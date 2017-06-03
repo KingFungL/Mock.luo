@@ -1,0 +1,1188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HbPlat.Models" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="HbPlatEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="BaseItems" EntityType="HbPlat.Models.BaseItem" />
+    <EntitySet Name="CatalogInfoes" EntityType="HbPlat.Models.CatalogInfo" />
+    <EntitySet Name="CheckOrgInfoes" EntityType="HbPlat.Models.CheckOrgInfo" />
+    <EntitySet Name="CheckPriceInfoes" EntityType="HbPlat.Models.CheckPriceInfo" />
+    <EntitySet Name="DemandEntries" EntityType="HbPlat.Models.DemandEntry" />
+    <EntitySet Name="DemandMains" EntityType="HbPlat.Models.DemandMain" />
+    <EntitySet Name="ElectricityProcures" EntityType="HbPlat.Models.ElectricityProcure" />
+    <EntitySet Name="ExpertInfoes" EntityType="HbPlat.Models.ExpertInfo" />
+    <EntitySet Name="FileUploads" EntityType="HbPlat.Models.FileUpload" />
+    <EntitySet Name="Financials" EntityType="HbPlat.Models.Financial" />
+    <EntitySet Name="NoticeItems" EntityType="HbPlat.Models.NoticeItem" />
+    <EntitySet Name="OfflineChecks" EntityType="HbPlat.Models.OfflineCheck" />
+    <EntitySet Name="OfflineHistories" EntityType="HbPlat.Models.OfflineHistory" />
+    <EntitySet Name="OfflineProcures" EntityType="HbPlat.Models.OfflineProcure" />
+    <EntitySet Name="PlanEntries" EntityType="HbPlat.Models.PlanEntry" />
+    <EntitySet Name="PlanMains" EntityType="HbPlat.Models.PlanMain" />
+    <EntitySet Name="PlanYears" EntityType="HbPlat.Models.PlanYear" />
+    <EntitySet Name="PlatformProcures" EntityType="HbPlat.Models.PlatformProcure" />
+    <EntitySet Name="PurExpEntries" EntityType="HbPlat.Models.PurExpEntry" />
+    <EntitySet Name="PurMonths" EntityType="HbPlat.Models.PurMonth" />
+    <EntitySet Name="PurProjInfoes" EntityType="HbPlat.Models.PurProjInfo" />
+    <EntitySet Name="PurResultEntries" EntityType="HbPlat.Models.PurResultEntry" />
+    <EntitySet Name="ShareAdjs" EntityType="HbPlat.Models.ShareAdj" />
+    <EntitySet Name="SupplierInfoes" EntityType="HbPlat.Models.SupplierInfo" />
+    <EntitySet Name="SupplierTypes" EntityType="HbPlat.Models.SupplierType" />
+    <EntitySet Name="SysButtons" EntityType="HbPlat.Models.SysButton" />
+    <EntitySet Name="SysDepartments" EntityType="HbPlat.Models.SysDepartment" />
+    <EntitySet Name="SysIcons" EntityType="HbPlat.Models.SysIcon" />
+    <EntitySet Name="SysLogInfoes" EntityType="HbPlat.Models.SysLogInfo" />
+    <EntitySet Name="SysLoginLogs" EntityType="HbPlat.Models.SysLoginLog" />
+    <EntitySet Name="SysMenus" EntityType="HbPlat.Models.SysMenu" />
+    <EntitySet Name="SysMenuButtons" EntityType="HbPlat.Models.SysMenuButton" />
+    <EntitySet Name="SysRoleInfoes" EntityType="HbPlat.Models.SysRoleInfo" />
+    <EntitySet Name="SysRoleMenus" EntityType="HbPlat.Models.SysRoleMenu" />
+    <EntitySet Name="SysRoleMenuButtons" EntityType="HbPlat.Models.SysRoleMenuButton" />
+    <EntitySet Name="SysUserInfoes" EntityType="HbPlat.Models.SysUserInfo" />
+    <EntitySet Name="SysUserRoles" EntityType="HbPlat.Models.SysUserRole" />
+    <EntitySet Name="SysUserVipPermissions" EntityType="HbPlat.Models.SysUserVipPermission" />
+    <AssociationSet Name="FK_CheckPriceInfo_CheckPriceInfo" Association="HbPlat.Models.FK_CheckPriceInfo_CheckPriceInfo">
+      <End Role="CheckOrgInfo" EntitySet="CheckOrgInfoes" />
+      <End Role="CheckPriceInfo" EntitySet="CheckPriceInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DemandEntry_DemandMain" Association="HbPlat.Models.FK_DemandEntry_DemandMain">
+      <End Role="DemandMain" EntitySet="DemandMains" />
+      <End Role="DemandEntry" EntitySet="DemandEntries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DemandMain_SysDepartment" Association="HbPlat.Models.FK_DemandMain_SysDepartment">
+      <End Role="SysDepartment" EntitySet="SysDepartments" />
+      <End Role="DemandMain" EntitySet="DemandMains" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FileInfo_SysDepartment" Association="HbPlat.Models.FK_FileInfo_SysDepartment">
+      <End Role="SysDepartment" EntitySet="SysDepartments" />
+      <End Role="FileUpload" EntitySet="FileUploads" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OfflineCheck_SysUserInfo" Association="HbPlat.Models.FK_OfflineCheck_SysUserInfo">
+      <End Role="SysUserInfo" EntitySet="SysUserInfoes" />
+      <End Role="OfflineCheck" EntitySet="OfflineChecks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OfflineHistory_OfflineProcure" Association="HbPlat.Models.FK_OfflineHistory_OfflineProcure">
+      <End Role="OfflineProcure" EntitySet="OfflineProcures" />
+      <End Role="OfflineHistory" EntitySet="OfflineHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OfflineHistory_SysUserInfo" Association="HbPlat.Models.FK_OfflineHistory_SysUserInfo">
+      <End Role="SysUserInfo" EntitySet="SysUserInfoes" />
+      <End Role="OfflineHistory" EntitySet="OfflineHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OfflineProcure_SysUserInfo" Association="HbPlat.Models.FK_OfflineProcure_SysUserInfo">
+      <End Role="SysUserInfo" EntitySet="SysUserInfoes" />
+      <End Role="OfflineProcure" EntitySet="OfflineProcures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PlanEntry_PlanMain" Association="HbPlat.Models.FK_PlanEntry_PlanMain">
+      <End Role="PlanMain" EntitySet="PlanMains" />
+      <End Role="PlanEntry" EntitySet="PlanEntries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PlanYear_SysDepartment" Association="HbPlat.Models.FK_PlanYear_SysDepartment">
+      <End Role="SysDepartment" EntitySet="SysDepartments" />
+      <End Role="PlanYear" EntitySet="PlanYears" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurExpEntry_PurProjInfo" Association="HbPlat.Models.FK_PurExpEntry_PurProjInfo">
+      <End Role="PurProjInfo" EntitySet="PurProjInfoes" />
+      <End Role="PurExpEntry" EntitySet="PurExpEntries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurMonth_PurProjInfo" Association="HbPlat.Models.FK_PurMonth_PurProjInfo">
+      <End Role="PurProjInfo" EntitySet="PurProjInfoes" />
+      <End Role="PurMonth" EntitySet="PurMonths" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurProjInfo_SysDepartment" Association="HbPlat.Models.FK_PurProjInfo_SysDepartment">
+      <End Role="SysDepartment" EntitySet="SysDepartments" />
+      <End Role="PurProjInfo" EntitySet="PurProjInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurResultEntry_PurProjInfo" Association="HbPlat.Models.FK_PurResultEntry_PurProjInfo">
+      <End Role="PurProjInfo" EntitySet="PurProjInfoes" />
+      <End Role="PurResultEntry" EntitySet="PurResultEntries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShareAdj_SysUserInfo" Association="HbPlat.Models.FK_ShareAdj_SysUserInfo">
+      <End Role="SysUserInfo" EntitySet="SysUserInfoes" />
+      <End Role="ShareAdj" EntitySet="ShareAdjs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SupplierInfo_SupplierType" Association="HbPlat.Models.FK_SupplierInfo_SupplierType">
+      <End Role="SupplierType" EntitySet="SupplierTypes" />
+      <End Role="SupplierInfo" EntitySet="SupplierInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysMenuButton_SysButton" Association="HbPlat.Models.FK_SysMenuButton_SysButton">
+      <End Role="SysButton" EntitySet="SysButtons" />
+      <End Role="SysMenuButton" EntitySet="SysMenuButtons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysRoleMenuButton_SysButton" Association="HbPlat.Models.FK_SysRoleMenuButton_SysButton">
+      <End Role="SysButton" EntitySet="SysButtons" />
+      <End Role="SysRoleMenuButton" EntitySet="SysRoleMenuButtons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysUserInfo_SysDepartment" Association="HbPlat.Models.FK_SysUserInfo_SysDepartment">
+      <End Role="SysDepartment" EntitySet="SysDepartments" />
+      <End Role="SysUserInfo" EntitySet="SysUserInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysMenuButton_SysMenu" Association="HbPlat.Models.FK_SysMenuButton_SysMenu">
+      <End Role="SysMenu" EntitySet="SysMenus" />
+      <End Role="SysMenuButton" EntitySet="SysMenuButtons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysRoleMenu_SysMenu" Association="HbPlat.Models.FK_SysRoleMenu_SysMenu">
+      <End Role="SysMenu" EntitySet="SysMenus" />
+      <End Role="SysRoleMenu" EntitySet="SysRoleMenus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysRoleMenuButton_SysMenu" Association="HbPlat.Models.FK_SysRoleMenuButton_SysMenu">
+      <End Role="SysMenu" EntitySet="SysMenus" />
+      <End Role="SysRoleMenuButton" EntitySet="SysRoleMenuButtons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysUserVipPermission_SysMenu" Association="HbPlat.Models.FK_SysUserVipPermission_SysMenu">
+      <End Role="SysMenu" EntitySet="SysMenus" />
+      <End Role="SysUserVipPermission" EntitySet="SysUserVipPermissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysRoleMenu_SysRoleInfo" Association="HbPlat.Models.FK_SysRoleMenu_SysRoleInfo">
+      <End Role="SysRoleInfo" EntitySet="SysRoleInfoes" />
+      <End Role="SysRoleMenu" EntitySet="SysRoleMenus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysRoleMenuButton_SysRoleInfo" Association="HbPlat.Models.FK_SysRoleMenuButton_SysRoleInfo">
+      <End Role="SysRoleInfo" EntitySet="SysRoleInfoes" />
+      <End Role="SysRoleMenuButton" EntitySet="SysRoleMenuButtons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysUserRole_SysRoleInfo" Association="HbPlat.Models.FK_SysUserRole_SysRoleInfo">
+      <End Role="SysRoleInfo" EntitySet="SysRoleInfoes" />
+      <End Role="SysUserRole" EntitySet="SysUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysUserRole_SysUserInfo" Association="HbPlat.Models.FK_SysUserRole_SysUserInfo">
+      <End Role="SysUserInfo" EntitySet="SysUserInfoes" />
+      <End Role="SysUserRole" EntitySet="SysUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SysUserVipPermission_SysUserInfo" Association="HbPlat.Models.FK_SysUserVipPermission_SysUserInfo">
+      <End Role="SysUserInfo" EntitySet="SysUserInfoes" />
+      <End Role="SysUserVipPermission" EntitySet="SysUserVipPermissions" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="BaseItem">
+    <Key>
+      <PropertyRef Name="ItemID" />
+    </Key>
+    <Property Name="ItemID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemType" Type="Int32" />
+    <Property Name="ItemName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ItemOrder" Type="Int32" />
+    <Property Name="Remark" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="AddTime" Type="DateTime" Precision="3" />
+    <Property Name="AddUserName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="CatalogInfo">
+    <Key>
+      <PropertyRef Name="CataID" />
+    </Key>
+    <Property Name="CataID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="CataPID" Type="Int32" />
+    <Property Name="CataNO" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="CataName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="CataObject" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="PurSuper" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Remark" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="AddTime" Type="DateTime" Precision="3" />
+    <Property Name="AddUserID" Type="Int32" />
+    <Property Name="CataVisible" Type="Int32" />
+    <Property Name="ValueType" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="StoreType" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="CheckOrgInfo">
+    <Key>
+      <PropertyRef Name="OrgID" />
+    </Key>
+    <Property Name="OrgID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="OrgName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="OrgNO" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="OrgSeq" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Remark" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="AddTime" Type="DateTime" Precision="3" />
+    <Property Name="AddUserID" Type="Int32" />
+    <Property Name="OrgVisible" Type="Int32" />
+    <NavigationProperty Name="CheckPriceInfoes" Relationship="HbPlat.Models.FK_CheckPriceInfo_CheckPriceInfo" FromRole="CheckOrgInfo" ToRole="CheckPriceInfo" />
+  </EntityType>
+  <EntityType Name="CheckPriceInfo">
+    <Key>
+      <PropertyRef Name="PriceID" />
+    </Key>
+    <Property Name="PriceID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="PriceNO" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="OrgID" Type="Int32" />
+    <Property Name="ProductName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PriceElement" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="Remark" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="AddTime" Type="DateTime" Precision="3" />
+    <Property Name="AddUserID" Type="Int32" />
+    <Property Name="PriceVisible" Type="Int32" />
+    <NavigationProperty Name="CheckOrgInfo" Relationship="HbPlat.Models.FK_CheckPriceInfo_CheckPriceInfo" FromRole="CheckPriceInfo" ToRole="CheckOrgInfo" />
+  </EntityType>
+  <EntityType Name="DemandEntry">
+    <Key>
+      <PropertyRef Name="DemandEntryID" />
+    </Key>
+    <Property Name="DemandEntryID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="DemandPID" Type="Int32" />
+    <Property Name="MtrNo" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="MtrName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="MtrModel" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="MtrUnit" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Qty" Type="Int32" />
+    <Property Name="Remark" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="DemandMain" Relationship="HbPlat.Models.FK_DemandEntry_DemandMain" FromRole="DemandEntry" ToRole="DemandMain" />
+  </EntityType>
+  <EntityType Name="DemandMain">
+    <Key>
+      <PropertyRef Name="DemandID" />
+    </Key>
+    <Property Name="DemandID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="DemandType" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="DemandTitle" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Person" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Phone" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Email" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="AddTime" Type="DateTime" Precision="3" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="DepID" Type="Int32" />
+    <Property Name="DemandStatus" Type="Int32" />
+    <NavigationProperty Name="DemandEntries" Relationship="HbPlat.Models.FK_DemandEntry_DemandMain" FromRole="DemandMain" ToRole="DemandEntry" />
+    <NavigationProperty Name="SysDepartment" Relationship="HbPlat.Models.FK_DemandMain_SysDepartment" FromRole="DemandMain" ToRole="SysDepartment" />
+  </EntityType>
+  <EntityType Name="ElectricityProcure">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderSource" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="OrderCode" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Account" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="InvoiceType" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="InvoiceUp" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Branch" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Sort" Type="Int32" />
+    <Property Name="InvoiceContent" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ProCate1" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ProCate2" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ProCate3" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ProLabel" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Brand" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ProCode" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="ProName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Model" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Number" Type="Int32" />
+    <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Freight" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Preferential" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="GiftCard" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Vouchers" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="RedEnvelope" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Balance" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ActualPay" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PayMentWay" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="InDistribution" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ReceivePro" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Consignee" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="MobilePhone" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="ShippingAddress" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="OrderDate" Type="DateTime" Precision="0" />
+    <Property Name="PaymentDate" Type="DateTime" Precision="0" />
+    <Property Name="DeliveryDate" Type="DateTime" Precision="0" />
+    <Property Name="ReceiptDate" Type="DateTime" Precision="0" />
+    <Property Name="IfGift" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="OrderStatus" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="OrderType" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Remark" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="OrderCompleteDate" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="ExpertInfo">
+    <Key>
+      <PropertyRef Name="ExpID" />
+    </Key>
+    <Property Name="ExpID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="ExpName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ExpSex" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="BirthDate" Type="DateTime" Precision="0" />
+    <Property Name="SpecLife" Type="Int32" />
+    <Property Name="Education" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ExpNation" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Specialty" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ExpUnit" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="ExpPost" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ExpTitle" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ExpPhone" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="ExpEmail" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="ExpCerNO" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="District" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="ExpImageUrl" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="ExpRemark" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="Address" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="BidBegin" Type="DateTime" Precision="3" />
+    <Property Name="BidEnd" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="FileUpload">
+    <Key>
+      <PropertyRef Name="FileID" />
+    </Key>
+    <Property Name="FileID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="FileName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Url" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="DepID" Type="Int32" />
+    <Property Name="Type" Type="Int32" />
+    <Property Name="UploadTime" Type="DateTime" Precision="3" />
+    <Property Name="UploadPerson" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="SysDepartment" Relationship="HbPlat.Models.FK_FileInfo_SysDepartment" FromRole="FileUpload" ToRole="SysDepartment" />
+  </EntityType>
+  <EntityType Name="Financial">
+    <Key>
+      <PropertyRef Name="FID" />
+    </Key>
+    <Property Name="FID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="MainCategory" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="TimeCategory" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="UpYear" Type="Int32" />
+    <Property Name="UpQuarter" Type="Int32" />
+    <Property Name="Area" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Project" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="No" Type="Int32" />
+    <Property Name="LastYear" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="NowMonth" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="NowYear" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ProjNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="NoticeItem">
+    <Key>
+      <PropertyRef Name="NotID" />
+    </Key>
+    <Property Name="NotID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="NotTitle" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="NotContent" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="NotAddTime" Type="DateTime" Precision="3" />
+    <Property Name="Hits" Type="Int32" />
+    <Property Name="NotDepName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="OfflineCheck">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="CheckDeps" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="SysUserInfo" Relationship="HbPlat.Models.FK_OfflineCheck_SysUserInfo" FromRole="OfflineCheck" ToRole="SysUserInfo" />
+  </EntityType>
+  <EntityType Name="OfflineHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="PlanId" Type="Int32" />
+    <Property Name="Status" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="OpeaTime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="OfflineProcure" Relationship="HbPlat.Models.FK_OfflineHistory_OfflineProcure" FromRole="OfflineHistory" ToRole="OfflineProcure" />
+    <NavigationProperty Name="SysUserInfo" Relationship="HbPlat.Models.FK_OfflineHistory_SysUserInfo" FromRole="OfflineHistory" ToRole="SysUserInfo" />
+  </EntityType>
+  <EntityType Name="OfflineProcure">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Product" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="ConName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="ConNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="PurWay" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Contract" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ConMoney" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ConUrl" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="SignUrl" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="CheckUrl" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="SignName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Remark" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="ProTime" Type="DateTime" Precision="0" />
+    <Property Name="AddTime" Type="DateTime" Precision="3" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="Status" Type="Int32" />
+    <NavigationProperty Name="OfflineHistories" Relationship="HbPlat.Models.FK_OfflineHistory_OfflineProcure" FromRole="OfflineProcure" ToRole="OfflineHistory" />
+    <NavigationProperty Name="SysUserInfo" Relationship="HbPlat.Models.FK_OfflineProcure_SysUserInfo" FromRole="OfflineProcure" ToRole="SysUserInfo" />
+  </EntityType>
+  <EntityType Name="PlanEntry">
+    <Key>
+      <PropertyRef Name="PlanEntryID" />
+    </Key>
+    <Property Name="PlanEntryID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="PlanPID" Type="Int32" />
+    <Property Name="DepName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="DepID" Type="Int32" />
+    <Property Name="ProName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="PName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="PNameReal" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="ProNameReal" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="SampleReq" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="SCount" Type="Int32" />
+    <Property Name="SCountReal" Type="Int32" />
+    <Property Name="CheckResult" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="UnQuality" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="UnitPrice" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="UnitTotal" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="CheckUnit" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="FeeCase" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="ReportUrl" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="AgainFlag" Type="Int32" />
+    <Property Name="BackReason" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="SampleType" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="SampleCount" Type="Int32" />
+    <Property Name="Penatly" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="CheckFee" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="CorrectReportUrl" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="ModeUPUrl" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="PlanSJTime" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="JCDepName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ActSJTime" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="JCReportNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="PlanMain" Relationship="HbPlat.Models.FK_PlanEntry_PlanMain" FromRole="PlanEntry" ToRole="PlanMain" />
+  </EntityType>
+  <EntityType Name="PlanMain">
+    <Key>
+      <PropertyRef Name="PlanID" />
+    </Key>
+    <Property Name="PlanID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="PlanName" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="SubNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="PlanNO" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="PurMode" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="TestType" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ModeDownUrl" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="PlanStatus" Type="Int32" />
+    <NavigationProperty Name="PlanEntries" Relationship="HbPlat.Models.FK_PlanEntry_PlanMain" FromRole="PlanMain" ToRole="PlanEntry" />
+  </EntityType>
+  <EntityType Name="PlanYear">
+    <Key>
+      <PropertyRef Name="YearID" />
+    </Key>
+    <Property Name="YearID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="FileName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="FileUrl" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="DepID" Type="Int32" />
+    <Property Name="UploadTime" Type="DateTime" Precision="3" />
+    <Property Name="UploadPerson" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="SysDepartment" Relationship="HbPlat.Models.FK_PlanYear_SysDepartment" FromRole="PlanYear" ToRole="SysDepartment" />
+  </EntityType>
+  <EntityType Name="PlatformProcure">
+    <Key>
+      <PropertyRef Name="PlatID" />
+    </Key>
+    <Property Name="PlatID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Sort" Type="Int32" />
+    <Property Name="Area" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="UpMonth" Type="DateTime" Precision="0" />
+    <Property Name="Purchase" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PurAgent" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PurService" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SumPur" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="OfficeSup" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="OSAgent" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="OSService" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SumOS" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Food" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="FoodAgent" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="FoodService" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SumFood" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Share" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ShareAgent" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ShareService" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SumShare" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="OfficeEquip" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="OEAgent" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="OEService" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SumOE" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="BusinessHall" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="BHAgent" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="BHService" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SumBH" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CarUse" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CUAgent" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CUService" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SumCU" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Printer" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PrintAgent" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PrintService" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SumPrint" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="StafClothing" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SCAgent" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SCService" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SumSC" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Decorate" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="DeAgent" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="DeService" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SumDe" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="BHFurniture" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="BHFAgent" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="BHFService" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SumBHF" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Seat" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SeatAgent" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SeatService" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SumSeat" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CarInsurance" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CarIAgent" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CarIService" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SumCar" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SumAll" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="PurExpEntry">
+    <Key>
+      <PropertyRef Name="ExpEntryID" />
+    </Key>
+    <Property Name="ExpEntryID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="ExpPurID" Type="Int32" />
+    <Property Name="ExpName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ExpUnit" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="ExpPhone" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="ExpID" Type="Int32" />
+    <Property Name="Specialty" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="District" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="EvalLevel" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="EvalCont" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="IfAttend" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="NoAttend" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="ExpType" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="PurProjInfo" Relationship="HbPlat.Models.FK_PurExpEntry_PurProjInfo" FromRole="PurExpEntry" ToRole="PurProjInfo" />
+  </EntityType>
+  <EntityType Name="PurMonth">
+    <Key>
+      <PropertyRef Name="MonthEntryID" />
+    </Key>
+    <Property Name="MonthEntryID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="MonthPurID" Type="Int32" />
+    <Property Name="YearMonth" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="MAmount" Type="Double" />
+    <NavigationProperty Name="PurProjInfo" Relationship="HbPlat.Models.FK_PurMonth_PurProjInfo" FromRole="PurMonth" ToRole="PurProjInfo" />
+  </EntityType>
+  <EntityType Name="PurProjInfo">
+    <Key>
+      <PropertyRef Name="PurID" />
+    </Key>
+    <Property Name="PurID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="PurNO" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="PurName" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="PurMode" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="PurType" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="PurMatType" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="PurResultNO" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ResultMeetingUrl" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="ResultFee" Type="Double" />
+    <Property Name="FinishDate" Type="DateTime" Precision="0" />
+    <Property Name="IfDeploy" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="DeployDate" Type="DateTime" Precision="0" />
+    <Property Name="ExpCount" Type="Int32" />
+    <Property Name="BidBegin" Type="DateTime" Precision="3" />
+    <Property Name="BidEnd" Type="DateTime" Precision="3" />
+    <Property Name="BudgetFee" Type="Double" />
+    <Property Name="CapitalSrc" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="TechNormalUrl" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="BidDocUrl" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="MeetingUrl" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="ImplementDate" Type="DateTime" Precision="0" />
+    <Property Name="Purstatus" Type="Int32" />
+    <Property Name="AddTime" Type="DateTime" Precision="3" />
+    <Property Name="AddUserID" Type="Int32" />
+    <Property Name="DepID" Type="Int32" />
+    <Property Name="RunDep" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="CenterType" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="IfLimit" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="IfSatisfy" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="IfFormula" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="Remark1" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="Remark2" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="PurExpEntries" Relationship="HbPlat.Models.FK_PurExpEntry_PurProjInfo" FromRole="PurProjInfo" ToRole="PurExpEntry" />
+    <NavigationProperty Name="PurMonths" Relationship="HbPlat.Models.FK_PurMonth_PurProjInfo" FromRole="PurProjInfo" ToRole="PurMonth" />
+    <NavigationProperty Name="SysDepartment" Relationship="HbPlat.Models.FK_PurProjInfo_SysDepartment" FromRole="PurProjInfo" ToRole="SysDepartment" />
+    <NavigationProperty Name="PurResultEntries" Relationship="HbPlat.Models.FK_PurResultEntry_PurProjInfo" FromRole="PurProjInfo" ToRole="PurResultEntry" />
+  </EntityType>
+  <EntityType Name="PurResultEntry">
+    <Key>
+      <PropertyRef Name="ResultEntryID" />
+    </Key>
+    <Property Name="ResultEntryID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="ResultPurID" Type="Int32" />
+    <Property Name="SupID" Type="Int32" />
+    <Property Name="SupName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="SharePer" Type="Double" />
+    <Property Name="ShareSum" Type="Double" />
+    <Property Name="PriceListUrl" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="ArrDays" Type="Int32" />
+    <Property Name="QuaDays" Type="Int32" />
+    <NavigationProperty Name="PurProjInfo" Relationship="HbPlat.Models.FK_PurResultEntry_PurProjInfo" FromRole="PurResultEntry" ToRole="PurProjInfo" />
+  </EntityType>
+  <EntityType Name="ShareAdj">
+    <Key>
+      <PropertyRef Name="AdjID" />
+    </Key>
+    <Property Name="AdjID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="PurNO" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="PurName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="AdjReason" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="AttListUrl" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="AdjStatus" Type="Int32" />
+    <Property Name="AddTime" Type="DateTime" Precision="3" />
+    <Property Name="AddUserID" Type="Int32" />
+    <Property Name="CheckUserID" Type="Int32" />
+    <Property Name="CheckTime" Type="DateTime" Precision="3" />
+    <Property Name="NoPassReason" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="SysUserInfo" Relationship="HbPlat.Models.FK_ShareAdj_SysUserInfo" FromRole="ShareAdj" ToRole="SysUserInfo" />
+  </EntityType>
+  <EntityType Name="SupplierInfo">
+    <Key>
+      <PropertyRef Name="SupID" />
+    </Key>
+    <Property Name="SupID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="SupNO" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="SupName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="SupTypeID" Type="Int32" />
+    <Property Name="LinkPerson" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="LinkTel" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="TaxNo" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="BankAccount" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="ComAddress" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="LoginName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Remark" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="AddTime" Type="DateTime" Precision="3" />
+    <Property Name="AddUserID" Type="Int32" />
+    <Property Name="SupVisible" Type="Int32" />
+    <NavigationProperty Name="SupplierType" Relationship="HbPlat.Models.FK_SupplierInfo_SupplierType" FromRole="SupplierInfo" ToRole="SupplierType" />
+  </EntityType>
+  <EntityType Name="SupplierType">
+    <Key>
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Name="TypeID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="TypeName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="TypeNO" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Remark" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="AddTime" Type="DateTime" Precision="3" />
+    <Property Name="AddUserID" Type="Int32" />
+    <Property Name="TypeVisible" Type="Int32" />
+    <NavigationProperty Name="SupplierInfoes" Relationship="HbPlat.Models.FK_SupplierInfo_SupplierType" FromRole="SupplierType" ToRole="SupplierInfo" />
+  </EntityType>
+  <EntityType Name="SysButton">
+    <Key>
+      <PropertyRef Name="ButtonID" />
+    </Key>
+    <Property Name="ButtonID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="ButtonCode" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="ButtonName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ButtonSeq" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="ButtonIcon" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="AddTime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="SysMenuButtons" Relationship="HbPlat.Models.FK_SysMenuButton_SysButton" FromRole="SysButton" ToRole="SysMenuButton" />
+    <NavigationProperty Name="SysRoleMenuButtons" Relationship="HbPlat.Models.FK_SysRoleMenuButton_SysButton" FromRole="SysButton" ToRole="SysRoleMenuButton" />
+  </EntityType>
+  <EntityType Name="SysDepartment">
+    <Key>
+      <PropertyRef Name="DepID" />
+    </Key>
+    <Property Name="DepID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="DepPID" Type="Int32" Nullable="false" />
+    <Property Name="DepName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="DepNO" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="DepRemark" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="DepIconCls" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="DepPhone" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="DepIsDel" Type="Boolean" />
+    <Property Name="DepOrder" Type="Int32" />
+    <Property Name="DepAddtime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="DemandMains" Relationship="HbPlat.Models.FK_DemandMain_SysDepartment" FromRole="SysDepartment" ToRole="DemandMain" />
+    <NavigationProperty Name="FileUploads" Relationship="HbPlat.Models.FK_FileInfo_SysDepartment" FromRole="SysDepartment" ToRole="FileUpload" />
+    <NavigationProperty Name="PlanYears" Relationship="HbPlat.Models.FK_PlanYear_SysDepartment" FromRole="SysDepartment" ToRole="PlanYear" />
+    <NavigationProperty Name="PurProjInfoes" Relationship="HbPlat.Models.FK_PurProjInfo_SysDepartment" FromRole="SysDepartment" ToRole="PurProjInfo" />
+    <NavigationProperty Name="SysUserInfoes" Relationship="HbPlat.Models.FK_SysUserInfo_SysDepartment" FromRole="SysDepartment" ToRole="SysUserInfo" />
+  </EntityType>
+  <EntityType Name="SysIcon">
+    <Key>
+      <PropertyRef Name="IconID" />
+    </Key>
+    <Property Name="IconID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="IconName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="IconUrl" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="SysLogInfo">
+    <Key>
+      <PropertyRef Name="LogID" />
+    </Key>
+    <Property Name="LogID" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="LogDate" Type="DateTime" Precision="3" />
+    <Property Name="Thread" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="LogLevel" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Logger" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="Message" Type="String" MaxLength="4000" Unicode="false" FixedLength="false" />
+    <Property Name="Exception" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="SysLoginLog">
+    <Key>
+      <PropertyRef Name="LogID" />
+    </Key>
+    <Property Name="LogID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="LoginTime" Type="DateTime" Precision="3" />
+    <Property Name="LoginResult" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="LoginOffTime" Type="DateTime" Precision="3" />
+    <Property Name="LoginIP" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="SysMenu">
+    <Key>
+      <PropertyRef Name="MenuID" />
+    </Key>
+    <Property Name="MenuID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="MenuPID" Type="Int32" />
+    <Property Name="MenuName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="LinkUrl" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="MenuIcon" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="MenuSeq" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="IsVisible" Type="Boolean" />
+    <Property Name="IsEnable" Type="Boolean" />
+    <Property Name="MenuState" Type="Boolean" />
+    <Property Name="AddTime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="SysMenuButtons" Relationship="HbPlat.Models.FK_SysMenuButton_SysMenu" FromRole="SysMenu" ToRole="SysMenuButton" />
+    <NavigationProperty Name="SysRoleMenus" Relationship="HbPlat.Models.FK_SysRoleMenu_SysMenu" FromRole="SysMenu" ToRole="SysRoleMenu" />
+    <NavigationProperty Name="SysRoleMenuButtons" Relationship="HbPlat.Models.FK_SysRoleMenuButton_SysMenu" FromRole="SysMenu" ToRole="SysRoleMenuButton" />
+    <NavigationProperty Name="SysUserVipPermissions" Relationship="HbPlat.Models.FK_SysUserVipPermission_SysMenu" FromRole="SysMenu" ToRole="SysUserVipPermission" />
+  </EntityType>
+  <EntityType Name="SysMenuButton">
+    <Key>
+      <PropertyRef Name="MBID" />
+    </Key>
+    <Property Name="MBID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="MBMenuID" Type="Int32" />
+    <Property Name="MBButtonID" Type="Int32" />
+    <Property Name="IsDel" Type="Boolean" />
+    <Property Name="AddTime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="SysButton" Relationship="HbPlat.Models.FK_SysMenuButton_SysButton" FromRole="SysMenuButton" ToRole="SysButton" />
+    <NavigationProperty Name="SysMenu" Relationship="HbPlat.Models.FK_SysMenuButton_SysMenu" FromRole="SysMenuButton" ToRole="SysMenu" />
+  </EntityType>
+  <EntityType Name="SysRoleInfo">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="RoleRemark" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="RoleIsShow" Type="Boolean" Nullable="false" />
+    <Property Name="RoleIsDel" Type="Boolean" Nullable="false" />
+    <Property Name="RoleSeq" Type="Int32" />
+    <Property Name="RoleAddTime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="SysRoleMenus" Relationship="HbPlat.Models.FK_SysRoleMenu_SysRoleInfo" FromRole="SysRoleInfo" ToRole="SysRoleMenu" />
+    <NavigationProperty Name="SysRoleMenuButtons" Relationship="HbPlat.Models.FK_SysRoleMenuButton_SysRoleInfo" FromRole="SysRoleInfo" ToRole="SysRoleMenuButton" />
+    <NavigationProperty Name="SysUserRoles" Relationship="HbPlat.Models.FK_SysUserRole_SysRoleInfo" FromRole="SysRoleInfo" ToRole="SysUserRole" />
+  </EntityType>
+  <EntityType Name="SysRoleMenu">
+    <Key>
+      <PropertyRef Name="RMID" />
+    </Key>
+    <Property Name="RMID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="RMRoleID" Type="Int32" Nullable="false" />
+    <Property Name="RMMenuID" Type="Int32" Nullable="false" />
+    <Property Name="RPIsDel" Type="Boolean" />
+    <Property Name="RPAddTime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="SysMenu" Relationship="HbPlat.Models.FK_SysRoleMenu_SysMenu" FromRole="SysRoleMenu" ToRole="SysMenu" />
+    <NavigationProperty Name="SysRoleInfo" Relationship="HbPlat.Models.FK_SysRoleMenu_SysRoleInfo" FromRole="SysRoleMenu" ToRole="SysRoleInfo" />
+  </EntityType>
+  <EntityType Name="SysRoleMenuButton">
+    <Key>
+      <PropertyRef Name="RMBID" />
+    </Key>
+    <Property Name="RMBID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="RMBRoleID" Type="Int32" />
+    <Property Name="RMBMenuID" Type="Int32" />
+    <Property Name="RMBButtonID" Type="Int32" />
+    <Property Name="RPIsDel" Type="Boolean" />
+    <Property Name="RPAddTime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="SysButton" Relationship="HbPlat.Models.FK_SysRoleMenuButton_SysButton" FromRole="SysRoleMenuButton" ToRole="SysButton" />
+    <NavigationProperty Name="SysMenu" Relationship="HbPlat.Models.FK_SysRoleMenuButton_SysMenu" FromRole="SysRoleMenuButton" ToRole="SysMenu" />
+    <NavigationProperty Name="SysRoleInfo" Relationship="HbPlat.Models.FK_SysRoleMenuButton_SysRoleInfo" FromRole="SysRoleMenuButton" ToRole="SysRoleInfo" />
+  </EntityType>
+  <EntityType Name="SysUserInfo">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="UserDepID" Type="Int32" />
+    <Property Name="LoginName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="UserPwd" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="UserPost" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="UserRemark" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="UserIsDel" Type="Boolean" />
+    <Property Name="LastLoginTime" Type="DateTime" Precision="3" />
+    <Property Name="LoginCount" Type="Int32" />
+    <Property Name="UserAddTime" Type="DateTime" Precision="3" />
+    <Property Name="IfDepMain" Type="Int32" />
+    <Property Name="UserSeq" Type="Int32" />
+    <Property Name="RoleNameList" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="OrgNameList" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="OfflineChecks" Relationship="HbPlat.Models.FK_OfflineCheck_SysUserInfo" FromRole="SysUserInfo" ToRole="OfflineCheck" />
+    <NavigationProperty Name="OfflineHistories" Relationship="HbPlat.Models.FK_OfflineHistory_SysUserInfo" FromRole="SysUserInfo" ToRole="OfflineHistory" />
+    <NavigationProperty Name="OfflineProcures" Relationship="HbPlat.Models.FK_OfflineProcure_SysUserInfo" FromRole="SysUserInfo" ToRole="OfflineProcure" />
+    <NavigationProperty Name="ShareAdjs" Relationship="HbPlat.Models.FK_ShareAdj_SysUserInfo" FromRole="SysUserInfo" ToRole="ShareAdj" />
+    <NavigationProperty Name="SysDepartment" Relationship="HbPlat.Models.FK_SysUserInfo_SysDepartment" FromRole="SysUserInfo" ToRole="SysDepartment" />
+    <NavigationProperty Name="SysUserRoles" Relationship="HbPlat.Models.FK_SysUserRole_SysUserInfo" FromRole="SysUserInfo" ToRole="SysUserRole" />
+    <NavigationProperty Name="SysUserVipPermissions" Relationship="HbPlat.Models.FK_SysUserVipPermission_SysUserInfo" FromRole="SysUserInfo" ToRole="SysUserVipPermission" />
+  </EntityType>
+  <EntityType Name="SysUserRole">
+    <Key>
+      <PropertyRef Name="URID" />
+    </Key>
+    <Property Name="URID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="URUserID" Type="Int32" Nullable="false" />
+    <Property Name="URRoleID" Type="Int32" Nullable="false" />
+    <Property Name="URIsDel" Type="Boolean" Nullable="false" />
+    <Property Name="URAddTime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="SysRoleInfo" Relationship="HbPlat.Models.FK_SysUserRole_SysRoleInfo" FromRole="SysUserRole" ToRole="SysRoleInfo" />
+    <NavigationProperty Name="SysUserInfo" Relationship="HbPlat.Models.FK_SysUserRole_SysUserInfo" FromRole="SysUserRole" ToRole="SysUserInfo" />
+  </EntityType>
+  <EntityType Name="SysUserVipPermission">
+    <Key>
+      <PropertyRef Name="UPID" />
+    </Key>
+    <Property Name="UPID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="UPUserID" Type="Int32" Nullable="false" />
+    <Property Name="UPMenuID" Type="Int32" Nullable="false" />
+    <Property Name="UPIsDel" Type="Boolean" Nullable="false" />
+    <Property Name="UPAddTime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="SysMenu" Relationship="HbPlat.Models.FK_SysUserVipPermission_SysMenu" FromRole="SysUserVipPermission" ToRole="SysMenu" />
+    <NavigationProperty Name="SysUserInfo" Relationship="HbPlat.Models.FK_SysUserVipPermission_SysUserInfo" FromRole="SysUserVipPermission" ToRole="SysUserInfo" />
+  </EntityType>
+  <Association Name="FK_CheckPriceInfo_CheckPriceInfo">
+    <End Role="CheckOrgInfo" Type="HbPlat.Models.CheckOrgInfo" Multiplicity="0..1" />
+    <End Role="CheckPriceInfo" Type="HbPlat.Models.CheckPriceInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CheckOrgInfo">
+        <PropertyRef Name="OrgID" />
+      </Principal>
+      <Dependent Role="CheckPriceInfo">
+        <PropertyRef Name="OrgID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DemandEntry_DemandMain">
+    <End Role="DemandMain" Type="HbPlat.Models.DemandMain" Multiplicity="0..1" />
+    <End Role="DemandEntry" Type="HbPlat.Models.DemandEntry" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DemandMain">
+        <PropertyRef Name="DemandID" />
+      </Principal>
+      <Dependent Role="DemandEntry">
+        <PropertyRef Name="DemandPID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DemandMain_SysDepartment">
+    <End Role="SysDepartment" Type="HbPlat.Models.SysDepartment" Multiplicity="0..1" />
+    <End Role="DemandMain" Type="HbPlat.Models.DemandMain" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysDepartment">
+        <PropertyRef Name="DepID" />
+      </Principal>
+      <Dependent Role="DemandMain">
+        <PropertyRef Name="DepID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FileInfo_SysDepartment">
+    <End Role="SysDepartment" Type="HbPlat.Models.SysDepartment" Multiplicity="0..1" />
+    <End Role="FileUpload" Type="HbPlat.Models.FileUpload" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysDepartment">
+        <PropertyRef Name="DepID" />
+      </Principal>
+      <Dependent Role="FileUpload">
+        <PropertyRef Name="DepID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OfflineCheck_SysUserInfo">
+    <End Role="SysUserInfo" Type="HbPlat.Models.SysUserInfo" Multiplicity="0..1" />
+    <End Role="OfflineCheck" Type="HbPlat.Models.OfflineCheck" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysUserInfo">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="OfflineCheck">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OfflineHistory_OfflineProcure">
+    <End Role="OfflineProcure" Type="HbPlat.Models.OfflineProcure" Multiplicity="0..1" />
+    <End Role="OfflineHistory" Type="HbPlat.Models.OfflineHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OfflineProcure">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OfflineHistory">
+        <PropertyRef Name="PlanId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OfflineHistory_SysUserInfo">
+    <End Role="SysUserInfo" Type="HbPlat.Models.SysUserInfo" Multiplicity="0..1" />
+    <End Role="OfflineHistory" Type="HbPlat.Models.OfflineHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysUserInfo">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="OfflineHistory">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OfflineProcure_SysUserInfo">
+    <End Role="SysUserInfo" Type="HbPlat.Models.SysUserInfo" Multiplicity="0..1" />
+    <End Role="OfflineProcure" Type="HbPlat.Models.OfflineProcure" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysUserInfo">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="OfflineProcure">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PlanEntry_PlanMain">
+    <End Role="PlanMain" Type="HbPlat.Models.PlanMain" Multiplicity="0..1" />
+    <End Role="PlanEntry" Type="HbPlat.Models.PlanEntry" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PlanMain">
+        <PropertyRef Name="PlanID" />
+      </Principal>
+      <Dependent Role="PlanEntry">
+        <PropertyRef Name="PlanPID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PlanYear_SysDepartment">
+    <End Role="SysDepartment" Type="HbPlat.Models.SysDepartment" Multiplicity="0..1" />
+    <End Role="PlanYear" Type="HbPlat.Models.PlanYear" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysDepartment">
+        <PropertyRef Name="DepID" />
+      </Principal>
+      <Dependent Role="PlanYear">
+        <PropertyRef Name="DepID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurExpEntry_PurProjInfo">
+    <End Role="PurProjInfo" Type="HbPlat.Models.PurProjInfo" Multiplicity="0..1" />
+    <End Role="PurExpEntry" Type="HbPlat.Models.PurExpEntry" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PurProjInfo">
+        <PropertyRef Name="PurID" />
+      </Principal>
+      <Dependent Role="PurExpEntry">
+        <PropertyRef Name="ExpPurID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurMonth_PurProjInfo">
+    <End Role="PurProjInfo" Type="HbPlat.Models.PurProjInfo" Multiplicity="0..1" />
+    <End Role="PurMonth" Type="HbPlat.Models.PurMonth" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PurProjInfo">
+        <PropertyRef Name="PurID" />
+      </Principal>
+      <Dependent Role="PurMonth">
+        <PropertyRef Name="MonthPurID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurProjInfo_SysDepartment">
+    <End Role="SysDepartment" Type="HbPlat.Models.SysDepartment" Multiplicity="0..1" />
+    <End Role="PurProjInfo" Type="HbPlat.Models.PurProjInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysDepartment">
+        <PropertyRef Name="DepID" />
+      </Principal>
+      <Dependent Role="PurProjInfo">
+        <PropertyRef Name="DepID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurResultEntry_PurProjInfo">
+    <End Role="PurProjInfo" Type="HbPlat.Models.PurProjInfo" Multiplicity="0..1" />
+    <End Role="PurResultEntry" Type="HbPlat.Models.PurResultEntry" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PurProjInfo">
+        <PropertyRef Name="PurID" />
+      </Principal>
+      <Dependent Role="PurResultEntry">
+        <PropertyRef Name="ResultPurID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShareAdj_SysUserInfo">
+    <End Role="SysUserInfo" Type="HbPlat.Models.SysUserInfo" Multiplicity="0..1" />
+    <End Role="ShareAdj" Type="HbPlat.Models.ShareAdj" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysUserInfo">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="ShareAdj">
+        <PropertyRef Name="AddUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SupplierInfo_SupplierType">
+    <End Role="SupplierType" Type="HbPlat.Models.SupplierType" Multiplicity="0..1" />
+    <End Role="SupplierInfo" Type="HbPlat.Models.SupplierInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SupplierType">
+        <PropertyRef Name="TypeID" />
+      </Principal>
+      <Dependent Role="SupplierInfo">
+        <PropertyRef Name="SupTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysMenuButton_SysButton">
+    <End Role="SysButton" Type="HbPlat.Models.SysButton" Multiplicity="0..1" />
+    <End Role="SysMenuButton" Type="HbPlat.Models.SysMenuButton" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysButton">
+        <PropertyRef Name="ButtonID" />
+      </Principal>
+      <Dependent Role="SysMenuButton">
+        <PropertyRef Name="MBButtonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysRoleMenuButton_SysButton">
+    <End Role="SysButton" Type="HbPlat.Models.SysButton" Multiplicity="0..1" />
+    <End Role="SysRoleMenuButton" Type="HbPlat.Models.SysRoleMenuButton" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysButton">
+        <PropertyRef Name="ButtonID" />
+      </Principal>
+      <Dependent Role="SysRoleMenuButton">
+        <PropertyRef Name="RMBButtonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysUserInfo_SysDepartment">
+    <End Role="SysDepartment" Type="HbPlat.Models.SysDepartment" Multiplicity="0..1" />
+    <End Role="SysUserInfo" Type="HbPlat.Models.SysUserInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysDepartment">
+        <PropertyRef Name="DepID" />
+      </Principal>
+      <Dependent Role="SysUserInfo">
+        <PropertyRef Name="UserDepID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysMenuButton_SysMenu">
+    <End Role="SysMenu" Type="HbPlat.Models.SysMenu" Multiplicity="0..1" />
+    <End Role="SysMenuButton" Type="HbPlat.Models.SysMenuButton" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysMenu">
+        <PropertyRef Name="MenuID" />
+      </Principal>
+      <Dependent Role="SysMenuButton">
+        <PropertyRef Name="MBMenuID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysRoleMenu_SysMenu">
+    <End Role="SysMenu" Type="HbPlat.Models.SysMenu" Multiplicity="1" />
+    <End Role="SysRoleMenu" Type="HbPlat.Models.SysRoleMenu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysMenu">
+        <PropertyRef Name="MenuID" />
+      </Principal>
+      <Dependent Role="SysRoleMenu">
+        <PropertyRef Name="RMMenuID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysRoleMenuButton_SysMenu">
+    <End Role="SysMenu" Type="HbPlat.Models.SysMenu" Multiplicity="0..1" />
+    <End Role="SysRoleMenuButton" Type="HbPlat.Models.SysRoleMenuButton" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysMenu">
+        <PropertyRef Name="MenuID" />
+      </Principal>
+      <Dependent Role="SysRoleMenuButton">
+        <PropertyRef Name="RMBMenuID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysUserVipPermission_SysMenu">
+    <End Role="SysMenu" Type="HbPlat.Models.SysMenu" Multiplicity="1" />
+    <End Role="SysUserVipPermission" Type="HbPlat.Models.SysUserVipPermission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysMenu">
+        <PropertyRef Name="MenuID" />
+      </Principal>
+      <Dependent Role="SysUserVipPermission">
+        <PropertyRef Name="UPMenuID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysRoleMenu_SysRoleInfo">
+    <End Role="SysRoleInfo" Type="HbPlat.Models.SysRoleInfo" Multiplicity="1" />
+    <End Role="SysRoleMenu" Type="HbPlat.Models.SysRoleMenu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysRoleInfo">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="SysRoleMenu">
+        <PropertyRef Name="RMRoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysRoleMenuButton_SysRoleInfo">
+    <End Role="SysRoleInfo" Type="HbPlat.Models.SysRoleInfo" Multiplicity="0..1" />
+    <End Role="SysRoleMenuButton" Type="HbPlat.Models.SysRoleMenuButton" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysRoleInfo">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="SysRoleMenuButton">
+        <PropertyRef Name="RMBRoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysUserRole_SysRoleInfo">
+    <End Role="SysRoleInfo" Type="HbPlat.Models.SysRoleInfo" Multiplicity="1" />
+    <End Role="SysUserRole" Type="HbPlat.Models.SysUserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysRoleInfo">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="SysUserRole">
+        <PropertyRef Name="URRoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysUserRole_SysUserInfo">
+    <End Role="SysUserInfo" Type="HbPlat.Models.SysUserInfo" Multiplicity="1" />
+    <End Role="SysUserRole" Type="HbPlat.Models.SysUserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysUserInfo">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="SysUserRole">
+        <PropertyRef Name="URUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SysUserVipPermission_SysUserInfo">
+    <End Role="SysUserInfo" Type="HbPlat.Models.SysUserInfo" Multiplicity="1" />
+    <End Role="SysUserVipPermission" Type="HbPlat.Models.SysUserVipPermission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SysUserInfo">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="SysUserVipPermission">
+        <PropertyRef Name="UPUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

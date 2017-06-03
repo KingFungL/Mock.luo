@@ -1,0 +1,172 @@
+﻿@{
+    ViewBag.Title = "上传文件示例";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="body">
+    <form method="post" style="margin: 100px 200px;">
+        <table>
+            <tr>
+                <td>用户名:</td>
+                <td>
+                    <input type="hidden" name="Id" />
+                    <input type="text" name="UserName" /></td>
+            </tr>
+            <tr style="height: 100px;">
+                <td></td>
+                <td>
+                    <input type="file" name="uploadify" id="uploadify" />
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <div class="submit">
+                        <span class="uploadify-button-text">提交</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <!--上传demo-->
+        @*        <div id="uploadify-queue" class="uploadify-queue">
+            <div id="SWFUpload_0_0" class="uploadify-queue-item">
+                <b id="_mail_icon_47_239" class="nui-ico nui-ico-file32 nui-ico-file32-41"></b>
+                <span class="fileName" title="G7O6@KAV29FXUT5MBCQV3S.jpg" style="width: 148px;">}G7O6@KAV29FXUT5MBCQV3S.j... </span>
+                <div class="cancel">
+                    <a href="javascript:$('#uploadify').uploadify('cancel', 'SWFUpload_0_0')" class="nui-txt-link">删除</a>
+                </div>
+                <div class="data"><span class="fileSize">(5KB)</span><span class="nui-txt-suc">上传完成</span></div>
+                <div class="uploadify-progress">
+                    <div class="uploadify-progress-bar" style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    </form>
+    <!--查看demo-->
+</div>
+
+@section scripts{
+    <link href="~/Content/base64_compress.css" rel="stylesheet" />
+@*    <script>
+        var uploadifycss = "<link href='../Uploadify/uploadify.css?d='" + Math.random() + " rel='stylesheet' />";
+        document.write(uploadifycss);
+    </script>*@
+    <link href="~/Uploadify/uploadify.css" rel="stylesheet" />
+    <style>
+        .submit {height: 30px;line-height: 30px;width: 88px;text-align: center;border-radius: 5px;background-color: #0F6099;color: white;}
+        .submit:hover {background-color: orange;cursor: pointer;}
+    </style>
+    <script src="~/Uploadify/jquery.uploadify.js"></script>
+    <script type="text/javascript">
+        var uploadify_onSelectError = function (file, errorCode, errorMsg) {
+            var msgText = "上传失败\n";
+            switch (errorCode) {
+                case SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED:
+                    //this.queueData.errorMsg = "每次最多上传 " + this.settings.queueSizeLimit + "个文件";  
+                    msgText += "每次最多上传 " + this.settings.queueSizeLimit + "个文件";
+                    break;
+                case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT:
+                    msgText += "文件大小超过限制( " + this.settings.fileSizeLimit + " )";
+                    break;
+                case SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE:
+                    msgText += "文件大小为0";
+                    break;
+                case SWFUpload.QUEUE_ERROR.INVALID_FILETYPE:
+                    msgText += "文件格式不正确，仅限 " + this.settings.fileTypeExts;
+                    break;
+                default:
+                    msgText += "错误代码：" + errorCode + "\n" + errorMsg;
+            }
+            alert(msgText);
+        };
+        $(document).ready(function () {
+            initUploadify();
+
+            var Id = 1;
+            $.get('/Mock/UploadFile/GetForm', { 'Id': Id }, function (data) {
+                console.log(data);
+                var json = {}
+                $('form').setForm(data);
+
+                $('#uploadify').bindUploadify({
+                    hiddenUrl: data.Url,
+                    fileName: data.FileName,
+                    fileSize: data.FileSize
+                });
+            }, 'json');
+
+
+            ////绑定demo
+            //var hiddenurl = ['/plat/demo/url1.png', '/plat/demo/url2.ppt'];
+            //var fileName = ['fileName1.png', 'fileName2.ppt'];
+
+            //$('#uploadify').bindUploadify({
+            //    hiddenUrl: hiddenurl,
+            //    fileName: fileName
+            //});
+
+            $('.submit').on('click', SumbmitForm);
+        });
+
+        function SumbmitForm() {
+            var username = $('input[name=UserName]').val();
+            var Id = $('input[name=Id]').val();
+            var Url = [];
+            var FileName = [];
+            var FileSize = [];
+            $('#uploadify-queue').find('input[name=hiddenUrl]').each(function () {
+                Url.push($(this).val());
+            });
+            $('#uploadify-queue').find('.fileName').each(function () {
+                FileName.push($(this)[0].title);
+            });
+            $('#uploadify-queue').find('.fileSize').each(function () {
+                FileSize.push($(this)[0].outerText);
+            });
+            console.log(FileSize);
+            console.log(Url);
+            console.log(FileName);
+            var data = { 'UserName': username, 'Url': Url, 'FileName': FileName, 'FileSize': FileSize, 'Id': Id };
+            //var jsondata=JSON.stringify(data);
+            $.ajax({
+                url: '/Mock/UploadFile/SubmitForm',
+                data: data,
+                traditional: true,//布尔值，规定是否使用参数序列化的传统样式。这样后台数组变量才能接受到值
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.code == "200")
+                        alert(data.msg);
+                },
+                error: function (a, b, c) {
+                    console.log(a);
+                    console.log(b)
+                    console.log(c);
+                }
+            });
+        }
+        function initUploadify() {
+            $("#uploadify").uploadify({
+                buttonText: '上传测试',
+                height: 30,
+                width: 88,
+                auto: true,
+                removeCompleted: false,
+                swf: '/Uploadify/uploadify.swf',
+                uploader: '/Mock/UploadFile/Upload',
+                multi: false,
+                //fileTypeExts: '*.jpg;*jpeg',
+                onUploadSuccess: function (file, data, response) {
+                    //console.log(file); 
+                    data = JSON.parse(data);
+                    //console.log(data.obj);
+                    var url = data.obj;
+                    $('#' + file.id).find('input[name=hiddenUrl]').val(url);
+                },
+                onSelectError: uploadify_onSelectError
+            });
+        }
+
+    </script>
+}

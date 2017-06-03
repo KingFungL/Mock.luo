@@ -1,0 +1,110 @@
+.uploadify {
+    position: relative;
+    margin-bottom: 1em;
+}
+
+.uploadify-button {
+    color: white;
+    font: 'Microsoft Yahei',verdana;
+    text-align: center;
+    width: 100%;
+    background-color:#0142fe;
+    border-radius: 5px;
+    background-color: #0F6099;
+    color: white;
+}
+.uploadify:hover .uploadify-button {
+    background-color:orange;
+}
+.nui-ico2 {
+    background: url(cmps.png) no-repeat 0 0;
+    width: 7px;
+    height: 12px;
+    overflow: hidden;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    background-position: -36px 0;
+}
+.uploadify:hover .nui-ico2 {
+    background-position: -36px 0;
+}
+
+.uploadify-button.disabled {
+    background-color: #D0D0D0;
+    color: #808080;
+}
+
+.uploadify-queue {
+    margin-bottom: 1em;
+    background-color: #E3EAF4;
+}
+
+.uploadify-queue-item {
+    height: 44px;
+    float: left;
+    position: relative;
+    margin: 0 8px 8px 0;
+    border-radius: 3px;
+    overflow: visible;
+    font-size: 12px;
+    width: 272px;
+}
+
+.uploadify-error {
+    background-color: #FDE5DD !important;
+}
+
+.uploadify-queue-item .cancel {
+    position: absolute;
+    right: 6px;
+    top: 5px;
+    font-size: 12px;
+}
+
+.nui-txt-link {
+    outline: 0;
+    cursor: pointer;
+    padding: 2px 4px 4px;
+    text-decoration: none;
+    border-radius: 3px;
+}
+
+a:hover {
+    color: #ffffff;
+    background-color: #0F6099!important;
+}
+
+.uploadify-queue-item .data {
+    height: 16px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #B0B0B0;
+    position: absolute;
+    left: 41px;
+    top: 21px;
+    line-height: 160%;
+    overflow: visible;
+    font-size: 12px;
+    margin-top: 1px;
+}
+
+.uploadify-queue-item .nui-txt-suc {
+    color: #3d882d!important;
+}
+
+.uploadify-queue-item.completed {
+    background-color: #E5E5E5;
+}
+
+.uploadify-progress {
+    background-color: #E5E5E5;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.uploadify-progress-bar {
+    background-color: #0099FF;
+    height: 3px;
+    width: 1px;
+}
