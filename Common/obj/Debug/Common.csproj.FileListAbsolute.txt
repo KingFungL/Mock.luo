@@ -1,7 +1,0 @@
-D:\code\ASP.NET code\Mock.Luo\Common\bin\Debug\Common.dll
-D:\code\ASP.NET code\Mock.Luo\Common\bin\Debug\Common.pdb
-D:\code\ASP.NET code\Mock.Luo\Common\bin\Debug\Newtonsoft.Json.dll
-D:\code\ASP.NET code\Mock.Luo\Common\bin\Debug\Newtonsoft.Json.xml
-D:\code\ASP.NET code\Mock.Luo\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
-D:\code\ASP.NET code\Mock.Luo\Common\obj\Debug\Common.dll
-D:\code\ASP.NET code\Mock.Luo\Common\obj\Debug\Common.pdb
