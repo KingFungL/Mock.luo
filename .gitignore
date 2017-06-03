@@ -1,10 +1,21 @@
 ﻿#过滤数据库文件、sln解决方案文件、配置文件  
 *.mdb  
 *.ldb  
-*.sln  
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
   
 #过滤文件夹Debug,Release,obj  
-Debug/  
-Release/  
-obj/  
 UploadFile/
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+[Xx]64/
+[Xx]86/
+[Bb]uild/
+bld/
+[Bb]in/
+[Oo]bj/
