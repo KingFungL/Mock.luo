@@ -8,3 +8,7 @@ Debug/
 Release/  
 obj/  
 UploadFile/
+
+*.js linguist-language=.net
+*.css linguist-language=.net
+*.cshtml linguist-language=.net
