@@ -38,6 +38,13 @@ namespace Mock.Luo
                         "~/EasyUI151-Insdep-Them/themes/insdep/easyui_plus.css",
                         "~/EasyUI151-Insdep-Them/themes/insdep/insdep_theme_default.css",
                         "~/EasyUI151-Insdep-Them/themes/insdep/icon.css"));
+
+            bundles.Add(new StyleBundle("~/Content/css/bootstrap").Include(
+                "~/Content/css/bootstrap.min14ed.css",
+                "~/Content/css/font-awesome.min93e3.css",
+                "~/Content/css/animate.min.css",
+                "~/Content/css/style.min862f.css"
+                ));
         }
     }
 }

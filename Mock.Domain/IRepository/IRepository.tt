@@ -1,0 +1,52 @@
+﻿<#@ template language="C#" debug="True" hostspecific="True" #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="System.xml" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ import namespace="System.Data" #>
+<#@ include file="../Entities/ModelAuto.ttinclude"#>
+<# var manager = new Manager(Host, GenerationEnvironment, true) { OutputPath = Path.GetDirectoryName(Host.TemplateFile)}; #>
+<# 
+	string connectionString=Configs.connectionString();
+    //string connectionString = "Data Source=.;Initial Catalog=Mock;User ID=sa;Password=123456;"; 
+    SqlConnection conn = new SqlConnection(connectionString); 
+    conn.Open(); 
+    System.Data.DataTable schema = conn.GetSchema("TABLES"); 
+    string selectQuery = "select * from @tableName"; 
+    SqlCommand command = new SqlCommand(selectQuery,conn); 
+    SqlDataAdapter ad = new SqlDataAdapter(command); 
+    System.Data.DataSet ds = new DataSet();
+ 
+    string propQuery = "SELECT 表名=sobj.name,字段名=scol.name,字段说明=sprop.[value] FROM syscolumns as scol inner join sys.sysobjects as sobj on scol.id=sobj.id and sobj.xtype='U' and sobj.name<>'dtproperties' left join sys.extended_properties as sprop on scol.id=sprop.major_id and scol.colid=sprop.minor_id where sobj.name='@tableName' and scol.name='@columnName'"; 
+    SqlCommand command2 = new SqlCommand(propQuery,conn); 
+    SqlDataAdapter ad2 = new SqlDataAdapter(command2); 
+    System.Data.DataSet ds2 = new DataSet();
+ #>
+
+<# 
+    foreach(System.Data.DataRow row in schema.Rows) 
+    {  #>   
+
+     <# 
+        manager.StartBlock("I"+row["TABLE_NAME"]+"Repository.cs");
+     #>
+    using System;
+	using Mock.Data;
+    namespace Mock.Domain.IRepository
+    {
+        /// <summary>
+        /// 仓储接口层 I<#= row["TABLE_NAME"].ToString() #>Repository
+        /// </summary>]
+        public  interface I<#= row["TABLE_NAME"].ToString() #>Repository: IRepositoryBase<<#= row["TABLE_NAME"].ToString() #>>
+        {    
+          
+        }    
+     }
+    <# manager.EndBlock(); #>
+<# 
+    } #> 
+
+<#
+    manager.Process(true);
+#>

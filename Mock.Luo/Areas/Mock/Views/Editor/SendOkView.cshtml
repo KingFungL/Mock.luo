@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "SendOkView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/css/font-awesome.min93e3.css" rel="stylesheet" />
+<style>
+    .nui-txt-link {outline: 0;cursor: pointer;padding: 2px 4px 4px;text-decoration: none;border-radius: 3px;}
+    .nui-txt-link {color: #0F6099!important;}
+    .nui-txt-link:hover {background-color: #0F6099;color: #fff!important;}
+    .sQ1 {width: 910px;margin: 0 auto;padding-top: 60px;text-align: left;position: relative;overflow: visible;}
+    .tK1 {display: block;padding-left: 45px;height: 40px;line-height: 40px;font-size: 32px;color: #222;position: relative;font-family: 'Microsoft Yahei',simhei,verdana;}
+    .py1 {padding-top: 17px;overflow: visible;height: 102px;position: relative;z-index: 2;margin-right: 300px;}
+    .je1 {position: relative;float: left;padding-left: 22px;margin-right: 38px;color: #555;zoom: 1;height: 22px;line-height: 22px;font-size: 14px;}
+    .se0 {background-image: url(../../Images/cmp_succ.png);background-repeat: no-repeat;font-size: 0;line-height: 0;overflow: hidden;}
+    .pv1 {position: absolute;left: 0;top: 3px;width: 35px;height: 35px;background-position: -144px 0;}
+</style>
+<div class="sQ1">
+    <h1 class="tK1">
+        <i class="nui-ico se0 pv1"></i>发送成功
+    <span style="font-size: 14px; margin-left: 5px;">
+        <a href="javascript:void(0)" class="nui-txt-link">可用手机接收回复</a>
+    </span>
+        <span></span>
+    </h1>
+    <div class="py1">
+        <a id="_mail_link_41_303" href="javascript:void(0)" class="je1">
+            <i class="fa fa-long-arrow-left"></i>
+            返回收件箱
+        </a>
+        <a id="_mail_link_42_304" href="javascript:void(0)" class="je1">
+            <i class="fa fa-envelope-o"></i>
+            查看已发邮件
+        </a>
+        <a id="_mail_link_43_305" href="javascript:void(0)" class="je1">
+            <i class="fa fa-file-text-o"></i>
+            继续写信
+        </a>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            $('#_mail_link_41_303').on('click', function () {
+                window.location.href = "/Mock/Editor/EmailIndex?data=1";
+            });
+            $('#_mail_link_42_304').on('click', function () {
+                window.location.href = "/Mock/Editor/EmailIndex?data=3";
+            });
+            $('#_mail_link_43_305').on('click', function () {
+                window.location.href = "/Mock/Editor/EmailIndex?data=0";
+            });
+        });
+    </script>
+}

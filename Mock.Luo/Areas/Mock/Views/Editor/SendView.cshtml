@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "SendView";
+    Layout = null;
+}
+<div>
+    <form method="post" class="easyui-form">
+        <div>
+            <label for="name">发送到</label>
+            <input class="easyui-textbox" type="text" name="sendTo" data-options="required:true,validType:'email'" style="width: 80%;" />
+        </div>
+        <div>
+            <label for="email">主题：</label>
+            <input class="easyui-textbox" type="text" name="mainTitle" data-options="required:true" style="width: 80%;" />
+        </div>
+        <div>
+            <!-- 加载编辑器的容器 -->
+            <script id="container" name="content" type="text/plain"> </script>
+        </div>
+        <div style="float: right;">
+            <a id="btnSend" href="#" class="easyui-linkbutton btn" data-options="iconCls:'fa-reply'" onclick="javascript:sendemail(1)">发送</a>
+            <a class="easyui-linkbutton" data-options="iconCls:'fa-remove'" onclick="javascript:giveup()">放弃</a>
+            <a class="easyui-linkbutton" data-options="iconCls:'fa-pencil'" onclick="javascript:sendemail(0)">存为草稿</a>
+        </div>
+    </form>
+</div>
+<script src="~/ueditor/ueditor.config.js"></script>
+<script src="~/ueditor/ueditor.all.min.js"></script>
+<!-- 实例化编辑器 -->
+<script type="text/javascript">
+    var ue;
+    $(function () {
+         ue = UE.getEditor('container', {
+            autoHeight: true
+        });
+        $(".btn").hover(function () {
+            $(".btn").css("background-color", "orange");
+            $('.btn > span > span').css('color', '#000');
+        }, function () {
+            $(".btn").css("background-color", "#1ab394");
+            $('.btn > span > span').css('color', '#fff');
+        });
+    });
+
+
+    function sendemail(status) {
+
+        var validate=$('form').form("validate");
+        if (!validate) return;
+
+        var content = ue.getContent();
+        var sendTo = $('input[name=sendTo]').val();
+        var mainTitle = $('input[name=mainTitle]').val();
+        var data = {
+            'sendTo': sendTo,
+            'mainTitle': mainTitle,
+            'content': content,
+            'status': status
+        };
+        //$.messager.alert('提示', "发送成功！", 'info', function () {
+        //    window.location.href = '/Mock/Editor/SendOkView';
+        //});
+        //return;
+        $.post('/Mock/Editor/SendEmail', data, function (data) {
+            if (data.code == "200") {
+                $.messager.alert('提示', data.msg, 'info', function () {
+                    location.href = '/Mock/Editor/SendOkView';
+                });
+            } else {
+                $.messager.alert('提示', data.msg, 'error');
+            }
+        }, 'json');
+    }
+
+    function giveup() {
+
+    }
+</script>

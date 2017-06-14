@@ -63,12 +63,19 @@ $(function () {
                 'href': '/Mock/Editor/MarkDownView',
                 'SortCode': 9
             }, {
-                'MenuName': '代码编辑器',
+                'MenuName': 'Simditor编辑器',
                 'Id': 8,
                 'PId': 6,
                 'icon': 'fa fa-camera-retro',
-                'href': '/Mock/Editor/CodeView',
+                'href': '/Mock/Editor/SimditorView',
                 'SortCode': 8
+            }, {
+                'MenuName': '信箱',
+                'Id': 8,
+                'PId': 6,
+                'icon': 'fa fa-map',
+                'href': '/Mock/Editor/EmailIndex?data=0',
+                'SortCode': 9
             }]
         }]
     }

@@ -1,9 +1,11 @@
 ﻿using Mock.Luo.Controllers;
 using System;
+using Mock.Code;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Mock.Data;
 
 namespace Mock.Luo.Areas.Mock.Controllers
 {
@@ -12,10 +14,6 @@ namespace Mock.Luo.Areas.Mock.Controllers
         //
         // GET: /Mock/Editor/
 
-        public ActionResult Index()
-        {
-            return View();
-        }
         public ActionResult MarkDownView()
         {
             return View();
@@ -25,5 +23,70 @@ namespace Mock.Luo.Areas.Mock.Controllers
         {
             return View();
         }
+        public ActionResult SimditorView()
+        {
+            return View();
+        }
+
+        public ActionResult EmailIndex()
+        {
+            return View();
+        }
+
+        public ActionResult SendView()
+        {
+            return View();
+        }
+
+        public ActionResult SendOkView()
+        {
+            return View();
+        }
+        public ActionResult InboxView()
+        {
+            return View();
+        }
+
+        public ActionResult DraftboxView()
+        {
+            return View();
+        }
+
+        public ActionResult OutboxView()
+        {
+            return View();
+        }
+
+        [ValidateInput(false)]
+        public ActionResult SendEmail(EmailEntity entity)
+        {
+            AjaxMsg result;
+            MailHelper helper = new MailHelper();
+            try
+            {
+                bool flag = helper.Send(entity.sendTo, entity.mainTitle, entity.content); if (flag == true)
+                {
+                    result = AjaxMsg.Success("发送成功！");
+
+                }
+                else
+                {
+                    result = AjaxMsg.Error("发送失败！");
+                }
+            }
+            catch (Exception ex)
+            {
+                result = AjaxMsg.Error("发送失败！" + ex);
+            }
+
+            return Content(DataHelper.ObjToJson(result));
+        }
+    }
+    public class EmailEntity
+    {
+        public string sendTo { get; set; }
+        public string mainTitle { get; set; }
+        public string content { get; set; }
+        public int status { get; set; }
     }
 }

@@ -1,0 +1,129 @@
+﻿@{
+    ViewBag.Title = "EmailIndex";
+    Layout = "~/Views/Shared/_EasyUI151Layout.cshtml";
+}
+<div id="cc" class="easyui-layout" style="width: 100%; height: 98%;">
+    <div data-options="region:'west',title:'文件夹',split:true" style="width: 15%;">
+        <ul id="tt"></ul>
+    </div>
+    <div id="center" data-options="region:'center'" style="padding: 5px; background: #eee;"></div>
+</div>
+@section scripts{
+    <link href="~/Content/css/font-awesome.min93e3.css" rel="stylesheet" />
+    <style>
+    /*EmailIndex*/
+    #tt li, #tt li div {padding: 5px;}
+    .tree-node-selected {background-color: #FBEC88;color: #000;}
+    .l-btn-icon, .panel-icon, .menu-icon, .tabs-icon, .tree-icon {font-family: FontAwesome;font-size: 16px !important;line-height: normal !important;text-rendering: auto;
+    -webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;color: #6699cc;text-align: center;}
+    .tabs-icon {font-size: 16px !important;font-weight: normal;}
+    /*SendView*/
+     form > div {padding: 5px;}
+    .btn {background-color: #1ab394;border-color: #1ab394;border-radius: 3px;}
+    .btn > span > span {color: #FFF;}
+    </style>
+    <script>
+        $(function () {
+            var url = location.href;
+            var tmp1 = url.split("?")[1];
+            var d = tmp1.split('=')[1];
+
+            console.log(d);
+            
+            initTree(d);
+        });
+
+        function initTree(d) {
+            $('#tt').tree({
+                data: [{
+                    "id": 1,
+                    "text": "发送邮箱",
+                    "state": "open",
+                    "iconCls": 'fa-envelope-o fa-2x',
+                    'attributes': {
+                        "url": "/Mock/Editor/SendView",
+                    }
+                }, {
+                    "id": 2,
+                    "text": "收件箱",
+                    "state": "open",
+                    'iconCls': 'fa-inbox fa-2x',
+                    "children": [],
+                    'attributes': {
+                        "url": "/Mock/Editor/InboxView",
+                    }
+                }, {
+                    "id": 3,
+                    "text": "草稿",
+                    "state": "open",
+                    'iconCls': 'fa-file-text-o',
+                    'attributes': {
+                        "url": "/Mock/Editor/DraftboxView",
+                    }
+                }, {
+                    "id": 4,
+                    "text": "已发送",
+                    "state": "open",
+                    'iconCls': 'fa-envelope-o',
+                    "children": [],
+                    'attributes': {
+                        "url": "/Mock/Editor/OutboxView",
+                    }
+                }],
+                lines: true,
+                animate: true,
+                formatter: function (node) {
+                    var s = node.text;
+                    if (node.children && node.children.length > 0) {
+                        s += ' <span style=\'color:blue\'>(' + node.children.length + ')</span>';
+                    }
+                    return s;
+                },
+                onClick: function (node) {
+                    if (node.children && node.children.length > 0) {
+                        $(this).tree('toggle', node.target);
+                        var folderopen = $(this).find('span.tree-folder-open');
+                        if (folderopen) {
+                            $(folderopen).removeClass('tree-folder-open');
+                        }
+                    } else if (node.attributes && node.attributes.url) {
+                        var url = node.attributes.url;
+                        var pp = $('#cc').layout('panel', 'center');
+                        //动态刷新面板
+                        pp.panel('open').panel('refresh', url);
+                    }
+                },
+                onLoadSuccess: function (node, data) {
+                    dfsRemove(data);
+                    //默认选中第一项,并增加选中状态
+                    $('#cc').find('ul li div').eq(d).trigger('click').addClass('tree-node-selected tree-node-hover');
+                    function dfsRemove(data) {
+                        $.each(data, function (i, value) {
+                            if (data[i].children && data[i].children.length > 0) {
+                                dfsRemove(data[i].children);
+                            }
+                            if (data[i].iconCls.indexOf("icon") == -1) {
+                                removeclass(data[i].domId);
+                            }
+                        });
+                    }
+                    function removeclass(target) {
+                        var n = $('#' + target);
+                        var icons = n.find("span.tree-file");
+                        if (icons) {
+                            $(icons).removeClass("tree-file");
+                        }
+                        var folder = n.find("span.tree-folder");
+                        if (folder) {
+                            $(folder).removeClass("tree-folder");
+                        }
+                        var folderopen = n.find('span.tree-folder-open');
+                        if (folderopen) {
+                            $(folderopen).removeClass('tree-folder-open');
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+}

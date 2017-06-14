@@ -4,10 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Common;
-using Models;
+using Mock.Code;
+using Mock.Data;
 using System.Data.Entity;
 using Mock.Luo.Controllers;
+using Mock.Data.Models;
+using Mock.Data;
 namespace Mock.Luo.Areas.Mock.Controllers
 {
     public class UploadFileController : BaseController
@@ -68,7 +70,7 @@ namespace Mock.Luo.Areas.Mock.Controllers
             //UploadifyEntity entity=DataHelper.JsonToObj<UploadifyEntity>(data);
 
 
-            using (var db = new MockEntities())
+            using (var db = new MockDbContext())
             {
 
                 //新增
@@ -142,7 +144,7 @@ namespace Mock.Luo.Areas.Mock.Controllers
         [HttpGet]
         public ActionResult GetForm(int Id)
         {
-            var db = new MockEntities();
+            var db = new MockDbContext();
             var result = db.Set<Upload>().Where(u => u.Id == Id).Select(u => new
             {
                 u.Id,
