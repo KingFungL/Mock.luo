@@ -10,6 +10,7 @@ using System.Data.Entity;
 using Mock.Luo.Controllers;
 using Mock.Data.Models;
 using Mock.Data;
+using Mock.Luo.Areas.Models;
 namespace Mock.Luo.Areas.Mock.Controllers
 {
     public class UploadFileController : BaseController
@@ -144,16 +145,7 @@ namespace Mock.Luo.Areas.Mock.Controllers
         [HttpGet]
         public ActionResult GetForm(int Id)
         {
-            var db = new MockDbContext();
-            var result = db.Set<Upload>().Where(u => u.Id == Id).Select(u => new
-            {
-                u.Id,
-                u.AddTime,
-                u.UserName,
-                FileSize = u.UploadEntries.Select(v => v.FileSize),
-                FileName = u.UploadEntries.Select(v => v.FileName),
-                Url = u.UploadEntries.Select(v => v.Url),
-            }).FirstOrDefault();
+            var result = new UploadApp().GetFormById(Id);
 
             return Content(DataHelper.ObjToJson(result));
         }

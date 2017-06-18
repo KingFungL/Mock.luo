@@ -168,9 +168,11 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Areas\Mock\Controllers\CodeController.cs" />
     <Compile Include="Areas\Mock\Controllers\EditorController.cs" />
     <Compile Include="Areas\Mock\Controllers\UploadFileController.cs" />
     <Compile Include="Areas\Mock\MockAreaRegistration.cs" />
+    <Compile Include="Areas\Mock\Models\UploadApp.cs" />
     <Compile Include="ueditor\net\App_Code\Config.cs" />
     <Compile Include="ueditor\net\App_Code\ConfigHandler.cs" />
     <Compile Include="ueditor\net\App_Code\CrawlerHandler.cs" />
@@ -2913,7 +2915,9 @@
     <Content Include="Areas\Mock\Views\Editor\MarkDownView.cshtml" />
     <Content Include="Areas\Mock\Views\Editor\SimditorView.cshtml" />
     <Content Include="Configs\database.config" />
-    <Content Include="Configs\system.config" />
+    <Content Include="Configs\system.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Areas\Mock\Views\Editor\SendView.cshtml" />
     <Content Include="Areas\Mock\Views\Editor\EmailIndex.cshtml" />
     <Content Include="ueditor\net\config.json" />
@@ -2928,6 +2932,7 @@
     <Content Include="Areas\Mock\Views\Editor\InboxView.cshtml" />
     <Content Include="Areas\Mock\Views\Editor\DraftboxView.cshtml" />
     <Content Include="Areas\Mock\Views\Editor\OutboxView.cshtml" />
+    <Content Include="Areas\Mock\Views\Code\CssFormatIndex.cshtml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-min.js" />
@@ -2980,7 +2985,6 @@
     <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Areas\Mock\Models\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -2997,6 +3001,10 @@
     <ProjectReference Include="..\Mock.Data\Mock.Data.csproj">
       <Project>{705f9c73-a416-4197-9c73-7dc33f8174bc}</Project>
       <Name>Mock.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mock.Domain\Mock.Domain.csproj">
+      <Project>{513dd367-6a38-48dd-8e7e-b25cbd0154e3}</Project>
+      <Name>Mock.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

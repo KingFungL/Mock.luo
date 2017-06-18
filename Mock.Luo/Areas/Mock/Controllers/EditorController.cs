@@ -64,7 +64,9 @@ namespace Mock.Luo.Areas.Mock.Controllers
             MailHelper helper = new MailHelper();
             try
             {
-                bool flag = helper.Send(entity.sendTo, entity.mainTitle, entity.content); if (flag == true)
+                bool flag = helper.Send(entity.sendTo, entity.mainTitle, entity.content);
+ 
+                if (flag == true)
                 {
                     result = AjaxMsg.Success("发送成功！");
 
