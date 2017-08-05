@@ -72,7 +72,7 @@ namespace Mock.Code
             }
             catch (Exception)
             {
-                throw;
+                throw ;
             }
         }
         /// <summary>

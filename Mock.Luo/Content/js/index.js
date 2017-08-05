@@ -59,7 +59,7 @@ $(function () {
                 'MenuName': 'MarkDown编辑器',
                 'Id': 7,
                 'PId': 6,
-                'icon':'fa fa-camera-retro',
+                'icon': 'fa fa-camera-retro',
                 'href': '/Mock/Editor/MarkDownView',
                 'SortCode': 9
             }, {
@@ -77,6 +77,21 @@ $(function () {
                 'href': '/Mock/Editor/EmailIndex?data=0',
                 'SortCode': 9
             }]
+        }]
+    }, {
+        'MenuName': '工具',
+        'Id': 11,
+        'PId': 0,
+        'icon': 'fa fa-th-list',
+        'SortCode': 7,
+        'children': [{
+            'MenuName': 'css格式化',
+            'Id': 12,
+            'PId': 11,
+            'icon': 'fa fa-thumbs-o-up',
+            'SortCode': 7,
+            'href': '/Mock/Code/CssFormatIndex',
+            'target': '_self',
         }]
     }
     ];
