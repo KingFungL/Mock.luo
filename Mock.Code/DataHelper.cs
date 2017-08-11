@@ -3,6 +3,7 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -45,13 +46,29 @@ namespace Mock.Code
             return JsonConvert.DeserializeObject<T>(json);
         }
 
-        #region 把一个字符串进行MD5加密
-        public static string Md5(string str)
-        {
-            return FormsAuthentication.HashPasswordForStoringInConfigFile(str, FormsAuthPasswordFormat.MD5.ToString());
-        }
-        #endregion
+        //#region 把一个字符串进行MD5加密
+        //public static string Md5(string str)
+        //{
+        //    return FormsAuthentication.HashPasswordForStoringInConfigFile(str, FormsAuthPasswordFormat.MD5.ToString());
+        //}
+        //#endregion
 
+        /// <summary>
+        /// 32位MD5加密
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static string Md5Hash(string input)
+        {
+            MD5CryptoServiceProvider md5Hasher = new MD5CryptoServiceProvider();
+            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));
+            StringBuilder sBuilder = new StringBuilder();
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+            return sBuilder.ToString();
+        }
 
         public static Dictionary<string, object> GetAddOrEditOrDel<T>(HttpRequestBase Request)
         {

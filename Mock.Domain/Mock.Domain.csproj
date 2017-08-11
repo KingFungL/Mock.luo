@@ -53,40 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\AllModelTemplate.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AllModelTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\UploadEntity.cs">
-      <DependentUpon>AllModelTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\UploadEntryEntity.cs">
-      <DependentUpon>AllModelTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Include="IRepository\IRepository.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>IRepository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="IRepository\IUploadEntryRepository.cs">
-      <DependentUpon>IRepository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="IRepository\IUploadRepository.cs">
-      <DependentUpon>IRepository.tt</DependentUpon>
-    </Compile>
+    <Compile Include="IRepository\IUploadRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\Repository.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Repository\UploadEntryRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Repository\UploadRepository.cs">
-      <DependentUpon>Repository.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Repository\UploadRepositroy.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mock.Code\Mock.Code.csproj">
@@ -103,22 +72,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="Entities\ModelAuto.ttinclude" />
+    <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Entities\AllModelTemplate.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AllModelTemplate.cs</LastGenOutput>
-    </Content>
-    <Content Include="IRepository\IRepository.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>IRepository.cs</LastGenOutput>
-    </Content>
-    <Content Include="Repository\Repository.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Repository.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

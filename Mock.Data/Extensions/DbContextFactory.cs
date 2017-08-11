@@ -1,5 +1,4 @@
 ﻿using Mock.Data.Models;
-using Mock.Data.Models;
 using System.Data.Entity;
 using System.Runtime.Remoting.Messaging;
 using System.Text;

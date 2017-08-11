@@ -1,4 +1,3 @@
-using Mock.Luo.Areas.HelpPage.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,6 +7,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Mock.Luo.Areas.HelpPage.Models;
 
 namespace Mock.Luo.Areas.HelpPage
 {
@@ -102,7 +102,7 @@ namespace Mock.Luo.Areas.HelpPage
         }
 
         /// <summary>
-        /// Specifies the actual type of <see cref="System.Net.Http.ObjectContent{T}"/> passed to the <see cref="System.Net.Http.HttpRequestMessage"/> in an action.
+        /// Specifies the actual type of <see cref="System.Net.Http.ObjectContent{T}"/> passed to the <see cref="System.Net.Http.HttpRequestMessage"/> in an action. 
         /// The help page will use this information to produce more accurate request samples.
         /// </summary>
         /// <param name="config">The <see cref="HttpConfiguration"/>.</param>
@@ -115,7 +115,7 @@ namespace Mock.Luo.Areas.HelpPage
         }
 
         /// <summary>
-        /// Specifies the actual type of <see cref="System.Net.Http.ObjectContent{T}"/> passed to the <see cref="System.Net.Http.HttpRequestMessage"/> in an action.
+        /// Specifies the actual type of <see cref="System.Net.Http.ObjectContent{T}"/> passed to the <see cref="System.Net.Http.HttpRequestMessage"/> in an action. 
         /// The help page will use this information to produce more accurate request samples.
         /// </summary>
         /// <param name="config">The <see cref="HttpConfiguration"/>.</param>
@@ -129,7 +129,7 @@ namespace Mock.Luo.Areas.HelpPage
         }
 
         /// <summary>
-        /// Specifies the actual type of <see cref="System.Net.Http.ObjectContent{T}"/> returned as part of the <see cref="System.Net.Http.HttpRequestMessage"/> in an action.
+        /// Specifies the actual type of <see cref="System.Net.Http.ObjectContent{T}"/> returned as part of the <see cref="System.Net.Http.HttpRequestMessage"/> in an action. 
         /// The help page will use this information to produce more accurate response samples.
         /// </summary>
         /// <param name="config">The <see cref="HttpConfiguration"/>.</param>
@@ -142,7 +142,7 @@ namespace Mock.Luo.Areas.HelpPage
         }
 
         /// <summary>
-        /// Specifies the actual type of <see cref="System.Net.Http.ObjectContent{T}"/> returned as part of the <see cref="System.Net.Http.HttpRequestMessage"/> in an action.
+        /// Specifies the actual type of <see cref="System.Net.Http.ObjectContent{T}"/> returned as part of the <see cref="System.Net.Http.HttpRequestMessage"/> in an action. 
         /// The help page will use this information to produce more accurate response samples.
         /// </summary>
         /// <param name="config">The <see cref="HttpConfiguration"/>.</param>

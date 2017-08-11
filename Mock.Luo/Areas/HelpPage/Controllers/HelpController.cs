@@ -1,7 +1,7 @@
-using Mock.Luo.Areas.HelpPage.Models;
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
+using Mock.Luo.Areas.HelpPage.Models;
 
 namespace Mock.Luo.Areas.HelpPage.Controllers
 {

@@ -31,25 +31,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.Extended, Version=6.0.0.0, Culture=neutral, PublicKeyToken=05b7e29bdd433584, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.Extended.6.1.0.168\lib\net45\EntityFramework.Extended.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.Extensions, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.Extensions.0.0.2\lib\net40\EntityFramework.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.resources">
       <HintPath>..\packages\EntityFramework.zh-Hans.6.1.3\lib\net45\zh-Hans\EntityFramework.resources.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web" />
@@ -72,77 +71,34 @@
     <Compile Include="Extensions\DbContextFactory.cs" />
     <Compile Include="Extensions\DbHelper.cs" />
     <Compile Include="Extensions\EntityInterfaceExtensions.cs" />
-    <Compile Include="MockDbContext.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MockDbContext.Context.tt</DependentUpon>
+    <Compile Include="Migrations\201708111536460_ApiMigration.cs" />
+    <Compile Include="Migrations\201708111536460_ApiMigration.Designer.cs">
+      <DependentUpon>201708111536460_ApiMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="MockDbContext.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MockDbContext.tt</DependentUpon>
+    <Compile Include="Migrations\201708111554059_ApiMigration1.cs" />
+    <Compile Include="Migrations\201708111554059_ApiMigration1.Designer.cs">
+      <DependentUpon>201708111554059_ApiMigration1.cs</DependentUpon>
     </Compile>
-    <Compile Include="MockDbContext.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MockDbContext.edmx</DependentUpon>
+    <Compile Include="Migrations\201708111600009_ApiMigration2.cs" />
+    <Compile Include="Migrations\201708111600009_ApiMigration2.Designer.cs">
+      <DependentUpon>201708111600009_ApiMigration2.cs</DependentUpon>
     </Compile>
-    <Compile Include="PocoModel\EntityToPoco.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntityToPoco.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PocoModel\ExtensionModels.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ExtensionModels.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PocoModel\POCO_Upload.cs">
-      <DependentUpon>EntityToPoco.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PocoModel\POCO_UploadEntry.cs">
-      <DependentUpon>EntityToPoco.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PocoModel\Upload.cs">
-      <DependentUpon>ExtensionModels.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PocoModel\UploadEntry.cs">
-      <DependentUpon>ExtensionModels.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AppMenu.cs" />
+    <Compile Include="Models\AppRole.cs" />
+    <Compile Include="Models\AppUser.cs" />
+    <Compile Include="Models\MockDbContext.cs" />
+    <Compile Include="Models\Upload.cs" />
+    <Compile Include="Models\UploadEntry.cs" />
+    <Compile Include="Models\UserRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IRepositoryBase.cs" />
     <Compile Include="Repository\IRepositoryBase.T.cs" />
     <Compile Include="Repository\RepositoryBase.cs" />
     <Compile Include="Repository\RepositoryBase.T.cs" />
-    <Compile Include="Upload.cs">
-      <DependentUpon>MockDbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UploadEntry.cs">
-      <DependentUpon>MockDbContext.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="MockDbContext.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MockDbContext.edmx</DependentUpon>
-      <LastGenOutput>MockDbContext.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="MockDbContext.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MockDbContext.edmx</DependentUpon>
-      <LastGenOutput>MockDbContext.cs</LastGenOutput>
-    </Content>
-    <Content Include="PocoModel\EntityToPoco.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EntityToPoco.cs</LastGenOutput>
-    </Content>
-    <Content Include="PocoModel\ExtensionModels.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ExtensionModels.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mock.Code\Mock.Code.csproj">
@@ -152,14 +108,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <EntityDeploy Include="MockDbContext.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MockDbContext.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="MockDbContext.edmx.diagram">
-      <DependentUpon>MockDbContext.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201708111536460_ApiMigration.resx">
+      <DependentUpon>201708111536460_ApiMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708111554059_ApiMigration1.resx">
+      <DependentUpon>201708111554059_ApiMigration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708111600009_ApiMigration2.resx">
+      <DependentUpon>201708111600009_ApiMigration2.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

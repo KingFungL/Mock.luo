@@ -22,7 +22,21 @@ namespace Mock.Data
     {
         //public DbContext dbcontext = DbContextFactory.GetCurrentDbContext();
         public System.Data.Entity.DbContext dbcontext = DbContextFactory.DbContext();
-        public MockDbContext MockDbContext { get; set; }
+
+
+        /// <summary>
+        /// 数据源
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public DbContext db
+        {
+            get
+            {
+                return dbcontext;
+            }
+        }
+
         public int Insert(TEntity entity)
         {
             dbcontext.Entry<TEntity>(entity).State = EntityState.Added;
@@ -98,7 +112,7 @@ namespace Mock.Data
         public int Delete(Expression<Func<TEntity, bool>> predicate)
         {
             var entitys = dbcontext.Set<TEntity>().Where(predicate).ToList();
-            entitys.ForEach(m => dbcontext.Entry<TEntity>(m).State =EntityState.Deleted);
+            entitys.ForEach(m => dbcontext.Entry<TEntity>(m).State = EntityState.Deleted);
             return dbcontext.SaveChanges();
         }
         public TEntity FindEntity(object keyValue)

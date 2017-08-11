@@ -9,8 +9,9 @@ using Mock.Data;
 using System.Data.Entity;
 using Mock.Luo.Controllers;
 using Mock.Data.Models;
-using Mock.Data;
-using Mock.Luo.Areas.Models;
+using MoBlog.Domain;
+using Autofac.Core;
+
 namespace Mock.Luo.Areas.Mock.Controllers
 {
     public class UploadFileController : BaseController
@@ -18,6 +19,13 @@ namespace Mock.Luo.Areas.Mock.Controllers
         //
         // GET: /Mock/UploadFile/
 
+        private readonly IUploadRepository _service;
+        public UploadFileController() { }
+        public UploadFileController(IUploadRepository service)
+        {
+            _service = service;
+        }
+        
         public ActionResult UploadView()
         {
             return View();
@@ -95,7 +103,7 @@ namespace Mock.Luo.Areas.Mock.Controllers
                                 FileSize = FileSize[i]
                             };
                             i++;
-                            entity.UploadEntries.Add(entry);
+                            entity.UploadEntry.Add(entry);
                         }
                     }
                     db.Set<Upload>().Add(entity);
@@ -104,7 +112,7 @@ namespace Mock.Luo.Areas.Mock.Controllers
                 else
                 {
                     int id = int.Parse(Id);
-                    DateTime now=DateTime.Now;
+                    DateTime now = DateTime.Now;
                     Upload entity = db.Set<Upload>().AsNoTracking().Where(u => u.Id == id).First();
                     entity.UserName = UserName;
                     entity.AddTime = now;
@@ -112,17 +120,17 @@ namespace Mock.Luo.Areas.Mock.Controllers
                     db.Entry(entity).Property("UserName").IsModified = true;
                     db.Entry(entity).Property("AddTime").IsModified = true;
 
-                    var entitys = db.Set<UploadEntry>().Where(u=>u.FId==id).ToList();
+                    var entitys = db.Set<UploadEntry>().Where(u => u.FId == id).ToList();
                     entitys.ForEach(m => db.Entry<UploadEntry>(m).State = EntityState.Deleted);
 
-                    if (Url!=null&&Url.Length>0)
+                    if (Url != null && Url.Length > 0)
                     {
                         int i = 0;
                         foreach (var url in Url)
                         {
                             UploadEntry entry = new UploadEntry
                             {
-                                FId=id,
+                                FId = id,
                                 AddTime = now,
                                 Url = url,
                                 FileName = FileName[i],
@@ -137,7 +145,7 @@ namespace Mock.Luo.Areas.Mock.Controllers
             }
 
 
-            AjaxMsg result = AjaxMsg.Success(string.IsNullOrEmpty(Id)?"新增成功1":"编辑成功！");
+            AjaxMsg result = AjaxMsg.Success(string.IsNullOrEmpty(Id) ? "新增成功1" : "编辑成功！");
             return Content(DataHelper.ObjToJson(result));
 
         }
@@ -145,7 +153,7 @@ namespace Mock.Luo.Areas.Mock.Controllers
         [HttpGet]
         public ActionResult GetForm(int Id)
         {
-            var result = new UploadApp().GetFormById(Id);
+            var result = _service.GetFormById(Id);
 
             return Content(DataHelper.ObjToJson(result));
         }

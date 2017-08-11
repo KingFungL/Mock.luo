@@ -1,13 +1,15 @@
-    using System;
-	using Mock.Data;
-    namespace Mock.Domain.IRepository
+﻿using Mock.Data;
+using Mock.Data.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MoBlog.Domain
+{
+    public interface IUploadRepository : IRepositoryBase<Upload>
     {
-        /// <summary>
-        /// 仓储接口层 IUploadRepository
-        /// </summary>]
-        public  interface IUploadRepository: IRepositoryBase<Upload>
-        {    
-          
-        }    
-     }
-    
+         dynamic GetFormById(int Id);
+    }
+}

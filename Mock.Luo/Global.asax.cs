@@ -6,11 +6,13 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Autofac;
+using Autofac.Integration.Mvc;
+using Autofac.Builder;
+using System.Reflection;
 
 namespace Mock.Luo
 {
-    // 注意: 有关启用 IIS6 或 IIS7 经典模式的说明，
-    // 请访问 http://go.microsoft.com/?LinkId=9394801
 
     public class WebApiApplication : System.Web.HttpApplication
     {
@@ -22,6 +24,14 @@ namespace Mock.Luo
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            ContainerBuilder builder = new ContainerBuilder();
+            var service = Assembly.Load("MoBlog.Domain");
+            builder.RegisterControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterAssemblyTypes(service).AsImplementedInterfaces();
+            var container = builder.Build();
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+
         }
     }
 }

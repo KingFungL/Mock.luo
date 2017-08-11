@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +11,7 @@ using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Web.Http.Description;
 using System.Xml.Linq;
+using Newtonsoft.Json;
 
 namespace Mock.Luo.Areas.HelpPage
 {
@@ -136,7 +136,7 @@ namespace Mock.Luo.Areas.HelpPage
 
             // First, try get sample provided for a specific mediaType, controllerName, actionName and parameterNames.
             // If not found, try get the sample provided for a specific mediaType, controllerName and actionName regardless of the parameterNames
-            // If still not found, try get the sample provided for a specific type and mediaType
+            // If still not found, try get the sample provided for a specific type and mediaType 
             if (ActionSamples.TryGetValue(new HelpPageSampleKey(mediaType, sampleDirection, controllerName, actionName, parameterNames), out sample) ||
                 ActionSamples.TryGetValue(new HelpPageSampleKey(mediaType, sampleDirection, controllerName, actionName, new[] { "*" }), out sample) ||
                 ActionSamples.TryGetValue(new HelpPageSampleKey(mediaType, type), out sample))
@@ -148,7 +148,7 @@ namespace Mock.Luo.Areas.HelpPage
         }
 
         /// <summary>
-        /// Gets the sample object that will be serialized by the formatters.
+        /// Gets the sample object that will be serialized by the formatters. 
         /// First, it will look at the <see cref="SampleObjects"/>. If no sample object is found, it will try to create one using <see cref="ObjectGenerator"/>.
         /// </summary>
         /// <param name="type">The type.</param>
@@ -211,7 +211,6 @@ namespace Mock.Luo.Areas.HelpPage
                         type = requestBodyParameter == null ? null : requestBodyParameter.ParameterDescriptor.ParameterType;
                         formatters = api.SupportedRequestBodyFormatters;
                         break;
-
                     case SampleDirection.Response:
                     default:
                         type = api.ActionDescriptor.ReturnType;
@@ -337,7 +336,6 @@ namespace Mock.Luo.Areas.HelpPage
             {
                 case SampleDirection.Request:
                     return formatter.CanReadType(type);
-
                 case SampleDirection.Response:
                     return formatter.CanWriteType(type);
             }

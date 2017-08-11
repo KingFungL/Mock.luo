@@ -16,12 +16,14 @@
             string strEncrypt = string.Empty;
             if (code == 16)
             {
-                strEncrypt = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(str, "MD5").Substring(8, 16);
+                //strEncrypt = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(str, "MD5").Substring(8, 16);
+                strEncrypt = DataHelper.Md5Hash(str).Substring(8, 16);
             }
 
             if (code == 32)
             {
-                strEncrypt = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(str, "MD5");
+                //strEncrypt = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(str, "MD5");
+                strEncrypt = DataHelper.Md5Hash(str);
             }
 
             return strEncrypt;

@@ -153,7 +153,7 @@
                 width: 88,
                 auto: true,
                 removeCompleted: false,
-                swf: '/Uploadify/uploadify.swf',
+                swf: '/Content/js/uploadify/uploadify.swf',
                 uploader: '/Mock/UploadFile/Upload',
                 multi: false,
                 //fileTypeExts: '*.jpg;*jpeg',
@@ -163,6 +163,9 @@
                     //console.log(data.obj);
                     var url = data.obj;
                     $('#' + file.id).find('input[name=hiddenUrl]').val(url);
+                },
+                onFallback: function () {
+                    alert('你的浏览器不支持flash')
                 },
                 onSelectError: uploadify_onSelectError
             });

@@ -11,19 +11,19 @@ namespace Mock.Luo
 
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/Scripts/jquery-min.js"));
+                "~/Content/js/jquery-min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery-extends").Include(
-                "~/Scripts/jquery.extend.js",
-                "~/Scripts/common.js"));
+                "~/Content/js/jquery.extend.js",
+                "~/Content/js/common.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                        "~/Content/js/jquery.validate*"));
 
             // 使用 Modernizr 的开发版本进行开发和了解信息。然后，当你做好
             // 生产准备时，请使用 http://modernizr.com 上的生成工具来仅选择所需的测试。
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+                        "~/Content/js/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/EasyUI151").Include(
                 "~/EasyUI151-Insdep-Them/jquery.easyui-1.5.1-min.js",
