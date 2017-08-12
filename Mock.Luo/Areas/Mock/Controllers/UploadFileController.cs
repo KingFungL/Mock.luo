@@ -9,7 +9,7 @@ using Mock.Data;
 using System.Data.Entity;
 using Mock.Luo.Controllers;
 using Mock.Data.Models;
-using MoBlog.Domain;
+using Mock.Domain;
 using Autofac.Core;
 
 namespace Mock.Luo.Areas.Mock.Controllers

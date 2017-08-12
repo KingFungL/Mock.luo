@@ -8,7 +8,7 @@ namespace Mock.Code
     /// <summary>
     /// 常用公共类
     /// </summary>
-    public class Common
+    public class Utils
     {
         #region Stopwatch计时器
         /// <summary>

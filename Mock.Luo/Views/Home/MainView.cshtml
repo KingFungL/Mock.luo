@@ -3,10 +3,16 @@
 }
 
 
-<div class="button">
+<div id="btn" class="button">
     <span>首页</span>
 </div>
 
+<script src="~/Content/js/jquery-2.1.4.min.js"></script>
+<script>
+    $('#btn').click(function () {
+        top.location.href ='/Home/BlogView'
+    })
+</script>
 <style>
     .button {
         height: 30px;

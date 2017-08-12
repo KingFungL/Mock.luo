@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MoBlog.Domain
+namespace Mock.Domain
 {
     /// <summary>
     /// 仓储实现层 UploadRepository
@@ -15,7 +15,7 @@ namespace MoBlog.Domain
     {
         public dynamic GetFormById(int Id)
         {
-            var d = IQueryable(u => u.Id == Id).Select(u => new
+            var d = this.IQueryable(u => u.Id == Id).Select(u => new
             {
                 u.Id,
                 u.AddTime,

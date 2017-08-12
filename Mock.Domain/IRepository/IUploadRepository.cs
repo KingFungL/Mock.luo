@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MoBlog.Domain
+namespace Mock.Domain
 {
     public interface IUploadRepository : IRepositoryBase<Upload>
     {

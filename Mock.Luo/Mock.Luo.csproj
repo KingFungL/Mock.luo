@@ -146,11 +146,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -169,6 +169,8 @@
     <Compile Include="Areas\Mock\Controllers\EditorController.cs" />
     <Compile Include="Areas\Mock\Controllers\UploadFileController.cs" />
     <Compile Include="Areas\Mock\MockAreaRegistration.cs" />
+    <Compile Include="Areas\Plat\Controllers\ArticleController.cs" />
+    <Compile Include="Areas\Plat\PlatAreaRegistration.cs" />
     <Compile Include="Content\js\ueditor\net\App_Code\Config.cs" />
     <Compile Include="Content\js\ueditor\net\App_Code\ConfigHandler.cs" />
     <Compile Include="Content\js\ueditor\net\App_Code\CrawlerHandler.cs" />
@@ -189,18 +191,45 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\base64_compress.css" />
     <Content Include="Content\css\animate.min.css" />
+    <Content Include="Content\css\blogbase.css" />
     <Content Include="Content\css\bootstrap.min14ed.css" />
     <Content Include="Content\css\font-awesome.min93e3.css" />
     <Content Include="Content\css\mobile.css" />
     <Content Include="Content\css\style.min862f.css" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Images\1201222024b6eda8d51a4679bb .jpg" />
+    <Content Include="Content\Images\195317m.jpg" />
+    <Content Include="Content\Images\5891.png" />
+    <Content Include="Content\Images\8041c133fdbc199b420586ff6dff940f.gif" />
+    <Content Include="Content\Images\ashe.jpg" />
+    <Content Include="Content\Images\banner_top.jpg" />
+    <Content Include="Content\Images\bg-char2.jpg" />
+    <Content Include="Content\Images\bg-char3.jpg" />
+    <Content Include="Content\Images\ex.jpg" />
+    <Content Include="Content\Images\ex02.jpg" />
+    <Content Include="Content\Images\ex03.png" />
+    <Content Include="Content\Images\h_line.jpg" />
+    <Content Include="Content\Images\li.jpg" />
+    <Content Include="Content\Images\logo.jpg" />
+    <Content Include="Content\Images\logo_110.jpg" />
+    <Content Include="Content\Images\mo.jpg" />
+    <Content Include="Content\Images\ph.jpg" />
+    <Content Include="Content\Images\photos2.jpg" />
+    <Content Include="Content\Images\r_title_bg.jpg" />
+    <Content Include="Content\Images\time.jpg" />
+    <Content Include="Content\Images\weixin.jpg" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\contab.js" />
     <Content Include="Content\js\content.min.js" />
     <Content Include="Content\js\index.js" />
     <Content Include="Content\js\jquery-2.1.4.min.js" />
-    <Content Include="Content\js\jquery-min.js" />
     <Content Include="Content\js\jquery.metisMenu.js" />
     <Content Include="Content\js\jquery.slimscroll.min.js" />
+    <Content Include="Areas\Plat\Views\web.config" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Content\js\jquery.validate-vsdoc.js" />
     <Content Include="Content\js\jquery.validate.js" />
     <Content Include="Content\js\jquery.validate.min.js" />
@@ -529,6 +558,7 @@
     <Content Include="Content\js\ueditor\ueditor.all.min.js" />
     <Content Include="Content\js\ueditor\ueditor.config.js" />
     <Content Include="Content\js\ueditor\ueditor.parse.min.js" />
+    <Content Include="Content\js\vue\vue.min.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -2374,7 +2404,6 @@
     <Content Include="Views\Shared\_EasyUI151Layout.cshtml" />
     <Content Include="Areas\Mock\Views\UploadFile\UploadView.cshtml" />
     <Content Include="Areas\Mock\Views\UploadFile\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Web.config" />
     <Content Include="Areas\Mock\Views\Editor\MarkDownView.cshtml" />
     <Content Include="Areas\Mock\Views\Editor\SimditorView.cshtml" />
     <Content Include="Configs\database.config" />
@@ -2437,13 +2466,15 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\DatalistView.cshtml" />
     <Content Include="Views\Home\MainView.cshtml" />
+    <Content Include="Views\Home\BlogView.cshtml" />
+    <Content Include="数据字典.docx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Controllers\" />
-    <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Mock\Models\" />
+    <Folder Include="Areas\Plat\Models\" />
+    <Folder Include="Areas\Plat\Views\Article\" />
+    <Folder Include="Areas\Plat\Views\Shared\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

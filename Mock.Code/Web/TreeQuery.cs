@@ -8,7 +8,7 @@ namespace Mock.Code
 {
     public static class TreeQuery
     {
-        public static List<T> TreeWhere<T>(this List<T> entityList, Predicate<T> condition, string keyValue = "F_Id", string parentId = "F_ParentId") where T : class
+        public static List<T> TreeWhere<T>(this List<T> entityList, Predicate<T> condition, string keyValue = " Id", string parentId = " ParentId") where T : class
         {
             List<T> locateList = entityList.FindAll(condition);
             var parameter = Expression.Parameter(typeof(T), "t");

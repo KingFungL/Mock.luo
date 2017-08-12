@@ -10,6 +10,7 @@ using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Builder;
 using System.Reflection;
+using Mock.Luo.App_Start;
 
 namespace Mock.Luo
 {
@@ -24,13 +25,7 @@ namespace Mock.Luo
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            ContainerBuilder builder = new ContainerBuilder();
-            var service = Assembly.Load("MoBlog.Domain");
-            builder.RegisterControllers(Assembly.GetExecutingAssembly());
-            builder.RegisterAssemblyTypes(service).AsImplementedInterfaces();
-            var container = builder.Build();
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+            AutofacConfig.Register();
 
         }
     }

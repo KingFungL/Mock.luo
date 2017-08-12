@@ -1,0 +1,879 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="分享知识，分享快乐，分享生活。" />
+    <meta name="keywords" content="如莫博客,个人博客,独立博客,博客,程序员,奋斗的扫雪工" />
+
+    <link href="~/Content/css/font-awesome.min93e3.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap.min14ed.css" rel="stylesheet" />
+    <link href="~/Content/css/blogbase.css" rel="stylesheet" />
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top clearfix">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <span class="navbar-brand"><a href="/Home/BlogView" style="text-decoration:none;">Mock Blog</a></span>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#"><span class="glyphicon glyphicon-home"></span> 首页 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-book"></span> 博文</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-header"></span> 随笔</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-stats"></span> 关于我</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-compressed"></span> 留言</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container">
+        <div class="col-xs-12 col-md-9 left-body">
+            <!--轮播图片-->
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <img src="~/Content/Images/banner_top.jpg">
+                        <div class="carousel-caption">
+                            <div class="headerPic"><a href="/"><span>Mock个人博客</span></a></div>
+                            <div class="websiteDescription">
+                                <p>渡人如渡己，渡已，亦是渡</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="~/Content/Images/banner_top.jpg">
+                        <div class="carousel-caption">
+                            <div class="websiteDescription">
+                                、天上有木月
+                                <p>-“你如今的气质里，藏着你走过的路，读过的书，和爱过的人。”</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="~/Content/Images/banner_top.jpg" alt="...">
+                        <div class="carousel-caption">
+                            <div class="websiteDescription">
+                                <p>人生若只如初见</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 index-article">
+                <div class="index-article-box">
+                    <div id="post-1186" class="col-xs-12 col-sm-12 col-lg-12 sf_post_list sf_post_normal">
+                        <div class="col-xs-12 col-sm-12 col-lg-12 post_body">
+                            <div class="col-xs-12 col-sm-12 col-lg-12 post-content">
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_title">
+                                    <h2>
+                                        <a href="https://www.gzpblog.com/20170801/1186.html" title="火狐浏览器X-Content-Type-Options导致Images类型无法加载">火狐浏览器X-Content-Type-Options导致Images类型无法加载</a>
+                                    </h2>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_meta">
+                                    <ul class="post_meta_ul">
+                                        <li class="inline-li">
+                                            <i class="fa fa-calendar-check-o"></i>
+                                            2017-08-01 10:23
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-tags"></i>
+                                            <a href="https://www.gzpblog.com/category/code/front-about" rel="category tag">前端综合</a>
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-eye"></i>
+                                            14         阅读
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-comments-o"></i>
+                                            <a href="https://www.gzpblog.com/20170801/1186.html#respond">暂无回复</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-content-main">
+                                    <p>
+                                        1. 发现问题
+                                        最近用火狐上博客时，发现一个问题，加载博客页面总是出现菊花一直在转，左下角一直在等待sp0.baidu.com：
+
+                                        导致后面的js无法加载。看了一下 network 发现是获取一个 s.gif 的时候出现问题：
+
+                                        具体的url：
+
+                                        而这个问题只在火狐上出现，其它浏览器正常，比如chrome浏览器正常加载：
+
+                                        同时在火狐上报了一个错...
+                                    </p>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-bottom">
+                                    <div class="col-xs-9 col-sm-9 post-tags">
+                                        <a href="https://www.gzpblog.com/tag/%e5%89%8d%e7%ab%af" rel="tag">前端</a>
+                                    </div>
+                                    <a class="view-all" href="https://www.gzpblog.com/20170801/1186.html">阅读全文 »</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="post-1175" class="col-xs-12 col-sm-12 col-lg-12 sf_post_list sf_post_normal">
+                        <div class="col-xs-12 col-sm-12 col-lg-12 post_body">
+                            <div class="col-xs-12 col-sm-12 col-lg-12 post-content">
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_title">
+                                    <h2>
+                                        <a href="https://www.gzpblog.com/20170731/1175.html" title="Guzzle：PHP的HTTP客户端">Guzzle：PHP的HTTP客户端</a>
+                                    </h2>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_meta">
+                                    <ul class="post_meta_ul">
+                                        <li class="inline-li">
+                                            <i class="fa fa-calendar-check-o"></i>
+                                            2017-07-31 16:09
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-tags"></i>
+                                            <a href="https://www.gzpblog.com/category/code/code-about/php" rel="category tag">PHP</a> , <a href="https://www.gzpblog.com/category/code/code-learning" rel="category tag">学习笔记</a>
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-eye"></i>
+                                            12         阅读
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-comments-o"></i>
+                                            <a href="https://www.gzpblog.com/20170731/1175.html#respond">暂无回复</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-content-main">
+                                    <p>
+                                        1. 什么是Guzzle？
+                                        Guzzle是一个PHP的HTTP客户端，用来轻而易举地发送请求，并集成到我们的WEB服务上。
+
+                                        接口简单：构建查询语句、POST请求、分流上传下载大文件、使用HTTP cookies、上传JSON数据等等。
+                                        发送同步或异步的请求均使用相同的接口。
+                                        使用PSR-7接口来请求、响应、分流，允许你使用其他兼容的PSR-7类库与Guzzl...
+                                    </p>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-bottom">
+                                    <div class="col-xs-9 col-sm-9 post-tags">
+                                        <a href="https://www.gzpblog.com/tag/guzzle" rel="tag">Guzzle</a> <a href="https://www.gzpblog.com/tag/http" rel="tag">HTTP</a> <a href="https://www.gzpblog.com/tag/php" rel="tag">PHP</a>
+                                    </div>
+                                    <a class="view-all" href="https://www.gzpblog.com/20170731/1175.html">阅读全文 »</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="post-1166" class="col-xs-12 col-sm-12 col-lg-12 sf_post_list sf_post_normal">
+                        <div class="col-xs-12 col-sm-12 col-lg-12 post_body">
+                            <div class="col-xs-12 col-sm-12 col-lg-12 post-content">
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_title">
+                                    <h2>
+                                        <a href="https://www.gzpblog.com/20170720/1166.html" title="用Workerman快速实现Socket服务">用Workerman快速实现Socket服务</a>
+                                    </h2>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_meta">
+                                    <ul class="post_meta_ul">
+                                        <li class="inline-li">
+                                            <i class="fa fa-calendar-check-o"></i>
+                                            2017-07-20 16:35
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-tags"></i>
+                                            <a href="https://www.gzpblog.com/category/code/code-about/php" rel="category tag">PHP</a> , <a href="https://www.gzpblog.com/category/code/framework/workerman" rel="category tag">Workerman</a>
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-eye"></i>
+                                            27         阅读
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-comments-o"></i>
+                                            <a href="https://www.gzpblog.com/20170720/1166.html#respond">暂无回复</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-content-main">
+                                    <p>
+                                        1. 知识储备
+                                        在开始使用workerman之前，可能需要了解这些：
+
+                                        网络通讯协议（HTTP、TCP等）
+                                        进程和线程
+                                        了解workerman是什么
+                                        Linux与Windows
+                                        ……
+
+                                        Workerman官方的解释：http://doc.workerman.net/315119
+                                        2. Workerman vs Swoole
+                                        Swoole是个好东西，拟补了PHP的很多空白，功能上也会比workerman多，C拓展方式...
+                                    </p>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-bottom">
+                                    <div class="col-xs-9 col-sm-9 post-tags">
+                                        <a href="https://www.gzpblog.com/tag/php" rel="tag">PHP</a> <a href="https://www.gzpblog.com/tag/workerman" rel="tag">Workerman</a> <a href="https://www.gzpblog.com/tag/%e9%80%9a%e8%ae%af" rel="tag">通讯</a>
+                                    </div>
+                                    <a class="view-all" href="https://www.gzpblog.com/20170720/1166.html">阅读全文 »</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="post-1161" class="col-xs-12 col-sm-12 col-lg-12 sf_post_list sf_post_normal">
+                        <div class="col-xs-12 col-sm-12 col-lg-12 post_body">
+                            <div class="col-xs-12 col-sm-12 col-lg-12 post-content">
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_title">
+                                    <h2>
+                                        <a href="https://www.gzpblog.com/20170718/1161.html" title="「PSR 规范」关于PHP标准规范">「PSR 规范」关于PHP标准规范</a>
+                                    </h2>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_meta">
+                                    <ul class="post_meta_ul">
+                                        <li class="inline-li">
+                                            <i class="fa fa-calendar-check-o"></i>
+                                            2017-07-18 15:03
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-tags"></i>
+                                            <a href="https://www.gzpblog.com/category/code/code-about/php" rel="category tag">PHP</a>
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-eye"></i>
+                                            28         阅读
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-comments-o"></i>
+                                            <a href="https://www.gzpblog.com/20170718/1161.html#respond">暂无回复</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-content-main">
+                                    <p>
+                                        PSR标准规范不是官方的规范，意味着不是所有的PHP程序都会遵循这个规范，有可能你接手的项目，或者你自己开始写一个项目，不会用到PSR规范。但是PSR规范提供了一个标准参考，能大大提高我们的工作效率。
+                                        1. 什么是 PSR ?
+                                        PSR 是 PHP Standard Recommendations 的简写，由 PHP FIG 组织制定的 PHP 规范，是 PHP 开发的实...
+                                    </p>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-bottom">
+                                    <div class="col-xs-9 col-sm-9 post-tags">
+                                        <a href="https://www.gzpblog.com/tag/php" rel="tag">PHP</a>
+                                    </div>
+                                    <a class="view-all" href="https://www.gzpblog.com/20170718/1161.html">阅读全文 »</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="post-1151" class="col-xs-12 col-sm-12 col-lg-12 sf_post_list sf_post_normal">
+                        <div class="col-xs-12 col-sm-12 col-lg-12 post_body">
+                            <div class="col-xs-12 col-sm-12 col-lg-12 post-content">
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_title">
+                                    <h2>
+                                        <a href="https://www.gzpblog.com/20170718/1151.html" title="消息队列及PHP中的简单实现与应用">消息队列及PHP中的简单实现与应用</a>
+                                    </h2>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_meta">
+                                    <ul class="post_meta_ul">
+                                        <li class="inline-li">
+                                            <i class="fa fa-calendar-check-o"></i>
+                                            2017-07-18 11:48
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-tags"></i>
+                                            <a href="https://www.gzpblog.com/category/code/code-about/php" rel="category tag">PHP</a> , <a href="https://www.gzpblog.com/category/code/sql/redis" rel="category tag">Redis</a> , <a href="https://www.gzpblog.com/category/code/code-learning" rel="category tag">学习笔记</a>
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-eye"></i>
+                                            24         阅读
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-comments-o"></i>
+                                            <a href="https://www.gzpblog.com/20170718/1151.html#respond">暂无回复</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-content-main">
+                                    <p>
+                                        本文总结自慕课网的一个教程：PHP消息队列实现及应用；这个教程非常适合新手刚接触消息队列，我觉得蛮不错。
+                                        1. 关于消息队列
+                                        1.1 基础模式
+                                        一个基础的消息队列应该是这样的：
+
+                                        1.2 应用场景
+                                        消息队列的应用场景大概可以是以下几种：
+
+                                        冗余；
+                                        解耦（比如业务系统和队列处理系统一方奔溃不会影响另一方）；
+                                        流量削峰（抢...
+                                    </p>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-bottom">
+                                    <div class="col-xs-9 col-sm-9 post-tags">
+                                        <a href="https://www.gzpblog.com/tag/php" rel="tag">PHP</a> <a href="https://www.gzpblog.com/tag/redis" rel="tag">Redis</a> <a href="https://www.gzpblog.com/tag/%e9%98%9f%e5%88%97" rel="tag">队列</a>
+                                    </div>
+                                    <a class="view-all" href="https://www.gzpblog.com/20170718/1151.html">阅读全文 »</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="post-1147" class="col-xs-12 col-sm-12 col-lg-12 sf_post_list sf_post_normal">
+                        <div class="col-xs-12 col-sm-12 col-lg-12 post_body">
+                            <div class="col-xs-12 col-sm-12 col-lg-12 post-content">
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_title">
+                                    <h2>
+                                        <a href="https://www.gzpblog.com/20170714/1147.html" title="「PSR 规范」PSR-6 缓存接口规范">「PSR 规范」PSR-6 缓存接口规范</a>
+                                    </h2>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_meta">
+                                    <ul class="post_meta_ul">
+                                        <li class="inline-li">
+                                            <i class="fa fa-calendar-check-o"></i>
+                                            2017-07-14 10:23
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-tags"></i>
+                                            <a href="https://www.gzpblog.com/category/code/code-about/php" rel="category tag">PHP</a>
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-eye"></i>
+                                            22         阅读
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-comments-o"></i>
+                                            <a href="https://www.gzpblog.com/20170714/1147.html#respond">暂无回复</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-content-main">
+                                    <p>
+                                        一 关于PSR-6缓存接口规范
+                                        缓存是提升应用性能的常用手段，为框架中最通用的功能，每个框架也都推出专属的、功能多 样的缓存库。这些差别使得开发人员不得不学习多种系统，而很多可能是他们并不需要的功能。 此外，缓存库的开发者同样面临着一个窘境，是只支持有限数量的几个框架还是创建一堆庞 大的适配器类。
+                                        一个通用...
+                                    </p>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-bottom">
+                                    <div class="col-xs-9 col-sm-9 post-tags">
+                                        <a href="https://www.gzpblog.com/tag/php" rel="tag">PHP</a>
+                                    </div>
+                                    <a class="view-all" href="https://www.gzpblog.com/20170714/1147.html">阅读全文 »</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="post-1141" class="col-xs-12 col-sm-12 col-lg-12 sf_post_list sf_post_normal">
+                        <div class="col-xs-12 col-sm-12 col-lg-12 post_body">
+                            <div class="col-xs-12 col-sm-12 col-lg-12 post-content">
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_title">
+                                    <h2>
+                                        <a href="https://www.gzpblog.com/20170713/1141.html" title="PHP正则表达式的应用">PHP正则表达式的应用</a>
+                                    </h2>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_meta">
+                                    <ul class="post_meta_ul">
+                                        <li class="inline-li">
+                                            <i class="fa fa-calendar-check-o"></i>
+                                            2017-07-13 14:35
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-tags"></i>
+                                            <a href="https://www.gzpblog.com/category/code/code-about/php" rel="category tag">PHP</a> , <a href="https://www.gzpblog.com/category/code/code-learning" rel="category tag">学习笔记</a>
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-eye"></i>
+                                            23         阅读
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-comments-o"></i>
+                                            <a href="https://www.gzpblog.com/20170713/1141.html#respond">暂无回复</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-content-main">
+                                    <p>
+                                        关于PCRE的介绍以及实现正则表达式功能的所有说明，都可以在官方手册中看到：正则表达式(兼容 Perl)
+                                        一 认识PCRE
+                                        1. 什么是PCRE
+                                        PCRE 库是一个实现了与 perl 5 在语法和语义上略有差异的正则表达式模式匹配功能的函数集。
+                                        2. PCRE 库介绍
+                                        PCRE 是 PHP 核心扩展，所以总是启用的。
+                                        默认情况下，该扩展使用内置的 PCRE lib...
+                                    </p>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-bottom">
+                                    <div class="col-xs-9 col-sm-9 post-tags">
+                                        <a href="https://www.gzpblog.com/tag/php" rel="tag">PHP</a>
+                                    </div>
+                                    <a class="view-all" href="https://www.gzpblog.com/20170713/1141.html">阅读全文 »</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="post-1138" class="col-xs-12 col-sm-12 col-lg-12 sf_post_list sf_post_normal">
+                        <div class="col-xs-12 col-sm-12 col-lg-12 post_body">
+                            <div class="col-xs-12 col-sm-12 col-lg-12 post-content">
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_title">
+                                    <h2>
+                                        <a href="https://www.gzpblog.com/20170711/1138.html" title="「PSR 规范」PSR-4 自动加载规范">「PSR 规范」PSR-4 自动加载规范</a>
+                                    </h2>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_meta">
+                                    <ul class="post_meta_ul">
+                                        <li class="inline-li">
+                                            <i class="fa fa-calendar-check-o"></i>
+                                            2017-07-11 17:33
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-tags"></i>
+                                            <a href="https://www.gzpblog.com/category/code/code-about/php" rel="category tag">PHP</a>
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-eye"></i>
+                                            24         阅读
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-comments-o"></i>
+                                            <a href="https://www.gzpblog.com/20170711/1138.html#respond">暂无回复</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-content-main">
+                                    <p>
+                                        一 关于PSR-4自动加载规范
+                                        本 PSR 是关于由文件路径 自动载入 对应类的相关规范， 本规范是可互操作的，可以作为任一自动载入规范的补充，其中包括 PSR-0（已废弃），此外， 本 PSR 还包括自动载入的类对应的文件存放路径规范。
+                                        本篇能愿动词解释：
+
+                                        必须 (MUST)：绝对，严格遵循，请照做，无条件遵守；
+                                        一定不可 (MUST ...
+                                    </p>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-bottom">
+                                    <div class="col-xs-9 col-sm-9 post-tags">
+                                        <a href="https://www.gzpblog.com/tag/php" rel="tag">PHP</a>
+                                    </div>
+                                    <a class="view-all" href="https://www.gzpblog.com/20170711/1138.html">阅读全文 »</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="post-1133" class="col-xs-12 col-sm-12 col-lg-12 sf_post_list sf_post_normal">
+                        <div class="col-xs-12 col-sm-12 col-lg-12 post_body">
+                            <div class="col-xs-12 col-sm-12 col-lg-12 post-content">
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_title">
+                                    <h2>
+                                        <a href="https://www.gzpblog.com/20170707/1133.html" title="「PSR 规范」PSR-3 日志接口规范">「PSR 规范」PSR-3 日志接口规范</a>
+                                    </h2>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_meta">
+                                    <ul class="post_meta_ul">
+                                        <li class="inline-li">
+                                            <i class="fa fa-calendar-check-o"></i>
+                                            2017-07-07 16:59
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-tags"></i>
+                                            <a href="https://www.gzpblog.com/category/code/code-about/php" rel="category tag">PHP</a>
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-eye"></i>
+                                            33         阅读
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-comments-o"></i>
+                                            <a href="https://www.gzpblog.com/20170707/1133.html#respond">暂无回复</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-content-main">
+                                    <p>
+                                        一. 关于PSR-3日志接口规范
+                                        本文制定了日志类库的通用接口规范。
+                                        本规范的主要目的，是为了让日志类库以简单通用的方式，通过接收一个 Psr\Log\LoggerInterface 对象，来记录日志信息。 框架以及CMS内容管理系统如有需要，可以 对此接口进行扩展，但需遵循本规范， 这才能保证在使用第三方的类库文件时，日志接口仍能正...
+                                    </p>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-bottom">
+                                    <div class="col-xs-9 col-sm-9 post-tags">
+                                        <a href="https://www.gzpblog.com/tag/php" rel="tag">PHP</a>
+                                    </div>
+                                    <a class="view-all" href="https://www.gzpblog.com/20170707/1133.html">阅读全文 »</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="post-1126" class="col-xs-12 col-sm-12 col-lg-12 sf_post_list sf_post_thumbnail">
+                        <div class="col-xs-12 col-sm-12 col-lg-12 post_body">
+                            <div class="col-xs-12 col-sm-4 col-md-3 post-thumbnail">
+                                <div class="ih-item square effect6 from_top_and_bottom">
+                                    <a href="https://www.gzpblog.com/20170705/1126.html" rel="bookmark">
+                                        <div class="img">
+                                            <img class="lazy" src="https://www.gzpblog.com/wp-content/themes/SaltedFish/timthumb.php?src=https%3A%2F%2Ffiles.gzpblog.com%2Fwp%2F2017%2F07%2Fdocker-logo3.png&amp;w=240&amp;h=240&amp;zc=1&amp;q=100" data-original="https://www.gzpblog.com/wp-content/themes/SaltedFish/timthumb.php?src=https%3A%2F%2Ffiles.gzpblog.com%2Fwp%2F2017%2F07%2Fdocker-logo3.png&amp;w=240&amp;h=240&amp;zc=1&amp;q=100" alt="Win10安装使用Docker for Windows" width="240" height="240" style="display: inline;">
+                                        </div>
+                                        <div class="info">
+                                            <h3>Win10安装使用Docker for Windows</h3>
+                                            <p><i class="fa fa-eye"></i>点击阅读</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-8 col-md-9 post-content">
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_title">
+                                    <h2>
+                                        <a href="https://www.gzpblog.com/20170705/1126.html" title="Win10安装使用Docker for Windows">Win10安装使用Docker for Windows</a>
+                                    </h2>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post_meta">
+                                    <ul class="post_meta_ul">
+                                        <li class="inline-li">
+                                            <i class="fa fa-calendar-check-o"></i>
+                                            2017-07-05 11:02
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-tags"></i>
+                                            <a href="https://www.gzpblog.com/category/code/systemoperation/docker" rel="category tag">Docker</a>
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-eye"></i>
+                                            40         阅读
+                                        </li>
+                                        <li class="inline-li">
+                                            <i class="fa fa-comments-o"></i>
+                                            <a href="https://www.gzpblog.com/20170705/1126.html#respond">暂无回复</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-content-main">
+                                    <p>
+                                        本文更新时间：2017-07-05（Docker发展得很快）
+                                        1. 环境要求
+                                        需要Windows 10 Pro系统；不是win10的windows系统不能用Docker for Windows，需要使用 Docker Toolbox。
+                                        2. 安装
+                                        2.1 下载
+                                        Docker store下载地址：下载Docker CE for Windows
+                                        2.2 安装
+                                        基本上，什么都不用干！勾个协议就搞定了。
+
+
+
+                                        2.3 启动
+                                        第一次启动的时...
+                                    </p>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-lg-12 post-bottom">
+                                    <div class="col-xs-9 col-sm-9 post-tags">
+                                        <a href="https://www.gzpblog.com/tag/docker" rel="tag">Docker</a>
+                                    </div>
+                                    <a class="view-all" href="https://www.gzpblog.com/20170705/1126.html">阅读全文 »</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <nav class="text-center" aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="active"><span class="page-numbers">1</span></li>
+                            <li><a class="page-numbers" href="https://www.gzpblog.com/page/2" title="page 2">2</a></li>
+                            <li><a class="page-numbers" href="https://www.gzpblog.com/page/3" title="page 3">3</a></li>
+                            <li><a class="page-numbers" href="https://www.gzpblog.com/page/4" title="page 4">4</a></li>
+                            <li><a class="page-numbers" href="https://www.gzpblog.com/page/5" title="page 5">5</a></li>
+                            <li><a class="page-numbers" href="https://www.gzpblog.com/page/6" title="page 6">6</a></li>
+                            <li><span class="page-numbers">...</span></li>
+                            <li><a class="page-numbers" href="https://www.gzpblog.com/page/2" title="Next »" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-3 right-sidebar visible-lg-block">
+            <div class="author-info-widget">
+                <div class="author-info-widget-img">
+                    <img src="~/Content/Images/mo.jpg" class="img-responsive img-circle center-block" alt="侧栏个人头像" width="120px">
+                </div>
+                <div class="author-info-widget-intro text-center">
+                    <h4>如莫</h4>
+                    <a href="http://weibo.com/zpguo/home?wvr=5&amp;lf=reg" class="i_weibo" target="_blank" rel="external nofollow"><i class="fa fa-weibo  fa-lg"></i></a>
+                    <a href="https://github.com/ZpGuo" class="i_github" target="_blank" rel="external nofollow"><i class="fa fa-github fa-lg"></i></a>
+                    <a href="#" class="i_facebook" target="_blank" rel="external nofollow"><i class="fa fa-facebook-square fa-lg"></i></a>
+                </div>
+                <div class="author-info-widget-words">
+                    <div class="author-info-widget-words-left"></div>
+                    <div class="author-info-widget-words-main">
+                        <span>当你发现自己的才华撑不起野心时，就请安静下来学习吧。</span>
+                    </div>
+                    <div class="author-info-widget-words-right"></div>
+                </div>
+                <div class="author-info-widget-marker"></div>
+            </div>
+
+            <div id="other-widgets" class="other-widgets affix-top">
+                <div class="widget widget-tagsMenu clearfix visible-lg-block">
+                    <h4><span><i class="fa fa-tags"></i>&nbsp;分类</span></h4>
+                    <ul id="menu-%e4%be%a7%e6%a0%8f%e6%a0%87%e7%ad%be%e5%8c%96%e8%8f%9c%e5%8d%95" class="menu">
+                        <li id="menu-item-944" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-944"><a href="https://www.gzpblog.com/category/essay/essay-me">个人随笔</a></li>
+                        <li id="menu-item-945" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-945"><a href="https://www.gzpblog.com/category/essay/essay-extra">发发牢骚</a></li>
+                        <li id="menu-item-946" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-946"><a href="https://www.gzpblog.com/category/essay/essay-life">生活杂谈</a></li>
+                        <li id="menu-item-947" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-947">
+                            <a href="https://www.gzpblog.com/category/code/code-about/php">PHP</a>
+                            <ul class="sub-menu">
+                                <li id="menu-item-1172" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1172"><a href="https://www.gzpblog.com/category/code/library-expand/swoole">Swoole</a></li>
+                                <li id="menu-item-961" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-961"><a href="https://www.gzpblog.com/category/code/framework/thinkphp">ThinkPHP</a></li>
+                                <li id="menu-item-1170" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1170"><a href="https://www.gzpblog.com/category/code/framework/workerman">Workerman</a></li>
+                                <li id="menu-item-960" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-960"><a href="https://www.gzpblog.com/category/code/framework/phalcon">Phalcon</a></li>
+                                <li id="menu-item-965" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-965"><a href="https://www.gzpblog.com/category/code/code-software/wordpress">WordPress</a></li>
+                                <li id="menu-item-963" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-963"><a href="https://www.gzpblog.com/category/code/code-software/ecshop">ECshop</a></li>
+                                <li id="menu-item-959" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-959"><a href="https://www.gzpblog.com/category/code/framework/phalapi">PhalApi</a></li>
+                                <li id="menu-item-964" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-964"><a href="https://www.gzpblog.com/category/code/code-software/typecho">Typecho</a></li>
+                            </ul>
+                        </li>
+                        <li id="menu-item-948" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-948">
+                            <a href="https://www.gzpblog.com/category/code/code-about/javascript">JavaScript</a>
+                            <ul class="sub-menu">
+                                <li id="menu-item-956" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-956"><a href="https://www.gzpblog.com/category/code/library-expand/jquery">JQuery</a></li>
+                                <li id="menu-item-962" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-962"><a href="https://www.gzpblog.com/category/code/framework/vue-js">Vue.js</a></li>
+                                <li id="menu-item-958" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-958"><a href="https://www.gzpblog.com/category/code/othertechnology/ajax">ajax</a></li>
+                            </ul>
+                        </li>
+                        <li id="menu-item-1014" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1014"><a href="https://www.gzpblog.com/category/code/code-about/python">Python</a></li>
+                        <li id="menu-item-949" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-949"><a href="https://www.gzpblog.com/category/code/code-about/go">Go</a></li>
+                        <li id="menu-item-952" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-952"><a href="https://www.gzpblog.com/category/code/systemoperation/linux">Linux</a></li>
+                        <li id="menu-item-1026" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1026"><a href="https://www.gzpblog.com/category/code/systemoperation/docker">Docker</a></li>
+                        <li id="menu-item-951" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-951"><a href="https://www.gzpblog.com/category/code/systemoperation/apache">Apache</a></li>
+                        <li id="menu-item-953" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-953"><a href="https://www.gzpblog.com/category/code/systemoperation/nginx">Nginx</a></li>
+                        <li id="menu-item-954" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-954"><a href="https://www.gzpblog.com/category/code/sql/mysql">MySQL</a></li>
+                        <li id="menu-item-957" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-957"><a href="https://www.gzpblog.com/category/code/library-expand/memcache">Memcache</a></li>
+                        <li id="menu-item-955" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-955"><a href="https://www.gzpblog.com/category/code/sql/redis">Redis</a></li>
+                        <li id="menu-item-966" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-966"><a href="https://www.gzpblog.com/category/code/front-about">前端综合</a></li>
+                        <li id="menu-item-967" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-967"><a href="https://www.gzpblog.com/category/code/back-about">后端综合</a></li>
+                        <li id="menu-item-968" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-968"><a href="https://www.gzpblog.com/category/code/code-learning">学习笔记</a></li>
+                    </ul>
+                </div>
+                <div class="widget widget-news visible-lg-block">
+                    <h4><span><i class="fa fa-leaf"></i>&nbsp;最新文章</span></h4>
+                    <ul class="list fa-ul">
+                        <li class="widget-new">
+                            <i class="fa-li fa fa-angle-double-right"></i>
+                            <p>
+                                <a href="https://www.gzpblog.com/20170801/1186.html" title="火狐浏览器X-Content-Type-Options导致Images类型无法加载">火狐浏览器X-Content-Type-Options导致Images类型无法加载</a>
+                            </p>
+                        </li>
+                        <li class="widget-new">
+                            <i class="fa-li fa fa-angle-double-right"></i>
+                            <p>
+                                <a href="https://www.gzpblog.com/20170731/1175.html" title="Guzzle：PHP的HTTP客户端">Guzzle：PHP的HTTP客户端</a>
+                            </p>
+                        </li>
+                        <li class="widget-new">
+                            <i class="fa-li fa fa-angle-double-right"></i>
+                            <p>
+                                <a href="https://www.gzpblog.com/20170720/1166.html" title="用Workerman快速实现Socket服务">用Workerman快速实现Socket服务</a>
+                            </p>
+                        </li>
+                        <li class="widget-new">
+                            <i class="fa-li fa fa-angle-double-right"></i>
+                            <p>
+                                <a href="https://www.gzpblog.com/20170718/1161.html" title="「PSR 规范」关于PHP标准规范">「PSR 规范」关于PHP标准规范</a>
+                            </p>
+                        </li>
+                        <li class="widget-new">
+                            <i class="fa-li fa fa-angle-double-right"></i>
+                            <p>
+                                <a href="https://www.gzpblog.com/20170718/1151.html" title="消息队列及PHP中的简单实现与应用">消息队列及PHP中的简单实现与应用</a>
+                            </p>
+                        </li>
+                        <li class="widget-new">
+                            <i class="fa-li fa fa-angle-double-right"></i>
+                            <p>
+                                <a href="https://www.gzpblog.com/20170714/1147.html" title="「PSR 规范」PSR-6 缓存接口规范">「PSR 规范」PSR-6 缓存接口规范</a>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="widget widget-comments visible-lg-block">
+                    <h4><span><i class="fa fa-comments"></i>&nbsp;最新评论</span></h4>
+                    <ul>
+                        <li>
+                            <div class="col-xs-12 col-sm-2 gavatar"><img alt="胜达SEO博客" src="https://secure.gravatar.com/avatar/b71129efab76b9478772c9036082b4dc?s=43&amp;r=g" srcset="https://secure.gravatar.com/avatar/b71129efab76b9478772c9036082b4dc?s=86&amp;r=g 2x" class="avatar avatar-43 photo img-responsive img-circle" height="43" width="43"></div>
+                            <div class="col-xs-12 col-sm-10 comments-con">
+                                <p class="comments-name">
+                                    <a href="https://www.gzpblog.com/20170228/712.html#comment-678">胜达SEO博客</a>
+                                    <span class="comments-time">2017-07-18</span>
+                                </p>
+                                <p class="comments-comment"><a href="https://www.gzpblog.com/20170228/712.html#comment-678">感谢分享，欢迎回访我的网站</a></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="col-xs-12 col-sm-2 gavatar"><img alt="个人博客" src="https://secure.gravatar.com/avatar/cadab285394d8a5314b2741af5ff431b?s=43&amp;r=g" srcset="https://secure.gravatar.com/avatar/cadab285394d8a5314b2741af5ff431b?s=86&amp;r=g 2x" class="avatar avatar-43 photo img-responsive img-circle" height="43" width="43"></div>
+                            <div class="col-xs-12 col-sm-10 comments-con">
+                                <p class="comments-name">
+                                    <a href="https://www.gzpblog.com/20170623/1066.html#comment-671">个人博客</a>
+                                    <span class="comments-time">2017-07-10</span>
+                                </p>
+                                <p class="comments-comment"><a href="https://www.gzpblog.com/20170623/1066.html#comment-671">没事，我会看的</a></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="col-xs-12 col-sm-2 gavatar"><img alt="论文代发网" src="https://secure.gravatar.com/avatar/f696bcc0d7819c7647e2d7a6ea539713?s=43&amp;r=g" srcset="https://secure.gravatar.com/avatar/f696bcc0d7819c7647e2d7a6ea539713?s=86&amp;r=g 2x" class="avatar avatar-43 photo img-responsive img-circle" height="43" width="43"></div>
+                            <div class="col-xs-12 col-sm-10 comments-con">
+                                <p class="comments-name">
+                                    <a href="https://www.gzpblog.com/20170214/638.html#comment-670">论文代发网</a>
+                                    <span class="comments-time">2017-07-10</span>
+                                </p>
+                                <p class="comments-comment"><a href="https://www.gzpblog.com/20170214/638.html#comment-670">感谢楼主的分析</a></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="col-xs-12 col-sm-2 gavatar"><img alt="剪板机" src="https://secure.gravatar.com/avatar/eb7c69bce265943152716942e3f96a99?s=43&amp;r=g" srcset="https://secure.gravatar.com/avatar/eb7c69bce265943152716942e3f96a99?s=86&amp;r=g 2x" class="avatar avatar-43 photo img-responsive img-circle" height="43" width="43"></div>
+                            <div class="col-xs-12 col-sm-10 comments-con">
+                                <p class="comments-name">
+                                    <a href="https://www.gzpblog.com/20170215/656.html#comment-667">剪板机</a>
+                                    <span class="comments-time">2017-07-09</span>
+                                </p>
+                                <p class="comments-comment"><a href="https://www.gzpblog.com/20170215/656.html#comment-667">哎呦这歌不错哦！</a></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="col-xs-12 col-sm-2 gavatar"><img alt="加气块设备" src="https://secure.gravatar.com/avatar/152743ec8140f95241e3f416645471de?s=43&amp;r=g" srcset="https://secure.gravatar.com/avatar/152743ec8140f95241e3f416645471de?s=86&amp;r=g 2x" class="avatar avatar-43 photo img-responsive img-circle" height="43" width="43"></div>
+                            <div class="col-xs-12 col-sm-10 comments-con">
+                                <p class="comments-name">
+                                    <a href="https://www.gzpblog.com/20170214/638.html#comment-664">加气块设备</a>
+                                    <span class="comments-time">2017-07-07</span>
+                                </p>
+                                <p class="comments-comment"><a href="https://www.gzpblog.com/20170214/638.html#comment-664">博主好专业 收藏一下了</a></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <footer class="footer">
+
+        <div class="container">
+            <div class="col-xs-12 col-sm-12 col-lg-12">
+                <div class="col-xs-12 col-sm-6 footer-info-block">
+                    <div class="col-xs-12 col-sm-12 footer_links_label">
+                        <p><i class="fa fa-link"></i> 友情链接</p>
+                    </div>
+                    <div class="col-xs-12 col-sm-12">
+                        <ul class="footer_links">
+                            <li><a href="/" target="_blank"></a></li>
+                            <li><a href="/" target="_blank"></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3 footer-info-block">
+                    <div class="col-xs-12 col-sm-12 footer_links_label">
+                        <p><i class="fa fa-desktop"></i> 关于本站</p>
+                    </div>
+                    <div class="col-xs-12 col-sm-12">
+                        <p>
+                            本站是如莫的个人博客，专注个人学习，成长，留言，记录。欢迎沟通交流！
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3 footer-info-block">
+                    <div class="col-xs-12 col-sm-12 footer_links_label">
+                        <p><i class="fa fa-weixin"></i> 微信公众号</p>
+                    </div>
+                    <div class="col-xs-12 col-sm-12">
+                        <p><img src="https://www.gzpblog.com/wp-content/themes/SaltedFish/public/images/wechatPic.png" alt="微信公众号二维码" style="width:150px;"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid footer-bottom-container">
+            <div class="col-xs-12 col-sm-12 col-lg-12 footer-bottom text-center">
+                <span>
+                    Copyright © 2017 <a id="footer_name" href="https://www.gzpblog.com" target="_blank">如莫博客</a>
+                    All Rights Reserved. <a href="https://www.gzpblog.com/20170601/986.html" target="_blank" rel="nofollow">SaltedFish</a> theme powered by <a href="https://www.gzpblog.com" target="_blank" rel="nofollow">guo</a>.
+                    &nbsp;|&nbsp;
+                    <a href="http://www.miitbeian.gov.cn/" target="_blank" rel="nofollow">粤ICP备16013442号</a>
+                    &nbsp;|&nbsp;
+                    <a href="/sitemap.xml" target="_blank">网站地图</a>
+                    &nbsp;|&nbsp;
+                    本站运行于 <img src="https://www.gzpblog.com/wp-content/themes/SaltedFish/public/images/aliyun.png" style="height:30px;">
+                    &nbsp;|&nbsp;
+                    <!-- cnzz统计 -->
+                    <script>
+                        var _hmt = _hmt || [];
+                        (function () {
+                            var hm = document.createElement("script");
+                            hm.src = "https://hm.baidu.com/hm.js?62bfbd4737ca4e3c73f5b46e7a876e94";
+                            var s = document.getElementsByTagName("script")[0];
+                            s.parentNode.insertBefore(hm, s);
+                        })();
+                    </script>
+                    <script src=" https://s95.cnzz.com/z_stat.php?id=1257421693&amp;show=pic" type="text/javascript"></script>
+                    <script src="https://c.cnzz.com/core.php?web_id=1257421693&amp;show=pic&amp;t=z" charset="utf-8" type="text/javascript"></script>
+                </span>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <script src="~/Content/js/jquery-2.1.4.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/vue/vue.min.js"></script>
+    <script>
+        $("#other-widgets").affix({
+            offset: {
+                top: 270, bottom: function () {
+                    return (this.bottom =
+                        $('.widget-comments').outerHeight(true))
+                }
+            }
+        });
+    </script>
+</body>
+</html>

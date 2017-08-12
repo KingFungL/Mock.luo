@@ -21,7 +21,7 @@ namespace Mock.Code
             var licence = Configs.GetValue("LicenceKey");
             if (string.IsNullOrEmpty(licence))
             {
-                licence = Common.GuId();
+                licence = Utils.GuId();
                 Configs.SetValue("LicenceKey", licence);
             }
             return Md5.md5(licence, 32);
