@@ -11,7 +11,7 @@ namespace Mock.Luo
 
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/Content/js/jquery-min.js"));
+                "~/Content/js/jquery-2.1.4-min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery-extends").Include(
                 "~/Content/js/jquery.extend.js",

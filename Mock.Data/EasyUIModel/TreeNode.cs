@@ -24,6 +24,9 @@ namespace Mock.Data
         public string iconCls { get; set; }
         public bool Checked { get; set; }
         public object attributes { get; set; }
+        public string href { get; set; }
+        public int? sortcode { get; set; }
+        public string target { get; set; }
         public List<TreeNode> children { get; set; }
     }
 }

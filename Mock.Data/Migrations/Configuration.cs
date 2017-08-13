@@ -9,7 +9,7 @@ namespace Mock.Data.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(Mock.Data.Models.MockDbContext context)

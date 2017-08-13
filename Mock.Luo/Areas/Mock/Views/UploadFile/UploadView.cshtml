@@ -47,17 +47,17 @@
 </div>
 
 @section scripts{
-    <link href="~/Content/base64_compress.css" rel="stylesheet" />
+    <link href="~/Content/js/uploadify/base64_compress.css" rel="stylesheet" />
 @*    <script>
         var uploadifycss = "<link href='../Uploadify/uploadify.css?d='" + Math.random() + " rel='stylesheet' />";
         document.write(uploadifycss);
     </script>*@
-    <link href="~/Uploadify/uploadify.css" rel="stylesheet" />
+    <link href="~/Content/js/uploadify/uploadify.css" rel="stylesheet" />
     <style>
         .submit {height: 30px;line-height: 30px;width: 88px;text-align: center;border-radius: 5px;background-color: #0F6099;color: white;}
         .submit:hover {background-color: orange;cursor: pointer;}
     </style>
-    <script src="~/Uploadify/jquery.uploadify.js"></script>
+    <script src="~/Content/js/uploadify/jquery.uploadify.js"></script>
     <script type="text/javascript">
         var uploadify_onSelectError = function (file, errorCode, errorMsg) {
             var msgText = "上传失败\n";

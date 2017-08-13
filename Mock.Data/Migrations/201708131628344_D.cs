@@ -3,7 +3,7 @@ namespace Mock.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class ApiMigration : DbMigration
+    public partial class D : DbMigration
     {
         public override void Up()
         {
@@ -11,21 +11,39 @@ namespace Mock.Data.Migrations
                 "dbo.AppMenu",
                 c => new
                     {
-                        AppMenuId = c.Int(nullable: false, identity: true),
+                        Id = c.Int(nullable: false, identity: true),
                         MenuName = c.String(maxLength: 50),
                         SortCode = c.Int(),
+                        State = c.String(maxLength: 20),
+                        Icon = c.String(maxLength: 50),
+                        LinkUrl = c.String(maxLength: 200),
+                        Target = c.String(maxLength: 20),
+                        CreatorUserId = c.Int(),
+                        CreatorTime = c.DateTime(),
+                        DeleteMark = c.Boolean(),
+                        DeleteUserId = c.Int(),
+                        DeleteTime = c.DateTime(),
+                        LastModifyUserId = c.Int(),
+                        LastModifyTime = c.DateTime(),
                     })
-                .PrimaryKey(t => t.AppMenuId);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.AppRole",
                 c => new
                     {
-                        AppRoleId = c.Int(nullable: false, identity: true),
+                        Id = c.Int(nullable: false, identity: true),
                         Guid = c.String(maxLength: 50),
                         RoleName = c.String(maxLength: 50),
+                        CreatorUserId = c.Int(),
+                        CreatorTime = c.DateTime(),
+                        DeleteMark = c.Boolean(),
+                        DeleteUserId = c.Int(),
+                        DeleteTime = c.DateTime(),
+                        LastModifyUserId = c.Int(),
+                        LastModifyTime = c.DateTime(),
                     })
-                .PrimaryKey(t => t.AppRoleId);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.UserRole",
@@ -45,17 +63,32 @@ namespace Mock.Data.Migrations
                 "dbo.AppUser",
                 c => new
                     {
-                        AppUserId = c.Int(nullable: false, identity: true),
+                        Id = c.Int(nullable: false, identity: true),
                         Guid = c.String(maxLength: 50),
-                        UserName = c.String(maxLength: 50),
                         LoginName = c.String(maxLength: 50),
                         LoginPassword = c.String(maxLength: 50),
                         Phone = c.String(maxLength: 50),
                         Email = c.String(maxLength: 50),
+                        Birthday = c.String(maxLength: 50),
+                        PersonalWebsite = c.String(maxLength: 50),
                         Sex = c.Int(),
-                        BranchOfficeId = c.Int(),
+                        NickName = c.String(maxLength: 50),
+                        PersonSignature = c.String(maxLength: 50),
+                        UserSecretkey = c.String(maxLength: 50),
+                        HeadHref = c.String(maxLength: 100),
+                        LoginCount = c.Int(nullable: false),
+                        LastLoginTime = c.DateTime(),
+                        LastLogIp = c.String(maxLength: 50),
+                        StatusCode = c.String(maxLength: 50),
+                        CreatorUserId = c.Int(),
+                        CreatorTime = c.DateTime(),
+                        DeleteMark = c.Boolean(),
+                        DeleteUserId = c.Int(),
+                        DeleteTime = c.DateTime(),
+                        LastModifyUserId = c.Int(),
+                        LastModifyTime = c.DateTime(),
                     })
-                .PrimaryKey(t => t.AppUserId);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.Upload",
@@ -65,6 +98,13 @@ namespace Mock.Data.Migrations
                         AddTime = c.DateTime(),
                         UserName = c.String(maxLength: 50),
                         SortCode = c.Int(),
+                        CreatorUserId = c.Int(),
+                        CreatorTime = c.DateTime(),
+                        DeleteMark = c.Boolean(),
+                        DeleteUserId = c.Int(),
+                        DeleteTime = c.DateTime(),
+                        LastModifyUserId = c.Int(),
+                        LastModifyTime = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -75,7 +115,7 @@ namespace Mock.Data.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         FId = c.Int(nullable: false),
                         AddTime = c.DateTime(),
-                        Url = c.String(maxLength: 50),
+                        Url = c.String(maxLength: 200),
                         FileName = c.String(maxLength: 50),
                         FileSize = c.String(maxLength: 50),
                     })

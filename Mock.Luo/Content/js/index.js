@@ -1,100 +1,23 @@
 ﻿
 $(function () {
+
+    com.ajax({
+        url: '/Plat/AppMenu/GetUserMenu?userid=1',
+        async:false,
+        success: function (menulist) {
+            $ui.initMenu(menulist);
+        }
+    })
+});
+
+
+var $ui = new Object();
+
+$ui.initMenu = function (menulist) {
+
+   
+    //var menulist=$ui.get_static_menu();
     var $sidemenu = $('#side-menu');
-    var menulist = [{
-        'MenuName': '主页',
-        'Id': 1,
-        'PId': 0,
-        'icon': 'fa fa-home',
-        'href': '',
-        'SortCode': 1,
-        'target': '_self',
-        'children': [{
-            'MenuName': '上传文件',
-            'Id': 2,
-            'PId': 1,
-            'icon': 'fa fa-upload',
-            'href': '/Mock/UploadFile/UploadView',
-            'SortCode': 2,
-            'target': '_self'
-        }, {
-            'MenuName': 'FontAwesome',
-            'Id': 5,
-            'PId': 1,
-            'icon': 'fa fa-gift',
-            'href': 'http://dnt.dkill.net/dnt/font/',
-            'SortCode': 3,
-            'target': '_self'
-        }]
-    }, {
-        'MenuName': 'EasyUI示例',
-        'Id': 4,
-        'PId': 0,
-        'icon': 'fa fa-amazon',
-        'SortCode': 4,
-        'target': '_self',
-        'children': [{
-            'MenuName': 'DatalistView',
-            'Id': 3,
-            'PId': 1,
-            'icon': 'fa fa-tablet',
-            'href': '/Home/DatalistView',
-            'SortCode': 3,
-            'target': '_self',
-        }]
-    }, {
-        'MenuName': '表单',
-        'Id': 6,
-        'PId': 0,
-        'icon': 'fa fa-list',
-        'SortCode': 7,
-        'target': '_self',
-        'children': [{
-            'MenuName': '编辑器',
-            'Id': 3,
-            'PId': 1,
-            'icon': 'fa fa-edit',
-            'SortCode': 8,
-            'children': [{
-                'MenuName': 'MarkDown编辑器',
-                'Id': 7,
-                'PId': 6,
-                'icon': 'fa fa-camera-retro',
-                'href': '/Mock/Editor/MarkDownView',
-                'SortCode': 9
-            }, {
-                'MenuName': 'Simditor编辑器',
-                'Id': 8,
-                'PId': 6,
-                'icon': 'fa fa-camera-retro',
-                'href': '/Mock/Editor/SimditorView',
-                'SortCode': 8
-            }, {
-                'MenuName': '信箱',
-                'Id': 8,
-                'PId': 6,
-                'icon': 'fa fa-map',
-                'href': '/Mock/Editor/EmailIndex?data=0',
-                'SortCode': 9
-            }]
-        }]
-    }, {
-        'MenuName': '工具',
-        'Id': 11,
-        'PId': 0,
-        'icon': 'fa fa-th-list',
-        'SortCode': 7,
-        'children': [{
-            'MenuName': 'css格式化',
-            'Id': 12,
-            'PId': 11,
-            'icon': 'fa fa-thumbs-o-up',
-            'SortCode': 7,
-            'href': '/Mock/Code/CssFormatIndex',
-            'target': '_self',
-        }]
-    }
-    ];
     var html = '';
     for (var i = 0; i < menulist.length; i++) {
         var template = '<li>\
@@ -105,7 +28,7 @@ $(function () {
                 </a>'
 
         var jsonobj = menulist[i];
-        html += com.formatString(template, jsonobj.icon, jsonobj.MenuName);
+        html += com.formatString(template, jsonobj.iconCls, jsonobj.text);
         html += '<ul class="nav nav-second-level collapse">';
 
         var temple = '<li>\
@@ -118,7 +41,7 @@ $(function () {
                 if (m.target != '_blank') {
                     m.target = '_self';
                 }
-                html += com.formatString(temple, m.href, m.SortCode, m.target, m.icon, m.MenuName);
+                html += com.formatString(temple, m.href, m.sortcode, m.target, m.iconCls, m.text);
                 var json3 = m;
                 if (m && m.children && m.children.length > 0) {
                     html += '<span class="fa arrow"></span></a>';
@@ -128,7 +51,7 @@ $(function () {
                                      </li>'
                     for (var k = 0; k < m.children.length; k++) {
                         var t = m.children[k]
-                        html += com.formatString(template3, t.href, t.SortCode, t.target, t.icon, t.MenuName);
+                        html += com.formatString(template3, t.href, t.sortcode, t.target, t.iconCls, t.text);
                     }
                     html += '</ul>';
                 } else {
@@ -140,8 +63,8 @@ $(function () {
         html += '</ul></li>';
     }
     $sidemenu.append(html);
-});
 
+}
 
 //三级菜单
 
@@ -167,3 +90,102 @@ $(function () {
                 </ul>
             </li>
 */
+
+
+$ui.get_static_menu = function () {
+    var menulist = [{
+        'text': '主页',
+        'id': 1,
+        'PId': 0,
+        'iconCls': 'fa fa-home',
+        'href': '',
+        'sortcode': 1,
+        'target': '_self',
+        'children': [{
+            'text': '上传文件',
+            'id': 2,
+            'PId': 1,
+            'iconCls': 'fa fa-upload',
+            'href': '/Mock/UploadFile/UploadView',
+            'sortcode': 2,
+            'target': '_self'
+        }, {
+            'text': 'FontAwesome',
+            'id': 5,
+            'PId': 1,
+            'iconCls': 'fa fa-gift',
+            'href': 'http://dnt.dkill.net/dnt/font/',
+            'sortcode': 3,
+            'target': '_self'
+        }]
+    }, {
+        'text': 'EasyUI示例',
+        'id': 4,
+        'PId': 0,
+        'iconCls': 'fa fa-amazon',
+        'sortcode': 4,
+        'target': '_self',
+        'children': [{
+            'text': 'DatalistView',
+            'id': 3,
+            'PId': 1,
+            'iconCls': 'fa fa-tablet',
+            'href': '/Home/DatalistView',
+            'sortcode': 3,
+            'target': '_self',
+        }]
+    }, {
+        'text': '表单',
+        'id': 6,
+        'PId': 0,
+        'iconCls': 'fa fa-list',
+        'sortcode': 7,
+        'target': '_self',
+        'children': [{
+            'text': '编辑器',
+            'id': 3,
+            'PId': 1,
+            'iconCls': 'fa fa-edit',
+            'sortcode': 8,
+            'children': [{
+                'text': 'MarkDown编辑器',
+                'id': 7,
+                'PId': 6,
+                'iconCls': 'fa fa-camera-retro',
+                'href': '/Mock/Editor/MarkDownView',
+                'sortcode': 9
+            }, {
+                'text': 'Simditor编辑器',
+                'id': 8,
+                'PId': 6,
+                'iconCls': 'fa fa-camera-retro',
+                'href': '/Mock/Editor/SimditorView',
+                'sortcode': 8
+            }, {
+                'text': '信箱',
+                'id': 8,
+                'PId': 6,
+                'iconCls': 'fa fa-map',
+                'href': '/Mock/Editor/EmailIndex?data=0',
+                'sortcode': 9
+            }]
+        }]
+    }, {
+        'text': '工具',
+        'id': 11,
+        'PId': 0,
+        'iconCls': 'fa fa-th-list',
+        'sortcode': 7,
+        'children': [{
+            'text': 'css格式化',
+            'id': 12,
+            'PId': 11,
+            'iconCls': 'fa fa-thumbs-o-up',
+            'sortcode': 7,
+            'href': '/Mock/Code/CssFormatIndex',
+            'target': '_self',
+        }]
+    }
+    ];
+    return menulist;
+}

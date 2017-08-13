@@ -53,9 +53,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IRepository\IAppMenuRepository.cs" />
+    <Compile Include="IRepository\IAppUserRepository.cs" />
     <Compile Include="IRepository\IArticleRepository.cs" />
     <Compile Include="IRepository\IUploadRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AppMenuRepository.cs" />
+    <Compile Include="Repository\AppUserRepositroy.cs" />
     <Compile Include="Repository\ArticleRepositroy.cs" />
     <Compile Include="Repository\UploadRepositroy.cs" />
   </ItemGroup>

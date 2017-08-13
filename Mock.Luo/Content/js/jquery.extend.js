@@ -7,7 +7,7 @@
  * */
 $.fn.serializeJson = function (otherString) {
     var serializeObj = {},
-      array = this.serializeArray();
+        array = this.serializeArray();
     $(array).each(function () {
         if (serializeObj[this.name]) {
             serializeObj[this.name] += ';' + this.value;
@@ -33,6 +33,7 @@ $.fn.serializeJson = function (otherString) {
  * @method serializeJson
  * */
 $.fn.setForm = function (jsonValue) {
+    if (!jsonValue) return;
     var obj = this;
     $.each(jsonValue, function (name, ival) {
         var $oinput = obj.find("input[name=" + name + "]");

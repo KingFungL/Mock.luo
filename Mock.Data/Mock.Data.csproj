@@ -64,7 +64,7 @@
     <Compile Include="EasyUIModel\DataGrid.cs" />
     <Compile Include="EasyUIModel\TreeNode.cs" />
     <Compile Include="ExtensionModel\MenuButtons.cs" />
-    <Compile Include="ExtensionModel\SysMenu.cs" />
+    <Compile Include="ExtensionModel\AppMenu.cs" />
     <Compile Include="ExtensionModel\SysMenuExtension.cs" />
     <Compile Include="Extensions\CollectionsExtensions.cs" />
     <Compile Include="Extensions\DataTableExtensions.cs" />
@@ -75,17 +75,13 @@
     <Compile Include="Infrastructure\IDeleteAudited.cs" />
     <Compile Include="Infrastructure\IEntity.cs" />
     <Compile Include="Infrastructure\IModificationAudited.cs" />
-    <Compile Include="Migrations\201708111536460_ApiMigration.cs" />
-    <Compile Include="Migrations\201708111536460_ApiMigration.Designer.cs">
-      <DependentUpon>201708111536460_ApiMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201708131628344_D.cs" />
+    <Compile Include="Migrations\201708131628344_D.Designer.cs">
+      <DependentUpon>201708131628344_D.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708111554059_ApiMigration1.cs" />
-    <Compile Include="Migrations\201708111554059_ApiMigration1.Designer.cs">
-      <DependentUpon>201708111554059_ApiMigration1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708111600009_ApiMigration2.cs" />
-    <Compile Include="Migrations\201708111600009_ApiMigration2.Designer.cs">
-      <DependentUpon>201708111600009_ApiMigration2.cs</DependentUpon>
+    <Compile Include="Migrations\201708131630130_1.cs" />
+    <Compile Include="Migrations\201708131630130_1.Designer.cs">
+      <DependentUpon>201708131630130_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppMenu.cs" />
@@ -119,14 +115,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708111536460_ApiMigration.resx">
-      <DependentUpon>201708111536460_ApiMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708131628344_D.resx">
+      <DependentUpon>201708131628344_D.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708111554059_ApiMigration1.resx">
-      <DependentUpon>201708111554059_ApiMigration1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708111600009_ApiMigration2.resx">
-      <DependentUpon>201708111600009_ApiMigration2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708131630130_1.resx">
+      <DependentUpon>201708131630130_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

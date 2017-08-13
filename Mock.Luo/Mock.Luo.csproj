@@ -169,7 +169,10 @@
     <Compile Include="Areas\Mock\Controllers\EditorController.cs" />
     <Compile Include="Areas\Mock\Controllers\UploadFileController.cs" />
     <Compile Include="Areas\Mock\MockAreaRegistration.cs" />
+    <Compile Include="Areas\Plat\Controllers\AppMenuController.cs" />
+    <Compile Include="Areas\Plat\Controllers\AppUserController.cs" />
     <Compile Include="Areas\Plat\Controllers\ArticleController.cs" />
+    <Compile Include="Areas\Plat\Models\AppUserViewModel.cs" />
     <Compile Include="Areas\Plat\PlatAreaRegistration.cs" />
     <Compile Include="Content\js\ueditor\net\App_Code\Config.cs" />
     <Compile Include="Content\js\ueditor\net\App_Code\ConfigHandler.cs" />
@@ -189,7 +192,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
-    <Content Include="Content\base64_compress.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\animate.min.css" />
     <Content Include="Content\css\blogbase.css" />
     <Content Include="Content\css\bootstrap.min14ed.css" />
@@ -208,6 +212,7 @@
     <Content Include="Content\Images\ex.jpg" />
     <Content Include="Content\Images\ex02.jpg" />
     <Content Include="Content\Images\ex03.png" />
+    <Content Include="Content\Images\hdp4.jpg" />
     <Content Include="Content\Images\h_line.jpg" />
     <Content Include="Content\Images\li.jpg" />
     <Content Include="Content\Images\logo.jpg" />
@@ -222,7 +227,8 @@
     <Content Include="Content\js\contab.js" />
     <Content Include="Content\js\content.min.js" />
     <Content Include="Content\js\index.js" />
-    <Content Include="Content\js\jquery-2.1.4.min.js" />
+    <Content Include="Content\js\jquery.js" />
+    <Content Include="Content\js\jquery-2.1.4-min.js" />
     <Content Include="Content\js\jquery.metisMenu.js" />
     <Content Include="Content\js\jquery.slimscroll.min.js" />
     <Content Include="Areas\Plat\Views\web.config" />
@@ -230,6 +236,11 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Areas\Plat\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Plat\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Plat\Views\AppUser\Form.cshtml" />
+    <Content Include="Areas\Plat\Views\AppUser\Index.cshtml" />
+    <Content Include="Areas\Plat\Views\AppMenu\Index.cshtml" />
     <None Include="Content\js\jquery.validate-vsdoc.js" />
     <Content Include="Content\js\jquery.validate.js" />
     <Content Include="Content\js\jquery.validate.min.js" />
@@ -558,6 +569,7 @@
     <Content Include="Content\js\ueditor\ueditor.all.min.js" />
     <Content Include="Content\js\ueditor\ueditor.config.js" />
     <Content Include="Content\js\ueditor\ueditor.parse.min.js" />
+    <Content Include="Content\js\uploadify\base64_compress.css" />
     <Content Include="Content\js\vue\vue.min.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -2269,6 +2281,7 @@
     <Content Include="EasyUI151-Insdep-Them\themes\insdep\jquery.insdep-extend-min.js" />
     <Content Include="EasyUI151-Insdep-Them\使用说明.txt" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Samples.cshtml" />
@@ -2277,7 +2290,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\Mock\Views\Web.config" />
-    <Content Include="Content\Images\fileico_v5.png" />
+    <Content Include="Content\js\uploadify\fileico_v5.png" />
     <Content Include="Content\fonts\fontawesome-webfont93e3.woff2" />
     <Content Include="EasyUI151-Insdep-Them\plugin\colpick-2.0.2\colpick.jquery.json" />
     <Content Include="EasyUI151-Insdep-Them\plugin\colpick-2.0.2\LICENSE" />
@@ -2468,13 +2481,14 @@
     <Content Include="Views\Home\MainView.cshtml" />
     <Content Include="Views\Home\BlogView.cshtml" />
     <Content Include="数据字典.docx" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Mock\Models\" />
-    <Folder Include="Areas\Plat\Models\" />
     <Folder Include="Areas\Plat\Views\Article\" />
-    <Folder Include="Areas\Plat\Views\Shared\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

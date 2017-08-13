@@ -29,6 +29,7 @@ namespace Mock.Data
                 entity.LastModifyUserId = LoginInfo.UserId;
             }
             entity.LastModifyTime = DateTime.Now;
+
         }
         public void Remove()
         {
