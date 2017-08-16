@@ -1,18 +1,18 @@
-﻿using System;
+﻿using Mock.Code;
+using Mock.Data.Models;
+using Mock.Domain;
+using Mock.Luo.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Mock.Domain;
-using Mock.Code;
-using Mock.Data.Models;
-using Mock.Luo.Controllers;
 
 namespace Mock.Luo.Areas.Plat.Controllers
 {
     public class AppUserController : BaseController
     {
-        // GET: Plat/Article
+        // GET: Plat/AppUser
         IAppUserRepository _service;
         public AppUserController(IAppUserRepository service)
         {
@@ -22,7 +22,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         [HttpGet]
         public ActionResult Form(int id)
         {
-            AppUser userEntity; 
+            AppUser userEntity;
             if (id == 0)
             {
                 userEntity = new AppUser { };

@@ -28,18 +28,14 @@ namespace Mock.Domain
         string GetUserMenusTree();
         #endregion
 
-        #region 得到所有权限的TreeGrid模板 GetAllPersForTreeGridPer
-        DataGrid GetAllPersForTreeGridPer(bool isMemu = false);
-        void SetMenuButtons(List<string> btnids, int MenuId);
-        DataGrid GetButtons();
-        dynamic GetMenuButton(int MenuId);
-        #endregion
+        DataGrid GetTreeGrid(bool isMemu = false);
 
-        #region SubmitForm  编辑菜单
+    
         void SubmitForm(AppMenu entity);
-        #endregion
 
         List<AppMenu> GetInsertOrUpdateList(Dictionary<string, object> di, string type);
+
+        void DeleteForm(int id);
 
     }
 }

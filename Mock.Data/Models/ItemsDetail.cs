@@ -12,26 +12,26 @@ namespace Mock.Data.Models
     public class ItemsDetail : IEntity<ItemsDetail>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         public int? Id { get; set; }
-        public int ItemId { get; set; }
-        public int ParentId { get; set; }
+        public int FId { get; set; }
+        [ForeignKey("FId")]
+        public Items Items { get; set; }
+        public int PId { get; set; }
         [StringLength(50)]
         public string ItemCode { get; set; }
         [StringLength(50)]
         public string ItemName { get; set; }
-        [StringLength(50)]
-        public string SimpleSpelling { get; set; }
         public bool? IsDefault { get; set; }
         public int? Layers { get; set; }
         public int? SortCode { get; set; }
-        public bool? DeleteMark { get; set; }
         public bool? EnabledMark { get; set; }
         [StringLength(200)]
-        public string Description { get; set; }
+        public string Remark { get; set; }
         public DateTime? CreatorTime { get; set; }
         public int? CreatorUserId { get; set; }
         public DateTime? LastModifyTime { get; set; }
         public int? LastModifyUserId { get; set; }
         public DateTime? DeleteTime { get; set; }
         public int? DeleteUserId { get; set; }
+        public bool? DeleteMark { get; set; }
     }
 }

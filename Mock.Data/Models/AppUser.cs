@@ -18,8 +18,6 @@ namespace Mock.Data.Models
         [Key]
         public int? Id { get; set; }
         [StringLength(50)]
-        public string Guid { get; set; }
-        [StringLength(50)]
         public string LoginName { get; set; }
         [StringLength(50)]
         public string LoginPassword { get; set; }

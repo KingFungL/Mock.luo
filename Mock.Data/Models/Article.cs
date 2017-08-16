@@ -12,8 +12,9 @@ namespace Mock.Data.Models
     public class Article : IEntity<Article>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         public int? Id { get; set; }
-        [StringLength(50)]
-        public string FTypeCode { get; set; }
+        public int? TypeCode { get; set; }
+        [ForeignKey("TypeCode")]
+        public ItemsDetail ItemsDetail { get; set; }
         [StringLength(50)]
         public string Title { get; set; }
         [StringLength(200)]
@@ -26,6 +27,7 @@ namespace Mock.Data.Models
         public int? ViewHits { get; set; }
         public int? CommentQuantity { get; set; }
         public int? PointQuantity { get; set; }
+        [StringLength(200)]
         public string thumbnail { get; set; }
         public bool? IsAudit { get; set; }
         public bool? Recommend { get; set; }
@@ -39,5 +41,7 @@ namespace Mock.Data.Models
         public DateTime? DeleteTime { get; set; }
         public int? LastModifyUserId { get; set; }
         public DateTime? LastModifyTime { get; set; }
+
+        public virtual ICollection<Review> Reviews { get; set; }
     }
 }

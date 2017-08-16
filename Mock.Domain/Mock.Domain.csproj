@@ -54,11 +54,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IRepository\IAppMenuRepository.cs" />
+    <Compile Include="IRepository\IItemsDetailRepositroy.cs" />
+    <Compile Include="IRepository\IItemsRepositroy.cs" />
     <Compile Include="IRepository\IAppUserRepository.cs" />
     <Compile Include="IRepository\IArticleRepository.cs" />
+    <Compile Include="IRepository\IReviewRepository.cs" />
     <Compile Include="IRepository\IUploadRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\ReviewRepository .cs" />
     <Compile Include="Repository\AppMenuRepository.cs" />
+    <Compile Include="Repository\ItemsDetailRepositroy.cs" />
+    <Compile Include="Repository\ItemsRepositroy.cs" />
     <Compile Include="Repository\AppUserRepositroy.cs" />
     <Compile Include="Repository\ArticleRepositroy.cs" />
     <Compile Include="Repository\UploadRepositroy.cs" />

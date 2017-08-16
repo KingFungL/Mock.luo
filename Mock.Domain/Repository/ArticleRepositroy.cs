@@ -17,12 +17,24 @@ namespace Mock.Domain
         public DataGrid GetDataGrid(Pagination pag)
         {
 
-            var dglist = this.IQueryable().Where(pag).Select(u => new
+            var dglist = this.IQueryable().Where(pag).Select(t => new
             {
-                u.Title,
-                u.Content,
-                u.CreatorUserId,
-                u.AppUser.LoginName
+                t.Id,
+                t.ItemsDetail.ItemName,
+                t.CreatorTime,
+                t.Title,
+                t.Excerpt,
+                t.Content,
+                t.ViewHits,
+                t.CommentQuantity,
+                t.Keywords,
+                t.Source,
+                t.thumbnail,
+                t.AppUser.LoginName,
+                t.IsAudit,
+                t.IsStickie,
+                t.PointQuantity,
+                t.Recommend
             }).ToList();
 
             return new DataGrid { rows = dglist, total = pag.total };
@@ -37,6 +49,61 @@ namespace Mock.Domain
             return d;
         }
 
+        public void Edit(Article entity)
+        {
 
+            if (entity.Id == 0)
+            {
+                entity.Create();
+                entity.ViewHits = 0;
+                entity.CommentQuantity = 0;
+                entity.PointQuantity = 0;
+                this.Insert(entity);
+            }
+            else
+            {
+                entity.Modify(entity.Id);
+                string[] modifystr = { "FTypeCode", "Excerpt", "Title", "Keywords", "Source", "Excerpt", "Content", "thumbnail", "IsAudit", "Recommend", "IsStickie" };
+                this.Update(entity, modifystr);
+            }
+
+        }
+
+        public void DeleteForm(int keyValue)
+        {
+            Article entity = new Article { Id = keyValue };
+            entity.Remove();
+            this.Update(entity, "IsVisible");
+        }
+
+        /// <summary>
+        /// 最新的文章
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public dynamic GetRecentArticle(int count)
+        {
+            return this.IQueryable(u => u.DeleteMark == false).OrderByDescending(r => r.Id).Select(r => new
+            {
+                r.Id,
+                r.Title
+            }).Take(count).ToList();
+        }
+
+        public DataGrid GetIndexGird(Pagination pag)
+        {
+            var rows = this.IQueryable().OrderByDescending(r => r.Id).Where(pag).Select(r => new
+            {
+                r.Title,
+                r.AppUser.LoginName,
+                r.CreatorTime,
+                r.Id,
+                r.ItemsDetail.ItemName,
+                ReviewCount = r.Reviews.Count(u => u.AId == r.Id),
+                r.Excerpt,
+                r.thumbnail
+            }).ToList();
+            return new DataGrid { rows = rows, total = pag.total };
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace Mock.Data.Models
     public class Items : IEntity<Items>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         public int? Id { get; set; }
-        public int ParentId { get; set; }
+        public int PId { get; set; }
         [StringLength(50)]
         public string EnCode { get; set; }
         [StringLength(50)]
@@ -30,5 +30,6 @@ namespace Mock.Data.Models
         public DateTime? DeleteTime { get; set; }
         public int? DeleteUserId { get; set; }
         public bool? DeleteMark { get; set; }
+        public virtual ICollection<ItemsDetail> ItemsDetail { get; set; }
     }
 }

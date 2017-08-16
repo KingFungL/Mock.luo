@@ -12,16 +12,19 @@ namespace Mock.Domain
     /// <summary>
     /// 仓储实现层 ArticleRepositroy
     /// </summary>]
-    public class AppUserRepositroy : RepositoryBase<AppUser>, IAppUserRepository
+    public class ItemsDetailRepositroy : RepositoryBase<ItemsDetail>, IItemsDetailRepositroy
     {
+        public void Edit(ItemsDetail Entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public DataGrid GetDataGrid(Pagination pag)
         {
 
             var dglist = this.IQueryable(u => u.DeleteMark == false).Where(pag).Select(u => new
             {
-                u.LoginName,
-                u.NickName,
-                u.Email,
+              
                 u.Id
             }).ToList();
 
@@ -33,30 +36,18 @@ namespace Mock.Domain
         {
             var d = this.IQueryable(u => u.Id == Id).Select(u => new
             {
-                u.LoginName,
-                u.NickName,
-                u.Email,
-                u.Id
+                u.ItemCode,  
+                u.Id,
+                u.ItemName,
             }).FirstOrDefault();
             return d;
         }
 
-        public void Edit(AppUser userEntity)
+        public dynamic GetItemDetailsFCode(string FCode)
         {
-
-            if (userEntity.Id == 0)
-            {
-                userEntity.Create();
-                this.Insert(userEntity);
-            }
-            else
-            {
-                userEntity.Modify(userEntity.Id);
-                string[] modifystrs = { "LoginName", "Phone", "Email", "Birthday", "PersonalWebsite", "NickName", "PersonSignature ", "HeadHref", "Sex", "LastModifyUserId", "LastModifyTime" };
-                this.Update(userEntity, modifystrs);
-            }
+            return this.IQueryable(r=>r.Items.EnCode==FCode).Select(u => new {
+               u.Id,u.ItemName,u.ItemCode,u.SortCode
+            }).OrderBy(u=>u.SortCode).ToList();
         }
-
-
     }
 }

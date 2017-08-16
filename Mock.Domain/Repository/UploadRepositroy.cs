@@ -17,12 +17,7 @@ namespace Mock.Domain
         {
             var d = this.IQueryable(u => u.Id == Id).Select(u => new
             {
-                u.Id,
-                u.AddTime,
-                u.UserName,
-                FileSize = u.UploadEntry.Select(v => v.FileSize),
-                FileName = u.UploadEntry.Select(v => v.FileName),
-                Url = u.UploadEntry.Select(v => v.Url),
+                u.Id
             }).FirstOrDefault();
             return d;
         }

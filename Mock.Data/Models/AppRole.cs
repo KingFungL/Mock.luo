@@ -17,9 +17,10 @@ namespace Mock.Data.Models
         }
         public int? Id { get; set; }
         [StringLength(50)]
-        public string Guid { get; set; }
-        [StringLength(50)]
         public string RoleName { get; set; }
+        [StringLength(50)]
+        public string Remark { get; set; }
+        public int? SortCode { get; set; }
         public virtual ICollection<UserRole> UserRoles { get; set; }
 
         public int? CreatorUserId { get; set; }

@@ -34,5 +34,25 @@ namespace Mock.Luo.Areas.Plat.Controllers
         }
         #endregion
 
+        public ActionResult GetTreeGrid()
+        {
+            DataGrid dg = _service.GetTreeGrid();
+
+            return Content(dg.ToJson());
+        }
+
+
+        public ActionResult SubmitForm(AppMenu entity)
+        {
+            _service.SubmitForm(entity);
+            return Success();
+        }
+
+        public ActionResult DeleteForm(int id)
+        {
+            _service.DeleteForm(id);
+            return Success();
+        }
+
     }
 }

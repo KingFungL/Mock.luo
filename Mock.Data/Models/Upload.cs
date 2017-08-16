@@ -11,19 +11,23 @@ namespace Mock.Data.Models
     [Table("Upload")]
     public class Upload : IEntity<Upload>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
-        public Upload()
-        {
-            this.UploadEntry = new HashSet<UploadEntry>();
-        }
 
         [Required, Key]
         public int? Id { get; set; }
-        public DateTime? AddTime { get; set; }
+        public int? FId { get; set; }
+        [StringLength(100)]
+        public string Url { get; set; }
         [StringLength(50)]
-        public string UserName { get; set; }
-        public int? SortCode { get; set; }
-        public virtual ICollection<UploadEntry> UploadEntry { get; set; }
+        public string FileName { get; set; }
+        [StringLength(50)]
+        public string FileSize { get; set; }
+        [StringLength(20)]
+        public string Type { get; set; }
+        [StringLength(20)]
+        public string Mime { get; set; }
         public int? CreatorUserId { get; set; }
+        [ForeignKey("CreatorUserId")]
+        public AppUser AppUser { get; set; }
         public DateTime? CreatorTime { get; set; }
         public bool? DeleteMark { get; set; }
         public int? DeleteUserId { get; set; }

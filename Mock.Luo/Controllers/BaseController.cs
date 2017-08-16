@@ -45,5 +45,10 @@ namespace Mock.Luo.Controllers
             return Content(new AjaxResult { state = state.ToString(), message = message, data = data }.ToJson());
         }
 
+        protected virtual ActionResult Result(object data)
+        {
+            return Content(JsonHelper.SerializeObject(data));
+        }
+
     }
 }

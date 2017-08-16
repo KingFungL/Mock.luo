@@ -23,8 +23,16 @@ namespace Mock.Data.Models
         public DbSet<UserRole> UserRole { get; set; }
 
         public DbSet<AppMenu> AppMenu { get; set; }
+
+        public DbSet<RoleMenu> RoleMenu { get; set; }
+
+        public DbSet<Article> Article { get; set; }
         public DbSet<Upload> Upload { get; set; }
-        public DbSet<UploadEntry> UploadEntry { get; set; }
+        public DbSet<Items> Items { get; set; }
+        public DbSet<ItemsDetail> ItemsDetail { get; set; }
+        public DbSet<PointArtice> PointArtice { get; set; }
+        public DbSet<ThirdUser> ThirdUser { get; set; }
+        public DbSet<Review> Review { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

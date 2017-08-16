@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/css/font-awesome.min93e3.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap.min14ed.css" rel="stylesheet" />
+
+</head>
+<body>
+    @RenderBody()
+
+
+
+    <script src="~/Content/js/jquery-2.1.4-min.js"></script>
+    <script src="~/Content/js/jquery.extend.js"></script>
+    <script src="~/Content/js/common.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/vue/vue.min.js"></script>
+    <script src="~/Content/js/layer.min.js"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
