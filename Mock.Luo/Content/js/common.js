@@ -30,7 +30,11 @@ com.ajax = function (options) {
     };
     var options = $.extend(defaults, options);
 
-    var index = layer.load(0, { shade: false });
+
+    var index = 0;
+    if (options.showLoading == true) {
+        index = layer.load(0, { shade: false });
+    }
 
     $.ajax({
         url: options.url,
@@ -39,18 +43,27 @@ com.ajax = function (options) {
         async: options.async,
         dataType: "json",
         success: function (data) {
-            layer.close(index);
-        
-            if (options.close) {
-                $.layerClose();
+            if (options.showLoading == true) {
+                layer.close(index);
             }
 
             if (options.showMsg) {
-                $.layerMsg(data.message, data.state, function () {
-                    if (options.success && $.isFunction(options.success)) {
-                        options.success(data);
+                $.procAjaxMsg(data, function () {
+                    //默认操作成功后，关闭iframe框
+                    if (options.close) {
+                        $.layerClose();
                     }
-                });
+                    //然后弹出成功操作的提示
+                    $.layerMsg(data.message, data.state, function () {
+                        //回调成功后的刷新表格操作
+                        if (options.success && $.isFunction(options.success)) {
+                            options.success(data);
+                        }
+                    });
+                }, function () {
+                    //操作失败时
+                    $.layerMsg(data.message, data.state);
+                })
             } else {
                 if (options.success && $.isFunction(options.success)) {
                     options.success(data);
@@ -67,7 +80,7 @@ com.ajax = function (options) {
         },
         error: function (xhr, status, error) {
             layer.close(index);
-
+            debugger;
             var msg = xhr.responseText;
             var errMsg = top.layer.open({
                 title: '错误提示',
@@ -344,4 +357,20 @@ com.delete = function (url, element) {
             });
         }
     });
+}
+
+
+com.getselectid = function (dgelement) {
+    if (!dgelement) {
+        dgelement = '#dginfo'
+    }
+    var Id = 0;
+    if ($('#dginfo').bootstrapTable('getSelections')[0] != undefined) {
+        var row = $(dgelement).bootstrapTable('getSelections')[0];
+        Id = row.Id;
+    };
+    if (Id == 0) {
+        layer.msg('请先选择需要编辑的信息！');
+    }
+    return Id;
 }

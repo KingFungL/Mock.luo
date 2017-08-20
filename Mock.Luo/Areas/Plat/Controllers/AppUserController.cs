@@ -25,8 +25,24 @@ namespace Mock.Luo.Areas.Plat.Controllers
         [HttpGet]
         public ActionResult Form(int id = 0)
         {
-
-            ViewBag.ViewModel = this.GetFormJson(id);
+            if (id == 0)
+            {
+                ViewBag.ViewModel = this.GetFormJson(id).ToJson();
+            }
+            else
+            {
+                var userEntity = _service.IQueryable(u => u.Id == id).Select(u => new {
+                    u.Id,
+                    u.LoginName,
+                    u.NickName,
+                    u.Email,
+                    roleIds = u.UserRoles.Select(r => new {
+                        id = r.RoleId,
+                        text = r.AppRole.RoleName
+                    }).ToList()
+                }).FirstOrDefault();
+                ViewBag.ViewModel = userEntity.ToJson();
+            }
             return View();
 
         }
@@ -36,5 +52,20 @@ namespace Mock.Luo.Areas.Plat.Controllers
             return Content(_service.GetDataGrid(pag, LoginName, Email).ToJson());
         }
        
+        public ActionResult SubmitForm(AppUser userEntity,string roleIds)
+        {
+            AjaxResult result = _service.IsRepeat(userEntity);
+
+            //用户名或邮箱重复
+            if (result.state == ResultType.error.ToString())
+            {
+                return Content(result.ToJson());
+            }
+
+            _service.SubmitForm(userEntity, roleIds);
+
+            return Success();
+
+        }
     }
 }

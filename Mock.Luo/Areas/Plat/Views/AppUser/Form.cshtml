@@ -9,44 +9,96 @@
     <form action="/" method="post">
         <div class="form-group">
             <label>登录名</label>
-            <input type="hidden" v-model="Id"  value="" />
-            <input type="text" v-model="LoginName"  class="form-control" />
+            <input type="hidden" v-model="Id" value="" />
+            <input type="text" v-model="LoginName" class="form-control" />
         </div>
         <div class="form-group">
             <label>邮件</label>
-            <input type="text" v-model="Email"  class="form-control" />
+            <input type="text" v-model="Email" class="form-control" />
         </div>
         <div class="form-group">
             <label>昵称</label>
-            <input type="text" v-model="NickName"  class="form-control" />
+            <input type="text" v-model="NickName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>角色配置</label>
+            <multiselect v-model="roleIds" :hide-selected="false" label="text" track-by="id" placeholder="--请配置角色--" :options="roleJson" :multiple="true"
+                         :searchable="true" :clear-on-select="false"
+                         :close-on-select="false">
+                <span slot="noResult">Oops! No elements found. Consider changing the search query.</span>
+            </multiselect>
+
         </div>
     </form>
 </div>
 
 @section css{
+    <link href="https://unpkg.com/vue-multiselect@2.0.0-beta.14/dist/vue-multiselect.min.css" rel="stylesheet" />
 
 }
-
-
 @section scripts{
+    <script src="https://unpkg.com/vue-multiselect@2.0.0-beta.14"></script>
     <script>
+        var json = JSON.parse(`@Html.Raw(ViewBag.ViewModel)`);
+        Vue.component('Multiselect',VueMultiselect.Multiselect);
+                 //json.roleJson = [];
 
-        var json = JSON.parse('@Html.Raw(ViewBag.ViewModel)');
+                 //json.roleIds = json.roleIds==null?[]:json.roleIds;
 
-        var vm = new Vue({
-            el: '#v-app',
-            data: json,
-            methods: {
-                submit: function (callback) {
-                    com.ajax({
-                        url: '/Plat/AppUser/Edit/' + vm.Id,
-                        data: vm.$data,
-                        showMsg: true,
-                        success: callback
-                    })
-                }
-            }
-        });
+                 //$ui = {};
+                 //$ui.get_rolejson=function () {
+                 //    com.ajax({
+                 //        url: '/Plat/AppRole/GetRoleJson',
+                 //        showLoading: false,
+                 //        success: function (d) {
+                 //            json.roleJson = d;
+                 //        }
+                 //    });
+                 //}
+
+                 var vm = new Vue({
+                    el: '#v-app',
+                    data: json,
+                    beforeCreate: function () {
+                        json.roleJson = [];
+                        json.roleIds = json.roleIds == null ? [] : json.roleIds;
+                        //$ui.get_rolejson();
+                    },
+                    mounted: function () {
+                        this.get_rolejson();
+                    },
+                    methods: {
+                        submit: function (callback) {
+                            var roleIds = [];
+                            vm.roleIds.forEach(u => {
+                                roleIds.push(u.id);
+                            });
+
+                            var postdata = {
+                                Id: vm.Id,
+                                LoginName: vm.LoginName,
+                                NickName: vm.NickName,
+                                Email: vm.Email,
+                                roleIds: String(roleIds)
+                            };
+                            com.ajax({
+                                url: '/Plat/AppUser/SubmitForm',
+                                data: postdata,
+                                showMsg: true,
+                                success: callback
+                            })
+                        },
+                        get_rolejson:function () {
+                            com.ajax({
+                                url: '/Plat/AppRole/GetRoleJson',
+                                showLoading: false,
+                                success: function (d) {
+                                    json.roleJson = d;
+                                }
+                            });
+                        }
+                    },
+                });
     </script>
 
 }

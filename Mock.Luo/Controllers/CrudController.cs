@@ -28,17 +28,17 @@ namespace Mock.Luo.Controllers
         /// <returns></returns>
         public string GetFormJson(int Id = 0)
         {
-            TViewModel viewModel;
-            TEntityModel entity = _ibase.FindEntity(Id);
+            TViewModel viewModel = new TViewModel { };
+            if (Id != 0)
+            {
+                TEntityModel entity = _ibase.FindEntity(Id);
+                if (entity != null)
+                {
 
-            if (entity != null)
-            {
-                viewModel = Mapper.Map<TEntityModel, TViewModel>(entity);
+                    viewModel = Mapper.Map<TEntityModel, TViewModel>(entity);
+                }
             }
-            else
-            {
-                viewModel = new TViewModel { };
-            }
+
             return viewModel.ToJson();
         }
         #endregion
@@ -99,7 +99,7 @@ namespace Mock.Luo.Controllers
                 }
                 return Error("编辑失败");
             }
-        } 
+        }
         #endregion
 
 

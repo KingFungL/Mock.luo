@@ -7,7 +7,7 @@ namespace Mock.Code
         /// <summary>
         /// 操作结果类型
         /// </summary>
-        public object state { get; set; }
+        public string state { get; set; }
         /// <summary>
         /// 获取 消息内容
         /// </summary>
@@ -16,6 +16,21 @@ namespace Mock.Code
         /// 获取 返回数据
         /// </summary>
         public object data { get; set; }
+
+        public static AjaxResult Info(string message, object data, string state)
+        {
+            return new AjaxResult { state = state, message = message, data = data };
+        }
+
+        public static AjaxResult Success(string message, object data = null)
+        {
+            return Info(message, data, ResultType.success.ToString());
+        }
+        public static AjaxResult Error(string message, object data = null)
+        {
+            return Info(message, data, ResultType.error.ToString());
+        }
+
     }
     /// <summary>
     /// 表示 ajax 操作结果类型的枚举
@@ -42,9 +57,9 @@ namespace Mock.Code
         /// 未登录
         /// </summary>
         nologin,
-       /// <summary>
-       /// 没有权限
-       /// </summary>
+        /// <summary>
+        /// 没有权限
+        /// </summary>
         nopermission
 
     }

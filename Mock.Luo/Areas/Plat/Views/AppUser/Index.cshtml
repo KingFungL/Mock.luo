@@ -48,7 +48,6 @@
 @section scripts{
     <script type="text/javascript">
 
-        //初始化页面上面的按钮事件
         var vm = new Vue({
             el: '#v-app',
             data: {
@@ -57,37 +56,12 @@
             },
             methods: {
                 btn_add: function () {
-                    $.layerOpen({
-                        title: '新增用户',
-                        content: '/Plat/AppUser/Form?Id=0',
-                        width: '50%',
-                        height:'50%',
-                        yes: function (iframebody, iframeWin, index) {
-                            iframeWin.vm.submit(function () {
-                                vm.btn_clear();
-                            });
-                        }
-                    });
+                    this.editinfo('新增用户', 0);
                 },
                 btn_edit: function () {
-                    var Id = 0;
-                    var AduitState = 0
-                    if ($('#dginfo').bootstrapTable('getSelections')[0] != undefined) {
-                        var row = $('#dginfo').bootstrapTable('getSelections')[0];
-                        Id = row.Id;
-                    };
-                    if (Id == 0) { layer.msg('请先选择需要编辑的信息！'); return; }
-                    $.layerOpen({
-                        title: '编辑用户',
-                        width: '50%',
-                        height: '50%',
-                        content: '/Plat/AppUser/Form/' + Id,
-                        yes: function (iframebody, iframeWin, index) {
-                            iframeWin.vm.submit(function () {
-                                vm.btn_clear();
-                            });
-                        }
-                    });
+                    var Id = com.getselectid('#dginfo');
+                    if (Id == 0) return;
+                    this.editinfo('编辑用户', Id);
                 },
                 btn_delete: function () {
                     com.delete('/Plat/AppUser/Delete');
@@ -99,6 +73,19 @@
                     this.Email = '';
                     this.LoginName = '';
                     $('#dginfo').bootstrapTable("refresh");
+                },
+                editinfo: function (title, Id) {
+                    $.layerOpen({
+                        title: title,
+                        width: '50%',
+                        height: '70%',
+                        content: '/Plat/AppUser/Form/' + Id,
+                        yes: function (iframebody, iframeWin, index) {
+                            iframeWin.vm.submit(function () {
+                                vm.btn_clear();
+                            });
+                        }
+                    });
                 }
             }
         });
@@ -112,7 +99,7 @@
                     sortOrder: "desc,asc", //排序方式
                     sortName: 'LoginName,Id',
                     queryParams: oTableInit.queryParams,
-                    uniqueId: "Id", 
+                    uniqueId: "Id",
                     columns: [{
                         checkbox: true
                     }, {
@@ -141,27 +128,27 @@
 
             //得到查询的参数
             oTableInit.queryParams = function (params) {
-                var temp = {
-                    limit: params.limit, //页面大小
-                    offset: params.offset, //页码
-                    order: params.order,
-                    sort: params.sort,
-                    Email: vm.Email,
-                    LoginName: vm.LoginName
-                };
-                return temp;
+                //var temp = {
+                //    limit: params.limit, //页面大小
+                //    offset: params.offset, //页码
+                //    order: params.order,
+                //    sort: params.sort,
+                //    Email: vm.Email,
+                //    LoginName: vm.LoginName
+                //};
+                //return temp;
+                params.Email = vm.Email;
+                params.LoginName = vm.LoginName;
+                return params;
             };
             return oTableInit;
         };
-        $(function () {
 
+        $(function () {
             //初始化Table
             var oTable = new TableInit();
             oTable.Init();
         });
-
-
-
 
     </script>
 }
