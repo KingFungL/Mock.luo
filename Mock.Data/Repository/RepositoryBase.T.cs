@@ -51,23 +51,13 @@ namespace Mock.Data
             return dbcontext.SaveChanges();
         }
         /// <summary>
-        /// 在没有外键关联的情况下，更新所有字段
+        /// 根据实体属性全部字段修改
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
         public int Update(TEntity entity)
         {
-            dbcontext.Set<TEntity>().Attach(entity);
-            PropertyInfo[] props = entity.GetType().GetProperties();
-            foreach (PropertyInfo prop in props)
-            {
-                if (prop.GetValue(entity, null) != null)
-                {
-                    if (prop.GetValue(entity, null).ToString() == "&nbsp;")
-                        dbcontext.Entry(entity).Property(prop.Name).CurrentValue = null;
-                    dbcontext.Entry(entity).Property(prop.Name).IsModified = true;
-                }
-            }
+            dbcontext.Entry(entity).State = EntityState.Modified;
             return dbcontext.SaveChanges();
         }
 

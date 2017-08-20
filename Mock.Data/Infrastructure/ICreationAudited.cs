@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Mock.Data
 {
-    public interface ICreationAudited
+    public interface ICreationAudited : IAduited
     {
-        int? Id { get; set; }
         int? CreatorUserId { get; set; }
         DateTime? CreatorTime { get; set; }
+        bool? DeleteMark { get; set; }
     }
 }

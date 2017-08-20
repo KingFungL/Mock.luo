@@ -60,28 +60,28 @@ namespace Mock.Luo.Areas.Mock.Controllers
         [ValidateInput(false)]
         public ActionResult SendEmail(EmailEntity entity)
         {
-            AjaxMsg result;
+            ActionResult result;
             MailHelper helper = new MailHelper();
             try
             {
                 bool flag = helper.Send(entity.sendTo, entity.mainTitle, entity.content);
- 
+
                 if (flag == true)
                 {
-                    result = AjaxMsg.Success("发送成功！");
+                    result = Success("发送成功！");
 
                 }
                 else
                 {
-                    result = AjaxMsg.Error("发送失败！");
+                    result = Error("发送失败！");
                 }
             }
             catch (Exception ex)
             {
-                result = AjaxMsg.Error("发送失败！" + ex);
+                result = Error("发送失败！" + ex);
             }
 
-            return Content(DataHelper.ObjToJson(result));
+            return result;
         }
     }
     public class EmailEntity

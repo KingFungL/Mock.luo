@@ -11,15 +11,19 @@
 
         public OperatorModel GetCurrent()
         {
-            OperatorModel operatorModel = new OperatorModel();
-            if (LoginProvider == "Cookie")
+            OperatorModel operatorModel = new OperatorModel()
             {
-                operatorModel = DESEncrypt.Decrypt(WebHelper.GetCookie(LoginUserKey).ToString()).ToObject<OperatorModel>();
-            }
-            else
-            {
-                operatorModel = DESEncrypt.Decrypt(WebHelper.GetSession(LoginUserKey).ToString()).ToObject<OperatorModel>();
-            }
+                UserId = 3
+            };
+            
+            //if (LoginProvider == "Cookie")
+            //{
+            //    operatorModel = DESEncrypt.Decrypt(WebHelper.GetCookie(LoginUserKey).ToString()).ToObject<OperatorModel>();
+            //}
+            //else
+            //{
+            //    operatorModel = DESEncrypt.Decrypt(WebHelper.GetSession(LoginUserKey).ToString()).ToObject<OperatorModel>();
+            //}
             return operatorModel;
         }
         public void AddCurrent(OperatorModel operatorModel)

@@ -1,6 +1,7 @@
 ﻿using Mock.Code.Helpers;
 using Newtonsoft.Json;
-using System.Collections.   Generic;
+using Newtonsoft.Json.Converters;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Mock.Code
@@ -18,6 +19,7 @@ namespace Mock.Code
         public static string SerializeObject(object o)
         {
             JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
             settings.MissingMemberHandling = MissingMemberHandling.Ignore;
             string json = JsonConvert.SerializeObject(o, settings);
             return json;

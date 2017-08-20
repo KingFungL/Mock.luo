@@ -1,6 +1,9 @@
-﻿using Mock.Code;
+﻿using Autofac;
+using AutoMapper;
+using Mock.Code;
 using Mock.Data.Models;
 using Mock.Domain;
+using Mock.Luo.Areas.Plat.Models;
 using Mock.Luo.Controllers;
 using System;
 using System.Collections.Generic;
@@ -10,40 +13,28 @@ using System.Web.Mvc;
 
 namespace Mock.Luo.Areas.Plat.Controllers
 {
-    public class AppUserController : BaseController
+    public class AppUserController : CrudController<AppUser, AppUserViewModel>
     {
         // GET: Plat/AppUser
         IAppUserRepository _service;
-        public AppUserController(IAppUserRepository service)
+        public AppUserController(IAppUserRepository service, IComponentContext container) : base(container)
         {
             this._service = service;
         }
 
         [HttpGet]
-        public ActionResult Form(int id)
+        public ActionResult Form(int id = 0)
         {
-            AppUser userEntity;
-            if (id == 0)
-            {
-                userEntity = new AppUser { };
-            }
-            else
-            {
-                userEntity = _service.FindEntity(id);
-            }
-            return View(userEntity);
+
+            ViewBag.ViewModel = this.GetFormJson(id);
+            return View();
 
         }
         [HttpPost]
-        public ActionResult GetGrid(Pagination pag)
+        public ActionResult GetGrid(Pagination pag, string LoginName = "", string Email = "")
         {
-            return Content(_service.GetDataGrid(pag).ToJson());
+            return Content(_service.GetDataGrid(pag, LoginName, Email).ToJson());
         }
-        [HttpPost]
-        public ActionResult Edit(AppUser userEntity)
-        {
-            _service.Edit(userEntity);
-            return Success();
-        }
+       
     }
 }

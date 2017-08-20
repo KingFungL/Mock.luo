@@ -196,7 +196,7 @@ $(function () {
         }
         return false
     }
-    $(".J_menuTabs").on("click", ".J_menuTab i", h);
+    $(".J_menuTabs").on("click", ".J_menuTab i:eq(1)", h);
 
     function i() {
         $(".page-tabs-content").children("[data-id]").not(":first").not(".active").each(function () {

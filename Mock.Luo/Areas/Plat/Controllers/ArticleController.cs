@@ -19,10 +19,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         {
             this._service = service;
         }
-        public ActionResult Index()
-        {
-            return View();
-        }
+
         public ActionResult GetGrid(Pagination pag)
         {
             return Content(_service.GetDataGrid(pag).ToJson());

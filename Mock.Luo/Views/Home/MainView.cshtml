@@ -1,5 +1,6 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/_Index.cshtml";
+    ViewBag.Title = "首页";
 }
 
 
@@ -7,25 +8,20 @@
     <span>首页</span>
 </div>
 
-<script src="~/Content/js/jquery-2.1.4.min.js"></script>
-<script>
-    $('#btn').click(function () {
-        top.location.href ='/Home/BlogView'
-    })
-</script>
-<style>
-    .button {
-        height: 30px;
-        line-height: 30px;
-        width: 88px;
-        text-align: center;
-        border-radius: 5px;
-        background-color: #0F6099;
-        color: white;
-    }
 
-        .button:hover {
-            background-color: orange;
-            cursor: pointer;
-        }
-</style>
+@section css{
+    <style>
+        .button { height: 30px; line-height: 30px; width: 88px; text-align: center; border-radius: 5px; background-color: #0F6099; color: white; }
+        .button:hover { background-color: orange; cursor: pointer; }
+    </style>
+
+}
+
+@section scripts{
+    <script>
+        $('#btn').click(function () {
+            top.location.href = '/Home/BlogView'
+        })
+    </script>
+
+}

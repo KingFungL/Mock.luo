@@ -14,7 +14,7 @@ namespace Mock.Luo
                 "~/Content/js/jquery-2.1.4-min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery-extends").Include(
-                "~/Content/js/jquery.extend.js",
+                "~/Content/js/global.js",
                 "~/Content/js/common.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -42,8 +42,9 @@ namespace Mock.Luo
             bundles.Add(new StyleBundle("~/Content/css/bootstrap").Include(
                 "~/Content/css/bootstrap.min14ed.css",
                 "~/Content/css/font-awesome.min93e3.css",
-                "~/Content/css/animate.min.css",
-                "~/Content/css/style.min862f.css"
+                "~/Content/css/animate.min2932.css",
+                "~/Content/css/style.min862f.css",
+                "~/Content/css/bootstrap-table.min12.css"
                 ));
         }
     }

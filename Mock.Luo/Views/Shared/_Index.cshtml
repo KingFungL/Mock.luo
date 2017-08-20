@@ -1,12 +1,18 @@
-﻿<!DOCTYPE html>
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@ViewBag.Title</title>
-    <link href="~/Content/css/font-awesome.min93e3.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="~/Content/css/bootstrap.min14ed.css" rel="stylesheet" />
+    <link href="~/Content/css/font-awesome.min93e3.css" rel="stylesheet" />
+    <link href="~/Content/css/animate.min2932.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap-table.min12.css" rel="stylesheet"/>
+    @RenderSection("css",required:false)
 
 </head>
 <body>
@@ -14,13 +20,16 @@
 
 
 
+
+
     <script src="~/Content/js/jquery-2.1.4-min.js"></script>
-    <script src="~/Content/js/jquery.extend.js"></script>
+    <script src="~/Content/js/global.js?v=1"></script>
     <script src="~/Content/js/common.js"></script>
     <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/bootstrap-table.min.js"></script>
+    <script src="~/Content/js/bootstrap-table-zh-CN.min.js"></script>   
     <script src="~/Content/js/vue/vue.min.js"></script>
-    <script src="~/Content/js/layer.min.js"></script>
-
+    <script src="~/Content/js/layui/lay/dest/layui.all.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

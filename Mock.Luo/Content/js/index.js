@@ -15,7 +15,6 @@ var $ui = new Object();
 
 $ui.initMenu = function (menulist) {
 
-   
     //var menulist=$ui.get_static_menu();
     var $sidemenu = $('#side-menu');
     var html = '';
@@ -63,7 +62,6 @@ $ui.initMenu = function (menulist) {
         html += '</ul></li>';
     }
     $sidemenu.append(html);
-
 }
 
 //三级菜单

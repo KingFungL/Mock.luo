@@ -26,7 +26,7 @@ namespace Mock.Luo
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutofacConfig.Register();
-
+            AutoMapperConfig.RegisterMappings();
         }
     }
 }

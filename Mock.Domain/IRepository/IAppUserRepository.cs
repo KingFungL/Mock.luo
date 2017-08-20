@@ -11,8 +11,7 @@ namespace Mock.Domain
 {
     public interface IAppUserRepository : IRepositoryBase<AppUser>
     {
-        dynamic GetFormById(int Id);
-        DataGrid GetDataGrid(Pagination pag);
+        DataGrid GetDataGrid(Pagination pag,string LoginName,string Email);
          void Edit(AppUser userEntity);
     }
 }

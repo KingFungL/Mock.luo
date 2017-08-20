@@ -23,20 +23,31 @@ namespace Mock.Code
     public enum ResultType
     {
         /// <summary>
-        /// 消息结果类型
+        /// 警告结果类型
         /// </summary>
-        info,
+        warning,
         /// <summary>
         /// 成功结果类型
         /// </summary>
         success,
         /// <summary>
-        /// 警告结果类型
-        /// </summary>
-        warning,
-        /// <summary>
         /// 异常结果类型
         /// </summary>
-        error
+        error,
+        /// <summary>
+        /// 消息结果类型
+        /// </summary>
+        info,
+        /// <summary>
+        /// 未登录
+        /// </summary>
+        nologin,
+       /// <summary>
+       /// 没有权限
+       /// </summary>
+        nopermission
+
     }
 }
+
+

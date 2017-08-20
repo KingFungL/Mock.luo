@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Mock.Data
 {
-    public interface IModificationAudited
+    public interface IModificationAudited : IAduited
     {
-        int? Id { get; set; }
-        int?  LastModifyUserId { get; set; }
-        DateTime?  LastModifyTime { get; set; }
+        int? LastModifyUserId { get; set; }
+        DateTime? LastModifyTime { get; set; }
     }
 }

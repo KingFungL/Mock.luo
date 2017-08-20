@@ -17,6 +17,7 @@ namespace Mock.Data
             {
                 entity.CreatorUserId = LoginInfo.UserId;
             }
+            entity.DeleteMark = false;
             entity.CreatorTime = DateTime.Now;
         }
         public void Modify(int? keyValue)

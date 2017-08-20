@@ -1,0 +1,25 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/css/bootstrap.min14ed.css" rel="stylesheet" />
+    <link href="~/Content/css/font-awesome.min93e3.css" rel="stylesheet" />
+    @RenderSection("css", required: false)
+</head>
+<body>
+    @RenderBody()
+    @Scripts.Render("~/bundles/jquery")
+    @*@Scripts.Render("~/bundles/jquery-extends")*@
+    <script src="~/Content/js/global.js?v=1"></script>
+    <script src="~/Content/js/common.js?v=2"></script>
+    <script src="~/Content/js/vue/vue.min.js"></script>
+    <script src="~/Content/js/layui/lay/dest/layui.all.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

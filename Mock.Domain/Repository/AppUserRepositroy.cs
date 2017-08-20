@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Mock.Code;
+using System.Linq.Expressions;
 
 namespace Mock.Domain
 {
@@ -14,31 +15,24 @@ namespace Mock.Domain
     /// </summary>]
     public class AppUserRepositroy : RepositoryBase<AppUser>, IAppUserRepository
     {
-        public DataGrid GetDataGrid(Pagination pag)
+        public DataGrid GetDataGrid(Pagination pag, string LoginName, string Email)
         {
 
-            var dglist = this.IQueryable(u => u.DeleteMark == false).Where(pag).Select(u => new
+            Expression<Func<AppUser, bool>> predicate = u => u.DeleteMark == false && (LoginName == "" || u.LoginName.Contains(LoginName))
+            && (Email == "" || u.Email.Contains(Email));
+
+            var dglist = this.IQueryable(predicate).Where(pag).Select(u => new
             {
                 u.LoginName,
                 u.NickName,
                 u.Email,
-                u.Id
+                u.Id,
+                u.LoginCount,
+                u.LastLoginTime
             }).ToList();
 
             return new DataGrid { rows = dglist, total = pag.total };
 
-        }
-
-        public dynamic GetFormById(int Id)
-        {
-            var d = this.IQueryable(u => u.Id == Id).Select(u => new
-            {
-                u.LoginName,
-                u.NickName,
-                u.Email,
-                u.Id
-            }).FirstOrDefault();
-            return d;
         }
 
         public void Edit(AppUser userEntity)
@@ -52,7 +46,7 @@ namespace Mock.Domain
             else
             {
                 userEntity.Modify(userEntity.Id);
-                string[] modifystrs = { "LoginName", "Phone", "Email", "Birthday", "PersonalWebsite", "NickName", "PersonSignature ", "HeadHref", "Sex", "LastModifyUserId", "LastModifyTime" };
+                string[] modifystrs = { "LoginName", "Phone", "Email", "Birthday", "PersonalWebsite", "NickName", "PersonSignature", "HeadHref", "Sex", "LastModifyUserId", "LastModifyTime" };
                 this.Update(userEntity, modifystrs);
             }
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mock.Data
 {
-    public interface IDeleteAudited
+    public interface IDeleteAudited : IAduited
     {
         /// <summary>
         /// 逻辑删除标记
