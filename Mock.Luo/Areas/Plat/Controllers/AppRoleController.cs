@@ -28,5 +28,16 @@ namespace Mock.Luo.Areas.Plat.Controllers
             return Result(_service.GetRoleJson());
         }
 
+        public ActionResult Form(int Id)
+        {
+            ViewBag.ViewModel = this.GetFormJson(Id);
+            return View();
+        }
+
+        public ActionResult GetDataGrid(string search="")
+        {
+            return Result(_service.GetDataGrid(search));
+        }
+
     }
 }

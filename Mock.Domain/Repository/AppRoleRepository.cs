@@ -13,15 +13,33 @@ namespace Mock.Domain
 
     public class AppRoleRepository : RepositoryBase<AppRole>, IAppRoleRepository
     {
+
+
         public dynamic GetRoleJson()
-        { //Type=1时为按钮，下拉菜单框中为选上级菜单，去除按钮
-            var entities = this.IQueryable().Where(u => u.DeleteMark == false).OrderBy(u => u.SortCode).Select(u => new
+        {
+            var entities = this.IQueryable().Where(u => u.DeleteMark == false && u.IsEnableMark == true).OrderBy(u => u.SortCode).Select(u => new
             {
                 id = u.Id,
                 text = u.RoleName
             }).ToList();
 
             return entities;
+        }
+
+        public DataGrid GetDataGrid(string search)
+        {
+            Expression<Func<AppRole, bool>> predicate = u => u.DeleteMark == false
+            && (search == "" || u.RoleName.Contains(search))
+            && (search == "" || u.Remark.Contains(search));
+            var entities = this.IQueryable(predicate).OrderBy(u => u.SortCode).ThenByDescending(r => r.Id).Select(u => new
+            {
+                u.Id,
+                u.RoleName,
+                u.SortCode,
+                u.Remark,
+                u.IsEnableMark
+            }).ToList();
+            return new DataGrid { rows = entities, total = entities.Count() };
         }
     }
 }

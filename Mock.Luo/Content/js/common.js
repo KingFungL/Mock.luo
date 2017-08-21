@@ -156,21 +156,20 @@ com.formatString = function () {
 
 /***是否启用*/
 com.formatIsEnable = function (value, row) {
-    var enableMark = '', selectwith = '', leftpx = 1;
+    var enableMark = '', selectwith = '', leftpx = 5;
     if (value == true) {
-        enableMark = "是";
+        enableMark = "启用";
         selectwith = 'layui-form-onswitch';
-        leftpx = 24;
+        leftpx = 32;
     } else {
-        enableMark = "否";
+        enableMark = "禁用";
         selectwith = '';
-        leftpx = 1;
+        leftpx = 5;
     }
     var check = com.formatString(
-        '<div class="layui-unselect layui-form-switch {0}" lay- skin="_switch" >\
+        '<div class="layui-box layui-unselect layui-form-switch {0}" lay- skin="_switch" style="margin-top:0px;" >\
             <em> {1}</em >\
-            <i style= "top:2px;left:{2}px;" >\
-            </i>\
+            <i style= "top:3px;left:{2}px;" ></i>\
          </div>', selectwith, enableMark, leftpx);
     return check;
 };

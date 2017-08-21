@@ -10,7 +10,13 @@
     <title>@ViewBag.Title</title>
     <link href="~/Content/css/bootstrap.min14ed.css" rel="stylesheet" />
     <link href="~/Content/css/font-awesome.min93e3.css" rel="stylesheet" />
+    <link href="~/Content/js/layui2.0/css/layui.css" rel="stylesheet" />
     @RenderSection("css", required: false)
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
     @RenderBody()
@@ -19,7 +25,8 @@
     <script src="~/Content/js/global.js?v=1"></script>
     <script src="~/Content/js/common.js?v=2"></script>
     <script src="~/Content/js/vue/vue.min.js"></script>
-    <script src="~/Content/js/layui/lay/dest/layui.all.js"></script>
+    @*<script src="~/Content/js/layui/lay/dest/layui.all.js"></script>*@
+    <script src="~/Content/js/layui2.0/layui.all.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

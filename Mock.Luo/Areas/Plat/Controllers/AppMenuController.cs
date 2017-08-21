@@ -21,7 +21,6 @@ namespace Mock.Luo.Areas.Plat.Controllers
             this._service = service;
         }
 
-
         #region 根据用户id得到用户菜单权限
         public ActionResult GetUserMenu(int userid = 1)
         {
@@ -40,19 +39,5 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
             return Content(dg.ToJson());
         }
-
-
-        public ActionResult SubmitForm(AppMenu entity)
-        {
-            _service.SubmitForm(entity);
-            return Success();
-        }
-
-        public ActionResult DeleteForm(int id)
-        {
-            _service.DeleteForm(id);
-            return Success();
-        }
-
     }
 }

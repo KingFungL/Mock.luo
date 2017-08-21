@@ -29,11 +29,21 @@ namespace Mock.Domain
             return new DataGrid { rows = rows, total = rows.Count() };
         }
 
-        public List<AppMenu> GetInsertOrUpdateList(Dictionary<string, object> di, string type)
+        public DataGrid GetTreeGrid()
         {
+            var entities = this.IQueryable(u => u.DeleteMark == false).Select(r => new {
+                r.Id,
+                r.PId,
+                r.MenuName,
+                r.SortCode,
+                r.State,
+                r.Target
+            }).ToList();
+
+            return new DataGrid { rows = entities, total = entities.Count() };
+
             throw new NotImplementedException();
         }
-
 
         public List<AppMenu> GetUserMenus(int userid)
         {
@@ -55,27 +65,5 @@ namespace Mock.Domain
             throw new NotImplementedException();
         }
 
-
-
-        public void SubmitForm(AppMenu entity)
-        {
-            if (entity.Id == 0)
-            {
-                entity.Create();
-                this.Insert(entity);
-            }
-            else
-            {
-                entity.Modify(entity.Id);
-                string[] modifystrs = { "PId", "MenuName", "SortCode", "State", "Icon", "LinkUrl", "Target", "LastModifyUserId", "LastModifyTime" };
-                this.Update(entity, modifystrs);
-            }
-        }
-        public void DeleteForm(int id)
-        {
-            AppMenu entity = new AppMenu { Id = id };
-            entity.Remove();
-            this.Update(entity, "DeleteMark", "DeleteUserId", "DeleteTime");
-        }
     }
 }

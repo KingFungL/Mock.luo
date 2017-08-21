@@ -41,20 +41,6 @@
     <script>
         var json = JSON.parse(`@Html.Raw(ViewBag.ViewModel)`);
         Vue.component('Multiselect',VueMultiselect.Multiselect);
-                 //json.roleJson = [];
-
-                 //json.roleIds = json.roleIds==null?[]:json.roleIds;
-
-                 //$ui = {};
-                 //$ui.get_rolejson=function () {
-                 //    com.ajax({
-                 //        url: '/Plat/AppRole/GetRoleJson',
-                 //        showLoading: false,
-                 //        success: function (d) {
-                 //            json.roleJson = d;
-                 //        }
-                 //    });
-                 //}
 
                  var vm = new Vue({
                     el: '#v-app',
@@ -62,7 +48,6 @@
                     beforeCreate: function () {
                         json.roleJson = [];
                         json.roleIds = json.roleIds == null ? [] : json.roleIds;
-                        //$ui.get_rolejson();
                     },
                     mounted: function () {
                         this.get_rolejson();

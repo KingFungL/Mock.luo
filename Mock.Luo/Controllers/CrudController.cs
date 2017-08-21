@@ -47,13 +47,13 @@ namespace Mock.Luo.Controllers
         #region Edit 统一的新增，编辑方法，每次用一次拆箱，装箱，不知道会不会影响速度
         /// <summary>
         /// author:luozQ
-        /// function:通用新增，编辑方法
+        /// function:Edit 统一的新增，编辑方法，每次用一次拆箱，装箱，不知道会不会影响速度
         /// </summary>
         /// <param name="Id">主键</param>
         /// <param name="viewModel">实体对象</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Edit(TViewModel viewModel, int Id = 0)
+        public virtual ActionResult Edit(TViewModel viewModel, int Id = 0)
         {
             var userid = OperatorProvider.Provider.GetCurrent().UserId;
             //新增

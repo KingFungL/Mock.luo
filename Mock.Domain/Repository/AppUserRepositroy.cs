@@ -28,7 +28,8 @@ namespace Mock.Domain
                 u.Email,
                 u.Id,
                 u.LoginCount,
-                u.LastLoginTime
+                u.LastLoginTime,
+                UserRoleList=u.UserRoles.Select(r=>r.AppRole.RoleName)
             }).ToList();
 
             return new DataGrid { rows = dglist, total = pag.total };

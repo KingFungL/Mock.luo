@@ -74,13 +74,9 @@
     <Compile Include="Infrastructure\IDeleteAudited.cs" />
     <Compile Include="Infrastructure\IEntity.cs" />
     <Compile Include="Infrastructure\IModificationAudited.cs" />
-    <Compile Include="Migrations\201708161648243_3.cs" />
-    <Compile Include="Migrations\201708161648243_3.Designer.cs">
-      <DependentUpon>201708161648243_3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708161827224_5.cs" />
-    <Compile Include="Migrations\201708161827224_5.Designer.cs">
-      <DependentUpon>201708161827224_5.cs</DependentUpon>
+    <Compile Include="Migrations\201708211135020_1.cs" />
+    <Compile Include="Migrations\201708211135020_1.Designer.cs">
+      <DependentUpon>201708211135020_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppMenu.cs" />
@@ -116,11 +112,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708161648243_3.resx">
-      <DependentUpon>201708161648243_3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708161827224_5.resx">
-      <DependentUpon>201708161827224_5.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708211135020_1.resx">
+      <DependentUpon>201708211135020_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

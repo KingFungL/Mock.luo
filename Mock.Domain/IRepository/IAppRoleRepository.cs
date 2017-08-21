@@ -18,6 +18,13 @@ namespace Mock.Domain
         /// </summary>
         /// <returns></returns>
         dynamic GetRoleJson();
+        /// <summary>
+        /// 不分页的角色列表数据
+        /// </summary>
+        /// <returns></returns>
+
+        DataGrid GetDataGrid(string search);
+        
 
     }
 }

@@ -21,6 +21,8 @@ namespace Mock.Data.Models
         [StringLength(50)]
         public string Remark { get; set; }
         public int? SortCode { get; set; }
+
+        public bool? IsEnableMark { get; set; }
         public virtual ICollection<UserRole> UserRoles { get; set; }
 
         public int? CreatorUserId { get; set; }

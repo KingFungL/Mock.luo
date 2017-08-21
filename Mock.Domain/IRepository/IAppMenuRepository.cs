@@ -28,14 +28,7 @@ namespace Mock.Domain
         string GetUserMenusTree();
         #endregion
 
-        DataGrid GetTreeGrid(bool isMemu = false);
-
-    
-        void SubmitForm(AppMenu entity);
-
-        List<AppMenu> GetInsertOrUpdateList(Dictionary<string, object> di, string type);
-
-        void DeleteForm(int id);
+        DataGrid GetTreeGrid();
 
     }
 }

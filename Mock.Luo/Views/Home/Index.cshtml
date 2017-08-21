@@ -8,7 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>首页</title>
     <link href="~/Content/css/bootstrap.min14ed.css" rel="stylesheet" />
-    <link href="~/Content/css/font-awesome.min93e3.css" rel="stylesheet" />
+    <link href="~/Content/css/font-awesome4.7.min.css" rel="stylesheet" />
     <link href="~/Content/css/animate.min2932.css" rel="stylesheet" />
     <link href="~/Content/css/style.min862f.css?v=4.1.0" rel="stylesheet" />
     <link href="~/Content/js/layui/css/layui.css" rel="stylesheet" />
@@ -20,30 +20,30 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="side-menu">
                     @*   <li>
-                        <a href="#">
-                            <i class="fa fa-home"></i>
-                            <span class="nav-label">主页</span>
-                            <span class="fa arrow"></span>
-                        </a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a class="J_menuItem" href="/Home/UploadFileView" data-index="1"><i class="fa fa-upload"></i>上传文件</a>
-                            </li>
-                            <li>
-                                <a class="J_menuItem" href="/Home/DatalistView" data-index="2"><i class="fa fa-tasks"></i>DatalistView</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="J_menuItem" target="_blank" href="layouts.html" data-index="2"><i class="fa fa-columns"></i><span class="nav-label">布局</span></a>
-                    </li>*@
+                            <a href="#">
+                                <i class="fa fa-home"></i>
+                                <span class="nav-label">主页</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a class="J_menuItem" href="/Home/UploadFileView" data-index="1"><i class="fa fa-upload"></i>上传文件</a>
+                                </li>
+                                <li>
+                                    <a class="J_menuItem" href="/Home/DatalistView" data-index="2"><i class="fa fa-tasks"></i>DatalistView</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="J_menuItem" target="_blank" href="layouts.html" data-index="2"><i class="fa fa-columns"></i><span class="nav-label">布局</span></a>
+                        </li>*@
                 </ul>
             </div>
         </nav>
         <!--左侧导航结束-->
         <!--右侧部分开始-->
         <div id="page-wrapper" class="gray-bg dashbard-1">
-            
+
 
             <div class="row content-tabs">
                 <nav class="page-tabs J_menuTabs">
@@ -59,12 +59,15 @@
                         关闭操作<span class="caret"></span>
                     </button>
                     <ul role="menu" class="dropdown-menu dropdown-menu-right">
-                        <li class="J_tabShowActive"><a>定位当前选项卡</a>
+                        <li class="J_tabShowActive">
+                            <a>定位当前选项卡</a>
                         </li>
                         <li class="divider"></li>
-                        <li class="J_tabCloseAll"><a>关闭全部选项卡</a>
+                        <li class="J_tabCloseAll">
+                            <a>关闭全部选项卡</a>
                         </li>
-                        <li class="J_tabCloseOther"><a>关闭其他选项卡</a>
+                        <li class="J_tabCloseOther">
+                            <a>关闭其他选项卡</a>
                         </li>
                     </ul>
                 </div>
@@ -81,13 +84,15 @@
     </div>
     <script src="~/Content/js/jquery.js"></script>
     <script src="~/Content/js/bootstrap.min.js"></script>
-    <script src="~/Content/js/layui/lay/dest/layui.all.js"></script>
+    <script src="~/Content/js/layui2.0/layui.all.js"></script>
     <script src="~/Content/js/common.js"></script>
     <script src="~/Content/js/index.js"></script>
     <script src="~/Content/js/jquery.metisMenu.js"></script>
     <script src="http://139.129.7.65:81/hplus/js/plugins/slimscroll/jquery.slimscroll.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src=" http://139.129.7.65:81/hplus/js/hplus.min.js?v=4.1.0" type="text/javascript" charset="utf-8"></script>
+    @*<script src=" http://139.129.7.65:81/hplus/js/hplus.min.js?v=4.1.0" type="text/javascript" charset="utf-8"></script>*@
+    <script src="~/Content/js/hplus.min.js"></script>
     <script src="~/Content/js/contab.js?d=1"></script>
-    <script src="http://139.129.7.65:81/hplus/js/plugins/pace/pace.min.js" type="text/javascript" charset="utf-8"></script>
+    @*<script src="http://139.129.7.65:81/hplus/js/plugins/pace/pace.min.js" type="text/javascript" charset="utf-8"></script>*@
+    <script src="~/Content/js/pace.min.js"></script>
 </body>
 </html>

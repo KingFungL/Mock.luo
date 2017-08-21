@@ -47,7 +47,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
         }
         [HttpPost]
-        public ActionResult GetGrid(Pagination pag, string LoginName = "", string Email = "")
+        public ActionResult GetDataGrid(Pagination pag, string LoginName = "", string Email = "")
         {
             return Content(_service.GetDataGrid(pag, LoginName, Email).ToJson());
         }

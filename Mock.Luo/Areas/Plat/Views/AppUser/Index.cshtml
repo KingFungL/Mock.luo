@@ -95,7 +95,7 @@
             //初始化Table
             oTableInit.Init = function () {
                 $('#dginfo').dataGrid({
-                    url: '/Plat/AppUser/GetGrid', //请求后台的URL（*）
+                    url: '/Plat/AppUser/GetDataGrid', //请求后台的URL（*）
                     sortOrder: "desc,asc", //排序方式
                     sortName: 'LoginName,Id',
                     queryParams: oTableInit.queryParams,
@@ -114,6 +114,12 @@
                         field: 'NickName',
                         title: '昵称',
                         sortable: true
+                    }, {
+                        field: 'Id',
+                        title: '配置角色',
+                        formatter: function (value, row) {
+                            return String(row.UserRoleList);
+                        }
                     }, {
                         field: 'LoginCount',
                         title: '登录次数',
