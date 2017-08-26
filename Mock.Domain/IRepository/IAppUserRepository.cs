@@ -11,7 +11,19 @@ namespace Mock.Domain
 {
     public interface IAppUserRepository : IRepositoryBase<AppUser>
     {
-        DataGrid GetDataGrid(Pagination pag,string LoginName,string Email);
+        /// <summary>
+        /// 根据条件得到用户列表数据
+        /// </summary>
+        /// <param name="pag">分页条件</param>
+        /// <param name="LoginName">登录名</param>
+        /// <param name="Email">邮件</param>
+        /// <returns></returns>
+        DataGrid GetDataGrid(Pagination pag, string LoginName, string Email);
+        /// <summary>
+        /// 新增用户，编辑用户信息
+        /// </summary>
+        /// <param name="userEntity">用户实体</param>
+        /// <param name="roleIds">角色id，以逗号分隔</param>
          void SubmitForm(AppUser userEntity,string roleIds);
         /// <summary>
         /// 判断用户是否重复，用户的LoginName是否重复，Email是否重复
