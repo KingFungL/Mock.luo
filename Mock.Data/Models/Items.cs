@@ -17,12 +17,11 @@ namespace Mock.Data.Models
         public string EnCode { get; set; }
         [StringLength(50)]
         public string FullName { get; set; }
-        public bool? IsTree { get; set; }
-        public int? Layers { get; set; }
+        public bool? Open { get; set; }
         public int? SortCode { get; set; }
-        public bool? EnabledMark { get; set; }
+        public bool? IsEnableMark { get; set; }
         [StringLength(200)]
-        public string Description { get; set; }
+        public string Remark { get; set; }
         public DateTime? CreatorTime { get; set; }
         public int? CreatorUserId { get; set; }
         public DateTime? LastModifyTime { get; set; }

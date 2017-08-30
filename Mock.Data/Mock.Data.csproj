@@ -60,9 +60,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppModel\AppMenu.cs" />
     <Compile Include="AppModel\DataGrid.cs" />
     <Compile Include="AppModel\TreeNode.cs" />
-    <Compile Include="AppModel\AppMenu.cs" />
     <Compile Include="Extensions\CollectionsExtensions.cs" />
     <Compile Include="Extensions\DataTableExtensions.cs" />
     <Compile Include="Extensions\DbContextFactory.cs" />
@@ -74,9 +74,21 @@
     <Compile Include="Infrastructure\IDeleteAudited.cs" />
     <Compile Include="Infrastructure\IEntity.cs" />
     <Compile Include="Infrastructure\IModificationAudited.cs" />
-    <Compile Include="Migrations\201708211135020_1.cs" />
-    <Compile Include="Migrations\201708211135020_1.Designer.cs">
-      <DependentUpon>201708211135020_1.cs</DependentUpon>
+    <Compile Include="Migrations\201708290517188_1.cs" />
+    <Compile Include="Migrations\201708290517188_1.Designer.cs">
+      <DependentUpon>201708290517188_1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708300401131_2.cs" />
+    <Compile Include="Migrations\201708300401131_2.Designer.cs">
+      <DependentUpon>201708300401131_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708300418245_3.cs" />
+    <Compile Include="Migrations\201708300418245_3.Designer.cs">
+      <DependentUpon>201708300418245_3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708300824407_4.cs" />
+    <Compile Include="Migrations\201708300824407_4.Designer.cs">
+      <DependentUpon>201708300824407_4.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppMenu.cs" />
@@ -112,8 +124,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708211135020_1.resx">
-      <DependentUpon>201708211135020_1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708290517188_1.resx">
+      <DependentUpon>201708290517188_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708300401131_2.resx">
+      <DependentUpon>201708300401131_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708300418245_3.resx">
+      <DependentUpon>201708300418245_3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708300824407_4.resx">
+      <DependentUpon>201708300824407_4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

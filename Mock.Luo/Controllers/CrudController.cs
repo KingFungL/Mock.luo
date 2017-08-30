@@ -19,6 +19,11 @@ namespace Mock.Luo.Controllers
             _ibase = container.Resolve<IRepositoryBase<TEntityModel>>();
         }
 
+        public virtual ActionResult Form(int Id)
+        {
+            ViewBag.ViewModel = this.GetFormJson(Id);
+            return View();
+        }
 
         #region 根据ID获取数据
         /// <summary>

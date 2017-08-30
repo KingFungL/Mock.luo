@@ -14,39 +14,68 @@ namespace Mock.Domain
     /// <summary>
     /// 仓储实现层 ItemsRepositroy
     /// </summary>]
-    public class ItemsRepositroy : RepositoryBase<Items>, IItemsRepositroy
+    public class ItemsRepositroy : RepositoryBase<Items>, IItemsRepository
     {
-        public DataGrid GetDataGrid(Pagination pag)
+        public List<TreeGridModel> GetTreeGrid()
         {
 
-            var dglist = this.IQueryable(u => u.DeleteMark == false).Where(pag).Select(u => new
+            var dglist = this.IQueryable(u => u.DeleteMark == false).OrderBy(u => u.SortCode).Select(u => new
             {
                 u.Id,
                 u.FullName,
                 u.EnCode,
+                u.PId,
+                u.SortCode,
+                u.Open,
+                u.IsEnableMark,
+                u.Remark
             }).ToList();
 
-            return new DataGrid { rows = dglist, total = pag.total };
-
-        }
-
-        public dynamic GetFormById(int Id)
-        {
-            var d = this.IQueryable(u => u.Id == Id).Select(u => new
+            var treeList = new List<TreeGridModel>();
+            foreach (var item in dglist)
             {
-                u.Id,
-                u.FullName,
-                u.EnCode,
-            }).FirstOrDefault();
-            return d;
+                TreeGridModel treeModel = new TreeGridModel();
+                bool hasChildren = dglist.Count(t => t.PId == item.Id) == 0 ? false : true;
+                treeModel.id = item.Id.ToString();
+                treeModel.isLeaf = hasChildren;
+                treeModel.parentId = item.PId.ToString();
+                treeModel.expanded = hasChildren;
+                treeModel.entityJson = item.ToJson();
+                treeList.Add(treeModel);
+            }
+            return treeList;
         }
-
 
         public void Edit(Items Entity)
         {
             throw new NotImplementedException();
         }
 
-        
+        public dynamic GetzTreeJson()
+        {
+            var itemsTreeJson = this.IQueryable(u => u.DeleteMark == false && u.IsEnableMark == true).OrderBy(u => u.SortCode).Select(u => new
+            {
+                id = u.Id,
+                pId = u.PId,
+                name = u.FullName,
+                open = u.Open,
+                u.EnCode
+            }).ToList();
+            return itemsTreeJson;
+        }
+
+        public List<TreeSelectModel> GetTreeJson()
+        {
+            List<TreeSelectModel> treeList = this.IQueryable().Where(u => u.DeleteMark == false && u.IsEnableMark == true).OrderBy(r => r.SortCode)
+                                    .ToList().Select(u => new TreeSelectModel
+                                    {
+                                        id = u.Id.ToString(),
+                                        parentId = u.PId.ToString(),
+                                        text = u.FullName,
+                                        data = new { u.EnCode }
+                                    }).ToList();
+            treeList.Insert(0, new TreeSelectModel { id = "-1", text = "==请选择==", parentId = "0" });
+            return treeList;
+        }
     }
 }

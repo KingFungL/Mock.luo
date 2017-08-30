@@ -21,6 +21,18 @@ namespace Mock.Luo.App_Start
                 cfg.CreateMap<AppRole, AppRoleViewModel>();
                 cfg.CreateMap<IDeleteAudited, AppRole>();
                 cfg.CreateMap<AppRoleViewModel, AppRole>();
+
+                cfg.CreateMap<AppMenu, AppMenuViewModel>();
+                cfg.CreateMap<IDeleteAudited, AppMenu>();
+                cfg.CreateMap<AppMenuViewModel, AppMenu>();
+
+                cfg.CreateMap<Items, ItemsViewModel>();
+                cfg.CreateMap<IDeleteAudited, Items>();
+                cfg.CreateMap<ItemsViewModel, Items>();
+
+                cfg.CreateMap<ItemsDetail, ItemsDetailViewModel>();
+                cfg.CreateMap<IDeleteAudited, ItemsDetail>();
+                cfg.CreateMap<ItemsDetailViewModel, ItemsDetail>();
             });
         }
     }

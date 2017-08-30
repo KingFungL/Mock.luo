@@ -1,0 +1,120 @@
+﻿[
+  {
+    "title": "主页",
+    "expanded": true,
+    "folder": true,
+    "data": {
+      "Id": 1,
+      "LinkUrl": "",
+      "SortCode": 1,
+      "State": "open",
+      "Icon": "fa fa-home",
+      "Target": "_self"
+    },
+    "children": [
+      {
+        "title": "用户管理",
+        "folder": false,
+        "data": {
+          "Id": 2,
+          "LinkUrl": "/Plat/AppUser/Index",
+          "SortCode": 2,
+          "State": "open",
+          "Icon": "fa fa-user",
+          "Target": "_self"
+        },
+        "children": [
+        ]
+      },
+      {
+        "title": "角色管理",
+        "expanded": true,
+        "folder": false,
+        "data": {
+          "Id": 3,
+          "LinkUrl": "/Plat/AppRole/Index",
+          "SortCode": 3,
+          "State": "open",
+          "Icon": "fa fa-user-circle",
+          "Target": "_self"
+        },
+        "children": [
+        ]
+      },
+      {
+        "title": "菜单管理",
+        "expanded": true,
+        "data": {
+          "Id": 4,
+          "LinkUrl": "/Plat/AppMenu/Index",
+          "SortCode": 4,
+          "State": "open",
+          "Icon": "fa fa-cog",
+          "Target": "_self"
+        },
+        "folder": false,
+        "children": [
+        ]
+      }
+    ]
+  },
+  {
+    "title": "主页",
+    "expanded": true,
+    "folder": true,
+    "data": {
+      "Id": 1,
+      "LinkUrl": "",
+      "SortCode": 1,
+      "State": "open",
+      "Icon": "fa fa-home",
+      "Target": "_self"
+    },
+    "children": [
+      {
+        "title": "用户管理",
+        "folder": false,
+        "data": {
+          "Id": 2,
+          "LinkUrl": "/Plat/AppUser/Index",
+          "SortCode": 2,
+          "State": "open",
+          "Icon": "fa fa-user",
+          "Target": "_self"
+        },
+        "children": [
+        ]
+      },
+      {
+        "title": "角色管理",
+        "expanded": true,
+        "folder": false,
+        "data": {
+          "Id": 3,
+          "LinkUrl": "/Plat/AppRole/Index",
+          "SortCode": 3,
+          "State": "open",
+          "Icon": "fa fa-user-circle",
+          "Target": "_self"
+        },
+        "children": [
+        ]
+      },
+      {
+        "title": "菜单管理",
+        "expanded": true,
+        "data": {
+          "Id": 4,
+          "LinkUrl": "/Plat/AppMenu/Index",
+          "SortCode": 4,
+          "State": "open",
+          "Icon": "fa fa-cog",
+          "Target": "_self"
+        },
+        "folder": false,
+        "children": [
+        ]
+      }
+    ]
+  }
+]

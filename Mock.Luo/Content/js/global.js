@@ -77,7 +77,7 @@ $.fn.setForm = function (jsonValue) {
  */
 $.layerOpen = function (options) {
     var defaults = {
-        id: "default",
+        id: "default" + Math.random(),
         title: '系统窗口',
         type: 2,
         skin: 'layui-layer-molv',
@@ -92,11 +92,11 @@ $.layerOpen = function (options) {
         yes: null
     };
     var options = $.extend(defaults, options);
-    layer.open({
+    top.layer.open({
         id: options.id,
         type: options.type,
         scrollbar: false,
-        //skin: options.skin,
+        skin: options.skin,
         shade: options.shade,
         shadeClose: true,
         maxmin: options.maxmin,
@@ -138,6 +138,7 @@ $.layerConfirm = function (options) {
         //skin: 'layui-layer-molv',
         content: "",
         icon: 3,
+        resize: false,
         shade: 0.3,
         anim: 4,
         btn: ['确认', '取消'],
@@ -150,12 +151,14 @@ $.layerConfirm = function (options) {
         icon: options.icon,
         btn: options.btn,
         btnclass: options.btnclass,
+        resize: options.resize,
         //skin: options.skin,
         anim: options.anim
-    }, function () {
+    }, function (index) {
         if (options.callback && $.isFunction(options.callback)) {
             options.callback();
         }
+        layer.close(index);
     }, function () {
         return true;
     });
@@ -195,8 +198,7 @@ $.layerMsg = function (content, type, callback) {
             default:
                 icon = 0; break;
         }
-
-        top.layer.msg(content, { icon: icon, time: 2000 }, function () {
+       top.layer.msg(content, { icon: icon, time: 2000 }, function () {
             if (callback && $.isFunction(callback)) {
                 callback();
             }
@@ -298,18 +300,25 @@ $.alertMsg = function (msg, title, funcSuc, icon) {
      * 绑定Select选项。
      * @param {Object} options
      */
+    /**
+   * 绑定Select选项。
+   * @param {Object} options
+   */
     $.fn.bindSelect = function (options) {
         var defaults = {
             id: "id",
             text: "text",
             search: true,
-            //multiple: false,
+            multiple: false,
             title: "请选择",
             url: "",
             param: [],
             change: null
         };
         var options = $.extend(defaults, options);
+        options.placeholder = options.title;
+        options.minimumResultsForSearch = options.search == true ? 0 : -1;
+
         var $element = $(this);
         if (options.url != "") {
             $.ajax({
@@ -322,25 +331,21 @@ $.alertMsg = function (msg, title, funcSuc, icon) {
                     $.each(data, function (i) {
                         $element.append($("<option></option>").val(data[i][options.id]).html(data[i][options.text]));
                     });
-                    $element.select2({
-                        placeholder: options.title,
-                        //multiple: options.multiple,
-                        minimumResultsForSearch: options.search == true ? 0 : -1
-                    });
+                    $element.select2(options);
                     $element.on("change", function (e) {
                         if (options.change != null) {
                             options.change(data[$(this).find("option:selected").index()]);
                         }
-                        $("#select2-" + $element.attr('id') + "-container").html($(this).find("option:selected").text().replace(/　　/g, ''));
+                        $("#select2-" + $element.attr('id') + "-container").html($(this).find("option:selected").text());
+                        return false;
                     });
                 }
             });
         } else {
-            $element.select2({
-                minimumResultsForSearch: -1
-            });
+            $element.select2(options);
         }
     }
+
 
 /**
  * 绑定Enter提交事件。
@@ -503,59 +508,6 @@ $.fn.formSerialize = function (formdate, callback) {
     return postdata;
 }
 
-/**
- * 提交表单。
- * @param {Object} options
- */
-$.formSubmit = function (options) {
-    var defaults = {
-        url: "",
-        data: {},
-        type: "post",
-        async: true,
-        success: null,
-        close: true,
-        showMsg: true,
-        showLoading: true
-    };
-
-    var options = $.extend(defaults, options);
-
-    var index = layer.load(0, { shade: false });
-
-    $.ajax({
-        url: options.url,
-        data: options.data,
-        type: options.type,
-        async: options.async,
-        dataType: "json",
-        success: function (data) {
-            layer.close(index);
-            if (options.success && $.isFunction(options.success)) {
-                options.success(data);
-            }
-            //if (options.close) {
-            //    $.layerClose();
-            //}
-            if (options.showMsg) {
-                $.alertMsg(data.Msg, '', '', data.state);
-            }
-        },
-        error: function (xhr, status, error) {
-            layer.close(index);
-
-            var msg = xhr.responseText;
-            var errMsg = top.layer.open({
-                title: '错误提示',
-                area: ['500px', '400px'],
-                content: msg
-            })
-            console.log(status)
-
-            //$.layerMsg(error, "err");
-        },
-    });
-}
 
 /*
  1.function：在一个数组的第index位置插入一个对象或值item
@@ -569,7 +521,7 @@ Array.prototype.insert = function (index, item) {
 };
 
 
-
+/*封装bootstrapTable的表格默认功能*/
 $.fn.dataGrid = function (options) {
     var defaults = {
         method: 'post', //请求方式（*）  method: 'post', //请求方式（*）
@@ -600,3 +552,50 @@ $.fn.dataGrid = function (options) {
     var $element = $(this);
     return $element.bootstrapTable(options);
 };
+/*封装jqgrid的表格默认功能*/
+//$.fn.jqGrid = function (options) {
+//    var defaults = {
+//        datatype: "json",
+//        autowidth: true,
+//        rownumbers: true,
+//        shrinkToFit: false,
+//        gridview: true
+//    };
+//    var options = $.extend(defaults, options);
+//    var $element = $(this);
+//    return $element.jqGrid(options);
+//};
+
+
+/**/
+$.fn.jqGridRowValue = function () {
+    var $grid = $(this);
+    var selectedRowIds = $grid.jqGrid("getGridParam", "selarrrow");
+    if (selectedRowIds != "") {
+        var json = [];
+        var len = selectedRowIds.length;
+        for (var i = 0; i < len; i++) {
+            var rowData = $grid.jqGrid('getRowData', selectedRowIds[i]);
+            json.push(rowData);
+        }
+        return json;
+    } else {
+        return $grid.jqGrid('getRowData', $grid.jqGrid('getGridParam', 'selrow'));
+    }
+}
+
+$.fn.jqGridRowValue = function () {
+    var $grid = $(this);
+    var selectedRowIds = $grid.jqGrid("getGridParam", "selarrrow");
+    if (selectedRowIds != "") {
+        var json = [];
+        var len = selectedRowIds.length;
+        for (var i = 0; i < len; i++) {
+            var rowData = $grid.jqGrid('getRowData', selectedRowIds[i]);
+            json.push(rowData);
+        }
+        return json;
+    } else {
+        return $grid.jqGrid('getRowData', $grid.jqGrid('getGridParam', 'selrow'));
+    }
+}

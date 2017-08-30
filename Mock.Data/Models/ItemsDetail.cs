@@ -15,15 +15,12 @@ namespace Mock.Data.Models
         public int FId { get; set; }
         [ForeignKey("FId")]
         public Items Items { get; set; }
-        public int PId { get; set; }
         [StringLength(50)]
         public string ItemCode { get; set; }
         [StringLength(50)]
         public string ItemName { get; set; }
-        public bool? IsDefault { get; set; }
-        public int? Layers { get; set; }
         public int? SortCode { get; set; }
-        public bool? EnabledMark { get; set; }
+        public bool? IsEnableMark { get; set; }
         [StringLength(200)]
         public string Remark { get; set; }
         public DateTime? CreatorTime { get; set; }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Mock.Code;
+using System.Linq.Expressions;
 
 namespace Mock.Domain
 {
@@ -14,49 +15,34 @@ namespace Mock.Domain
     /// </summary>]
     public class AppMenuRepository : RepositoryBase<AppMenu>, IAppMenuRepository
     {
-        public DataGrid GetTreeGrid(bool isMemu = false)
+        public List<TreeNode> GetFancyTreeGrid()
         {
-            var rows = this.IQueryable(r => r.DeleteMark == false).Select(u => new
-            {
-                u.Id,
-                u.MenuName,
-                u.SortCode,
-                u.Icon,
-                u.LinkUrl,
-                u.PId,
-                u.State,
-            }).ToList();
-            return new DataGrid { rows = rows, total = rows.Count() };
+            List<AppMenu> entities = this.GetAppMenuList(u => true);
+
+            return AppMenu.ConvertFancyTreeNodes(entities);
         }
+
 
         public DataGrid GetTreeGrid()
         {
-            var entities = this.IQueryable(u => u.DeleteMark == false).Select(r => new {
-                r.Id,
-                r.PId,
-                r.MenuName,
-                r.SortCode,
-                r.State,
-                r.Target
-            }).ToList();
-
+            var entities = this.GetAppMenuList(u => true);
             return new DataGrid { rows = entities, total = entities.Count() };
-
-            throw new NotImplementedException();
         }
 
-        public List<AppMenu> GetUserMenus(int userid)
+        public List<AppMenu> GetAppMenuList(Expression<Func<AppMenu, bool>> predicate)
         {
-            return this.IQueryable().ToList().Select(u => new AppMenu
+            predicate = predicate.And(r => r.DeleteMark == false);
+            return this.IQueryable(predicate).OrderBy(r => r.SortCode).ToList().Select(u => new AppMenu
             {
                 Id = u.Id,
                 PId = u.PId,
-                MenuName = u.MenuName,
+                Name = u.Name,
                 Icon = u.Icon,
                 LinkUrl = u.LinkUrl,
                 SortCode = u.SortCode,
                 Target = u.Target,
-                State = u.State
+                Folder = u.Folder,
+                Expanded = u.Expanded
             }).ToList();
         }
 
@@ -64,6 +50,19 @@ namespace Mock.Domain
         {
             throw new NotImplementedException();
         }
+        public List<TreeSelectModel> GetTreeJson()
+        {
+            //Type=1时为按钮，下拉菜单框中为选上级菜单，去除按钮
+            List<TreeSelectModel> treeList = this.IQueryable().Where(u => u.DeleteMark == false).OrderBy(r => r.SortCode).ToList()
+                                    .Select(u => new TreeSelectModel
+                                    {
+                                        id = u.Id.ToString(),
+                                        text = u.Name,
+                                        parentId = u.PId.ToString()
+                                    }).ToList();
 
+            treeList.Insert(0, new TreeSelectModel { id = "-1", text = "==请选择==", parentId = "0" });
+            return treeList;
+        }
     }
 }

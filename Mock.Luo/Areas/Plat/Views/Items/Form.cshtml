@@ -1,0 +1,118 @@
+﻿
+@{
+    ViewBag.Title = "类别新增编辑管理";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+
+<div class="layui-container" style="margin-top:15px;">
+    <form class="layui-form layui-box layui-form-pane" action="" id="v-app">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" v-model="FullName" placeholder="请输入名称" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">编码</label>
+                <div class="layui-input-inline">
+                    <input type="text" v-model="EnCode" placeholder="请输入编码" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">上级节点</label>
+                <div class="layui-input-inline">
+                    <select id="PId" class="layui-input" lay-ignore></select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">排序码</label>
+                <div class="layui-input-inline">
+                    <input type="number" v-model="SortCode" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">是否展开</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" lay-skin="switch" lay-text="是|否" v-model="Open" name="Open" />
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">是否启用</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" lay-skin="switch" lay-text="启用|禁用" v-model="IsEnableMark" name="IsEnableMark" />
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <div class="layui-form-label">
+                备注
+            </div>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入备注" class="layui-textarea" v-model="Remark"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+@section css{
+    <link href="~/Content/js/select2-4.0.3/css/select2.min.css" rel="stylesheet" />
+}
+@section scripts{
+    <script src="~/Content/js/select2-4.0.3/js/select2.full.min.js"></script>
+    <script src="~/Content/js/select2-4.0.3/js/i18n/zh-CN.js"></script>
+    <script>
+        var json = JSON.parse(`@Html.Raw(ViewBag.ViewModel)`);
+
+        json.IsEnableMark = json.IsEnableMark == null ? true : json.IsEnableMark;
+        json.Open = json.Open == null ? true : json.Open;
+
+        if (!json.PId) {
+            json.PId = -1;
+        }
+        var vm = new Vue({
+        el: '#v-app',
+        data: json,
+        beforeCreate: function () {
+        },
+        created: function () {
+
+        },
+        mounted: function () {
+            layui.form.on('switch', function (data) {
+                vm[$(data.elem).attr('name')]=data.elem.checked;
+            });
+            $("#PId").bindSelect({
+                url: '/Plat/Items/GetTreeJson',
+                search: true,
+                change: function (selectrow) {
+                    if (selectrow != null) {
+                        vm.PId = selectrow.id;
+                    }
+                }
+            });
+            layui.form.render();
+            window.setTimeout(function () {
+                $("#PId").val(json.PId).trigger("change");
+            }, 500);
+        },
+        methods: {
+            submit: function (callback) {
+                if (vm.PId == -1) {
+                    vm.PId = 0;
+                }
+                com.ajax({
+                    url: '/Plat/Items/Edit/'+vm.Id,
+                    data: vm.$data,
+                    showMsg: true,
+                    success: callback
+                })
+            }
+        },
+    });
+    </script>
+
+}

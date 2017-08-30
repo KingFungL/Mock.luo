@@ -23,7 +23,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         }
 
         [HttpGet]
-        public ActionResult Form(int id = 0)
+        public override ActionResult Form(int id = 0)
         {
             if (id == 0)
             {

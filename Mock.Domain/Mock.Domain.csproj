@@ -51,15 +51,15 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Z.ExtensionMethods, Version=2.0.12.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Z.ExtensionMethods.2.0.12\lib\net45\Z.ExtensionMethods.dll</HintPath>
+    <Reference Include="Z.ExtensionMethods, Version=2.0.13.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.ExtensionMethods.2.0.13\lib\net45\Z.ExtensionMethods.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IRepository\IAppRoleRepository.cs" />
     <Compile Include="IRepository\IAppMenuRepository.cs" />
-    <Compile Include="IRepository\IItemsDetailRepositroy.cs" />
-    <Compile Include="IRepository\IItemsRepositroy.cs" />
+    <Compile Include="IRepository\IItemsDetailRepository.cs" />
+    <Compile Include="IRepository\IItemsRepository.cs" />
     <Compile Include="IRepository\IAppUserRepository.cs" />
     <Compile Include="IRepository\IArticleRepository.cs" />
     <Compile Include="IRepository\IReviewRepository.cs" />
@@ -68,7 +68,7 @@
     <Compile Include="Repository\AppRoleRepository.cs" />
     <Compile Include="Repository\ReviewRepository .cs" />
     <Compile Include="Repository\AppMenuRepository.cs" />
-    <Compile Include="Repository\ItemsDetailRepositroy.cs" />
+    <Compile Include="Repository\ItemsDetailRepository.cs" />
     <Compile Include="Repository\ItemsRepositroy.cs" />
     <Compile Include="Repository\AppUserRepositroy.cs" />
     <Compile Include="Repository\ArticleRepositroy.cs" />

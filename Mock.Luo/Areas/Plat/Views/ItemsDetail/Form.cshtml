@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "字典详情新增编辑管理";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+
+<div class="layui-container" style="margin-top:15px;">
+    <form class="layui-form layui-box layui-form-pane" action="" id="v-app">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" v-model="ItemName" placeholder="请输入名称" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">编码</label>
+                <div class="layui-input-inline">
+                    <input type="text" v-model="ItemCode" placeholder="请输入编码" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">排序码</label>
+                <div class="layui-input-inline">
+                    <input type="number" v-model="SortCode" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">是否启用</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" lay-skin="switch" lay-text="启用|禁用" v-model="IsEnableMark" name="IsEnableMark" />
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <div class="layui-form-label">
+                备注
+            </div>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入内容" class="layui-textarea" v-model="Remark"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section scripts{
+    <script>
+        var json = JSON.parse(`@Html.Raw(ViewBag.ViewModel)`);
+        json.IsEnableMark = json.IsEnableMark == null ? true : json.IsEnableMark;
+        var FId = $.getQueryString('FId');
+        //新增时，通过index页面传过来FId,编辑时,为后台查出来的FId值
+        json.FId = (FId == 0 || FId == null) ? json.FId : FId;
+
+                 var vm = new Vue({
+                    el: '#v-app',
+                    data: json,
+                    beforeCreate: function () {
+                    },
+                    created: function () {
+
+                    },
+                    mounted: function () {
+                        layui.form.on('switch', function (data) {
+                            vm.IsEnableMark=data.elem.checked;
+                        });
+                        layui.form.render();
+
+                    },
+                    methods: {
+                        submit: function (callback) {
+                            com.ajax({
+                                url: '/Plat/ItemsDetail/Edit/'+vm.Id,
+                                data: vm.$data,
+                                showMsg: true,
+                                success: callback
+                            })
+                        }
+                    },
+                });
+    </script>
+
+}

@@ -27,30 +27,27 @@ $ui.initMenu = function (menulist) {
                 </a>'
 
         var jsonobj = menulist[i];
-        html += com.formatString(template, jsonobj.iconCls, jsonobj.text);
+        html += com.format_str(template, jsonobj.iconcls, jsonobj.text);
         html += '<ul class="nav nav-second-level collapse">';
 
         var temple = '<li>\
-                          <a class="J_menuItem" href="{0}" data-index="{1}" target="{2}"><i class="{3}"></i>{4}\
+                          <a class="J_menuItem" href="{0}" target="{1}"><i class="{2}"></i>{3}\
                       ';
         if (jsonobj.children.length > 0) {
 
             for (var j = 0; j < jsonobj.children.length; j++) {
                 var m = jsonobj.children[j];
-                if (m.target != '_blank') {
-                    m.target = '_self';
-                }
-                html += com.formatString(temple, m.href, m.sortcode, m.target, m.iconCls, m.text);
+                html += com.format_str(temple, m.href, m.target, m.iconcls, m.text);
                 var json3 = m;
                 if (m && m.children && m.children.length > 0) {
                     html += '<span class="fa arrow"></span></a>';
                     html += '<ul class="nav nav-third-level">'
                     var template3 = '<li>\
-                                           <a class="J_menuItem" href="{0}" data-index="{1}" target="{2}"><i class="{3}"></i>{4}</a>\
+                                           <a class="J_menuItem" href="{0}"  target="{1}"><i class="{2}"></i>{3}</a>\
                                      </li>'
                     for (var k = 0; k < m.children.length; k++) {
                         var t = m.children[k]
-                        html += com.formatString(template3, t.href, t.sortcode, t.target, t.iconCls, t.text);
+                        html += com.format_str(template3, t.href, t.target,t.iconcls, t.text);
                     }
                     html += '</ul>';
                 } else {

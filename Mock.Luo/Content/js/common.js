@@ -1,13 +1,15 @@
 ﻿
-
-
-com = {};
+/**
+* 模块名：共通脚本
+* 程序名: 通用工具函数
+**/
+var com = {};
 /**
 * 格式化字符串
 * 用法:
-.formatString("{0}-{1}","a","b");
+.format_str("{0}-{1}","a","b");
 */
-com.formatString = function () {
+com.format_str = function () {
     for (var i = 1; i < arguments.length; i++) {
         var exp = new RegExp('\\{' + (i - 1) + '\\}', 'gm');
         arguments[0] = arguments[0].replace(exp, arguments[i]);
@@ -69,14 +71,6 @@ com.ajax = function (options) {
                     options.success(data);
                 }
             }
-
-            //if (options.showMsg) {
-            //    $.alertMsg(data.message, '', function () {
-            //        if (options.success && $.isFunction(options.success)) {
-            //            options.success(data);
-            //        }
-            //    }, data.state);
-            //}
         },
         error: function (xhr, status, error) {
             layer.close(index);
@@ -92,11 +86,7 @@ com.ajax = function (options) {
 };
 
 
-/**
-* 模块名：共通脚本
-* 程序名: 通用工具函数
-**/
-var com = $.extend({}, com);/* 定义全局对象，类似于命名空间或包的作用 */
+
 
 //去除表单中所有按钮,并且将所有文本框置为禁用
 com.ignoreEle = function (dom) {
@@ -107,8 +97,8 @@ com.ignoreEle = function (dom) {
     dom.find('a').removeAttr('href').removeAttr('onclick');//去掉a标签中的href属性去掉a标签中的onclick事件
 };
 
-//获取当前登录的使用信息
-com.getCurrentInfo = function () {
+//获取当前登录的个人信息
+com.get_currentinfo = function () {
     var d = '';
     com.ajax({
         url: '/Login/GetCurrentUserInfo',
@@ -122,11 +112,11 @@ com.getCurrentInfo = function () {
 };
 
 //返回当前 URL 的查询部分（问号 ? 之后的部分）。
-com.getparams = function () {
+com.get_params = function () {
     var urlParameters = location.search;
-    return com.geturlparams(urlParameters);
+    return com.get_urlparams(urlParameters);
 };
-com.geturlparams = function (urlParameters) {
+com.get_urlparams = function (urlParameters) {
     var requestParameters = new Object();
     if (urlParameters.indexOf('?') != -1) {
         var parameters = decodeURI(urlParameters.substr(1));
@@ -141,12 +131,11 @@ com.geturlparams = function (urlParameters) {
     return requestParameters;
 };
 
-
 /*
 * function:格式化字符串
-* demo: com.formatString("{0}-{1}","a","b");
+* demo: com.format_str("{0}-{1}","a","b");
 */
-com.formatString = function () {
+com.format_str = function () {
     for (var i = 1; i < arguments.length; i++) {
         var exp = new RegExp('\\{' + (i - 1) + '\\}', 'gm');
         arguments[0] = arguments[0].replace(exp, arguments[i]);
@@ -155,96 +144,30 @@ com.formatString = function () {
 };
 
 /***是否启用*/
-com.formatIsEnable = function (value, row) {
-    var enableMark = '', selectwith = '', leftpx = 5;
-    if (value == true) {
-        enableMark = "启用";
-        selectwith = 'layui-form-onswitch';
-        leftpx = 32;
-    } else {
-        enableMark = "禁用";
-        selectwith = '';
-        leftpx = 5;
+com.format_enable = function (value, row) {
+    var text = '数据为空', label_class = 'warning';
+    if (value === true) {
+        text = '启用';
+        label_class = 'success';
+    } else if (value === false) {
+        text = "禁用";
+        label_class = 'danger';
     }
-    var check = com.formatString(
-        '<div class="layui-box layui-unselect layui-form-switch {0}" lay- skin="_switch" style="margin-top:0px;" >\
-            <em> {1}</em >\
-            <i style= "top:3px;left:{2}px;" ></i>\
-         </div>', selectwith, enableMark, leftpx);
+    var check = com.format_str('<span class="label label-{0}">{1}</span>', label_class, text);
     return check;
 };
 
-/**
-*把表单元素序列化成对象
-*/
-com.serializeObject = function (form) {
-    var o = {};
-    if (!form) return o;
-    $.each(form.serializeArray(), function (intdex) {
-        if (o[this['name']]) {
-            o[this['name']] = o[this['name']] + "," + this['value'];
-        } else {
-            o[this['name']] = this['value'];
-        }
-    });
-    var $radio = form.find('input[type=radio],input[type=checkbox]');
-    $.each($radio, function () {
-        if (!o.hasOwnProperty(this.name)) {
-            o[this.name] = false;
-        } else if (this['value'] === 'on') {
-            o[this['name']] = true;
-        }
-    });
-    return o;
-};
-com.dialog = function (options) {
-    //var index = layer.load(0, { shade: 0.3 });
-    options = $.extend({
-        type: 1,
-        title: '标题',
-        resize: false,
-        url: '',
-        shadeClose: true,
-        value: '',
-        name: 'id'
-    }, options);
-    $.get(options.url, {}, function (data) {
-        options.content = '<input type="hidden" name="' + options.name + '" value="' + options.value + '"/>' + data;
-        layer.open(options);
-    }, 'html');
-};
-com.renderhtml = function (options) {
-    //key是往后台传的键,
-    //name是页面上隐藏的主键名称
-    options = $.extend({
-        url: '',
-        key: 'id',
-        name: 'id',
-        editlayer: '#v-app',
-        callback: ''
-    }, options);
-
-    var keyValue = $('input[name=' + options.name + ']').val();
-    var key = options.key;
-    var data = {};
-    data[key] = keyValue;
-    if (!!keyValue) {
-        $.get(options.url + '/' + keyValue, {}, function (data) {
-            var app = new Vue({
-                el: options.editlayer,
-                data: data
-            });
-            if (typeof (options.callback) == 'function') {
-                options.callback(data);
-            }
-        }, 'json');
+com.format_yes = function (value, row) {
+    var text = '数据为空', label_class = 'warning';
+    if (value == true) {
+        text = '是';
+        label_class = 'success';
     } else {
-        if (typeof (options.callback) == 'function') {
-            options.callback();
-        }
+        text = "否";
+        label_class = 'danger';
     }
-};
-
+    return com.format_str('<span class="label label-{0}">{1}</span>', label_class, text);
+}
 
 com.button = function (obj) {
     var func, title, id, css, show;
@@ -272,7 +195,7 @@ com.button = function (obj) {
             console.error("id是必须的！");
             return '';
         }
-        d += com.formatString('<button onclick="{0}(\'{1}\',{2})" class="layui-btn layui-btn-small {3}"> {4}</button>', v.func, v.title, v.id, v.css, v.show);
+        d += com.format_str('<button onclick="{0}(\'{1}\',{2})" class="layui-btn layui-btn-small {3}"> {4}</button>', v.func, v.title, v.id, v.css, v.show);
     });
     d += '</div>';
     return d;
@@ -329,16 +252,18 @@ com.image_preview_dialog = function (url) {
 function:统一的删除方法,必要的条件是，列表数据的主键为Id,后端使用统一的删除方法
 date:2017-8-10
 */
-com.delete = function (url, element) {
+com.delete = function (url, element, type) {
     var Id = 0;
     if (!element) {
         element = '#dginfo'
     }
-    if ($(element).bootstrapTable('getSelections')[0] != undefined) {
-        var row = $(element).bootstrapTable('getSelections')[0];
-        Id = row.Id;
-    };
-    if (Id == 0) { layer.msg('请先选择需要删除的信息！'); return; }
+    if (!type) {
+        type = 'boot';
+    }
+    var $grid = $(element);
+    Id = com.get_selectid(element, type);
+
+    if (!Id) { layer.msg('请先选择需要删除的信息！'); return; }
     $.layerConfirm({
         content: '是否删除这条信息?',
         callback: function () {
@@ -348,7 +273,11 @@ com.delete = function (url, element) {
                 success: function (dataJson) {
                     $.procAjaxMsg(dataJson, function () {
                         layer.msg(dataJson.message);
-                        $(element).bootstrapTable("refresh");
+                        if (type == 'boot') {
+                            $(element).bootstrapTable("refresh");
+                        } else {
+                            $(element).trigger('reloadGrid').jqGrid('resetSelection');
+                        }
                     }, function () {
                         layer.msg(dataJson.message);
                     });
@@ -358,18 +287,34 @@ com.delete = function (url, element) {
     });
 }
 
-
-com.getselectid = function (dgelement) {
+/*得到选中的节点id（单选）*/
+com.get_selectid = function (dgelement, type) {
     if (!dgelement) {
         dgelement = '#dginfo'
     }
     var Id = 0;
-    if ($('#dginfo').bootstrapTable('getSelections')[0] != undefined) {
-        var row = $(dgelement).bootstrapTable('getSelections')[0];
-        Id = row.Id;
-    };
-    if (Id == 0) {
-        layer.msg('请先选择需要编辑的信息！');
+    var $grid = $(dgelement);
+    //如果是jqGrid的列表，使用jqGrid的方法获取主键值
+    if (type === 'jq') {
+        var row = $grid.jqGridRowValue();
+        //当得到的行记录不是数组时，则为对象
+        if (!(row instanceof Array)) {
+            Id = row.Id;
+        };
+    } else {
+        if ($grid.bootstrapTable('getSelections')[0] != undefined) {
+            var row = $(dgelement).bootstrapTable('getSelections')[0];
+            Id = row.Id;
+        };
     }
     return Id;
+}
+//编辑前统一提示信息,当Id为0时，说明未选中任何记录，其他时，将Id,作为回调函数的参数
+com.edit = function (dgelement, type, callback) {
+    var Id = com.get_selectid(dgelement, type);
+    if (!Id) {
+        layer.msg('请先选择需要编辑的信息！');
+    } else {
+        callback(Id);
+    }
 }

@@ -6,6 +6,11 @@ namespace Mock.Code
 {
     public static class TreeSelect
     {
+        /// <summary>
+        /// 将select2实体集合转成下拉json字符串
+        /// </summary>
+        /// <param name="data">下拉实体list</param>
+        /// <returns>格式化后的json字符串</returns>
         public static string TreeSelectJson(this List<TreeSelectModel> data)
         {
             StringBuilder sb = new StringBuilder();

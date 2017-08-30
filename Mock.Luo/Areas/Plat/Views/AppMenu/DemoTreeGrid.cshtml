@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "菜单管理TreeGrid扩展方法-实现";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<section class="content-header">
+    <ol class="breadcrumb" style="margin-bottom:0px;">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 后台管理</a></li>
+        <li class="active">菜单管理</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="panel panel-default">
+        <div class="panel-body" style="padding-top: -13px;" id="v-app">
+            <div id="toolbar" class="btn-group" style="margin-bottom:10px;margin-top:10px;">
+                <button id="btn_refresh" type="button" class="btn btn-default" v-on:click="btn_refresh">
+                    <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>刷新
+                </button>
+                <button id="btn_add" type="button" class="btn btn-default" v-on:click="btn_add">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                </button>
+                <button id="btn_edit" type="button" class="btn btn-default" v-on:click="btn_edit">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+                </button>
+                <button id="btn_delete" type="button" class="btn btn-default" v-on:click="btn_delete">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table id="dginfo" class="table-condensed"></table>
+            </div>
+        </div>
+    </div>
+</section>
+@section css{
+    <link href="~/Content/css/jquery.treegrid.css" rel="stylesheet" />
+    <style>
+        /*选中的样式*/
+        .tree-item-selected-light {
+            color: #ffffff !important;
+            background-color: #1ca8dd !important;
+            background-repeat: repeat-x;
+            border-color: #1ca8dd !important;
+            background: #1ca8dd;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+        }
+    </style>
+}
+@section scripts{
+    <script src="~/Content/js/treegrid/jquery.treegrid.js"></script>
+    <script src="~/Content/js/treegrid/jquery.treegrid.bootstrap3.js"></script>
+    <script src="~/Content/js/treegrid/jquery.treegrid.extension.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#dginfo').treegridData({
+                id: 'Id',
+                parentColumn: 'PId',
+                type: "GET", //请求数据的ajax类型
+                url: '/Plat/AppMenu/GetTreeGrid',   //请求数据的ajax的url
+                queryParams: {}, //请求数据的ajax的data属性
+                expandColumn: null,//在哪一列上面显示展开按钮
+                striped: true,   //是否各行渐变色
+                bordered: true,  //是否显示边框
+                hover: true,
+                expandAll: true,  //是否全部展开
+                columns: [
+                    { title: '菜单名称', field: 'MenuName', css: { "min-width": "200px", "width": "200px" } },
+                    { title: '链接地址', field: 'LinkUrl', align: 'center', hidden: false },
+                    { title: '排序码', field: 'SortCode', align: 'center' },
+                    { title: '状态', field: 'State', align: 'center' },
+                    {
+                        title: '图标', field: 'Icon', formatter: function (value, row, index) {
+                            return '<i class="' + value + '"></i>'
+                        }, align: 'center'
+                    },
+                    { title: '目标', field: 'Target', align: 'center' }
+                ]
+            });
+        });
+
+    </script>
+}
