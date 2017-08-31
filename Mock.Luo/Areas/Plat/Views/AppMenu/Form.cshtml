@@ -13,17 +13,17 @@
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">链接地址</label>
+                <label class="layui-form-label">父菜单</label>
                 <div class="layui-input-inline">
-                    <input type="text" v-model="LinkUrl" class="layui-input">
+                    <div id="PId" type="selectTree" class="ui-select"></div>
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">父菜单</label>
+                <label class="layui-form-label">链接地址</label>
                 <div class="layui-input-inline">
-                    <select id="PId" class="layui-input" lay-ignore></select>
+                    <input type="text" v-model="LinkUrl" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
@@ -71,11 +71,10 @@
 
 
 @section css{
-    <link href="~/Content/js/select2-4.0.3/css/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/js/tree/tree.css" rel="stylesheet" />
 }
 @section scripts{
-    <script src="~/Content/js/select2-4.0.3/js/select2.full.min.js"></script>
-    <script src="~/Content/js/select2-4.0.3/js/i18n/zh-CN.js"></script>
+    <script src="~/Content/js/tree/tree.js"></script>
     <script>
         $(function () {
         })
@@ -96,18 +95,20 @@
                 layui.form.on('select(Target)', function (data) {
                     vm.Target = data.value;
                 });
-                $("#PId").bindSelect({
-                    url: '/Plat/AppMenu/GetTreeJson',
-                    search: true,
-                    change: function (selectrow) {
-                        if (selectrow != null) {
-                            vm.PId = selectrow.id;
-                        }
+                $("#PId").comboBoxTree({
+                    url: "/Plat/AppMenu/GetComboBoxTreeJson",
+                    description: "==请选择==",
+                    height: "220px",
+                    allowSearch: true,
+                    click: function (node) {
+                        console.log(node);
+                        vm.PId =node.id;
                     }
                 });
+
                 layui.form.render();
                 window.setTimeout(function () {
-                    $("#PId").val(json.PId).trigger("change");
+                    $("#PId").comboBoxTreeSetValue(json.PId);
                 }, 500);
             },
             methods: {

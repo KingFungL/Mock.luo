@@ -12,8 +12,8 @@ namespace Mock.Data.Models
     public class Article : IEntity<Article>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         public int? Id { get; set; }
-        public int? TypeCode { get; set; }
-        [ForeignKey("TypeCode")]
+        public int? FId { get; set; }
+        [ForeignKey("FId")]
         public ItemsDetail ItemsDetail { get; set; }
         [StringLength(50)]
         public string Title { get; set; }

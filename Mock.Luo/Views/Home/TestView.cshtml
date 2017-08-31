@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "TestView";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<div class="container" style="margin-top:20px;">
+    <form>
+        <table>
+            <tr>
+                <th class="formTitle">上级菜单</th>
+                <td class="formValue">
+                    <div id="F_ParentId" type="selectTree" class="ui-select" style="width:260px;"></div>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</div>
+@section css{
+    <link href="~/Content/js/tree/tree.css" rel="stylesheet" />
+    <style>
+        .form .formTitle { position: relative; left: 0; text-align: right; white-space: nowrap; font-weight: normal; width: 90px; padding-right: 10px; }
+        .form .formValue { position: relative; padding: 5px; width: auto; }
+    </style>
+}
+@section scripts{
+    <script src="~/Content/js/tree/tree.js"></script>
+    <script>
+        var data = [{
+            "id": "0",
+            "text": "力软信息技术有限公司",
+            "hasChildren": true,
+            "ChildNodes": [{
+                "id": "1",
+                "text": "力软（苏州）公司",
+                "hasChildren": false,
+                "ChildNodes": []
+            }, {
+                "id": "2",
+                "text": "力软（重庆）公司",
+                "hasChildren": false,
+                "ChildNodes": []
+            }, {
+                "id": "3",
+                "text": "力软（北京）公司",
+                "hasChildren": false,
+                "ChildNodes": []
+            }, {
+                "id": "4",
+                "text": "力软（上海）公司",
+                "hasChildren": false,
+                "ChildNodes": []
+            }]
+        }]
+
+        $("#F_ParentId").comboBoxTree({
+            url: "/Plat/AppMenu/GetComboBoxTreeJson",
+            description: "==请选择==",
+            height: "260px",
+            allowSearch: true,
+            //data: data
+            click: function (node) {
+                console.log(node);
+            }
+        });
+    </script>
+}

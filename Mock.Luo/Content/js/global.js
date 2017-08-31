@@ -92,6 +92,11 @@ $.layerOpen = function (options) {
         yes: null
     };
     var options = $.extend(defaults, options);
+    if (!com.ispc()) {
+        options.width = '100%';
+        options.height = '100%';
+    }
+
     top.layer.open({
         id: options.id,
         type: options.type,
@@ -198,7 +203,7 @@ $.layerMsg = function (content, type, callback) {
             default:
                 icon = 0; break;
         }
-       top.layer.msg(content, { icon: icon, time: 2000 }, function () {
+        top.layer.msg(content, { icon: icon, time: 2000 }, function () {
             if (callback && $.isFunction(callback)) {
                 callback();
             }
@@ -523,6 +528,7 @@ Array.prototype.insert = function (index, item) {
 
 /*封装bootstrapTable的表格默认功能*/
 $.fn.dataGrid = function (options) {
+    var $element = $(this);
     var defaults = {
         method: 'post', //请求方式（*）  method: 'post', //请求方式（*）
         toolbar: '#toolbar',
@@ -546,10 +552,19 @@ $.fn.dataGrid = function (options) {
         uniqueId: "Id",                     //每一行的唯一标识，一般为主键列
         showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
         cardView: false,                    //是否显示详细视图
+        onToggle: function (cardView) {
+            var element = $element.parent('.fixed-table-body');
+            if (cardView == true) {
+                element.removeClass('table-responsive')
+            } else {
+                element.addClass('table-responsive');
+            }
+        },
+        onLoadSuccess: function () {
+            $element.parent('.fixed-table-body').addClass('table-responsive');
+        }
     };
-    var options = $.extend(defaults, options);
-
-    var $element = $(this);
+    options = $.extend(defaults, options);
     return $element.bootstrapTable(options);
 };
 /*封装jqgrid的表格默认功能*/
@@ -599,3 +614,122 @@ $.fn.jqGridRowValue = function () {
         return $grid.jqGrid('getRowData', $grid.jqGrid('getGridParam', 'selrow'));
     }
 }
+
+$.fn.comboBoxTree = function (options) {
+    var u = $(this),
+        e = u.attr("id");
+    if (!e) return !1;
+    var i = $.extend({
+        description: "==请选择==",
+        id: "id",
+        text: "text",
+        title: "title",
+        maxHeight: null,
+        width: null,
+        allowSearch: !1,
+        url: !1,
+        param: null,
+        method: "GET",
+        appendTo: null,
+        click: null,
+        icon: !1,
+        data: null,
+        dataItemName: !1
+    }, options),
+        f = {
+            rendering: function () {
+                var t, r;
+                return u.find(".ui-select-text").length == 0 && u.html("<div class=\"ui-select-text\" style='color:#999;'>" + i.description + "<\/div>"), t = '<div class="ui-select-option">', t += '<div class="ui-select-option-content" style="max-height: ' + i.maxHeight + '"><\/div>', i.allowSearch && (t += '<div class="ui-select-option-search"><input type="text" class="form-control" placeholder="搜索关键字" /><span class="input-query" title="回车搜索"><i class="fa fa-search"><\/i><\/span><\/div>'), t += "<\/div>", r = $(t), r.attr("id", e + "-option"), i.appendTo ? $(i.appendTo).prepend(r) : $("body").prepend(r), $("#" + e + "-option")
+            }, loadtreeview: function (n, t) {
+                o.treeview({
+                    onnodeclick: function (t) {
+                        if (n.click) {
+                            var i = "ok";
+                            if (i = n.click(t), i == "false") return !1
+                        }
+                        u.attr("data-value", t.id).attr("data-text", t.text);
+                        u.find(".ui-select-text").html(t.text).css("color", "#000");
+                        u.trigger("change")
+                    }, height: n.maxHeight,
+                    data: t,
+                    description: n.description
+                })
+            }, loadData: function (i) {
+                var r = [];
+                r = i.data ? i.data : com.asyncGet({
+                    url: i.url,
+                    data: i.param,
+                    type: i.method
+                });
+                i.dataItemName ? (i.data = [], $.each(r, function (n, t) {
+                    var r = top.learun.data.get(["dataItem", i.dataItemName, t[i.text]]);
+                    r != "" && (t[i.text] = r);
+                    i.data.push(t)
+                })) : i.data = r
+            }, searchData: function (t, i) {
+                var u = !1,
+                    r = [];
+                return $.each(t, function (n, t) {
+                    var e = {},
+                        o, s;
+                    for (o in t) o != "ChildNodes" && (e[o] = t[o]);
+                    s = !1;
+                    e.text.indexOf(i) != -1 && (s = !0);
+                    e.hasChildren && (e.ChildNodes = f.searchData(t.ChildNodes, i), e.ChildNodes.length > 0 ? s = !0 : e.hasChildren = !1);
+                    s && (u = !0, r.push(e))
+                }), r
+            }
+        },
+        r = f.rendering(),
+        o = $("#" + e + "-option").find(".ui-select-option-content");
+    return f.loadData(i), f.loadtreeview(i, i.data), i.allowSearch && (r.find(".ui-select-option-search").find("input").bind("keypress", function () {
+        if (event.keyCode == "13") {
+            var t = $(this),
+                i = $(this).val(),
+                r = f.searchData(t[0].opt.data, i);
+            f.loadtreeview(t[0].opt, r)
+        }
+    }).focus(function () {
+        $(this).select()
+    })[0].opt = i), i.icon && (r.find("i").remove(), r.find("img").remove()), u.find(".ui-select-text").unbind("click"), u.find(".ui-select-text").bind("click", function (t) {
+        var s;
+        if (u.attr("readonly") == "readonly" || u.attr("disabled") == "disabled") return !1;
+        if ($(this).parent().addClass("ui-select-focus"), r.is(":hidden")) {
+            u.find(".ui-select-option").hide();
+            $(".ui-select-option").hide();
+            var o = u.offset().left,
+                f = u.offset().top + 37,
+                e = u.width();
+            i.width && (e = i.width);
+            r.height() + f < $(window).height() ? r.slideDown(150).css({
+                top: f,
+                left: o,
+                width: e
+            }) : (s = f - r.height() - 32, r.show().css({
+                top: s,
+                left: o,
+                width: e
+            }), r.attr("data-show", !0));
+            r.css("border-top", "1px solid #ccc");
+            i.appendTo && r.css("position", "inherit");
+            r.find(".ui-select-option-search").find("input").select()
+        } else r.attr("data-show") ? r.hide() : r.slideUp(150);
+        t.stopPropagation()
+    }), u.find("li div").click(function (t) {
+        var t = t ? t : window.event,
+            i = t.srcElement || t.target;
+        $(i).hasClass("bbit-tree-ec-icon") || (r.slideUp(150), t.stopPropagation())
+    }), $(document).click(function (t) {
+        var t = t ? t : window.event,
+            i = t.srcElement || t.target;
+        $(i).hasClass("bbit-tree-ec-icon") || $(i).hasClass("form-control") || (r.attr("data-show") ? r.hide() : r.slideUp(150), u.removeClass("ui-select-focus"), t.stopPropagation())
+    }), u
+}
+$.fn.comboBoxTreeSetValue = function (i) {
+    if (!!i) {
+        var r = $(this),
+            u = $("#" + r.attr("id") + "-option").find(".ui-select-option-content");
+        return u.find("ul").find("[data-value=" + i + "]").trigger("click"), r
+    }
+}
+

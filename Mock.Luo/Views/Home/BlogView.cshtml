@@ -11,11 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="分享知识，分享快乐，分享生活。" />
     <meta name="keywords" content="如莫博客,个人博客,独立博客,博客,程序员,奋斗的扫雪工" />
-
-    <link href="~/Content/css/font-awesome.min93e3.css" rel="stylesheet" />
+    <link href="~/Content/css/font-awesome4.7.min.css" rel="stylesheet" />
     <link href="~/Content/css/bootstrap.min14ed.css" rel="stylesheet" />
-    <link href="~/Content/css/blogbase.css" rel="stylesheet" />
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
@@ -26,7 +23,6 @@
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top clearfix">
         <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
@@ -37,7 +33,6 @@
                 <span class="navbar-brand"><a href="/Home/BlogView" style="text-decoration:none;">Mock Blog</a></span>
             </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="#"><span class="glyphicon glyphicon-home"></span> 首页 <span class="sr-only">(current)</span></a></li>
@@ -49,7 +44,7 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-    <div class="container">
+    <div class="container" style="margin-top:80px;">
         <div class="col-xs-12 col-md-9 left-body">
             <!--轮播图片-->
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -80,14 +75,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="item">
-                        <img src="~/Content/Images/banner_top.jpg" alt="...">
-                        <div class="carousel-caption">
-                            <div class="websiteDescription">
-                                <p>人生若只如初见</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!-- Controls -->
                 <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
@@ -99,63 +86,6 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
-
-            @*<div class="col-xs-12 col-sm-12 index-article">
-                    <div class="index-article-box">
-                        <div id="post-1186" class="col-xs-12 col-sm-12 col-lg-12 sf_post_list sf_post_normal">
-                            <div class="col-xs-12 col-sm-12 col-lg-12 post_body">
-                                <div class="col-xs-12 col-sm-12 col-lg-12 post-content">
-                                    <div class="col-xs-12 col-sm-12 col-lg-12 post_title">
-                                        <h2>
-                                            <a href="https://www.gzpblog.com/20170801/1186.html" title="火狐浏览器X-Content-Type-Options导致Images类型无法加载">火狐浏览器X-Content-Type-Options导致Images类型无法加载</a>
-                                        </h2>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-lg-12 post_meta">
-                                        <ul class="post_meta_ul">
-                                            <li class="inline-li">
-                                                <i class="fa fa-calendar-check-o"></i>
-                                                2017-08-01 10:23
-                                            </li>
-                                            <li class="inline-li">
-                                                <i class="fa fa-tags"></i>
-                                                <a href="https://www.gzpblog.com/category/code/front-about" rel="category tag">前端综合</a>
-                                            </li>
-                                            <li class="inline-li">
-                                                <i class="fa fa-eye"></i>
-                                                14         阅读
-                                            </li>
-                                            <li class="inline-li">
-                                                <i class="fa fa-comments-o"></i>
-                                                <a href="https://www.gzpblog.com/20170801/1186.html#respond">暂无回复</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-lg-12 post-content-main">
-                                        <p>
-                                            1. 发现问题
-                                            最近用火狐上博客时，发现一个问题，加载博客页面总是出现菊花一直在转，左下角一直在等待sp0.baidu.com：
-
-                                            导致后面的js无法加载。看了一下 network 发现是获取一个 s.gif 的时候出现问题：
-
-                                            具体的url：
-
-                                            而这个问题只在火狐上出现，其它浏览器正常，比如chrome浏览器正常加载：
-
-                                            同时在火狐上报了一个错...
-                                        </p>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-lg-12 post-bottom">
-                                        <div class="col-xs-9 col-sm-9 post-tags">
-                                            <a href="https://www.gzpblog.com/tag/%e5%89%8d%e7%ab%af" rel="tag">前端</a>
-                                        </div>
-                                        <a class="view-all" href="https://www.gzpblog.com/20170801/1186.html">阅读全文 »</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>*@
         </div>
         <div class="col-xs-12 col-md-3 right-sidebar visible-lg-block">
             <div class="author-info-widget">
@@ -179,37 +109,7 @@
             </div>
 
             <div id="other-widgets" class="other-widgets affix-top">
-                <div class="widget widget-tagsMenu clearfix visible-lg-block">
-                    <h4><span><i class="fa fa-tags"></i>&nbsp;分类</span></h4>
-                    <ul id="menu-%e4%be%a7%e6%a0%8f%e6%a0%87%e7%ad%be%e5%8c%96%e8%8f%9c%e5%8d%95" class="menu">
-                        <li id="menu-item-944" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-944"><a href="https://www.gzpblog.com/category/essay/essay-me">个人随笔</a></li>
-                        <li id="menu-item-945" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-945"><a href="https://www.gzpblog.com/category/essay/essay-extra">发发牢骚</a></li>
-                        <li id="menu-item-946" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-946"><a href="https://www.gzpblog.com/category/essay/essay-life">生活杂谈</a></li>
-                        <li id="menu-item-947" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-947">
-                            <a href="https://www.gzpblog.com/category/code/code-about/php">PHP</a>
-                        </li>
-                        <li id="menu-item-1172" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1172"><a href="https://www.gzpblog.com/category/code/library-expand/swoole">Swoole</a></li>
-                        <li id="menu-item-961" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-961"><a href="https://www.gzpblog.com/category/code/framework/thinkphp">ThinkPHP</a></li>
-                        <li id="menu-item-1170" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1170"><a href="https://www.gzpblog.com/category/code/framework/workerman">Workerman</a></li>
-                        <li id="menu-item-960" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-960"><a href="https://www.gzpblog.com/category/code/framework/phalcon">Phalcon</a></li>
-                        <li id="menu-item-965" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-965"><a href="https://www.gzpblog.com/category/code/code-software/wordpress">WordPress</a></li>
-                        <li id="menu-item-963" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-963"><a href="https://www.gzpblog.com/category/code/code-software/ecshop">ECshop</a></li>
-                        <li id="menu-item-959" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-959"><a href="https://www.gzpblog.com/category/code/framework/phalapi">PhalApi</a></li>
-                        <li id="menu-item-964" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-964"><a href="https://www.gzpblog.com/category/code/code-software/typecho">Typecho</a></li>
-
-                    </ul>
-                </div>
-                <div class="widget widget-news visible-lg-block">
-                    <h4><span><i class="fa fa-leaf"></i>&nbsp;最新文章</span></h4>
-                    <ul class="list fa-ul">
-                        <li class="widget-new">
-                            <i class="fa-li fa fa-angle-double-right"></i>
-                            <p>
-                                <a href="https://www.gzpblog.com/20170801/1186.html" title="火狐浏览器X-Content-Type-Options导致Images类型无法加载">火狐浏览器X-Content-Type-Options导致Images类型无法加载</a>
-                            </p>
-                        </li>
-                    </ul>
-                </div>
+    
             </div>
 
         </div>
@@ -221,8 +121,7 @@
 
 
     <footer class="footer">
-
-        <div class="container">
+        @*<div class="container">
             <div class="col-xs-12 col-sm-12 col-lg-12">
                 <div class="col-xs-12 col-sm-6 footer-info-block">
                     <div class="col-xs-12 col-sm-12 footer_links_label">
@@ -254,7 +153,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
         <div class="container-fluid footer-bottom-container">
             <div class="col-xs-12 col-sm-12 col-lg-12 footer-bottom text-center">
                 <span>
@@ -274,7 +173,7 @@
 
 
 
-    <script src="~/Content/js/jquery-2.1.4.min.js"></script>
+    <script src="~/Content/js/jquery-2.1.4-min.js"></script>
     <script src="~/Content/js/bootstrap.min.js"></script>
     <script src="~/Content/js/vue/vue.min.js"></script>
     <script>

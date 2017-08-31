@@ -9,7 +9,6 @@
         <div class="layui-form-item">
             <label class="layui-form-label">角色名称</label>
             <div class="layui-input-block">
-                <input type="hidden" v-model="Id" />
                 <input type="text" v-model="RoleName" required lay-verify="required" placeholder="请输入角色名称" autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -43,9 +42,7 @@
 @section scripts{
     <script>
         var json = JSON.parse(`@Html.Raw(ViewBag.ViewModel)`);
-        json.IsEnableMark = json.IsEnableMark == null ? true : json.IsEnableMark;
-
-
+        json.IsEnableMark == null && (json.IsEnableMark = true);
                  var vm = new Vue({
                     el: '#v-app',
                     data: json,

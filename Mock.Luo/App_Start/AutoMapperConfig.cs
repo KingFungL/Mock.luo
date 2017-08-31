@@ -33,6 +33,10 @@ namespace Mock.Luo.App_Start
                 cfg.CreateMap<ItemsDetail, ItemsDetailViewModel>();
                 cfg.CreateMap<IDeleteAudited, ItemsDetail>();
                 cfg.CreateMap<ItemsDetailViewModel, ItemsDetail>();
+
+                cfg.CreateMap<Article, ArticleViewModel>();
+                cfg.CreateMap<IDeleteAudited, Article>();
+                cfg.CreateMap<ArticleViewModel, Article>();
             });
         }
     }

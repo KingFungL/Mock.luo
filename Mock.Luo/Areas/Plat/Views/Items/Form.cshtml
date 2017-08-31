@@ -67,12 +67,10 @@
     <script>
         var json = JSON.parse(`@Html.Raw(ViewBag.ViewModel)`);
 
-        json.IsEnableMark = json.IsEnableMark == null ? true : json.IsEnableMark;
-        json.Open = json.Open == null ? true : json.Open;
+        json.IsEnableMark == null && (json.IsEnableMark = true);
+        json.Open == null && (json.Open = true);
+        !json.PId && (json.PId = -1);
 
-        if (!json.PId) {
-            json.PId = -1;
-        }
         var vm = new Vue({
         el: '#v-app',
         data: json,

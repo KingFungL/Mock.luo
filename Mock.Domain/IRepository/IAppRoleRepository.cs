@@ -21,7 +21,7 @@ namespace Mock.Domain
         /// <summary>
         /// 不分页的角色列表数据
         /// </summary>
-        /// <returns></returns>
+        /// <returns>DataGrid实体</returns>
 
         DataGrid GetDataGrid(string search);
         

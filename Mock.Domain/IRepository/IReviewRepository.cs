@@ -10,8 +10,6 @@ namespace Mock.Domain
 {
     public interface IReviewRepository : IRepositoryBase<Review>
     {
-        dynamic GetFormById(int Id);
-
         /// <summary>
         /// 得到最新的count条回复信息
         /// </summary>

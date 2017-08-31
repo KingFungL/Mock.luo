@@ -17,7 +17,7 @@ namespace Mock.Domain
         public DataGrid GetDataGrid(Pagination pag)
         {
 
-            var dglist = this.IQueryable().Where(pag).Select(t => new
+            var dglist = this.IQueryable(u=>u.DeleteMark==false).Where(pag).Select(t => new
             {
                 t.Id,
                 t.ItemsDetail.ItemName,

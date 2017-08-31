@@ -13,6 +13,9 @@
     <div class="panel panel-default">
         <div class="panel-body" style="padding-top: -13px;" id="v-app">
             <div id="toolbar" class="btn-group">
+                <button id="btn_refresh" type="button" class="btn btn-default" v-on:click="btn_refresh">
+                    <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>刷新
+                </button>
                 <button id="btn_add" type="button" class="btn btn-default" v-on:click="btn_add">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                 </button>
@@ -21,6 +24,9 @@
                 </button>
                 <button id="btn_delete" type="button" class="btn btn-default" v-on:click="btn_delete">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                </button>
+                <button id="btn_configure_user" type="button" class="btn btn-default" v-on:click="btn_configure_user">
+                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>配置用户
                 </button>
             </div>
             <table id="dginfo"></table>
@@ -32,7 +38,13 @@
 
         var vm = new Vue({
             el: '#v-app',
+            mounted: function () {
+                this.init_table();
+            },
             methods: {
+                btn_refresh: function () {
+                    $('#dginfo').bootstrapTable('refresh');
+                },
                 btn_add: function () {
                     this.editinfo('新增', 0);
                 },
@@ -52,47 +64,32 @@
                         content: '/Plat/AppRole/Form/' + Id,
                         yes: function (iframebody, iframeWin, index) {
                             iframeWin.vm.submit(function () {
-                                $('#dginfo').bootstrapTable("refresh");
+                                vm.btn_refresh();
                             });
                         }
                     });
+                },
+                btn_configure_user: function () {
+                    $.layerOpen({
+                        title: '配置用户',
+                        width: '50%',
+                        height: '70%',
+                    })
+                },
+                init_table: function () {
+                    $('#dginfo').dataGrid({
+                        url: '/Plat/AppRole/GetDataGrid',
+                        pagination: false,
+                        uniqueId: "Id",
+                        search: true,
+                        columns: [{ checkbox: true },
+                        { field: 'RoleName', title: '角色名', align: 'center' },
+                        { field: 'IsEnableMark', title: '是否启用', formatter: com.format_enable, align: 'center' },
+                        { field: 'SortCode', title: '排序码', align: 'center' },
+                        { field: 'Remark', title: '备注' }]
+                    });
                 }
             }
-        });
-
-        var TableInit = function () {
-            var oTableInit = new Object();
-            oTableInit.Init = function () {
-                $('#dginfo').dataGrid({
-                    url: '/Plat/AppRole/GetDataGrid',
-                    pagination: false,
-                    uniqueId: "Id",
-                    search: true,
-                    columns: [{ checkbox: true },
-                    { field: 'RoleName', title: '角色名', align: 'center' },
-                    { field: 'IsEnableMark', title: '是否启用', formatter: com.format_enable, align: 'center' },
-                    { field: 'SortCode', title: '排序码', align: 'center' },
-                    { field: 'Remark', title: '备注' }],
-                    onLoadSuccess: function () {
-                        $("#dginfo").parent('.fixed-table-body').addClass('table-responsive');
-                    },
-                    onToggle: function (cardView) {
-                        var element = $("#dginfo").parent('.fixed-table-body');
-                        if (cardView == true) {
-                            element.removeClass('table-responsive')
-                        } else {
-                            element.addClass('table-responsive');
-                        }
-
-                    }
-                });
-            };
-            return oTableInit;
-        };
-
-        $(function () {
-            var oTable = new TableInit();
-            oTable.Init();
         });
 
     </script>

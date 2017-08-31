@@ -19,10 +19,10 @@ namespace Mock.Domain
         DataGrid GetDataGrid(Pagination pag,string ItemName,string EnCode);
 
         /// <summary>
-        /// 分类，根据items下的ItemCode获取ItemDetail的分类数据
+        /// 分类，根据items下的Encode获取ItemDetail的分类数据
         /// </summary>
-        /// <param name="FCode"></param>
+        /// <param name="Encode"></param>
         /// <returns></returns>
-        dynamic GetCombobox(string FCode);
+        List<TreeSelectModel> GetCombobox(string Encode);
     }
 }

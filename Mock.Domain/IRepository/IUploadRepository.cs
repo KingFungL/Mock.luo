@@ -10,6 +10,5 @@ namespace Mock.Domain
 {
     public interface IUploadRepository : IRepositoryBase<Upload>
     {
-         dynamic GetFormById(int Id);
     }
 }

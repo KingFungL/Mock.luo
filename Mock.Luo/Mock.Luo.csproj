@@ -156,7 +156,6 @@
     <Compile Include="Areas\Mock\Controllers\CodeController.cs" />
     <Compile Include="Areas\Mock\Controllers\EditorController.cs" />
     <Compile Include="Areas\Mock\Controllers\UploadController.cs" />
-    <Compile Include="Areas\Mock\Controllers\UploadFileController.cs" />
     <Compile Include="Areas\Mock\MockAreaRegistration.cs" />
     <Compile Include="Areas\Plat\Controllers\AppMenuController.cs" />
     <Compile Include="Areas\Plat\Controllers\AppRoleController.cs" />
@@ -168,6 +167,7 @@
     <Compile Include="Areas\Plat\Models\AppMenuViewModel.cs" />
     <Compile Include="Areas\Plat\Models\AppRoleViewModel.cs" />
     <Compile Include="Areas\Plat\Models\AppUserViewModel.cs" />
+    <Compile Include="Areas\Plat\Models\ArticleViewModel.cs" />
     <Compile Include="Areas\Plat\Models\ItemsDetailViewModel.cs" />
     <Compile Include="Areas\Plat\Models\ItemsViewModel.cs" />
     <Compile Include="Areas\Plat\PlatAreaRegistration.cs" />
@@ -201,6 +201,8 @@
     <Content Include="Content\Images\195317m.jpg" />
     <Content Include="Content\Images\5891.png" />
     <Content Include="Content\Images\8041c133fdbc199b420586ff6dff940f.gif" />
+    <Content Include="Content\Images\a2.png" />
+    <Content Include="Content\Images\ajax-loader.gif" />
     <Content Include="Content\Images\animated-overlay.gif" />
     <Content Include="Content\Images\ashe.jpg" />
     <Content Include="Content\Images\banner_top.jpg" />
@@ -208,6 +210,7 @@
     <Content Include="Content\Images\bg-char3.jpg" />
     <Content Include="Content\Images\code.png" />
     <Content Include="Content\Images\collapse.png" />
+    <Content Include="Content\Images\default-thumbnail.png" />
     <Content Include="Content\Images\ex.jpg" />
     <Content Include="Content\Images\ex02.jpg" />
     <Content Include="Content\Images\ex03.png" />
@@ -323,7 +326,6 @@
     <Content Include="Areas\Plat\Views\AppUser\Form.cshtml" />
     <Content Include="Areas\Plat\Views\AppUser\Index.cshtml" />
     <Content Include="Areas\Plat\Views\AppMenu\Index.cshtml" />
-    <Content Include="Areas\Plat\Views\Article\Index.cshtml" />
     <Content Include="Areas\Plat\Views\AppRole\Form.cshtml" />
     <Content Include="Areas\Plat\Views\AppRole\Index.cshtml" />
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
@@ -352,6 +354,9 @@
     <Content Include="Areas\Plat\Views\ItemsDetail\Form.cshtml" />
     <Content Include="Areas\Plat\Views\Items\Index.cshtml" />
     <Content Include="Areas\Plat\Views\Items\Form.cshtml" />
+    <Content Include="Areas\Plat\Views\Article\Form.cshtml" />
+    <Content Include="Areas\Plat\Views\Article\Index.cshtml" />
+    <Content Include="Areas\Mock\Views\Upload\ImageView.cshtml" />
     <None Include="Content\js\jquery.validate-vsdoc.js" />
     <Content Include="Content\js\jquery.validate.js" />
     <Content Include="Content\js\jquery.validate.min.js" />
@@ -522,6 +527,26 @@
     <Content Include="Content\js\treegrid\jquery.treegrid.extension.js" />
     <Content Include="Content\js\treegrid\jquery.treegrid.js" />
     <Content Include="Content\js\treegrid\jquery.treegrid.min.js" />
+    <Content Include="Content\js\tree\images\tree\arrows .gif" />
+    <Content Include="Content\js\tree\images\tree\arrows.gif" />
+    <Content Include="Content\js\tree\images\tree\elbow-end-minus-nl.gif" />
+    <Content Include="Content\js\tree\images\tree\elbow-end-minus.gif" />
+    <Content Include="Content\js\tree\images\tree\elbow-end-plus-nl.gif" />
+    <Content Include="Content\js\tree\images\tree\elbow-end-plus.gif" />
+    <Content Include="Content\js\tree\images\tree\elbow-end.gif" />
+    <Content Include="Content\js\tree\images\tree\elbow-line.gif" />
+    <Content Include="Content\js\tree\images\tree\elbow-minus-nl.gif" />
+    <Content Include="Content\js\tree\images\tree\elbow-minus.gif" />
+    <Content Include="Content\js\tree\images\tree\elbow-plus-nl.gif" />
+    <Content Include="Content\js\tree\images\tree\elbow-plus.gif" />
+    <Content Include="Content\js\tree\images\tree\elbow.gif" />
+    <Content Include="Content\js\tree\images\tree\folder-open.gif" />
+    <Content Include="Content\js\tree\images\tree\folder.gif" />
+    <Content Include="Content\js\tree\images\tree\leaf.gif" />
+    <Content Include="Content\js\tree\images\tree\loading.gif" />
+    <Content Include="Content\js\tree\images\tree\s.gif" />
+    <Content Include="Content\js\tree\tree.css" />
+    <Content Include="Content\js\tree\tree.js" />
     <Content Include="Content\js\ueditor\dialogs\anchor\anchor.html" />
     <Content Include="Content\js\ueditor\dialogs\attachment\attachment.css" />
     <Content Include="Content\js\ueditor\dialogs\attachment\attachment.html" />
@@ -788,6 +813,7 @@
     <Content Include="Content\js\ueditor\third-party\zeroclipboard\ZeroClipboard.js" />
     <Content Include="Content\js\ueditor\third-party\zeroclipboard\ZeroClipboard.min.js" />
     <Content Include="Content\js\ueditor\third-party\zeroclipboard\ZeroClipboard.swf" />
+    <Content Include="Content\js\ueditor\toggletool.js" />
     <Content Include="Content\js\ueditor\ueditor.all.min.js" />
     <Content Include="Content\js\ueditor\ueditor.config.js" />
     <Content Include="Content\js\ueditor\ueditor.parse.min.js" />
@@ -2608,8 +2634,6 @@
     <Content Include="EasyUI151-Insdep-Them\themes\insdep\iconfont\iconfont.woff" />
     <Content Include="Content\Images\image.png" />
     <Content Include="Views\Shared\_EasyUI151Layout.cshtml" />
-    <Content Include="Areas\Mock\Views\Upload\ImageView.cshtml" />
-    <Content Include="Areas\Mock\Views\Upload\Index.cshtml" />
     <Content Include="Areas\Mock\Views\Editor\MarkDownView.cshtml" />
     <Content Include="Areas\Mock\Views\Editor\SimditorView.cshtml" />
     <Content Include="Configs\database.config" />
@@ -2673,6 +2697,7 @@
     <Content Include="Content\js\layui2.0.2\font\iconfont.woff" />
     <Content Include="Content\js\zTree_v3-master\css\awesomeStyle\awesome.less" />
     <Content Include="Content\js\zTree_v3-master\css\awesomeStyle\fa.less" />
+    <Content Include="Views\Home\TestView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

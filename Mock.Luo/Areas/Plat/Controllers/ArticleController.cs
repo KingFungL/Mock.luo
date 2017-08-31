@@ -1,34 +1,29 @@
-﻿using System;
+﻿using Autofac;
+using Mock.Code;
+using Mock.Data;
+using Mock.Data.Models;
+using Mock.Domain;
+using Mock.Luo.Areas.Plat.Models;
+using Mock.Luo.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Mock.Domain;
-using Mock.Code;
-using Mock.Data.Models;
-using Mock.Luo.Controllers;
-using Mock.Data;
-
 namespace Mock.Luo.Areas.Plat.Controllers
 {
-    public class ArticleController : BaseController
+    public class ArticleController : CrudController<Article, ArticleViewModel>
     {
         // GET: Plat/Article
         IArticleRepository _service;
-        public ArticleController(IArticleRepository service)
+        public ArticleController(IArticleRepository service, IComponentContext container) : base(container)
         {
             this._service = service;
         }
 
-        public ActionResult GetGrid(Pagination pag)
+        public ActionResult GetDataGrid(Pagination pag)
         {
             return Content(_service.GetDataGrid(pag).ToJson());
-        }
-
-        public ActionResult Edit(Article entity)
-        {
-
-            return Success();
         }
 
         /// <summary>
@@ -39,7 +34,6 @@ namespace Mock.Luo.Areas.Plat.Controllers
         {
             return Result(_service.GetRecentArticle(5));
         }
-
 
         /// <summary>
         /// 得到博客列表页面

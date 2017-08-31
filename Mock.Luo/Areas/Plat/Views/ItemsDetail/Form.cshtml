@@ -48,37 +48,38 @@
 @section scripts{
     <script>
         var json = JSON.parse(`@Html.Raw(ViewBag.ViewModel)`);
-        json.IsEnableMark = json.IsEnableMark == null ? true : json.IsEnableMark;
+        json.IsEnableMark == null &&(json.IsEnableMark = true);
+
         var FId = $.getQueryString('FId');
         //新增时，通过index页面传过来FId,编辑时,为后台查出来的FId值
-        json.FId = (FId == 0 || FId == null) ? json.FId : FId;
+        FId!="0" && (json.FId= FId);
 
-                 var vm = new Vue({
-                    el: '#v-app',
-                    data: json,
-                    beforeCreate: function () {
-                    },
-                    created: function () {
+        var vm = new Vue({
+        el: '#v-app',
+        data: json,
+        beforeCreate: function () {
+        },
+        created: function () {
 
-                    },
-                    mounted: function () {
-                        layui.form.on('switch', function (data) {
-                            vm.IsEnableMark=data.elem.checked;
-                        });
-                        layui.form.render();
+        },
+        mounted: function () {
+            layui.form.on('switch', function (data) {
+                vm.IsEnableMark=data.elem.checked;
+            });
+            layui.form.render();
 
-                    },
-                    methods: {
-                        submit: function (callback) {
-                            com.ajax({
-                                url: '/Plat/ItemsDetail/Edit/'+vm.Id,
-                                data: vm.$data,
-                                showMsg: true,
-                                success: callback
-                            })
-                        }
-                    },
-                });
+        },
+        methods: {
+            submit: function (callback) {
+                com.ajax({
+                    url: '/Plat/ItemsDetail/Edit/'+vm.Id,
+                    data: vm.$data,
+                    showMsg: true,
+                    success: callback
+                })
+            }
+        },
+    });
     </script>
 
 }

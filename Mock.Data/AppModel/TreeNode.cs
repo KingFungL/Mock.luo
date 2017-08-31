@@ -31,20 +31,7 @@ namespace Mock.Data
         public string title { get; set; }
         public object data { get; set; }
         public List<TreeNode> children { get; set; }
+
     }
 
-    public class zTreeNode
-    {
-        public string icon { get; set; }
-        public string iconClose { get; set; }
-        public string iconOpen { get; set; }
-        public string iconSkin { get; set; }
-        public string isParent { get; set; }
-        public string name { get; set; }
-        public string open { get; set; }
-        public string target { get; set; }
-        public string url { get; set; }
-        public object DIY { get; set; }
-        public List<zTreeNode> children { get; set; }
-    }
 }

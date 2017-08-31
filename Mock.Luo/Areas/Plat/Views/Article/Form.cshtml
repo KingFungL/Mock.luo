@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewBag.Title = "文章新增编辑管理";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+
+<form class="form-horizontal" id="v-app" style="margin-top:15px;">
+    <div class="container-fluid">
+        <div class="col-md-9 table-responsive">
+            <table class="table table-bordered">
+                <tr>
+                    <th width="80">分类</th>
+                    <td colspan="3">
+                        <select id="FId" name="FId" class="form-control"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>关键词</th>
+                    <td>
+                        <input id="Keywords" name="Keywords" v-model="Keywords" title="请输入标题" class="form-control" type="text">
+                    </td>
+                    <th>文章来源</th>
+                    <td><input id="Source" name="Source" v-model="Source" class="form-control" type="text"></td>
+                </tr>
+                <tr>
+                    <th>文章标题<span style="color:red">*</span></th>
+                    <td colspan="3">
+                        <input id="Title" name="Title" v-model="Title" data-placement="right" title="请输入标题" class="form-control" type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <th>摘要</th>
+                    <td colspan="3">
+                        <textarea name="Excerpt" v-model="Excerpt" id="Excerpt" style="width: 98%; height: 50px;" class="form-control"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>内容</th>
+                    <td colspan="3">
+                        <!-- 加载编辑器的容器 -->
+                        <script id="Content" name="Content" type="text/plain" style="width:100%;">
+                        </script>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-3">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr> <th> <b>缩略图</b></th></tr>
+                    <tr>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" v-model="thumbnail">
+                                <a href="javascript:com.upload_one_image('图片上传','thumbnail');">
+                                    <img width="135" height="145" onerror="this.src='/Content/Images/default-thumbnail.png'" style="cursor:grab" :src="thumbnail" />
+                                </a>
+                                <input type="button" class="btn btn-default btn-sm" v-on:click="init_img" value="取消图片">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr> <th><b>评论</b></th> </tr>
+                    <tr>
+                        <td>
+                            <label style="width: 88px"><a href="javascript:open_iframe_dialog('/Plat/MoReview/Index?id='+$('#ArticleId').val(),'评论列表')">查看评论</a></label>
+                        </td>
+                    </tr>
+                    <tr> <th><b>状态</b></th> </tr>
+                    <tr>
+                        <td>
+                            <div class="radio">
+                                <label><input type="radio" name="IsAudit" value="true" v-model="IsAudit">审核通过</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="IsAudit" value="false" v-model="IsAudit">待审核</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio">
+                                <label><input type="radio" name="IsStickie" value="true" v-model="IsStickie">置顶</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="IsStickie" value="false" v-model="IsStickie">未置顶</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio">
+                                <label><input type="radio" name="Recommend" value="true" v-model="Recommend">推荐</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="Recommend" value="false" v-model="Recommend">未推荐</label>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
+
+@section css{
+    <link href="~/Content/js/select2-4.0.3/css/select2.min.css" rel="stylesheet" />
+}
+@section scripts{
+    <script src="~/Content/js/select2-4.0.3/js/select2.full.min.js"></script>
+    <script src="~/Content/js/select2-4.0.3/js/i18n/zh-CN.js"></script>
+    <script src="~/Content/js/ueditor/ueditor.config.js"></script>
+    <script src="~/Content/js/ueditor/ueditor.all.min.js"></script>
+    <script src="~/Content/js/ueditor/toggletool.js"></script>
+    <script>
+        var json = JSON.parse(`@Html.Raw(ViewBag.ViewModel)`);
+        if (json.Id == null) {
+            json.IsAudit = true;
+            json.Recommend = false;
+            json.IsStickie = false;
+            json.ViewHits = 0;
+            json.CommentQuantity = 0;
+            json.PointQuantity = 0;
+            json.thumbnail = "/Content/Images/default-thumbnail.png";
+        }
+        json.FId == null && (json.FId = -1);
+        var ue;
+        var vm = new Vue({
+        el: '#v-app',
+        data: json,
+        beforeCreate: function () {
+        },
+        created: function () {
+
+        },
+        mounted: function () {
+            $("#FId").bindSelect({
+                url: '/Plat/ItemsDetail/GetCombobox?Encode=FTypeCode',
+                change: function (selected) {
+                    if (selected != null) {
+                        vm.FId = selected.id;
+                    }
+                }
+            });
+            ue = UE.getEditor('Content', {
+                autoHeight: true
+            });
+
+            json.Content = decodeURIComponent(json.Content)
+            if (json.Id != null) {
+                ue.addListener("ready", function () {
+                    // editor准备好之后才可以使用
+                    ue.setContent(json.Content);
+                });
+                window.setTimeout(function () {
+                    $('#FId').val(json.FId).trigger('change');
+                }, 500);
+            }
+        },
+        methods: {
+            submit: function (callback) {
+                var content = ue.getContent();
+                vm.Content = encodeURIComponent(content);
+                if (json.FId == -1) {
+                    json.FId = null;
+                }
+                com.ajax({
+                    url: '/Plat/Article/Edit/'+vm.Id,
+                    data: vm.$data,
+                    showMsg: true,
+                    success: callback
+                })
+            },
+            init_img: function () {
+                var imgsrc = '/Content/Images/default-thumbnail.png';
+                this.thumbnail = imgsrc;
+                return false;
+            }
+        },
+    });
+    </script>
+
+}

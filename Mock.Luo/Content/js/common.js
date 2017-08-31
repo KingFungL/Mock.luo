@@ -203,25 +203,22 @@ com.button = function (obj) {
 
 
 com.upload_one_image = function (dialog_title, input_selector) {
-    layer.open({
-        type: 2,
+    $.layerOpen({
         area: ['650px', '420px'],
-        skin: 'layui-layer-molv',
         title: dialog_title,
         maxmin: true,
-        content: '/Plat/Upload/ImageView',
-        btn: ['确定', '取消'],
-        yes: function (index, layero) {
-            var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
-            files = iframeWin.get_selected_files();
+        content: '/Mock/Upload/ImageView',
+        yes: function (iframebody, iframeWin, index) {
+            var files = iframeWin.get_selected_files();
             if (files) {
                 if (files.length > 1) {
                     $.layerMsg('只能选中一张图片', 'info');
                     return;
                 }
-                $(input_selector).val(files[0].url);
-                $(input_selector + '-preview').attr('src', files[0].url);
-                layer.close(index);
+                $('#' + input_selector).val(files[0]);
+                $('#' + input_selector + '-preview').attr('src', files[0]);
+                vm[input_selector] = files[0];
+                top.layer.close(index);
             } else {
                 $.layerMsg('请选择你上传的图片！', 'info')
             }
@@ -237,10 +234,10 @@ com.image_preview_dialog = function (url) {
             title: false,
             closeBtn: 0,
             shadeClose: true,
-            //area: [img.width / 2 + 'px', img.height / 2 + 6 + 'px'], //宽高
-            //content: '<div><img src=' + url + ' style="margin-top:2px;width:' + (img.width / 2) + 'px;height:' + (img.height / 2) + 'px;"/></div>'
-            area: ['227px', '190px'],
-            content: '<div class="text-center"><img src=' + url + ' style="max-width:227px;max-height:190px; min-width:180px;min-height:150px;"/></div>'
+            area: [img.width / 2 + 'px', img.height / 2 + 6 + 'px'], //宽高
+            content: '<div><img src=' + url + ' style="margin-top:2px;width:' + (img.width / 2) + 'px;height:' + (img.height / 2) + 'px;"/></div>'
+            //area: ['227px', '190px'],
+            //content: '<div class="text-center"><img src=' + url + ' style="max-width:227px;max-height:190px; min-width:180px;min-height:150px;"/></div>'
         });
     };
     img.onerror = function () {
@@ -317,4 +314,34 @@ com.edit = function (dgelement, type, callback) {
     } else {
         callback(Id);
     }
+}
+
+
+
+com.ispc = function () {
+    var userAgentInfo = navigator.userAgent;
+    var Agents = ["Android", "iPhone",
+        "SymbianOS", "Windows Phone",
+        "iPad", "iPod"];
+    var flag = true;
+    for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+            flag = false;
+            break;
+        }
+    }
+    return flag;
+}
+com.asyncGet = function (t) {
+    var i = null,
+        t = $.extend({
+            type: "GET",
+            dataType: "json",
+            async: !1,
+            cache: !1,
+            success: function (n) {
+                i = n
+            }
+        }, t);
+    return $.ajax(t), i
 }

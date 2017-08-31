@@ -22,19 +22,19 @@ namespace Mock.Luo.Areas.Plat.Controllers
         {
             this._service = service;
         }
-        public ActionResult GetDataGrid(Pagination pag, string ItemName = "", string EnCode ="")
+        public ActionResult GetDataGrid(Pagination pag, string ItemName = "", string EnCode = "")
         {
             return Result(_service.GetDataGrid(pag, ItemName, EnCode));
         }
 
-        public ActionResult GetCombobox(string encode)
+        public ActionResult GetCombobox(string Encode)
         {
-            return Result(_service.GetCombobox(encode));
+            return Result(_service.GetCombobox(Encode));
         }
 
-        public override ActionResult Edit(ItemsDetailViewModel viewModel,int id)
+        public override ActionResult Edit(ItemsDetailViewModel viewModel, int id=0)
         {
-            return View();
+            return base.Edit(viewModel, id);
         }
     }
 }

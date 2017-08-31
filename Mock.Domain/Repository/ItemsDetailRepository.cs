@@ -16,7 +16,7 @@ namespace Mock.Domain
     public class ItemsDetailRepository : RepositoryBase<ItemsDetail>, IItemsDetailRepository
     {
 
-        public DataGrid GetDataGrid(Pagination pag,string ItemName,string EnCode)
+        public DataGrid GetDataGrid(Pagination pag, string ItemName, string EnCode)
         {
             Expression<Func<ItemsDetail, bool>> predicate = u => u.DeleteMark == false
             && (ItemName == "" || u.ItemName.Contains(ItemName))
@@ -34,11 +34,16 @@ namespace Mock.Domain
             return new DataGrid { rows = dglist, total = pag.total };
         }
 
-        public dynamic GetCombobox(string FCode)
+        public List<TreeSelectModel> GetCombobox(string Encode)
         {
-            return this.IQueryable(r=>r.Items.EnCode==FCode).OrderBy(u=>u.SortCode).Select(u => new {
-               u.Id,u.ItemName,u.ItemCode
+            List<TreeSelectModel> treeList = this.IQueryable(r => r.Items.EnCode == Encode).OrderBy(u => u.SortCode).ToList().Select(u => new TreeSelectModel
+            {
+                id = u.Id.ToString(),
+                text = u.ItemName,
+                parentId = "0"
             }).ToList();
+            treeList.Insert(0, new TreeSelectModel { id = "-1", parentId = "0", text = "==请选择==" });
+            return treeList;
         }
 
 

@@ -51,10 +51,17 @@ namespace Mock.Luo.Areas.Plat.Controllers
         {
             return Result(_service.GetFancyTreeGrid());
         }
+      
         public ActionResult GetTreeJson()
         {
             List<TreeSelectModel> treeList = _service.GetTreeJson();
             return Content(treeList.TreeSelectJson());
+        }
+
+        public ActionResult GetComboBoxTreeJson()
+        {
+            List<TreeSelectModel> treeList = _service.GetTreeJson();
+            return Content(treeList.ComboboxTreeJson());
         }
     }
 }

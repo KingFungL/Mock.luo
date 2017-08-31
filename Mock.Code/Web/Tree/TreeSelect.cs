@@ -41,5 +41,33 @@ namespace Mock.Code
             }
             return sb.ToString().Replace("}{", "},{");
         }
+
+        public static string ComboboxTreeJson(this List<TreeSelectModel> data)
+        {
+            List<TreeSelectModel> listTreeNodes = new List<TreeSelectModel>();
+            ComboboxTreeJson(data, listTreeNodes, "0");
+            return listTreeNodes.ToJson();
+        }
+
+        private static void ComboboxTreeJson(List<TreeSelectModel> listModels, List<TreeSelectModel>listTreeNodes,string pid)
+        {
+            foreach (TreeSelectModel item in listModels)
+            {
+                if (item.parentId == pid)
+                {
+                    TreeSelectModel node = new TreeSelectModel
+                    {
+                        id = item.id,
+                        text = item.text,
+                        parentId = item.parentId,
+                        hasChildren=listModels.TreeWhere(u=>u.parentId==item.id).Count>0?true:false,
+                        ChildNodes = new List<TreeSelectModel>()
+                    };
+                    listTreeNodes.Add(node);
+
+                    ComboboxTreeJson(listModels, node.ChildNodes, node.id);
+                }
+            }
+        }
     }
 }

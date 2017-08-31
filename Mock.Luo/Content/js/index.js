@@ -5,15 +5,14 @@ $(function () {
         url: '/Plat/AppMenu/GetUserMenu?userid=1',
         async:false,
         success: function (menulist) {
-            $ui.initMenu(menulist);
+            $index.initMenu(menulist);
         }
     })
 });
 
+var $index = {};
 
-var $ui = new Object();
-
-$ui.initMenu = function (menulist) {
+$index.initMenu = function (menulist) {
 
     //var menulist=$ui.get_static_menu();
     var $sidemenu = $('#side-menu');
@@ -87,7 +86,7 @@ $ui.initMenu = function (menulist) {
 */
 
 
-$ui.get_static_menu = function () {
+$index.get_static_menu = function () {
     var menulist = [{
         'text': '主页',
         'id': 1,

@@ -46,11 +46,6 @@ namespace Mock.Domain
             return treeList;
         }
 
-        public void Edit(Items Entity)
-        {
-            throw new NotImplementedException();
-        }
-
         public dynamic GetzTreeJson()
         {
             var itemsTreeJson = this.IQueryable(u => u.DeleteMark == false && u.IsEnableMark == true).OrderBy(u => u.SortCode).Select(u => new
