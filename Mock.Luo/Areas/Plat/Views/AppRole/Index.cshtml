@@ -25,8 +25,11 @@
                 <button id="btn_delete" type="button" class="btn btn-default" v-on:click="btn_delete">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
                 </button>
-                <button id="btn_configure_user" type="button" class="btn btn-default" v-on:click="btn_configure_user">
-                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>配置用户
+                <button id="" type="button" class="btn btn-default" v-on:click="btn_allot">
+                    <span class="fa fa-group" aria-hidden="true"></span>角色成员
+                </button>
+                <button id="" type="button" class="btn btn-default" v-on:click="btn_authorize">
+                    <span class="fa fa-gavel" aria-hidden="true"></span>角色授权
                 </button>
             </div>
             <table id="dginfo"></table>
@@ -49,7 +52,7 @@
                     this.editinfo('新增', 0);
                 },
                 btn_edit: function () {
-                    com.edit('#dginfo','boot',function (Id) {
+                    com.edit('#dginfo', 'boot', function (Id) {
                         vm.editinfo('编辑', Id);
                     });
                 },
@@ -69,12 +72,24 @@
                         }
                     });
                 },
-                btn_configure_user: function () {
+                btn_allot: function () {
+                    var id = com.get_selectid();
+                    if (id == 0) {
+                        $.layerMsg('请先选择你要配置的角色!');
+                        return;
+                    }
                     $.layerOpen({
-                        title: '配置用户',
+                        title: '角色成员',
+                        content: '/Plat/AppRole/AllotUser?Id='+id,
                         width: '50%',
                         height: '70%',
+                        yes: function (iframebody, iframeWin, index) {
+                            iframeWin.vm.submit();
+                        }
                     })
+                },
+                btn_authorize: function (){
+                    console.log('授权！！');
                 },
                 init_table: function () {
                     $('#dginfo').dataGrid({

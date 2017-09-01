@@ -14,7 +14,6 @@ namespace Mock.Luo.Controllers
         {
             return View();
         }
-    
         public virtual ActionResult Detail()
         {
             return View();
@@ -22,6 +21,10 @@ namespace Mock.Luo.Controllers
         protected virtual ActionResult Success()
         {
             return Success("操作完成!");
+        }
+        protected virtual ActionResult Error()
+        {
+            return Error("操作失败！");
         }
         protected virtual ActionResult Success(string message)
         {
@@ -39,7 +42,11 @@ namespace Mock.Luo.Controllers
         {
             return Content(new AjaxResult { state = state.ToString(), message = message, data = data }.ToJson());
         }
-
+        /// <summary>
+        /// 简化返回json对象的包裹
+        /// </summary>
+        /// <param name="data">object对象</param>
+        /// <returns></returns>
         protected virtual ActionResult Result(object data)
         {
             return Content(JsonHelper.SerializeObject(data));

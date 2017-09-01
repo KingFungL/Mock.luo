@@ -111,7 +111,7 @@ namespace Mock.Luo.Controllers
         /// <summary>
         /// 统一的删除功能，其类要继承IDeleteAduited这个类才行。
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="Id">主键Id</param>
         /// <returns></returns>
         [HttpPost]
         public ActionResult Delete(int Id)

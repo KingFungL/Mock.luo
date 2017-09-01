@@ -34,7 +34,7 @@ $ui = {
             }
         });
         if (k) {
-            var p = '<a href="javascript:;" class="active J_menuTab" data-id="' + o + '">' + l + ' <i class="fa fa-times-circle"></i></a>';
+            var p = '<a href="javascript:;" class="active J_menuTab" data-index="' + m + '" data-id="' + o + '">' + l + ' <i class="fa fa-times-circle"></i></a>';
             $(".J_menuTab").removeClass("active");
             var n = '<iframe class="J_iframe" name="iframe' + m + '" width="100%" height="100%" src="' + o + '" frameborder="0" data-id="' + o + '" seamless></iframe>';
             $(".J_mainContent").find("iframe.J_iframe").hide().parents(".J_mainContent").append(n);
@@ -43,53 +43,16 @@ $ui = {
         }
         return false
     },
-    //初始化tabs页签
-    init_tabs: function () {
-        var m = $(this).parents(".J_menuTab").data("id");
-        var l = $(this).parents(".J_menuTab").width();
-        if ($(this).parents(".J_menuTab").hasClass("active")) {
-            if ($(this).parents(".J_menuTab").next(".J_menuTab").size()) {
-                var k = $(this).parents(".J_menuTab").next(".J_menuTab:eq(0)").data("id");
-                $(this).parents(".J_menuTab").next(".J_menuTab:eq(0)").addClass("active");
-                $(".J_mainContent .J_iframe").each(function () {
-                    if ($(this).data("id") == k) {
-                        $(this).show().siblings(".J_iframe").hide();
-                        return false
-                    }
-                });
-                var n = parseInt($(".page-tabs-content").css("margin-left"));
-                if (n < 0) {
-                    $(".page-tabs-content").animate({
-                        marginLeft: (n + l) + "px"
-                    }, "fast")
-                }
-                $(this).parents(".J_menuTab").remove();
-                $(".J_mainContent .J_iframe").each(function () {
-                    if ($(this).data("id") == m) {
-                        $(this).remove();
-                        return false
-                    }
-                })
-            }
-            if ($(this).parents(".J_menuTab").prev(".J_menuTab").size()) {
-                var k = $(this).parents(".J_menuTab").prev(".J_menuTab:last").data("id");
-                $(this).parents(".J_menuTab").prev(".J_menuTab:last").addClass("active");
-                $(".J_mainContent .J_iframe").each(function () {
-                    if ($(this).data("id") == k) {
-                        $(this).show().siblings(".J_iframe").hide();
-                        return false
-                    }
-                });
-                $(this).parents(".J_menuTab").remove();
-                $(".J_mainContent .J_iframe").each(function () {
-                    if ($(this).data("id") == m) {
-                        $(this).remove();
-                        return false
-                    }
-                })
-            }
+    //点击关闭页签的图标
+    close_tabs: function () {
+        var $this = $(this).parents(".J_menuTab");
+        var m = $this.data("id");
+        var l = $this.width();
+        //关闭当前active的页签
+        if ($this.hasClass("active")) {
+            $ui.close($this);
         } else {
-            $(this).parents(".J_menuTab").remove();
+            $this.remove();
             $(".J_mainContent .J_iframe").each(function () {
                 if ($(this).data("id") == m) {
                     $(this).remove();
@@ -223,27 +186,84 @@ $ui = {
             }
         }
     },
+    //刷新当前选中的tabs页签
+    tabRefresh: function () {
+        var index = $(".page-tabs-content").children(".active").attr('data-index');
+        document["iframe" + index].location.reload()
+    },
+    //关闭当前选中的页签
+    tabCloseSelect: function () {
+        var $this = $(".page-tabs-content").children(".active");
+        $ui.close($this);
+    },
+    //关闭当前选的页签
+    close: function ($this) {
+        var m = $this.data("id");
+        if ($this.next(".J_menuTab").size()) {
+            var k = $this.next(".J_menuTab:eq(0)").data("id");
+            $this.next(".J_menuTab:eq(0)").addClass("active");
+            $(".J_mainContent .J_iframe").each(function () {
+                if ($(this).data("id") == k) {
+                    $(this).show().siblings(".J_iframe").hide();
+                    return false
+                }
+            });
+            var n = parseInt($(".page-tabs-content").css("margin-left"));
+            if (n < 0) {
+                $(".page-tabs-content").animate({
+                    marginLeft: (n + l) + "px"
+                }, "fast")
+            }
+            $this.remove();
+            $(".J_mainContent .J_iframe").each(function () {
+                if ($(this).data("id") == m) {
+                    $(this).remove();
+                    return false
+                }
+            })
+        }
+        if ($this.prev(".J_menuTab").size()) {
+            var k = $this.prev(".J_menuTab:last").data("id");
+            $this.prev(".J_menuTab:last").addClass("active");
+            $(".J_mainContent .J_iframe").each(function () {
+                if ($(this).data("id") == k) {
+                    $(this).show().siblings(".J_iframe").hide();
+                    return false
+                }
+            });
+            $this.remove();
+            $(".J_mainContent .J_iframe").each(function () {
+                if ($(this).data("id") == m) {
+                    $(this).remove();
+                    return false
+                }
+            })
+        }
+    }
 }
-
-
 
 $(function () {
 
     $(".J_menuItem").each(function (k) {
         if (!$(this).attr("data-index")) {
-            $(this).attr("data-index", k)
+            $(this).attr("data-index", k + 1)
         }
     });
+    //初始化左边树菜单
     $(".J_menuItem").on("click", $ui.init_menuitem);
-
-    $(".J_menuTabs").on("click", ".J_menuTab i.fa-times-circle", $ui.init_tabs);
-
+    //点击关闭的图标时，关闭当前选中面签
+    $(".J_menuTabs").on("click", ".J_menuTab i.fa-times-circle", $ui.close_tabs);
+    //关闭非首页与当前active的其他页签
     $(".J_tabCloseOther").on("click", $ui.tabsCloseOther);
-
-    $(".J_menuTabs").on("click", ".J_menuTab", $ui.sibling_active);
-
+    //关闭所有页签，除首页
     $(".J_tabCloseAll").on("click", $ui.tabCloseAll);
-
+    //刷新当前tabs
+    $('.J_tabRefresh').on('click', $ui.tabRefresh);
+    
+    $(".J_menuTabs").on("click", ".J_menuTab", $ui.sibling_active);
+    //关闭当前active的页签
+    $('.J_tabCloseSelect').on('click', $ui.tabCloseSelect);
+    //应该是切换到左边的tabs
     $(".J_tabLeft").on("click", $ui.tabLeft);
 
     $(".J_tabRight").on("click", $ui.tabRight);

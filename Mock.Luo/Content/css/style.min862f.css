@@ -124,6 +124,7 @@ body.canvas-menu.mini-navbar nav.navbar-static-side { display: block; width: 70p
 
 @media (max-width:768px) {
     .top-navigation .navbar-header { display: block; float: none }
+    .roll-nav.roll-right{display:none;}
 }
 
 .menu-visible-lg, .menu-visible-md { display: none !important }

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace Mock.Data.Models
 {
     [Table("Review")]
-    public class Review
+    public class Review: IEntity<Review>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public int? AId { get; set; }
         public int? PId { get; set; }
         [ForeignKey("AId")]
@@ -22,16 +22,23 @@ namespace Mock.Data.Models
         public string Ip { get; set; }
         [StringLength(50)]
         public string Agent { get; set; }
-        public DateTime? AddTime { get; set; }
-        public int? AuthorId { get; set; }
-        [ForeignKey("AuthorId")]
-        public AppUser AppUser { get; set; }
         [StringLength(50)]
-        public string Author { get; set; }
+        public string AuName { get; set; }
         [StringLength(50)]
         public string AuEmail { get; set; }
-        [StringLength(50)]
-        public string Status { get; set; }
+        /// <summary>
+        /// 是否已审核
+        /// </summary>
+        public bool? IsAduit { get; set; }
+        public int? CreatorUserId { get; set; }
+        [ForeignKey("CreatorUserId")]
+        public AppUser AppUser { get; set; }
+        public DateTime? CreatorTime { get; set; }
+        public bool? DeleteMark { get; set; }
+        public int? DeleteUserId { get; set; }
+        public DateTime? DeleteTime { get; set; }
+        public int? LastModifyUserId { get; set; }
+        public DateTime? LastModifyTime { get; set; }
 
     }
 }

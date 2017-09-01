@@ -78,6 +78,18 @@
     <Compile Include="Migrations\201708311033237_1.Designer.cs">
       <DependentUpon>201708311033237_1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709011153575_2.cs" />
+    <Compile Include="Migrations\201709011153575_2.Designer.cs">
+      <DependentUpon>201709011153575_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709011159322_3.cs" />
+    <Compile Include="Migrations\201709011159322_3.Designer.cs">
+      <DependentUpon>201709011159322_3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709011200595_4.cs" />
+    <Compile Include="Migrations\201709011200595_4.Designer.cs">
+      <DependentUpon>201709011200595_4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppMenu.cs" />
     <Compile Include="Models\AppRole.cs" />
@@ -117,6 +129,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201708311033237_1.resx">
       <DependentUpon>201708311033237_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709011153575_2.resx">
+      <DependentUpon>201709011153575_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709011159322_3.resx">
+      <DependentUpon>201709011159322_3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709011200595_4.resx">
+      <DependentUpon>201709011200595_4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
