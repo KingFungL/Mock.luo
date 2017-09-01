@@ -560,8 +560,11 @@ $.fn.dataGrid = function (options) {
                 element.addClass('table-responsive');
             }
         },
-        onLoadSuccess: function () {
+        onLoadSuccess: function (data) {
             $element.parent('.fixed-table-body').addClass('table-responsive');
+            if (typeof (options.callback) == 'function') {
+                options.callback(data);
+            }
         }
     };
     options = $.extend(defaults, options);

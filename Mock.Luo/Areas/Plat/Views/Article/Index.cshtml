@@ -30,6 +30,8 @@
         </div>
     </div>
 </section>
+@section css{
+}
 @section scripts{
     <script type="text/javascript">
 
@@ -39,7 +41,7 @@
                 this.init_table();
             },
             methods: {
-                btn_refresh:function() {
+                btn_refresh: function () {
                     $('#dginfo').bootstrapTable('refresh');
                 },
                 btn_add: function () {
@@ -80,12 +82,20 @@
                         { field: 'Title', title: '标题', align: 'center' },
                         { field: 'ItemName', title: '文章类型', align: 'center' },
                         { field: 'LoginName', title: '作者', align: 'center' },
-                        { field: 'CommentQuantity', title: '评论量', align: 'center' },
+                        {
+                            field: 'CommentQuantity', title: '评论量', align: 'center', formatter: function (value, row) {
+                                if (value != null) {
+                                    return com.format_str('<a  href="javascript:vm.show_review({0})" style="color: #2fa4e7;" title="点我查看评论" data-toggle="tooltip">{1}</a>', row.Id, value);
+                                } else {
+                                    return '_';
+                                }
+                            }
+                        },
                         { field: 'PointQuantity', title: '点赞量', align: 'center' },
                         { field: 'ViewHits', title: '阅读次数', align: 'center' },
                         {
                             field: 'IsAudit', title: '关键字/来源/摘要/缩略图', align: 'center', formatter: function (value, row, index) {
-                                var d = com.format_str('<i class="fa fa-{0} fa-fw" ></i><i class="fa fa-{1} fa-fw" style="margin-left:10px;" ></i><i class="fa fa-{2} fa-fw" style="margin-left:10px;" ></i>', row.Keywords ? "check" : "close", row.Source ? "check" : "close", row.Excerpt  ? "check" : "close")
+                                var d = com.format_str('<i class="fa fa-{0} fa-fw" ></i><i class="fa fa-{1} fa-fw" style="margin-left:10px;" ></i><i class="fa fa-{2} fa-fw" style="margin-left:10px;" ></i>', row.Keywords ? "check" : "close", row.Source ? "check" : "close", row.Excerpt ? "check" : "close")
                                 if (row.thumbnail) {
                                     var thumurl = com.format_str('<a href="javascript:com.image_preview_dialog(\'' + row.thumbnail + '\')"; data-toggle="tooltip" data-original-title="点我查看" style="margin-left:10px;color:#2fa4e7;text-decoration:none;"> <i class="fa fa-photo fa-fw"></i> </a>');
                                     return d + thumurl;
@@ -101,9 +111,19 @@
 
                             }
                         },
-                        { field: 'CreatorTime', title: '发布时间', align: 'center' }]
+                        { field: 'CreatorTime', title: '发布时间', align: 'center' }],
+                        callback: function () {
+                            $("[data-toggle='tooltip']").tooltip();
+                        }
                     });
+                }, show_review: function (Id) {
+                    $.layerOpen({
+                        content: '/Plat/Review/Index?Id=' + Id,
+                        width: '70%',
+                        height: '69%'
+                    })
                 }
+
             }
         });
 

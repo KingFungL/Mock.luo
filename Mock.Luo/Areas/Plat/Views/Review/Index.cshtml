@@ -26,6 +26,7 @@
 }
 @section scripts{
     <script>
+        var Id = $.getQueryString('Id');
         var vm = new Vue({
             el: '#v-app',
             mounted: function () {
@@ -40,6 +41,7 @@
                         sortName: 'Id',
                         queryParams: function (params) {
                             params.Email = params.search;
+                            params.AId = Id;
                             return params;
                         },
                         columns: [{ checkbox: true },
@@ -55,7 +57,10 @@
                         { field: 'CreatorTime', title: '评论时间', sortable: true },
                         { field: 'Ip', title: 'Ip地址', sortable: true, align: 'center' },
                         { field: 'Agent', title: '浏览器环境', align: 'center' },
-                        ]
+                        ],
+                        callback: function () {
+                            $('.pull-right.search .form-control').attr('placeholder','输入邮件');
+                        }
                     });
                 },
                 btn_refresh: function () {
