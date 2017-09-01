@@ -11,7 +11,11 @@
                 <tr>
                     <th width="80">分类</th>
                     <td colspan="3">
-                        <select id="FId" name="FId" class="form-control"></select>
+                        <multiselect v-model="FId" :hide-selected="false" label="text" track-by="id" placeholder="--请选择分类--" :options="FTypeOptions" :multiple="false"
+                                     :searchable="true" :clear-on-select="false"
+                                     :close-on-select="true">
+                            <span slot="noResult">Oops! No elements found. Consider changing the search query.</span>
+                        </multiselect>
                     </td>
                 </tr>
                 <tr>
@@ -103,16 +107,16 @@
 </form>
 
 @section css{
-    <link href="~/Content/js/select2-4.0.3/css/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/css/vue-multiselect.min31f.css" rel="stylesheet" />
 }
 @section scripts{
-    <script src="~/Content/js/select2-4.0.3/js/select2.full.min.js"></script>
-    <script src="~/Content/js/select2-4.0.3/js/i18n/zh-CN.js"></script>
+    <script src="~/Content/js/vue/vue-multiselect.min.js"></script>
     <script src="~/Content/js/ueditor/ueditor.config.js"></script>
     <script src="~/Content/js/ueditor/ueditor.all.min.js"></script>
     <script src="~/Content/js/ueditor/toggletool.js"></script>
     <script>
         var json = JSON.parse(`@Html.Raw(ViewBag.ViewModel)`);
+        Vue.component('Multiselect', VueMultiselect.Multiselect);
         if (json.Id == null) {
             json.IsAudit = true;
             json.Recommend = false;
@@ -128,19 +132,14 @@
         el: '#v-app',
         data: json,
         beforeCreate: function () {
+            json.FTypeOptions = [];
+            json.FId == null && (json.FId = -1);
         },
         created: function () {
 
         },
         mounted: function () {
-            $("#FId").bindSelect({
-                url: '/Plat/ItemsDetail/GetCombobox?Encode=FTypeCode',
-                change: function (selected) {
-                    if (selected != null) {
-                        vm.FId = selected.id;
-                    }
-                }
-            });
+            this.get_ftypeoptions();
             ue = UE.getEditor('Content', {
                 autoHeight: true
             });
@@ -151,15 +150,13 @@
                     // editor准备好之后才可以使用
                     ue.setContent(json.Content);
                 });
-                window.setTimeout(function () {
-                    $('#FId').val(json.FId).trigger('change');
-                }, 500);
             }
         },
         methods: {
             submit: function (callback) {
                 var content = ue.getContent();
                 vm.Content = encodeURIComponent(content);
+                vm.FId = vm.FId.id;
                 if (json.FId == -1) {
                     json.FId = null;
                 }
@@ -174,6 +171,23 @@
                 var imgsrc = '/Content/Images/default-thumbnail.png';
                 this.thumbnail = imgsrc;
                 return false;
+            },
+            get_ftypeoptions: function () {
+                com.ajax({
+                    url: '/Plat/ItemsDetail/GetCombobox?Encode=FTypeCode',
+                    showLoading: false,
+                    success: function (d) {
+                        json.FTypeOptions = d;
+                        //实现,编辑时，后台只传来类别的id时,将combobox选中的对象赋值给json.FId,这样才能实现选中效果,
+                        //新增时，FId被赋值-1
+                        $.each(d, function (i, v) {
+                            if (json.FId ==v.id) {
+                                json.FId = v;
+                                return false;
+                            }
+                        });
+                    }
+                })
             }
         },
     });

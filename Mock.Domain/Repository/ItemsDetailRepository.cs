@@ -42,7 +42,7 @@ namespace Mock.Domain
                 text = u.ItemName,
                 parentId = "0"
             }).ToList();
-            treeList.Insert(0, new TreeSelectModel { id = "-1", parentId = "0", text = "==请选择==" });
+            treeList.Insert(0, new TreeSelectModel { id ="-1", parentId = "0", text = "==请选择==" });
             return treeList;
         }
 

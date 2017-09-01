@@ -24,7 +24,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
         public ActionResult GetTreeJson()
         {
-            return Content(_service.GetTreeJson().TreeSelectJson());
+            return Content(_service.GetTreeJson().ComboboxTreeJson());
         }
 
         public ActionResult GetzTreeJson()

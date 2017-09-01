@@ -27,63 +27,61 @@
                          :close-on-select="false">
                 <span slot="noResult">Oops! No elements found. Consider changing the search query.</span>
             </multiselect>
-
         </div>
     </form>
 </div>
 
 @section css{
-    <link href="https://unpkg.com/vue-multiselect@2.0.0-beta.14/dist/vue-multiselect.min.css" rel="stylesheet" />
-
+    <link href="~/Content/css/vue-multiselect.min31f.css" rel="stylesheet" />
 }
 @section scripts{
-    <script src="https://unpkg.com/vue-multiselect@2.0.0-beta.14"></script>
+    <script src="~/Content/js/vue/vue-multiselect.min.js"></script>
     <script>
         var json = JSON.parse(`@Html.Raw(ViewBag.ViewModel)`);
         Vue.component('Multiselect',VueMultiselect.Multiselect);
 
-                 var vm = new Vue({
-                    el: '#v-app',
-                    data: json,
-                    beforeCreate: function () {
-                        json.roleJson = [];
-                        json.roleIds = json.roleIds == null ? [] : json.roleIds;
-                    },
-                    mounted: function () {
-                        this.get_rolejson();
-                    },
-                    methods: {
-                        submit: function (callback) {
-                            var roleIds = [];
-                            vm.roleIds.forEach(u => {
-                                roleIds.push(u.id);
-                            });
-
-                            var postdata = {
-                                Id: vm.Id,
-                                LoginName: vm.LoginName,
-                                NickName: vm.NickName,
-                                Email: vm.Email,
-                                roleIds: String(roleIds)
-                            };
-                            com.ajax({
-                                url: '/Plat/AppUser/SubmitForm',
-                                data: postdata,
-                                showMsg: true,
-                                success: callback
-                            })
-                        },
-                        get_rolejson:function () {
-                            com.ajax({
-                                url: '/Plat/AppRole/GetRoleJson',
-                                showLoading: false,
-                                success: function (d) {
-                                    json.roleJson = d;
-                                }
-                            });
-                        }
-                    },
+        var vm = new Vue({
+        el: '#v-app',
+        data: json,
+        beforeCreate: function () {
+            json.roleJson = [];
+            json.roleIds == null && (json.roleIds = []);
+        },
+        mounted: function () {
+            this.get_rolejson();
+        },
+        methods: {
+            submit: function (callback) {
+                var roleIds = [];
+                vm.roleIds.forEach(u => {
+                    roleIds.push(u.id);
                 });
+
+                var postdata = {
+                    Id: vm.Id,
+                    LoginName: vm.LoginName,
+                    NickName: vm.NickName,
+                    Email: vm.Email,
+                    roleIds: String(roleIds)
+                };
+                com.ajax({
+                    url: '/Plat/AppUser/SubmitForm',
+                    data: postdata,
+                    showMsg: true,
+                    success: callback
+                })
+            },
+            get_rolejson:function () {
+                com.ajax({
+                    url: '/Plat/AppRole/GetRoleJson',
+                    showLoading: false,
+                    success: function (d) {
+                        json.roleJson = d;
+                    }
+                });
+            }
+        },
+    });
     </script>
 
 }

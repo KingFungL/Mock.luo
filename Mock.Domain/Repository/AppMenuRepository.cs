@@ -61,7 +61,7 @@ namespace Mock.Domain
                                         parentId = u.PId.ToString()
                                     }).ToList();
 
-            treeList.Insert(0, new TreeSelectModel { id = "-1", text = "==请选择==", parentId = "0" });
+            treeList.Insert(0, new TreeSelectModel { id ="-1", text = "==请选择==", parentId = "0" });
             return treeList;
         }
     }

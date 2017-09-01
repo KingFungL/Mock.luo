@@ -71,17 +71,14 @@
 
 
 @section css{
-    <link href="~/Content/js/tree/tree.css" rel="stylesheet" />
+    <link href="~/Content/js/wdTree/tree.css" rel="stylesheet" />
 }
 @section scripts{
-    <script src="~/Content/js/tree/tree.js"></script>
+    <script src="~/Content/js/wdTree/jquery.tree.js"></script>
     <script>
-        $(function () {
-        })
+
         var json = JSON.parse(`@Html.Raw(ViewBag.ViewModel)`);
-        if (!json.PId) {
-            json.PId = -1;
-        }
+       !json.PId && (json.PId = -1);
         var vm = new Vue({
             el: '#v-app',
             data: json,

@@ -24,7 +24,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">上级节点</label>
                 <div class="layui-input-inline">
-                    <select id="PId" class="layui-input" lay-ignore></select>
+                    <div id="PId" type="selectTree" class="ui-select"></div>
                 </div>
             </div>
             <div class="layui-inline">
@@ -59,11 +59,10 @@
     </form>
 </div>
 @section css{
-    <link href="~/Content/js/select2-4.0.3/css/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/js/wdTree/tree.css" rel="stylesheet" />
 }
 @section scripts{
-    <script src="~/Content/js/select2-4.0.3/js/select2.full.min.js"></script>
-    <script src="~/Content/js/select2-4.0.3/js/i18n/zh-CN.js"></script>
+    <script src="~/Content/js/wdTree/jquery.tree.js"></script>
     <script>
         var json = JSON.parse(`@Html.Raw(ViewBag.ViewModel)`);
 
@@ -83,18 +82,18 @@
             layui.form.on('switch', function (data) {
                 vm[$(data.elem).attr('name')]=data.elem.checked;
             });
-            $("#PId").bindSelect({
-                url: '/Plat/Items/GetTreeJson',
-                search: true,
-                change: function (selectrow) {
-                    if (selectrow != null) {
-                        vm.PId = selectrow.id;
-                    }
+            $("#PId").comboBoxTree({
+                url: "/Plat/Items/GetTreeJson",
+                description: "==请选择==",
+                height: "220px",
+                allowSearch: true,
+                click: function (node) {
+                    vm.PId = node.id;
                 }
             });
             layui.form.render();
             window.setTimeout(function () {
-                $("#PId").val(json.PId).trigger("change");
+                $("#PId").comboBoxTreeSetValue(json.PId);
             }, 500);
         },
         methods: {
