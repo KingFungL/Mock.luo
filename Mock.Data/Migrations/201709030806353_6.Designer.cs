@@ -7,13 +7,13 @@ namespace Mock.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class _3 : IMigrationMetadata
+    public sealed partial class _6 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(_3));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(_6));
         
         string IMigrationMetadata.Id
         {
-            get { return "201709011159322_3"; }
+            get { return "201709030806353_6"; }
         }
         
         string IMigrationMetadata.Source

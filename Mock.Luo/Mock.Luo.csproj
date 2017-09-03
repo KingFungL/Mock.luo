@@ -160,14 +160,14 @@
     <Compile Include="Areas\Mock\Controllers\EditorController.cs" />
     <Compile Include="Areas\Mock\Controllers\UploadController.cs" />
     <Compile Include="Areas\Mock\MockAreaRegistration.cs" />
-    <Compile Include="Areas\Plat\Controllers\AppMenuController.cs" />
+    <Compile Include="Areas\Plat\Controllers\AppModuleController.cs" />
     <Compile Include="Areas\Plat\Controllers\AppRoleController.cs" />
     <Compile Include="Areas\Plat\Controllers\AppUserController.cs" />
     <Compile Include="Areas\Plat\Controllers\ArticleController.cs" />
     <Compile Include="Areas\Plat\Controllers\ItemsController.cs" />
     <Compile Include="Areas\Plat\Controllers\ItemsDetailController.cs" />
     <Compile Include="Areas\Plat\Controllers\ReviewController.cs" />
-    <Compile Include="Areas\Plat\Models\AppMenuViewModel.cs" />
+    <Compile Include="Areas\Plat\Models\AppModuleViewModel.cs" />
     <Compile Include="Areas\Plat\Models\AppRoleViewModel.cs" />
     <Compile Include="Areas\Plat\Models\AppUserViewModel.cs" />
     <Compile Include="Areas\Plat\Models\ArticleViewModel.cs" />
@@ -331,7 +331,6 @@
     <Content Include="Areas\Plat\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Plat\Views\AppUser\Form.cshtml" />
     <Content Include="Areas\Plat\Views\AppUser\Index.cshtml" />
-    <Content Include="Areas\Plat\Views\AppMenu\Index.cshtml" />
     <Content Include="Areas\Plat\Views\AppRole\Form.cshtml" />
     <Content Include="Areas\Plat\Views\AppRole\Index.cshtml" />
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
@@ -355,8 +354,6 @@
     <Content Include="Areas\Plat\Js\ajax-tree-taxonomy.json" />
     <Content Include="Areas\Plat\Js\ajax-sub2.json" />
     <Content Include="Areas\Plat\Js\ajax-tree-products.json" />
-    <Content Include="Areas\Plat\Views\AppMenu\DemoTreeGrid.cshtml" />
-    <Content Include="Areas\Plat\Views\AppMenu\Form.cshtml" />
     <Content Include="Areas\Plat\Views\ItemsDetail\Form.cshtml" />
     <Content Include="Areas\Plat\Views\Items\Index.cshtml" />
     <Content Include="Areas\Plat\Views\Items\Form.cshtml" />
@@ -365,6 +362,11 @@
     <Content Include="Areas\Mock\Views\Upload\ImageView.cshtml" />
     <Content Include="Areas\Plat\Views\Review\Index.cshtml" />
     <Content Include="Areas\Plat\Views\AppRole\AllotUser.cshtml" />
+    <Content Include="Areas\Plat\Views\AppModule\Form.cshtml" />
+    <Content Include="Areas\Plat\Views\AppModule\Icon.cshtml" />
+    <Content Include="Areas\Plat\Views\AppModule\Index.cshtml" />
+    <Content Include="Areas\Plat\Views\AppModule\DemoTreeGrid.cshtml" />
+    <Content Include="Areas\Plat\Views\AppModule\ButtonList.cshtml" />
     <None Include="Content\js\jquery.validate-vsdoc.js" />
     <Content Include="Content\js\jquery.validate.js" />
     <Content Include="Content\js\jquery.validate.min.js" />
@@ -476,6 +478,8 @@
     <Content Include="Content\js\mobilecheck.js" />
     <Content Include="Content\js\modernizr-2.6.2.js" />
     <Content Include="Content\js\pace.min.js" />
+    <Content Include="Content\css\wizcard.css" />
+    <Content Include="Content\js\plugins\wizcard.js" />
     <Content Include="Content\js\sidebar.js" />
     <Content Include="Content\js\simditor\hotkeys.js" />
     <Content Include="Content\js\simditor\module.js" />
@@ -973,7 +977,6 @@
     <Content Include="Views\Home\TestView.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Browsers\" />
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Mock\Models\" />
     <Folder Include="Content\themes\" />

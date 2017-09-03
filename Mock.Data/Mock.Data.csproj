@@ -60,7 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppModel\AppMenu.cs" />
+    <Compile Include="AppModel\AppModule.cs" />
     <Compile Include="AppModel\DataGrid.cs" />
     <Compile Include="AppModel\TreeNode.cs" />
     <Compile Include="Extensions\CollectionsExtensions.cs" />
@@ -74,24 +74,16 @@
     <Compile Include="Infrastructure\IDeleteAudited.cs" />
     <Compile Include="Infrastructure\IEntity.cs" />
     <Compile Include="Infrastructure\IModificationAudited.cs" />
-    <Compile Include="Migrations\201708311033237_1.cs" />
-    <Compile Include="Migrations\201708311033237_1.Designer.cs">
-      <DependentUpon>201708311033237_1.cs</DependentUpon>
+    <Compile Include="Migrations\201709030806353_6.cs" />
+    <Compile Include="Migrations\201709030806353_6.Designer.cs">
+      <DependentUpon>201709030806353_6.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201709011153575_2.cs" />
-    <Compile Include="Migrations\201709011153575_2.Designer.cs">
-      <DependentUpon>201709011153575_2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709011159322_3.cs" />
-    <Compile Include="Migrations\201709011159322_3.Designer.cs">
-      <DependentUpon>201709011159322_3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709011200595_4.cs" />
-    <Compile Include="Migrations\201709011200595_4.Designer.cs">
-      <DependentUpon>201709011200595_4.cs</DependentUpon>
+    <Compile Include="Migrations\201709031242128_1.cs" />
+    <Compile Include="Migrations\201709031242128_1.Designer.cs">
+      <DependentUpon>201709031242128_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AppMenu.cs" />
+    <Compile Include="Models\AppModule.cs" />
     <Compile Include="Models\AppRole.cs" />
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\Article.cs" />
@@ -100,7 +92,7 @@
     <Compile Include="Models\MockDbContext.cs" />
     <Compile Include="Models\PointArtice.cs" />
     <Compile Include="Models\Review.cs" />
-    <Compile Include="Models\RoleMenu.cs" />
+    <Compile Include="Models\RoleModule.cs" />
     <Compile Include="Models\ThirdUser.cs" />
     <Compile Include="Models\Upload.cs" />
     <Compile Include="Models\UserRole.cs" />
@@ -127,17 +119,11 @@
     <Folder Include="ExtensionModel\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708311033237_1.resx">
-      <DependentUpon>201708311033237_1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709030806353_6.resx">
+      <DependentUpon>201709030806353_6.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709011153575_2.resx">
-      <DependentUpon>201709011153575_2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709011159322_3.resx">
-      <DependentUpon>201709011159322_3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709011200595_4.resx">
-      <DependentUpon>201709011200595_4.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709031242128_1.resx">
+      <DependentUpon>201709031242128_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

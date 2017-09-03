@@ -345,3 +345,11 @@ com.asyncGet = function (t) {
         }, t);
     return $.ajax(t), i
 }
+
+com.tabiframe_Name = function () {
+    return top.$(".J_iframe:visible").attr("name")
+};
+/*得到当前可见的iframe对象*/
+com.currentIframe = function () {
+    return top.frames[com.tabiframe_Name()].contentWindow != undefined ? top.frames[com.tabiframe_Name()].contentWindow : top.frames[com.tabiframe_Name()]
+}

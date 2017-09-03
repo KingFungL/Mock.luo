@@ -38,10 +38,10 @@
                         <col width="100px"></col>
                     </colgroup>
                     <thead>
-                        <tr> <th></th>  <th>菜单名称</th> <th style="text-align:center;">链接地址</th> <th style="text-align:center;">排序码</th> <th style="text-align:center;">展开</th> <th style="text-align:center;">文件夹</th><th style="text-align:center;">图标</th><th style="text-align:center;">目标</th> </tr>
+                        <tr> <th></th>  <th>菜单名称</th> <th style="text-align:center;">链接地址</th> <th style="text-align:center;">排序码</th> <th style="text-align:center;">展开</th><th style="text-align:center;">文件夹</th> <th style="text-align:center;">菜单</th><th style="text-align:center;">图标</th><th style="text-align:center;">目标</th> </tr>
                     </thead>
                     <tbody>
-                        <tr> <td></td> <td></td> <td></td> <td></td> <td></td><td></td><td></td> <td></td> </tr>
+                        <tr> <td></td> <td></td> <td></td> <td></td> <td></td><td></td><td></td> <td></td><td></td> </tr>
                     </tbody>
                 </table>
             </div>
@@ -89,7 +89,7 @@
                         selectMode: 1,
                         quicksearch: true,
                         glyph: glyph_opts,
-                        source: { url: "/Plat/AppMenu/GetFancyTreeGrid", debugDelay: 1000 },
+                        source: { url: "/Plat/AppModule/GetFancyTreeGrid", debugDelay: 1000 },
                         table: {
                             checkboxColumnIdx: 0,
                             nodeColumnIdx: 1
@@ -114,13 +114,14 @@
                             $tdList.eq(3).css('text-align', 'center').text(d.SortCode);
                             $tdList.eq(4).css('text-align', 'center').html(com.format_yes(d.Expanded));
                             $tdList.eq(5).css('text-align', 'center').html(com.format_yes(d.Folder));
-                            $tdList.eq(6).css('text-align', 'center').html('<i class="' + d.Icon + '"></i>');
+                            $tdList.eq(6).css('text-align', 'center').html(com.format_yes(d.TypeCode=='Menu'?true:false));
+                            $tdList.eq(7).css('text-align', 'center').html('<i class="' + d.Icon + '"></i>');
                             var target = {
                                 "expand": "无页面",
                                 "iframe": "框架页",
                                 "open": "新窗口"
                             };
-                            $tdList.eq(7).css('text-align', 'center').text(target[d.Target]);
+                            $tdList.eq(8).css('text-align', 'center').text(target[d.Target]);
                         }
                     });
                 },
@@ -145,7 +146,7 @@
                             content: '您确定要删除你勾选的记录吗?',
                             callback: function () {
                                 com.ajax({
-                                    url: '/Plat/AppMenu/Delete/' + select_nodes[0].data.Id,
+                                    url: '/Plat/AppModule/Delete/' + select_nodes[0].data.Id,
                                     showMsg:true,
                                     success: function () {
                                         vm.btn_refresh();
@@ -159,10 +160,12 @@
                 },
                 editinfo: function (title, Id) {
                     $.layerOpen({
+                        id: "Form",
                         title: title,
                         width: '65%',
                         height: '70%',
-                        content: '/Plat/AppMenu/Form/' + Id,
+                        content: '/Plat/AppModule/Form/' + Id,
+                        btn:null,
                         yes: function (iframebody, iframeWin, index) {
                             iframeWin.vm.submit(function () {
                                 vm.btn_refresh();

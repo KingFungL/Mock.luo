@@ -24,7 +24,6 @@ namespace Mock.Data.Models
 
         public bool? IsEnableMark { get; set; }
         public virtual ICollection<UserRole> UserRoles { get; set; }
-
         public int? CreatorUserId { get; set; }
         public DateTime? CreatorTime { get; set; }
         public bool? DeleteMark { get; set; }

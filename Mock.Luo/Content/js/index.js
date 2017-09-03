@@ -2,7 +2,7 @@
 $(function () {
 
     com.ajax({
-        url: '/Plat/AppMenu/GetUserMenu?userid=1',
+        url: '/Plat/AppModule/GetUserModule?userid=1',
         async:false,
         success: function (menulist) {
             $index.initMenu(menulist);

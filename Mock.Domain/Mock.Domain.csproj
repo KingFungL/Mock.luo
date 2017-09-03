@@ -58,7 +58,7 @@
   <ItemGroup>
     <Compile Include="IRepository\ILeaveMsgRepository.cs" />
     <Compile Include="IRepository\IAppRoleRepository.cs" />
-    <Compile Include="IRepository\IAppMenuRepository.cs" />
+    <Compile Include="IRepository\IAppModuleRepository.cs" />
     <Compile Include="IRepository\IItemsDetailRepository.cs" />
     <Compile Include="IRepository\IItemsRepository.cs" />
     <Compile Include="IRepository\IAppUserRepository.cs" />
@@ -70,7 +70,7 @@
     <Compile Include="Repository\UserRoleRepository.cs" />
     <Compile Include="Repository\AppRoleRepository.cs" />
     <Compile Include="Repository\ReviewRepository .cs" />
-    <Compile Include="Repository\AppMenuRepository.cs" />
+    <Compile Include="Repository\AppModuleRepository.cs" />
     <Compile Include="Repository\ItemsDetailRepository.cs" />
     <Compile Include="Repository\ItemsRepositroy.cs" />
     <Compile Include="Repository\AppUserRepositroy.cs" />

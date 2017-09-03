@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace Mock.Data.Models
 {
-    public partial class AppMenu : IEntity<AppUser>, ICreationAudited, IDeleteAudited, IModificationAudited
+    public partial class AppModule : IEntity<AppUser>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         public int? Id { get; set; }
         public int? PId { get; set; }
+        [StringLength(50)]
+        public string EnCode { get; set; }
         [StringLength(50)]
         public string Name { get; set; }
         public int? SortCode { get; set; }
@@ -22,6 +24,16 @@ namespace Mock.Data.Models
         public string LinkUrl { get; set; }
         [StringLength(20)]
         public string Target { get; set; }
+        /// <summary>
+        /// 状态，显示或隐藏
+        /// </summary>
+        public bool? Status { get; set; }
+        /// <summary>
+        /// 类型:权限认证,菜单，按钮？
+        /// </summary>
+        ///
+        [StringLength(50)]
+        public string TypeCode { get; set; }
         public int? CreatorUserId { get; set; }
         public DateTime? CreatorTime { get; set; }
         public bool? DeleteMark { get; set; }

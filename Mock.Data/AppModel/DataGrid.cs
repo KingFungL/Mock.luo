@@ -6,10 +6,6 @@ using System.Threading.Tasks;
 
 namespace Mock.Data
 {
-    /// <summary>
-    /// easyuidatagrid模型
-    /// 用来返回EasyUI的DataGrid值
-    /// </summary>
     public class DataGrid
     {
         public int total { get; set; }

@@ -13,8 +13,8 @@ namespace Mock.Data.Models
     {
         [Key]
         public int Id { get; set; }
-        public int ArticleId { get; set; }
-        [ForeignKey("ArticleId")]
+        public int AId { get; set; }
+        [ForeignKey("AId")]
         public Article Article { get; set; }
         public int UserId { get; set; }
         [ForeignKey("UserId")]

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Mock.Data.Models
 {
-    public partial class AppMenu
+    public partial class AppModule
     {
         #region 把权限菜单转换化树形结点
         private TreeNode TransformTreeNode()
@@ -15,7 +15,7 @@ namespace Mock.Data.Models
                 id = (int)this.Id,
                 text = this.Name,
                 expanded = this.Expanded,
-                folder=this.Folder,
+                folder = this.Folder,
                 iconcls = this.Icon,
                 href = this.LinkUrl,
                 target = this.Target,
@@ -28,16 +28,16 @@ namespace Mock.Data.Models
         #endregion
 
         #region 把权限菜单数据转换成符合带有递归关系的集合
-        public static List<TreeNode> ConvertTreeNodes(List<AppMenu> listMenus)
+        public static List<TreeNode> ConvertTreeNodes(List<AppModule> listMenus)
         {
             List<TreeNode> listTreeNodes = new List<TreeNode>();
             LoadTreeNode(listMenus, listTreeNodes, 0);  //初始化菜单的父节点为0
             return listTreeNodes;
         }
 
-        private static void LoadTreeNode(List<AppMenu> listMenus, List<TreeNode> listTreeNodes, int pid)
+        private static void LoadTreeNode(List<AppModule> listMenus, List<TreeNode> listTreeNodes, int pid)
         {
-            foreach (AppMenu per in listMenus)
+            foreach (AppModule per in listMenus)
             {
                 if (per.PId == pid)
                 {
@@ -52,15 +52,20 @@ namespace Mock.Data.Models
         #endregion
 
         #region FancyTree插件TreeGrid后台数据结构
-        public static List<TreeNode> ConvertFancyTreeNodes(List<AppMenu> listMenus)
+        /// <summary>
+        /// FancyTree插件TreeGrid后台数据结构
+        /// </summary>
+        /// <param name="listMenus">AppModule的List集合</param>
+        /// <returns></returns>
+        public static List<TreeNode> ConvertFancyTreeNodes(List<AppModule> listMenus)
         {
             List<TreeNode> listTreeNodes = new List<TreeNode>();
             LoadFancyTreeNode(listMenus, listTreeNodes, 0);
             return listTreeNodes;
         }
-        private static void LoadFancyTreeNode(List<AppMenu> listMenus, List<TreeNode> listTreeNodes, int pid)
+        private static void LoadFancyTreeNode(List<AppModule> listMenus, List<TreeNode> listTreeNodes, int pid)
         {
-            foreach (AppMenu item in listMenus)
+            foreach (AppModule item in listMenus)
             {
                 if (item.PId == pid)
                 {
@@ -72,13 +77,14 @@ namespace Mock.Data.Models
                         folder = item.Folder,
                         data = new
                         {
-                            Id = item.Id,
-                            LinkUrl = item.LinkUrl,
-                            SortCode = item.SortCode,
-                            Icon = item.Icon,
-                            Target = item.Target,
-                            Expanded = item.Expanded,
-                            Folder = item.Folder
+                            item.Id,
+                            item.LinkUrl,
+                            item.SortCode,
+                            item.Icon,
+                            item.Target,
+                            item.Expanded,
+                            item.Folder,
+                            item.TypeCode
                         },
                         children = new List<TreeNode>()
                     };
@@ -87,7 +93,7 @@ namespace Mock.Data.Models
                     LoadFancyTreeNode(listMenus, node.children, node.id);
                 }
             }
-        } 
+        }
         #endregion
     }
 }

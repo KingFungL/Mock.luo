@@ -6,6 +6,11 @@ namespace Mock.Code
 {
     public static class TreeGrid
     {
+        /// <summary>
+        /// 将TreeGridModel集合转成TreeGridJosn字符串
+        /// </summary>
+        /// <param name="data">List<TreeGridModel>集合</param>
+        /// <returns></returns>
         public static string TreeGridJson(this List<TreeGridModel> data)
         {
             StringBuilder sb = new StringBuilder();

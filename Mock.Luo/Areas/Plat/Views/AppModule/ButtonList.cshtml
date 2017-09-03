@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "ButtonList";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<div style="height: 40px; line-height: 33px; text-align: left;">
+    <div class="btn-group">
+        <a id="lr-add-button" class="btn btn-default"><i class="fa fa-plus"></i>&nbsp;新增</a>
+        <a id="lr-edit-button" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+        <a id="lr-delete-button" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+    </div>
+    <div class="btn-group">
+        <a id="lr-copy-button" class="btn btn-default"><i class="fa fa-copy"></i>&nbsp;复制</a>
+    </div>
+</div>
+<table id="gridTable-button"></table>
+@section css{
+
+    <link href="~/Content/js/jqgrid/jqgrid.css" rel="stylesheet" />
+}
+
+@section scripts{
+    <script src="~/Content/js/jqgrid/jqgrid.min.js"></script>
+    <script>
+        var $grid = $("#gridTable-button");
+        $grid.jqGrid({
+            url: "/Plat/AppModule/GetButtonTreeJson?Id=2",
+            datatype: "json",
+            treeGrid: true,
+            treeGridModel: "adjacency",
+            ExpandColumn: "FullName",
+            height: $(window).height() - 90,
+            colModel: [
+                { label: "名称", name: "Name", width: 140, align: "left", sortable: false },
+                { label: "编码", name: "EnCode", width: 140, align: "left", sortable: false },
+                { label: "地址", name: "LinkUrl", width: 500, align: "left", sortable: false },
+            ],
+        });
+    </script>
+}
+
+
