@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "ButtonList";
-    Layout = "~/Views/Shared/_Form.cshtml";
+    Layout = "~/Views/Shared/_Index.cshtml";
 }
 <div style="height: 40px; line-height: 33px; text-align: left;">
     <div class="btn-group">
@@ -21,20 +21,23 @@
 
 @section scripts{
     <script src="~/Content/js/jqgrid/jqgrid.min.js"></script>
+    <script src="~/Content/js/jqgrid/grid.locale-cn.js"></script>
     <script>
         var $grid = $("#gridTable-button");
         $grid.jqGrid({
+            unwritten: false,
             url: "/Plat/AppModule/GetButtonTreeJson?Id=2",
             datatype: "json",
             treeGrid: true,
             treeGridModel: "adjacency",
-            ExpandColumn: "FullName",
+            ExpandColumn: "Name",
             height: $(window).height() - 90,
-            colModel: [
-                { label: "名称", name: "Name", width: 140, align: "left", sortable: false },
-                { label: "编码", name: "EnCode", width: 140, align: "left", sortable: false },
-                { label: "地址", name: "LinkUrl", width: 500, align: "left", sortable: false },
+            colModel: [{ label: "主键", name: "Id", hidden: true, key: true },//这个Id一定要有，一定要有，一定要有。没有则会出现树无法伸缩的情况
+            { label: "名称", name: "Name", width: 140, align: "left", sortable: false },
+            { label: "编码", name: "EnCode", width: 140, align: "left", sortable: false },
+            { label: "地址", name: "LinkUrl", width: 500, align: "left", sortable: false }
             ],
+            rowNum: "all",
         });
     </script>
 }

@@ -627,7 +627,7 @@ $.fn.comboBoxTree = function (options) {
         id: "id",
         text: "text",
         title: "title",
-        maxHeight: null,
+        height: null,
         width: null,
         allowSearch: !1,
         url: !1,
@@ -653,7 +653,7 @@ $.fn.comboBoxTree = function (options) {
                         u.attr("data-value", t.id).attr("data-text", t.text);
                         u.find(".ui-select-text").html(t.text).css("color", "#000");
                         u.trigger("change")
-                    }, height: n.maxHeight,
+                    }, height: n.height,
                     data: t,
                     description: n.description
                 })

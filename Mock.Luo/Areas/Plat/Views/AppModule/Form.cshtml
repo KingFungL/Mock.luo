@@ -75,12 +75,12 @@
         <div class="step-pane" id="step-2" style="margin: 5px;">
             <div style="height: 40px; line-height: 33px; text-align: left;">
                 <div class="btn-group">
-                    <a id="lr-add-button" class="btn btn-default"><i class="fa fa-plus"></i>&nbsp;新增</a>
-                    <a id="lr-edit-button" class="btn btn-default"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
-                    <a id="lr-delete-button" class="btn btn-default"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+                    <a class="btn btn-default" v-on:click="btn_add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+                    <a class="btn btn-default" v-on:click="btn_edit"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+                    <a class="btn btn-default" v-on:click="btn_delete"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
                 </div>
                 <div class="btn-group">
-                    <a id="lr-copy-button" class="btn btn-default"><i class="fa fa-copy"></i>&nbsp;复制</a>
+                    <a v-on:click="btn_copy" class="btn btn-default"><i class="fa fa-copy"></i>&nbsp;复制</a>
                 </div>
             </div>
             <table id="gridTable-button"></table>
@@ -123,7 +123,7 @@
             el: '#v-app',
             data: json,
             beforeCreate: function () {
-
+                json.buttonJson = [];
             },
             mounted: function () {
                 this.init_page();
@@ -150,7 +150,7 @@
                 $("#PId").comboBoxTree({
                     url: "/Plat/AppModule/GetComboBoxTreeJson",
                     description: "==请选择==",
-                    height: "220px",
+                    height: "180px",
                     allowSearch: true,
                     click: function (node) {
                         vm.PId =node.id;
@@ -184,23 +184,21 @@
                 },
                 init_table_button: function () {
                     var $grid = $("#gridTable-button");
+                    var Id=json.Id == null ? "-1" : json.Id
                     $grid.jqGrid({
-                        //unwritten: false,
-                        url: "/Plat/AppModule/GetButtonTreeJson?Id=" + json.Id,
+                        unwritten: false,
+                        url: "/Plat/AppModule/GetButtonTreeJson?Id=" + Id,
                         datatype: "json",
-                        height: $(window).height() - 165,
-                        width: $(window).width() - 11,
-                        colModel: [
-                            { label: "主键", name: "Id", hidden: true },
-                            { label: "名称", name: "Name", width: 140, align: "left", sortable: false },
-                            { label: "编码", name: "EnCode", width: 140, align: "left", sortable: false },
-                            { label: "地址", name: "LinkUrl", width: 500, align: "left", sortable: false },
-                        ],
                         treeGrid: true,
-                        rowNum: "all",
                         treeGridModel: "adjacency",
-                        ExpandColumn: "FullName",
-                        rownumbers: true
+                        ExpandColumn: "Name",
+                        height: $(window).height() - 90,
+                        colModel: [{ label: "主键", name: "Id", hidden: true, key: true },//这个Id一定要有，一定要有，一定要有。没有则会出现树无法伸缩的情况
+                        { label: "名称", name: "Name", width: 140, align: "left", sortable: false },
+                        { label: "编码", name: "EnCode", width: 140, align: "left", sortable: false },
+                        { label: "地址", name: "LinkUrl", width: 500, align: "left", sortable: false }
+                        ],
+                        rowNum: "all",
                     });
 
                 },
@@ -239,7 +237,61 @@
                         height: "600px",
                         btn: []
                     })
-
+                },
+                btn_add: function () {
+                    this.editinfo('新增', 0);
+                },
+                btn_edit: function () {
+                    com.edit('#gridTable-button', 'jq', function (Id) {
+                        vm.editinfo('编辑', Id);
+                    });
+                },
+                btn_delete: function () {
+                    var Id = $("#gridTable-button").jqGridRowValue("Id");
+                    if (com.checkedRow(Id)) {
+                        $.each(vm.buttonJson, function (i) {
+                            if (vm.buttonJson[i].Id == Id) {
+                                vm.buttonJson.splice(i, 1);
+                                vm.array_to_TreeJson(vm.buttonJson);
+                                return false;
+                            }
+                        });
+                    }
+                },
+                btn_copy: function () { },
+                editinfo: function (title,Id) {
+                    $.layerOpen({
+                        id: "ButtonForm",
+                        title: title,
+                        width: '65%',
+                        height: '70%',
+                        content: '/Plat/AppModule/Button/' + Id,
+                        yes: function (iframebody, iframeWin, index) {
+                            iframeWin.vm.submit(function (data) {
+                                if (Id == 0) {
+                                    vm.buttonJson.push(data);
+                                }
+                                else {
+                                    $.each(vm.buttonJson, function (i) {
+                                        if (vm.buttonJson[i].Id == Id) {
+                                            vm.buttonJson[i] = data;
+                                        }
+                                    });                                }
+                                vm.array_to_TreeJson(vm.buttonJson);
+                            });
+                        }
+                    });
+                },
+                array_to_TreeJson: function (buttonJson) {
+                    var $grid = $("#gridTable-button");
+                    com.ajax({
+                        url: "/Plat/AppMoudle/ToButtonTreeJson",
+                        data: { moduleButtonJson: JSON.stringify(buttonJson) },
+                        success: function (data) {
+                            $grid.clearGridData();
+                            $grid[0].addJSONData(data);
+                        },
+                    });
                 }
             }
         });

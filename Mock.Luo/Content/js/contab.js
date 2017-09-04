@@ -5,7 +5,8 @@ $ui = {
     init_menuitem: function () {
         var o = $(this).attr("href"),
             m = $(this).data("index"),
-            l = $.trim($(this)[0].innerHTML),
+            iconhtml = $(this).children('i')[0].outerHTML,
+            text = $(this)[0].innerText;
             target = $(this).attr('target'),
             k = true;
         if (o == undefined || $.trim(o).length == 0 || o == '#' || o == 'undefined') {
@@ -34,7 +35,7 @@ $ui = {
             }
         });
         if (k) {
-            var p = '<a href="javascript:;" class="active J_menuTab" data-index="' + m + '" data-id="' + o + '">' + l + ' <i class="fa fa-times-circle"></i></a>';
+            var p = '<a href="javascript:;" class="active J_menuTab" data-index="' + m + '" data-id="' + o + '">' + iconhtml+text + ' <i class="fa fa-times-circle"></i></a>';
             $(".J_menuTab").removeClass("active");
             var n = '<iframe class="J_iframe" name="iframe' + m + '" width="100%" height="100%" src="' + o + '" frameborder="0" data-id="' + o + '" seamless></iframe>';
             $(".J_mainContent").find("iframe.J_iframe").hide().parents(".J_mainContent").append(n);

@@ -367,6 +367,7 @@
     <Content Include="Areas\Plat\Views\AppModule\Index.cshtml" />
     <Content Include="Areas\Plat\Views\AppModule\DemoTreeGrid.cshtml" />
     <Content Include="Areas\Plat\Views\AppModule\ButtonList.cshtml" />
+    <Content Include="Areas\Plat\Views\AppModule\Button.cshtml" />
     <None Include="Content\js\jquery.validate-vsdoc.js" />
     <Content Include="Content\js\jquery.validate.js" />
     <Content Include="Content\js\jquery.validate.min.js" />

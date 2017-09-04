@@ -26,7 +26,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         #region 根据用户id得到用户菜单权限
         public ActionResult GetUserModule(int userid = 1)
         {
-            List<AppModule> userModuleEntities = _service.GetAppModuleList(u => true);
+            List<AppModule> userModuleEntities = _service.GetAppModuleList(u =>u.TypeCode!= "Button"&& u.TypeCode!="Permission");
 
             List<TreeNode> treeNodes = AppModule.ConvertTreeNodes(userModuleEntities);
 
@@ -71,6 +71,24 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
         public ActionResult ButtonList()
         {
+            return View();
+        }
+        public ActionResult Icon()
+        {
+            return View();
+        }
+        public ActionResult Button()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 将button数组转成前台jqGrid对应的树形表格
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ToButtonTreeJson(string moduleButtonJson)
+        {
+
             return View();
         }
     }

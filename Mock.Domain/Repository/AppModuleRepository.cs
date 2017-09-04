@@ -105,7 +105,7 @@ SELECT * FROM TEMP ORDER BY SortCode";
                 treeModel.isLeaf = hasChildren;
                 treeModel.parentId = Id == item.PId ? "0" : item.PId.ToString();//发现不这么做，无法转成树结构。走你。
                 treeModel.expanded = hasChildren;
-                treeModel.entityJson = item.ToJson();
+                treeModel.entityJson = JsonHelper.SerializeObject(new {item.Id,item.PId, item.Name,item.SortCode,item.EnCode,item.LinkUrl});
                 treeList.Add(treeModel);
             }
             return treeList;

@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "Button";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<div class="layui-container" style="margin-top:15px;">
+    <form class="layui-form layui-box layui-form-pane" action="" id="v-app">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">上级节点</label>
+                <div class="layui-input-inline">
+                    <div id="PId" type="selectTree" class="ui-select"></div>
+                </div>
+            </div>
+            
+            <div class="layui-inline">
+                <label class="layui-form-label">编码</label>
+                <div class="layui-input-inline">
+                    <input type="text" v-model="EnCode" placeholder="请输入编码" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" v-model="Name" placeholder="请输入名称" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">排序码</label>
+                <div class="layui-input-inline">
+                    <input type="number" v-model="SortCode" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">地址</label>
+                <div class="layui-input-inline">
+                    <input type="text" v-model="Name" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">是否隐藏</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" v-model="St"atus class="layui-input">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section css{
+    <link href="~/Content/js/wdTree/tree.css" rel="stylesheet" />
+}
+@section scripts{
+    <script src="~/Content/js/wdTree/jquery.tree.js"></script>
+    <script>
+        var json = JSON.parse(`@Html.Raw(ViewBag.ViewModel)`);
+
+        json.IsEnableMark == null && (json.IsEnableMark = true);
+        json.Open == null && (json.Open = true);
+        !json.PId && (json.PId = -1);
+
+        var vm = new Vue({
+        el: '#v-app',
+        data: json,
+        beforeCreate: function () {
+        },
+        created: function () {
+
+        },
+        mounted: function () {
+            layui.form.on('switch', function (data) {
+                vm[$(data.elem).attr('name')]=data.elem.checked;
+            });
+            $("#PId").comboBoxTree({
+                url: "/Plat/Items/GetTreeJson",
+                description: "==请选择==",
+                height: "220px",
+                allowSearch: true,
+                click: function (node) {
+                    vm.PId = node.id;
+                }
+            });
+            layui.form.render();
+            window.setTimeout(function () {
+                $("#PId").comboBoxTreeSetValue(json.PId);
+            }, 500);
+        },
+        methods: {
+            submit: function (callback) {
+                if (vm.PId == -1) {
+                    vm.PId = 0;
+                }
+                com.ajax({
+                    url: '/Plat/Items/Edit/'+vm.Id,
+                    data: vm.$data,
+                    showMsg: true,
+                    success: callback
+                })
+            }
+        },
+    });
+    </script>
+
+}

@@ -353,3 +353,9 @@ com.tabiframe_Name = function () {
 com.currentIframe = function () {
     return top.frames[com.tabiframe_Name()].contentWindow != undefined ? top.frames[com.tabiframe_Name()].contentWindow : top.frames[com.tabiframe_Name()]
 }
+com.checkedRow = function (n) {
+    var i = !0;
+    return n == undefined || n == "" || n == "null" || n == "undefined" ? (i = !1, $.layerMsg(
+        "请先选中一条记录后再操作！")): n.split(",").length > 1 && $.layerMsg(
+            "很抱歉,一次只能选择一条记录！", 0)
+}
