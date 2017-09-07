@@ -117,6 +117,7 @@
         json.btn_prev = true;
         json.btn_next = true;
         json.btn_finish = true;
+        json.autoId = -1;
         var vm = new Vue({
             el: '#v-app',
             data: json,
@@ -268,7 +269,7 @@
                     })
                 },
                 btn_add: function () {
-                    this.editinfo('新增', 0);
+                    this.editinfo('新增', vm.autoId--);
                 },
                 btn_edit: function () {
                     com.edit('#gridTable-button', 'jq', function (Id) {
@@ -297,7 +298,9 @@
                         content: '/Plat/AppModule/Button?PId=' + json.Id + '&Id=' + Id,
                         yes: function (iframebody, iframeWin, index) {
                             iframeWin.vm.submit(function (data) {
-                                if (Id == 0) {
+                                //新增
+                                if (Id <= 0 && data.IsNew == true) {
+                                    data.IsNew = false;
                                     vm.buttonJson.push(data);
                                 }
                                 else {

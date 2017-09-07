@@ -113,7 +113,7 @@
                             $tdList.eq(2).css('text-align', 'center').text(d.LinkUrl);
                             $tdList.eq(3).css('text-align', 'center').text(d.SortCode);
                             $tdList.eq(4).css('text-align', 'center').html(com.format_yes(d.Expanded));
-                            $tdList.eq(5).css('text-align', 'center').html(com.format_yes(d.TypeCode=='Menu'?true:false));
+                            $tdList.eq(5).css('text-align', 'center').html(com.format_yes(d.TypeCode == 'Menu' ? true : false));
                             $tdList.eq(6).css('text-align', 'center').html('<i class="' + d.Icon + '"></i>');
                             var target = {
                                 "expand": "无页面",
@@ -133,7 +133,12 @@
                 btn_edit: function () {
                     var select_nodes = $('#treetable').fancytree('getTree').getSelectedNodes();
                     if (select_nodes.length > 0) {
-                        this.editinfo('编辑', select_nodes[0].data.Id);
+                        var node = select_nodes[0].data;
+                        if (node.TypeCode == 'Menu' || node.TypeCode == 'PMenu') {
+                            this.editinfo('编辑', node.Id);
+                        }else{
+                            $.layerMsg('我不能这个地方就被你改变！请选择我所属的菜单项，小姐姐');
+                        }
                     } else {
                         $.layerMsg('请选中您要编辑的记录！');
                     }
@@ -146,7 +151,7 @@
                             callback: function () {
                                 com.ajax({
                                     url: '/Plat/AppModule/Delete/' + select_nodes[0].data.Id,
-                                    showMsg:true,
+                                    showMsg: true,
                                     success: function () {
                                         vm.btn_refresh();
                                     }
@@ -164,7 +169,7 @@
                         width: '65%',
                         height: '70%',
                         content: '/Plat/AppModule/Form/' + Id,
-                        btn:null,
+                        btn: null,
                         yes: function (iframebody, iframeWin, index) {
                             iframeWin.vm.submit(function () {
                                 vm.btn_refresh();

@@ -64,7 +64,6 @@
 
         var layui_iframe_name = com.get_layui_iframe_name();
         var buttonJson = top[layui_iframe_name].vm.buttonJson;
-        var PId = $.getQueryString('PId');
         var json = {
             Id: $.getQueryString('Id'),
             PId: -1,
@@ -73,22 +72,24 @@
             IsEnableMark: true,
             SortCode: 999,
             Name: '',
-            LinkUrl:''
+            LinkUrl: '',
+            IsNew: true
         };
-        $.each(buttonJson, function (i,v) {
+        $.each(buttonJson, function (i, v) {
             if (v.Id == json.Id) {
                 json = v;
                 return false;
             }
         });
-
+        json.ParentId = $.getQueryString('PId');
 
         var vm = new Vue({
             el: '#v-app',
             data: json,
             mounted: function () {
                 $("#PId").comboBoxTree({
-                    url: "/Plat/AppModule/GetComboBoxTreeJson?PId=" + PId,
+                    url: "/Plat/AppModule/ListToTreeJson",
+                    param: { moduleButtonJson: JSON.stringify(buttonJson), Id: json.ParentId },
                     description: "==请选择==",
                     height: "120px",
                     allowSearch: true,
@@ -111,7 +112,7 @@
                     }
                     //没有选择上级菜单或按钮，默认就属于当前菜单
                     if (vm.PId == -1) {
-                        vm.PId = PId;
+                        vm.PId =  json.ParentId;
                     }
                     callback(vm.$data);
                 }

@@ -98,7 +98,7 @@ WITH TEMP AS
       FROM 
         AppModule  
       WHERE 
-        PId = @Id 
+        PId = @Id AND DeleteMark='false'
     UNION ALL 
       SELECT a.*
       FROM 
@@ -133,7 +133,8 @@ SELECT * FROM TEMP ORDER BY SortCode";
 
         public void SubmitForm(AppModule module, List<AppModule> buttonList, int Id)
         {
-            if (Id == 0)
+            //前台自动生成了一个小于0的Id，
+            if (Id <=0)
             {
                 using (var db = new RepositoryBase().BeginTrans())
                 {
@@ -154,7 +155,7 @@ SELECT * FROM TEMP ORDER BY SortCode";
                     module.Modify(module.Id);
                     foreach (var item in buttonList)
                     {
-                        if (item.Id == 0)
+                        if (item.Id<=0)
                         {
                             item.Create();
                             db.Insert(item);
