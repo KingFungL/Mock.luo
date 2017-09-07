@@ -3,7 +3,7 @@
 * 模块名：共通脚本
 * 程序名: 通用工具函数
 **/
-var com = {};
+window.com = {};
 /**
 * 格式化字符串
 * 用法:
@@ -26,7 +26,7 @@ com.ajax = function (options) {
         type: "post",
         async: true,
         success: null,
-        close: options.showMsg || false,
+        close: true,
         showMsg: false,
         showLoading: true
     };
@@ -74,7 +74,8 @@ com.ajax = function (options) {
         },
         error: function (xhr, status, error) {
             layer.close(index);
-            debugger;
+            console.log(status);
+            console.log(error);
             var msg = xhr.responseText;
             var errMsg = top.layer.open({
                 title: '错误提示',
@@ -355,7 +356,22 @@ com.currentIframe = function () {
 }
 com.checkedRow = function (n) {
     var i = !0;
-    return n == undefined || n == "" || n == "null" || n == "undefined" ? (i = !1, $.layerMsg(
-        "请先选中一条记录后再操作！")): n.split(",").length > 1 && $.layerMsg(
-            "很抱歉,一次只能选择一条记录！", 0)
+    if (n == undefined || n == "" || n == "null" || n == "undefined" || (n instanceof Array)) {
+        $.layerMsg("请先选中一条记录后再操作！"); return false;
+    } else {
+        return true;
+    }
 }
+
+; (function ($, com) {
+    $.extend(com, {
+        get_layui_iframe_name: function (element) {
+            if (element == null || element == undefined || element == "") {
+                return top.$('#Form').children('iframe')[0].name;
+            } else {
+                return top.$(element).children('iframe')[0].name;
+            }
+        }
+    })
+
+})(window.jQuery, window.com);

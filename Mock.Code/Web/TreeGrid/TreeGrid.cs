@@ -11,11 +11,11 @@ namespace Mock.Code
         /// </summary>
         /// <param name="data">List<TreeGridModel>集合</param>
         /// <returns></returns>
-        public static string TreeGridJson(this List<TreeGridModel> data)
+        public static string TreeGridJson(this List<TreeGridModel> data,int Id=0)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("{ \"rows\": [");
-            sb.Append(TreeGridJson(data, -1, "0"));
+            sb.Append(TreeGridJson(data, -1, Id.ToString()));
             sb.Append("]}");
             return sb.ToString();
         }

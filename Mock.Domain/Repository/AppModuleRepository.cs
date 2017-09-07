@@ -48,7 +48,6 @@ namespace Mock.Domain
                 LinkUrl = u.LinkUrl,
                 SortCode = u.SortCode,
                 Target = u.Target,
-                Folder = u.Folder,
                 Expanded = u.Expanded,
                 TypeCode = u.TypeCode
             }).ToList();
@@ -58,10 +57,10 @@ namespace Mock.Domain
         {
             throw new NotImplementedException();
         }
-        public List<TreeSelectModel> GetTreeJson()
+        public List<TreeSelectModel> GetTreeJson(int PId)
         {
             //Type=1时为按钮，下拉菜单框中为选上级菜单，去除按钮
-            List<TreeSelectModel> treeList = this.IQueryable().Where(u => u.DeleteMark == false).OrderBy(r => r.SortCode).ToList()
+            List<TreeSelectModel> treeList = this.IQueryable().Where(u => u.DeleteMark == false && (PId == 0 || u.PId == PId)).OrderBy(r => r.SortCode).ToList()
                                     .Select(u => new TreeSelectModel
                                     {
                                         id = u.Id.ToString(),
@@ -73,7 +72,22 @@ namespace Mock.Domain
             return treeList;
         }
 
-        public List<TreeGridModel> GetButtonTreeJson(int Id)
+        /// <summary>
+        /// 子节点list结构
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public List<AppModule> GetListJson(int Id)
+        {
+            return this.GetModuleChildrenList(Id);
+        }
+
+        /// <summary>
+        ///根据id找到子节点
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        private List<AppModule> GetModuleChildrenList(int Id)
         {
             //这个sql语句能够找到PId下的所有子节点数据,正好解决递归查询的问题
             //Id,PId,Name,SortCode,EnCode,LinkUrl
@@ -84,7 +98,7 @@ WITH TEMP AS
       FROM 
         AppModule  
       WHERE 
-        PId = 2 
+        PId = @Id 
     UNION ALL 
       SELECT a.*
       FROM 
@@ -94,8 +108,14 @@ SELECT * FROM TEMP ORDER BY SortCode";
             DbParameter[] parameter = new SqlParameter[] {
                 new SqlParameter("Id",Id)
             };
-            var dglist = this.FindList(sql, parameter);
+            List<AppModule> dglist = this.FindList(sql, parameter);
+            return dglist;
+        }
 
+
+        public List<TreeGridModel> GetButtonTreeJson(int Id)
+        {
+            var dglist = this.GetModuleChildrenList(Id);
             var treeList = new List<TreeGridModel>();
             foreach (var item in dglist)
             {
@@ -103,12 +123,78 @@ SELECT * FROM TEMP ORDER BY SortCode";
                 bool hasChildren = dglist.Count(t => t.PId == item.Id) == 0 ? false : true;
                 treeModel.id = item.Id.ToString();
                 treeModel.isLeaf = hasChildren;
-                treeModel.parentId = Id == item.PId ? "0" : item.PId.ToString();//发现不这么做，无法转成树结构。走你。
+                treeModel.parentId = item.PId.ToString();
                 treeModel.expanded = hasChildren;
-                treeModel.entityJson = JsonHelper.SerializeObject(new {item.Id,item.PId, item.Name,item.SortCode,item.EnCode,item.LinkUrl});
+                treeModel.entityJson = JsonHelper.SerializeObject(new { item.Id, item.PId, item.Name, item.SortCode, item.EnCode, item.LinkUrl, item.TypeCode });
                 treeList.Add(treeModel);
             }
             return treeList;
+        }
+
+        public void SubmitForm(AppModule module, List<AppModule> buttonList, int Id)
+        {
+            if (Id == 0)
+            {
+                using (var db = new RepositoryBase().BeginTrans())
+                {
+                    module.Create();
+                    db.Insert(module);
+                    foreach (var item in buttonList)
+                    {
+                        item.Create();
+                        db.Insert(item);
+                    }
+                    db.Commit();
+                }
+            }
+            else
+            {
+                using (var db = new RepositoryBase().BeginTrans())
+                {
+                    module.Modify(module.Id);
+                    foreach (var item in buttonList)
+                    {
+                        if (item.Id == 0)
+                        {
+                            item.Create();
+                            db.Insert(item);
+                        }
+                        else
+                        {
+                            item.Modify(item.Id);
+                            string[] modifyList = { "PId", "EnCode", "Name", "SortCode", "LinkUrl", "TypeCode", "LastModifyUserId", "LastModifyTime" };
+                            db.Update(item, modifyList);
+                        }
+                    }
+                    List<AppModule> childrenButtonList = this.GetModuleChildrenList(Id);
+
+                    //存在删除行为
+                    if (childrenButtonList.Count != buttonList.Count)
+                    {
+                        //找到要删除的按钮
+                        foreach(var item in childrenButtonList)
+                        {
+                            int i = 0;
+                            int count = buttonList.Count;
+                            for ( i = 0; i < count; i++)
+                            {
+                                if (item.Id == buttonList[i].Id) break;
+                            }
+                            /*如果没有从前台传来的数据集合中找到id,说明此id，应该被删除，会有外键关联,所以还是置标志位*/
+                            if (i ==count)
+                            {
+                               // db.Delete(new AppModule { Id = item.Id });
+                                var deleteEntity = new AppModule { Id = item.Id };
+                                deleteEntity.Remove();
+                                db.Update(deleteEntity, "DeleteMark", "DeleteUserId", "DeleteTime");
+                              
+                            }
+                        }
+                    }
+                    db.Commit();
+
+                }
+            }
         }
     }
 }

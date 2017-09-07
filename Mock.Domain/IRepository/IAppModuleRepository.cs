@@ -41,11 +41,19 @@ namespace Mock.Domain
         /// </summary>
         /// <returns></returns>
 
-        List<TreeSelectModel> GetTreeJson();
+        List<TreeSelectModel> GetTreeJson(int PId);
+        /// <summary>
+        /// 子节点list结构
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        List<AppModule> GetListJson(int Id);
         /// <summary>
         /// 得到按钮权限树形数据
         /// </summary>
         /// <returns></returns>
         List<TreeGridModel> GetButtonTreeJson(int Id);
+
+        void SubmitForm(AppModule menu,List<AppModule>buttonList, int Id);
     }
 }

@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.12
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mock.Luo", "Mock.Luo\Mock.Luo.csproj", "{DCD0A49F-D07B-4529-9C19-E29954DF7A53}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 Common 基础结构层", "01 Common 基础结构层", "{6026DD4B-F235-42DF-A0FD-41AD31E738CB}"
@@ -41,7 +43,10 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{319865F9-866E-402B-A4AA-F1F50AA1F817} = {6026DD4B-F235-42DF-A0FD-41AD31E738CB}
-		{705F9C73-A416-4197-9C73-7DC33F8174BC} = {6026DD4B-F235-42DF-A0FD-41AD31E738CB}
 		{513DD367-6A38-48DD-8E7E-B25CBD0154E3} = {C2BC25B7-1627-4132-A741-572CFDA60A6F}
+		{705F9C73-A416-4197-9C73-7DC33F8174BC} = {6026DD4B-F235-42DF-A0FD-41AD31E738CB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {23DDC751-0FA0-4DE5-A467-9FD5487E52B9}
 	EndGlobalSection
 EndGlobal

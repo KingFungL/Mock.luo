@@ -12,7 +12,7 @@
                     <div id="PId" type="selectTree" class="ui-select"></div>
                 </div>
             </div>
-            
+
             <div class="layui-inline">
                 <label class="layui-form-label">编码</label>
                 <div class="layui-input-inline">
@@ -22,9 +22,9 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">名称</label>
+                <label class="layui-form-label"><span style="color:red">*</span> 名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" v-model="Name" placeholder="请输入名称" class="layui-input">
+                    <input type="text" v-model="Name" placeholder="请输入名称" class="layui-input" isvalid="yes" checkexpession="NotNull">
                 </div>
             </div>
             <div class="layui-inline">
@@ -38,13 +38,17 @@
             <div class="layui-inline">
                 <label class="layui-form-label">地址</label>
                 <div class="layui-input-inline">
-                    <input type="text" v-model="Name" class="layui-input">
+                    <input type="text" v-model="LinkUrl" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">是否隐藏</label>
+                <label class="layui-form-label"><span style="color:red">*</span> 类型</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" v-model="St"atus class="layui-input">
+                    <select id="TypeCode" name="TypeCode" v-model="TypeCode" lay-filter="TypeCode" isvalid="yes" checkexpession="NotNull">
+                        <option value="-1" disabled>==请选择==</option>
+                        <option value="Button">按钮</option>
+                        <option value="Permission">其他权限+隐藏</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -55,53 +59,64 @@
 }
 @section scripts{
     <script src="~/Content/js/wdTree/jquery.tree.js"></script>
+    <script src="~/Content/js/plugins/validator.js"></script>
     <script>
-        var json = JSON.parse(`@Html.Raw(ViewBag.ViewModel)`);
 
-        json.IsEnableMark == null && (json.IsEnableMark = true);
-        json.Open == null && (json.Open = true);
-        !json.PId && (json.PId = -1);
+        var layui_iframe_name = com.get_layui_iframe_name();
+        var buttonJson = top[layui_iframe_name].vm.buttonJson;
+        var PId = $.getQueryString('PId');
+        var json = {
+            Id: $.getQueryString('Id'),
+            PId: -1,
+            EnCode: '',
+            TypeCode: '',
+            IsEnableMark: true,
+            SortCode: 999,
+            Name: '',
+            LinkUrl:''
+        };
+        $.each(buttonJson, function (i,v) {
+            if (v.Id == json.Id) {
+                json = v;
+                return false;
+            }
+        });
+
 
         var vm = new Vue({
-        el: '#v-app',
-        data: json,
-        beforeCreate: function () {
-        },
-        created: function () {
-
-        },
-        mounted: function () {
-            layui.form.on('switch', function (data) {
-                vm[$(data.elem).attr('name')]=data.elem.checked;
-            });
-            $("#PId").comboBoxTree({
-                url: "/Plat/Items/GetTreeJson",
-                description: "==请选择==",
-                height: "220px",
-                allowSearch: true,
-                click: function (node) {
-                    vm.PId = node.id;
+            el: '#v-app',
+            data: json,
+            mounted: function () {
+                $("#PId").comboBoxTree({
+                    url: "/Plat/AppModule/GetComboBoxTreeJson?PId=" + PId,
+                    description: "==请选择==",
+                    height: "120px",
+                    allowSearch: true,
+                    click: function (node) {
+                        vm.PId = node.id;
+                    }
+                });
+                layui.form.on('select(TypeCode)', function (data) {
+                    vm.TypeCode = data.value;
+                });
+                layui.form.render();
+                window.setTimeout(function () {
+                    $("#PId").comboBoxTreeSetValue(json.PId);
+                }, 500);
+            },
+            methods: {
+                submit: function (callback) {
+                    if (!$('#v-app').Validform()) {
+                        return false;
+                    }
+                    //没有选择上级菜单或按钮，默认就属于当前菜单
+                    if (vm.PId == -1) {
+                        vm.PId = PId;
+                    }
+                    callback(vm.$data);
                 }
-            });
-            layui.form.render();
-            window.setTimeout(function () {
-                $("#PId").comboBoxTreeSetValue(json.PId);
-            }, 500);
-        },
-        methods: {
-            submit: function (callback) {
-                if (vm.PId == -1) {
-                    vm.PId = 0;
-                }
-                com.ajax({
-                    url: '/Plat/Items/Edit/'+vm.Id,
-                    data: vm.$data,
-                    showMsg: true,
-                    success: callback
-                })
-            }
-        },
-    });
+            },
+        });
     </script>
 
 }

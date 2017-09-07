@@ -26,7 +26,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         #region 根据用户id得到用户菜单权限
         public ActionResult GetUserModule(int userid = 1)
         {
-            List<AppModule> userModuleEntities = _service.GetAppModuleList(u =>u.TypeCode!= "Button"&& u.TypeCode!="Permission");
+            List<AppModule> userModuleEntities = _service.GetAppModuleList(u => u.TypeCode != "Button" && u.TypeCode != "Permission");
 
             List<TreeNode> treeNodes = AppModule.ConvertTreeNodes(userModuleEntities);
 
@@ -52,21 +52,21 @@ namespace Mock.Luo.Areas.Plat.Controllers
             return Result(_service.GetFancyTreeGrid());
         }
 
-        public ActionResult GetTreeJson()
+
+        public ActionResult GetComboBoxTreeJson(int PId = 0)
         {
-            List<TreeSelectModel> treeList = _service.GetTreeJson();
-            return Content(treeList.TreeSelectJson());
+            List<TreeSelectModel> treeList = _service.GetTreeJson(PId);
+            return Content(treeList.ComboboxTreeJson(PId));
         }
 
-        public ActionResult GetComboBoxTreeJson()
+        public ActionResult GetListJson(int Id)
         {
-            List<TreeSelectModel> treeList = _service.GetTreeJson();
-            return Content(treeList.ComboboxTreeJson());
+            return Result(_service.GetListJson(Id));
         }
 
         public ActionResult GetButtonTreeJson(int Id)
         {
-            return Content(_service.GetButtonTreeJson(Id).TreeGridJson());
+            return Content(_service.GetButtonTreeJson(Id).TreeGridJson(Id));
         }
 
         public ActionResult ButtonList()
@@ -86,10 +86,32 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// 将button数组转成前台jqGrid对应的树形表格
         /// </summary>
         /// <returns></returns>
-        public ActionResult ToButtonTreeJson(string moduleButtonJson)
+        public ActionResult ToButtonTreeJson(string moduleButtonJson, int Id = 0)
         {
+            List<AppModuleViewModel> dglist = JsonHelper.DeserializeJsonToList<AppModuleViewModel>(moduleButtonJson);
 
-            return View();
+            var treeList = new List<TreeGridModel>();
+            foreach (var item in dglist)
+            {
+                TreeGridModel treeModel = new TreeGridModel();
+                bool hasChildren = dglist.Count(t => t.PId == item.Id) == 0 ? false : true;
+                treeModel.id = item.Id.ToString();
+                treeModel.isLeaf = hasChildren;
+                treeModel.parentId = item.PId.ToString();
+                treeModel.expanded = hasChildren;
+                treeModel.entityJson = JsonHelper.SerializeObject(new { item.Id, item.PId, item.Name, item.SortCode, item.EnCode, item.LinkUrl, item.TypeCode });
+                treeList.Add(treeModel);
+            }
+            return Content(treeList.TreeGridJson(Id));
+        }
+
+        public ActionResult SubmitForm(AppModule viewModel, string buttonJson, int Id = 0)
+        {
+            List<AppModule> buttonList = JsonHelper.DeserializeJsonToList<AppModule>(buttonJson);
+
+            _service.SubmitForm(viewModel,buttonList, Id);
+
+            return Success();
         }
     }
 }

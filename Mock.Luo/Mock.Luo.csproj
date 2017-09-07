@@ -198,6 +198,7 @@
     <Content Include="Content\css\bootstrap.min14ed.css" />
     <Content Include="Content\css\font-awesome4.7.min12.css" />
     <Content Include="Content\css\jquery.treegrid.css" />
+    <Content Include="Content\css\mock.css" />
     <Content Include="Content\css\style.min862f.css" />
     <Content Include="Content\css\vue-multiselect.min31f.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
@@ -480,6 +481,7 @@
     <Content Include="Content\js\modernizr-2.6.2.js" />
     <Content Include="Content\js\pace.min.js" />
     <Content Include="Content\css\wizcard.css" />
+    <Content Include="Content\js\plugins\validator.js" />
     <Content Include="Content\js\plugins\wizcard.js" />
     <Content Include="Content\js\sidebar.js" />
     <Content Include="Content\js\simditor\hotkeys.js" />

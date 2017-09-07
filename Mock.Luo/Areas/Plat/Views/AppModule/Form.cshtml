@@ -45,7 +45,6 @@
                     <label class="layui-form-label">选项</label>
                     <div class="layui-input-block">
                         <input type="checkbox" name="Expanded" v-model="Expanded" title="展开" lay-skin="primary" lay-filter="check">
-                        <input type="checkbox" name="Folder" v-model="Folder" title="文件夹" lay-skin="primary" lay-filter="check">
                         <input type="checkbox" name="IsMenu" v-model="IsMenu" title="菜单" lay-skin="primary" lay-filter="check">
                     </div>
                 </div>
@@ -118,7 +117,6 @@
         json.btn_prev = true;
         json.btn_next = true;
         json.btn_finish = true;
-
         var vm = new Vue({
             el: '#v-app',
             data: json,
@@ -130,11 +128,13 @@
                 //如果是菜单被勾选，下一步不禁用，其他还是禁用
                 if (json.IsMenu == true) {
                     json.btn_next = false;
+                } else {
+                    json.btn_finish = false;
                 }
                 layui.form.on('checkbox(check)', function (data) {
                     var name = $(data.elem).attr('name');
                     vm[name] = data.elem.checked;
-                    if (name ==='IsMenu') {
+                    if (name === 'IsMenu') {
                         if (data.elem.checked == true) {
                             json.btn_next = false;
                             json.btn_finish = true;
@@ -153,7 +153,7 @@
                     height: "180px",
                     allowSearch: true,
                     click: function (node) {
-                        vm.PId =node.id;
+                        vm.PId = node.id;
                     }
                 });
 
@@ -183,33 +183,60 @@
                     });
                 },
                 init_table_button: function () {
+                    var Id = json.Id == null ? "-1" : json.Id
+                    com.ajax({
+                        url: "/Plat/AppModule/GetListJson?Id=" + Id,
+                        type: "get",
+                        success: function (data) {
+                            vm.buttonJson = data;
+                        }
+                    });
                     var $grid = $("#gridTable-button");
-                    var Id=json.Id == null ? "-1" : json.Id
                     $grid.jqGrid({
-                        unwritten: false,
                         url: "/Plat/AppModule/GetButtonTreeJson?Id=" + Id,
                         datatype: "json",
                         treeGrid: true,
                         treeGridModel: "adjacency",
                         ExpandColumn: "Name",
-                        height: $(window).height() - 90,
+                        height: $(window).height() - 190,
                         colModel: [{ label: "主键", name: "Id", hidden: true, key: true },//这个Id一定要有，一定要有，一定要有。没有则会出现树无法伸缩的情况
-                        { label: "名称", name: "Name", width: 140, align: "left", sortable: false },
-                        { label: "编码", name: "EnCode", width: 140, align: "left", sortable: false },
-                        { label: "地址", name: "LinkUrl", width: 500, align: "left", sortable: false }
+                        { label: "名称", name: "Name", width: 100, align: "left", sortable: false },
+                        { label: "编码", name: "EnCode", width: 100, align: "left", sortable: false },
+                        { label: "地址", name: "LinkUrl", width: 300, align: "left", sortable: false },
+                        {
+                            label: "类型", name: "TypeCode", width: 100, align: "left", sortable: false, formatter: function (cellvalue, options, rowObject) {
+                                if (cellvalue == 'Permission') {
+                                    return '权限+隐藏';
+                                } else if (cellvalue == 'Button') {
+                                    return '按钮';
+                                } else {
+                                    return '';
+                                }
+                            }
+                        }
                         ],
                         rowNum: "all",
                     });
 
                 },
                 btn_finsh_click: function () {
-                    console.log('$event');
                     //如果是未选中菜单项，就直接点击完成，则直接调用通用的菜单项编辑方法
                     if (vm.IsMenu == false) {
-                        console.log('直接提交，不想改后台.')
+                        console.info('直接提交，不想改后台.')
                         vm.submit();
                     } else {
-                        console.log('要把按钮及权限功能完成!');
+                        console.info('要把按钮及权限功能完成!');
+                        vm.buttonJson = JSON.stringify(vm.buttonJson);
+                        com.ajax({
+                            url: '/Plat/AppModule/SubmitForm',
+                            data: vm.$data,
+                            showMsg: true,
+                            close: false,
+                            success: function () {
+                                com.currentIframe().vm.btn_refresh();
+                                $.layerClose();
+                            }
+                        })
 
                     }
                 },
@@ -217,14 +244,16 @@
                     if (vm.PId == -1) {
                         vm.PId = 0;
                     }
-                    vm.IsMenu == true ? vm.TypeCode = 'Menu' : vm.TypeCode = null;
+                    vm.IsMenu == true ? vm.TypeCode = 'Menu' : vm.TypeCode = 'PMenu';
                     com.ajax({
-                        url: '/Plat/AppModule/Edit/'+vm.Id,
+                        url: '/Plat/AppModule/Edit/' + vm.Id,
                         data: vm.$data,
                         showMsg: true,
+                        close: false,
                         success: function () {
                             //刷新菜单管理列表项
                             com.currentIframe().vm.btn_refresh();
+                            $.layerClose();
                         }
                     })
                 },
@@ -247,10 +276,10 @@
                     });
                 },
                 btn_delete: function () {
-                    var Id = $("#gridTable-button").jqGridRowValue("Id");
-                    if (com.checkedRow(Id)) {
+                    var node = $("#gridTable-button").jqGridRowValue("Id");
+                    if (com.checkedRow(node)) {
                         $.each(vm.buttonJson, function (i) {
-                            if (vm.buttonJson[i].Id == Id) {
+                            if (vm.buttonJson[i].Id == node.Id) {
                                 vm.buttonJson.splice(i, 1);
                                 vm.array_to_TreeJson(vm.buttonJson);
                                 return false;
@@ -259,13 +288,13 @@
                     }
                 },
                 btn_copy: function () { },
-                editinfo: function (title,Id) {
+                editinfo: function (title, Id) {
                     $.layerOpen({
                         id: "ButtonForm",
                         title: title,
-                        width: '65%',
-                        height: '70%',
-                        content: '/Plat/AppModule/Button/' + Id,
+                        width: '60%',
+                        height: '55%',
+                        content: '/Plat/AppModule/Button?PId=' + json.Id + '&Id=' + Id,
                         yes: function (iframebody, iframeWin, index) {
                             iframeWin.vm.submit(function (data) {
                                 if (Id == 0) {
@@ -276,8 +305,10 @@
                                         if (vm.buttonJson[i].Id == Id) {
                                             vm.buttonJson[i] = data;
                                         }
-                                    });                                }
+                                    });
+                                }
                                 vm.array_to_TreeJson(vm.buttonJson);
+                                top.layer.close(index);
                             });
                         }
                     });
@@ -285,13 +316,14 @@
                 array_to_TreeJson: function (buttonJson) {
                     var $grid = $("#gridTable-button");
                     com.ajax({
-                        url: "/Plat/AppMoudle/ToButtonTreeJson",
-                        data: { moduleButtonJson: JSON.stringify(buttonJson) },
+                        url: "/Plat/AppModule/ToButtonTreeJson",
+                        data: { moduleButtonJson: JSON.stringify(buttonJson), Id: json.Id },
                         success: function (data) {
                             $grid.clearGridData();
                             $grid[0].addJSONData(data);
                         },
-                    });
+                    });
+
                 }
             }
         });

@@ -15,7 +15,6 @@ namespace Mock.Data.Models
                 id = (int)this.Id,
                 text = this.Name,
                 expanded = this.Expanded,
-                folder = this.Folder,
                 iconcls = this.Icon,
                 href = this.LinkUrl,
                 target = this.Target,
@@ -74,7 +73,7 @@ namespace Mock.Data.Models
                         id = (int)item.Id,
                         title = item.Name,
                         expanded = item.Expanded,
-                        folder = item.Folder,
+                        folder = listMenus.FindAll(u=>u.PId==item.Id).Count>0?true:false,
                         data = new
                         {
                             item.Id,
@@ -83,7 +82,6 @@ namespace Mock.Data.Models
                             item.Icon,
                             item.Target,
                             item.Expanded,
-                            item.Folder,
                             item.TypeCode
                         },
                         children = new List<TreeNode>()

@@ -42,10 +42,10 @@ namespace Mock.Code
             return sb.ToString().Replace("}{", "},{");
         }
 
-        public static string ComboboxTreeJson(this List<TreeSelectModel> data)
+        public static string ComboboxTreeJson(this List<TreeSelectModel> data,int PId=0)
         {
             List<TreeSelectModel> listTreeNodes = new List<TreeSelectModel>();
-            ComboboxTreeJson(data, listTreeNodes, "0");
+            ComboboxTreeJson(data, listTreeNodes, PId.ToString());
             return listTreeNodes.ToJson();
         }
 
