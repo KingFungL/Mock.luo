@@ -3,7 +3,7 @@
 .ui-select { cursor: pointer; outline: 0; width: auto; height: 36px; line-height: 36px; position: relative; background: #fff url(/Content/Images/a2.png) no-repeat right center; }
 .ui-select-option { margin: 0; padding: 0; width: 100%; display: none; position: absolute; left: 0; top: 28px; background-color: #fff; overflow: hidden; border: 1px solid #ccc; border-top: 0; z-index: 9999; }
 .ui-select-option-search { position: relative; }
-.ui-select-option-search .form-control { box-shadow: none; border-color: #ccc; border: none; border-top: 1px solid #ccc; height: 14px; margin: 0; }
+.ui-select-option-search .form-control { box-shadow: none; border-color: #ccc; border: none; border-top: 1px solid #ccc; height: 27px; margin: 0; }
 .ui-select-option-search .input-query { position: absolute; right: 4px; top: 4px; color: #ccc; font-size: 16px; }
 .ui-select-focus { border-color: #337ab7; }
 .ui-select .ui-select-text { box-shadow: none; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; -khtml-user-select: none; user-select: none; border: 1px solid #ccc; padding-left: 7px; height: 38px; line-height: 36px; }

@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "RoleAuthorization";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<div class="layui-fluid">
+    <div class="alert alert-danger" role="alert" style="display:none;margin-top:20px;">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        神奇！！!您当前竟然没有权限可配置...
+    </div>
+    <ul id="treePermission" class="ztree"></ul>
+</div>
+
+@section css{
+    <link href="~/Content/js/zTree_v3-master/css/metroStyle/metroStyle.css" rel="stylesheet" />
+}
+
+@section scripts{
+    <script src="~/Content/js/zTree_v3-master/js/jquery.ztree.all.min.js"></script>
+    <script type="text/javascript">
+        var roleId = $.getQueryString("roleId");
+        if (roleId == '' || roleId == undefined) {
+            $.layerMsg('未捕获到角色ID，请关闭后重试。', 'error');
+        } else {
+            var setting = {
+                data: {
+                    simpleData: {
+                        enable: true
+                    }
+                },
+                check: {
+                    enable: true,
+                    chkStyle: "checkbox",
+                    chkDisabledInherit: false
+                },
+                async: {
+                    enable: true,
+                    url: "/Plat/AppModule/GetRoleModuleAuth",
+                    dataType: "text",
+                    autoParam: ["id", "name"],
+                    otherParam: { roleId: roleId }
+                },
+                callback: {
+                    onAsyncSuccess: function (event, treeId, treeNode, msg) {
+                        if (msg == "[]") {
+                            $.layerMsg("神奇！！!您当前竟然没有权限可配置...");
+                            $('.alert').css('display', '');
+                        }
+                    }
+                }
+            };
+            var zTreeObj = $.fn.zTree.init($("#treePermission"), setting);
+        }
+
+        function submit(index) {
+            var zTreeObj = $.fn.zTree.getZTreeObj("treePermission");
+            if (zTreeObj.getNodes().length == 0) {
+                $.layerMsg("都说了无权限配置，您还点我！！！...");
+                return;
+            }
+            var checkedNodes = zTreeObj.getCheckedNodes(true);
+            var nodeIds = [];
+            $.each(checkedNodes, function (index, item) {
+                nodeIds.push(item.id);
+            });
+            com.ajax({
+                url: "/Plat/AppRole/SaveAuthorize",
+                data: { roleId: roleId, data: nodeIds.join() },
+                showMsg: true,
+                success: function (data) {
+                    layer.close(index);
+                }
+            });
+        }
+    </script>
+}

@@ -36,6 +36,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
                     u.LoginName,
                     u.NickName,
                     u.Email,
+                    u.StatusCode,
                     roleIds = u.UserRoles.Select(r => new {
                         id = r.RoleId,
                         text = r.AppRole.RoleName

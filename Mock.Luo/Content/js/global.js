@@ -569,7 +569,7 @@ $.fn.comboBoxTree = function (options) {
         f = {
             rendering: function () {
                 var t, r;
-                return u.find(".ui-select-text").length == 0 && u.html("<div class=\"ui-select-text\" style='color:#999;'>" + i.description + "<\/div>"), t = '<div class="ui-select-option">', t += '<div class="ui-select-option-content" style="max-height: ' + i.maxHeight + '"><\/div>', i.allowSearch && (t += '<div class="ui-select-option-search"><input type="text" class="form-control" placeholder="搜索关键字" /><span class="input-query" title="回车搜索"><i class="fa fa-search"><\/i><\/span><\/div>'), t += "<\/div>", r = $(t), r.attr("id", e + "-option"), i.appendTo ? $(i.appendTo).prepend(r) : $("body").prepend(r), $("#" + e + "-option")
+                return u.find(".ui-select-text").length == 0 && u.html("<div class=\"ui-select-text\" style='color:#999;'>" + i.description + "<\/div>"), t = '<div class="ui-select-option">', t += '<div class="ui-select-option-content" style="max-height: ' + i.maxHeight + '"><\/div>', i.allowSearch && (t += '<div class="ui-select-option-search"><input type="text" class="form-control" style="padding:0px;" placeholder="搜索关键字" /><span class="input-query" title="回车搜索"><i class="fa fa-search"><\/i><\/span><\/div>'), t += "<\/div>", r = $(t), r.attr("id", e + "-option"), i.appendTo ? $(i.appendTo).prepend(r) : $("body").prepend(r), $("#" + e + "-option")
             }, loadtreeview: function (n, t) {
                 o.treeview({
                     onnodeclick: function (t) {

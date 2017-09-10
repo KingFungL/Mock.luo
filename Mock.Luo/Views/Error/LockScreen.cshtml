@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Lockscreen";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+
+<div class="gray-bg">
+    <div class="layui-fluid text-center">
+        <h3 class="h3">Mock.Luo</h3>
+        <p>您需要再次输入密码</p>
+        <form method="post" class="m-t" id="v-app"> 
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="******" v-model="pwd" isvalid="yes" checkexpession="NotNull">
+            </div>
+            <button type="button" class="btn btn-primary full-width" v-on:click="submit">登录到你的Mock</button>
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        var json = { pwd: '', loginName: $.getQueryString("loginName"), token: $.getQueryString("token") };
+        var vm = new Vue({
+            el: '#v-app',
+            data: json,
+            methods: {
+                submit: function () {
+                    if (!$('#v-app').Validform()) {
+                        return false;
+                    }
+                    com.ajax({
+                        url: '/Login/CheckLogin',
+                        data: vm.$data,
+                        showMsg: true,
+                        success: function (data) {
+                            debugger;
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+}
+
+@section css{
+    <style>
+        .gray-bg { background-color: #f3f3f4; height: 100%; }
+        .layui-fluid { padding-top: 150px; width: 200px; }
+        .m-t { margin-top: 15px; }
+        .full-width { width: 170px; }
+        body, html { height: 100%; }
+    </style>
+}

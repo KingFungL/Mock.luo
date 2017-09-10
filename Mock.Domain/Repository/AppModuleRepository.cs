@@ -17,6 +17,11 @@ namespace Mock.Domain
     /// </summary>]
     public class AppModuleRepository : RepositoryBase<AppModule>, IAppModuleRepository
     {
+
+        /// <summary>
+        /// FancyTree插件TreeGrid列表数据
+        /// </summary>
+        /// <returns></returns>
         public List<TreeNode> GetFancyTreeGrid()
         {
             List<AppModule> entities = this.GetAppModuleList(u => true);
@@ -24,7 +29,10 @@ namespace Mock.Domain
             return AppModule.ConvertFancyTreeNodes(entities);
         }
 
-
+        /// <summary>
+        /// 得到树形treegrid菜单列表数据
+        /// </summary>
+        /// <returns></returns>
         public DataGrid GetTreeGrid()
         {
             var entities = this.GetAppModuleList(u => true);
@@ -57,6 +65,10 @@ namespace Mock.Domain
         {
             throw new NotImplementedException();
         }
+        /// <summary>
+        /// 下拉树json数据
+        /// </summary>
+        /// <returns></returns>
         public List<TreeSelectModel> GetTreeJson(int PId)
         {
             //Type=1时为按钮，下拉菜单框中为选上级菜单，去除按钮
@@ -112,7 +124,10 @@ SELECT * FROM TEMP ORDER BY SortCode";
             return dglist;
         }
 
-
+        /// <summary>
+        /// 得到按钮权限树形数据
+        /// </summary>
+        /// <returns></returns>
         public List<TreeGridModel> GetButtonTreeJson(int Id)
         {
             var dglist = this.GetModuleChildrenList(Id);
@@ -130,7 +145,12 @@ SELECT * FROM TEMP ORDER BY SortCode";
             }
             return treeList;
         }
-
+        /// <summary>
+        /// 保存菜单信息并且配置菜单下的按钮
+        /// </summary>
+        /// <param name="menu">菜单数据</param>
+        /// <param name="buttonList">按钮List</param>
+        /// <param name="Id">菜单主键</param>
         public void SubmitForm(AppModule module, List<AppModule> buttonList, int Id)
         {
             //前台自动生成了一个小于0的Id，
@@ -153,6 +173,7 @@ SELECT * FROM TEMP ORDER BY SortCode";
                 using (var db = new RepositoryBase().BeginTrans())
                 {
                     module.Modify(module.Id);
+                    db.Update(module, "PId", "EnCode", "Name", "Expanded", "Icon", "Target", "SortCode", "LinkUrl", "TypeCode", "LastModifyUserId", "LastModifyTime");
                     foreach (var item in buttonList)
                     {
                         if (item.Id<=0)
@@ -196,6 +217,27 @@ SELECT * FROM TEMP ORDER BY SortCode";
 
                 }
             }
+        }
+
+        /// <summary>
+        /// 根据角色id获取分配权限
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public dynamic GetRoleModuleAuth(int roleId)
+        {
+            var moduleList = this.IQueryable().Where(u=>u.DeleteMark == false).OrderBy(u=>u.SortCode)
+               .Select(u => new
+               {
+                   id = u.Id,
+                   pId = u.PId,
+                   name = u.Name,
+                   u.Icon,
+                   @checked = u.RoleModules.Where(r => r.RoleId == roleId && r.ModuleId == u.Id).Count() > 0 ? true : false,
+                   open = true
+               }).ToList();
+
+            return moduleList;
         }
     }
 }

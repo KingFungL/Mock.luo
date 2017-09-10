@@ -48,6 +48,7 @@
         </div>
     </div>
 </section>
+
 @section scripts{
     <script type="text/javascript">
 
@@ -56,6 +57,9 @@
             data: {
                 LoginName: '',
                 Email: '',
+            },
+            mounted: function () {
+                this.init_datagrid();
             },
             methods: {
                 btn_refresh: function () {
@@ -92,47 +96,44 @@
                             });
                         }
                     });
+                },
+                get_Status: function (code) {
+                    if (code == null || code == undefined || code == "") return null;
+                    var obj = { 'Enable': true, 'Forbidden': false };
+                    return obj[code];
+                },
+                init_datagrid: function () {
+                    $('#dginfo').dataGrid({
+                        url: '/Plat/AppUser/GetDataGrid', //请求后台的URL（*）
+                        sortOrder: "desc,asc", //排序方式
+                        sortName: 'LoginName,Id',
+                        queryParams: function (params) {
+                            if (vm) {
+                                params.Email = vm.Email;
+                                params.LoginName = vm.LoginName;
+                            }
+                            return params;
+                        },
+                        uniqueId: "Id",
+                        columns: [{ checkbox: true },
+                            { field: 'LoginName', title: '登录名', sortable: true },
+                            { field: 'Email', title: '邮件', sortable: true },
+                            { field: 'NickName', title: '昵称', sortable: true },
+                            {
+                                field: 'Id', title: '配置角色', formatter: function (value, row) {
+                                    return String(row.UserRoleList)
+                                }
+                            },
+                            { field: 'LoginCount', title: '登录次数', sortable: true },
+                            {
+                                field: 'StatusCode', title: '状态', sortable: true, formatter: function (value, row) {
+                                    return com.format_enable(vm.get_Status(value))
+                                }
+                            },
+                            { field: 'LastLoginTime', title: '最后登录时间', sortable: true }]
+                    });
                 }
             }
-        });
-
-        var TableInit = function () {
-            var oTableInit = new Object();
-            //初始化Table
-            oTableInit.Init = function () {
-                $('#dginfo').dataGrid({
-                    url: '/Plat/AppUser/GetDataGrid', //请求后台的URL（*）
-                    sortOrder: "desc,asc", //排序方式
-                    sortName: 'LoginName,Id',
-                    queryParams: oTableInit.queryParams,
-                    uniqueId: "Id",
-                    columns: [{ checkbox: true },
-                        { field: 'LoginName', title: '登录名', sortable: true },
-                        { field: 'Email', title: '邮件', sortable: true },
-                        { field: 'NickName', title: '昵称', sortable: true },
-                        {
-                            field: 'Id', title: '配置角色', formatter: function (value, row) {
-                                return String(row.UserRoleList)
-                            }
-                        },
-                        { field: 'LoginCount', title: '登录次数', sortable: true },
-                        { field: 'LastLoginTime', title: '最后登录时间', sortable: true }]
-                });
-            };
-
-            //得到查询的参数
-            oTableInit.queryParams = function (params) {
-                params.Email = vm.Email;
-                params.LoginName = vm.LoginName;
-                return params;
-            };
-            return oTableInit;
-        };
-
-        $(function () {
-            //初始化Table
-            var oTable = new TableInit();
-            oTable.Init();
         });
 
     </script>

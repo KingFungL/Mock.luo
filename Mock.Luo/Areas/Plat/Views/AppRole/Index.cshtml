@@ -89,7 +89,21 @@
                     })
                 },
                 btn_authorize: function (){
-                    console.log('授权！！');
+                    console.info('授权！！');
+                    var id = com.get_selectid();
+                    if (id == 0) {
+                        $.layerMsg('请先选择你要授权的角色!');
+                        return;
+                    }
+                    $.layerOpen({
+                        title: '角色授权',
+                        content: '/Plat/AppRole/AllotAuthorize?roleId=' + id,
+                        width: '30%',
+                        height: '70%',
+                        yes: function (iframebody, iframeWin, index) {
+                            iframeWin.submit(index);
+                        }
+                    })
                 },
                 init_table: function () {
                     $('#dginfo').dataGrid({

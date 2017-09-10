@@ -11,8 +11,6 @@ namespace Mock.Domain
 {
     public interface IAppRoleRepository : IRepositoryBase<AppRole>
     {
-
-
         /// <summary>
         /// 获取角色下拉框
         /// </summary>
@@ -24,7 +22,11 @@ namespace Mock.Domain
         /// <returns>DataGrid实体</returns>
 
         DataGrid GetDataGrid(string search);
-        
-
+        /// <summary>
+        /// 保存角色配置权限信息
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <param name="roleModules"></param>
+        void SaveAuthorize(int roleId, List<RoleModule> roleModules);
     }
 }

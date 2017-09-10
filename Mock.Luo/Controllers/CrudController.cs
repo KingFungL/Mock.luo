@@ -60,7 +60,7 @@ namespace Mock.Luo.Controllers
         [HttpPost]
         public virtual ActionResult Edit(TViewModel viewModel, int Id = 0)
         {
-            var userid = OperatorProvider.Provider.GetCurrent().UserId;
+            var userid = OperatorProvider.Provider.CurrentUser.UserId;
             //新增
             if (Id == 0)
             {
@@ -120,7 +120,7 @@ namespace Mock.Luo.Controllers
 
             if (codetableEntity == null)
                 return Error($"Id为{Id}未找到任何类型为{codetableEntity.GetType().Name}的实体对象");
-            IDeleteAudited deleteAudited = new DeleteAudited { Id = Id, DeleteMark = true, DeleteTime = DateTime.Now, DeleteUserId = OperatorProvider.Provider.GetCurrent().UserId };
+            IDeleteAudited deleteAudited = new DeleteAudited { Id = Id, DeleteMark = true, DeleteTime = DateTime.Now, DeleteUserId = OperatorProvider.Provider.CurrentUser.UserId };
 
             TEntityModel entity = Mapper.Map(deleteAudited, codetableEntity);
 

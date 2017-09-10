@@ -21,6 +21,13 @@
             <input type="text" v-model="NickName" class="form-control" />
         </div>
         <div class="form-group">
+            <label>状态</label>
+            <input data-value="Enable" type="radio" id="input-4" name="StatusCode" v-bind:checked="StatusCode=='Enable'">
+            <label for="input-4">启用 </label>
+            <input data-value="Forbidden" type="radio" id="input-3" name="StatusCode" v-bind:checked="StatusCode=='Forbidden'">
+            <label for="input-3">禁用</label>
+        </div>
+        <div class="form-group">
             <label>角色配置</label>
             <multiselect v-model="roleIds" :hide-selected="false" label="text" track-by="id" placeholder="--请配置角色--" :options="roleJson" :multiple="true"
                          :searchable="true" :clear-on-select="false"
@@ -33,55 +40,69 @@
 
 @section css{
     <link href="~/Content/css/vue-multiselect.min31f.css" rel="stylesheet" />
+    <link href="~/Content/css/plugins/skins/all.css" rel="stylesheet" />
 }
 @section scripts{
     <script src="~/Content/js/vue/vue-multiselect.min.js"></script>
+    <script src="~/Content/js/plugins/icheck.min.js"></script>
     <script>
         var json = JSON.parse(`@Html.Raw(ViewBag.ViewModel)`);
-        Vue.component('Multiselect',VueMultiselect.Multiselect);
+        Vue.component('Multiselect', VueMultiselect.Multiselect);
+        json.StatusCode == null && (json.StatusCode= 'Enable');
 
         var vm = new Vue({
-        el: '#v-app',
-        data: json,
-        beforeCreate: function () {
-            json.roleJson = [];
-            json.roleIds == null && (json.roleIds = []);
-        },
-        mounted: function () {
-            this.get_rolejson();
-        },
-        methods: {
-            submit: function (callback) {
-                var roleIds = [];
-                vm.roleIds.forEach(u => {
-                    roleIds.push(u.id);
-                });
-
-                var postdata = {
-                    Id: vm.Id,
-                    LoginName: vm.LoginName,
-                    NickName: vm.NickName,
-                    Email: vm.Email,
-                    roleIds: String(roleIds)
-                };
-                com.ajax({
-                    url: '/Plat/AppUser/SubmitForm',
-                    data: postdata,
-                    showMsg: true,
-                    success: callback
-                })
+            el: '#v-app',
+            data: json,
+            beforeCreate: function () {
+                json.roleJson = [];
+                json.roleIds == null && (json.roleIds = []);
             },
-            get_rolejson:function () {
-                com.ajax({
-                    url: '/Plat/AppRole/GetRoleJson',
-                    showLoading: false,
-                    success: function (d) {
-                        json.roleJson = d;
-                    }
-                });
-            }
-        },
-    });
+            mounted: function () {
+                this.get_rolejson();
+                this.init_form();
+            },
+            methods: {
+                submit: function (callback) {
+                    var roleIds = [];
+                    vm.roleIds.forEach(u => {
+                        roleIds.push(u.id);
+                    });
+                    vm.roleIds = String(roleIds);
+                    vm.roleJson = [];
+                    com.ajax({
+                        url: '/Plat/AppUser/SubmitForm',
+                        data: vm.$data,
+                        showMsg: true,
+                        success: callback
+                    })
+                },
+                get_rolejson: function () {
+                    com.ajax({
+                        url: '/Plat/AppRole/GetRoleJson',
+                        showLoading: false,
+                        success: function (d) {
+                            json.roleJson = d;
+                        }
+                    });
+                },
+                changeStatus: function () {
+                    var pressed = $(this).attr('aria-pressed');
+                    $(this).attr('aria-pressed', !pressed);
+                    vm.Status = !pressed;
+                },
+                init_form: function () {
+                    $('form .form-group input[type=radio]').on('ifChecked', function (event) {
+                        vm.StatusCode = $(event.target).attr('data-value');
+                    }).iCheck({
+                        labelHover: false,
+                        cursor: true,
+                        checkboxClass: 'icheckbox_square-blue',
+                        radioClass: 'iradio_square-blue',
+                        increaseArea: '20%'
+                    });
+                }
+            },
+        });
     </script>
 
 }

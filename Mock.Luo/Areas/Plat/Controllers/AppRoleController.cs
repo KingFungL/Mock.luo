@@ -63,5 +63,37 @@ namespace Mock.Luo.Areas.Plat.Controllers
             }
             return Result(_urService.SaveMembers(urList, roleId));
         }
+        [HttpGet]
+        public ActionResult AllotAuthorize()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SaveAuthorize(int roleId,string data)
+        {
+            List<int> moduleIds = new List<int>();
+
+            if (!string.IsNullOrEmpty(data))
+            {
+                moduleIds = data.Split(',').Select(u => Convert.ToInt32(u)).ToList();
+            }
+
+            List<RoleModule> roleModules = new List<RoleModule>();
+
+            DateTime now = DateTime.Now;
+            foreach (var moduleId in moduleIds)
+            {
+                RoleModule entity = new RoleModule
+                {
+                    RoleId = roleId,
+                    ModuleId = moduleId
+                };
+                roleModules.Add(entity);
+            }
+            _service.SaveAuthorize(roleId, roleModules);
+            return Success();
+        }
+
     }
 }

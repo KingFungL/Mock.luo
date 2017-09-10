@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using Mock.Luo.Generic.Filters;
+using System.Web.Mvc;
 
 namespace Mock.Luo
 {
@@ -7,6 +8,7 @@ namespace Mock.Luo
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new HandlerLoginAttribute());
         }
     }
 }

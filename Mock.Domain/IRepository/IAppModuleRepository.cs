@@ -53,7 +53,19 @@ namespace Mock.Domain
         /// </summary>
         /// <returns></returns>
         List<TreeGridModel> GetButtonTreeJson(int Id);
-
+        /// <summary>
+        /// 保存菜单信息并且配置菜单下的按钮
+        /// </summary>
+        /// <param name="menu">菜单数据</param>
+        /// <param name="buttonList">按钮List</param>
+        /// <param name="Id">菜单主键</param>
         void SubmitForm(AppModule menu,List<AppModule>buttonList, int Id);
+
+        /// <summary>
+        /// 根据角色id获取分配权限
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        dynamic GetRoleModuleAuth(int roleId);
     }
 }

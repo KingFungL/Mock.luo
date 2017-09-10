@@ -11,6 +11,16 @@
                 <td class="formValue">
                     <div id="F_ParentId" type="selectTree" class="ui-select" style="width:260px;"></div>
                 </td>
+                <th class="formTitle">
+                    状态
+                </th>
+                <td class="formValue">
+                    <label>状态</label>
+                    <input data-value="Enable" type="radio" id="input-4" name="StatusCode" v-bind:checked="StatusCode=='Enable'">
+                    <label for="input-4">启用 </label>
+                    <input data-value="Forbidden" type="radio" id="input-3" name="StatusCode" v-bind:checked="StatusCode=='Forbidden'">
+                    <label for="input-3">禁用</label>
+                </td>
             </tr>
         </table>
     </form>
@@ -18,6 +28,7 @@
 </div>
 @section css{
     <link href="~/Content/js/wdTree/tree.css" rel="stylesheet" />
+    <link href="~/Content/css/plugins/skins/all.css" rel="stylesheet" />
     <style>
         .form .formTitle { position: relative; left: 0; text-align: right; white-space: nowrap; font-weight: normal; width: 90px; padding-right: 10px; }
         .form .formValue { position: relative; padding: 5px; width: auto; }
@@ -25,6 +36,7 @@
 }
 @section scripts{
     <script src="~/Content/js/wdTree/jquery.tree.js"></script>
+    <script src="~/Content/js/plugins/icheck.min.js"></script>
     <script>
         var data = [{
             "id": "0",
@@ -63,5 +75,33 @@
                 console.log(node);
             }
         });
+
+        $('form input').on('ifChecked', function (event) {
+            alert(event.type + ' callback');
+        }).iCheck({
+            labelHover: false,
+            cursor: true,
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%'
+        });
+        var vm=new Vue({
+            el:"#v-app",
+            methods:{
+                init_from: function () {
+                    $('form .form-group input[type=radio]').on('ifChecked', function (event) {
+                        vm.StatusCode = $(event.target).attr('data-value');
+                    }).iCheck({
+                        labelHover: false,
+                        cursor: true,
+                        checkboxClass: 'icheckbox_square-blue',
+                        radioClass: 'iradio_square-blue',
+                        increaseArea: '20%'
+                    });
+                }
+            }
+        })
+
+
     </script>
 }

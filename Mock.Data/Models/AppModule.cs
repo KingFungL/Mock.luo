@@ -9,6 +9,10 @@ namespace Mock.Data.Models
 {
     public partial class AppModule : IEntity<AppUser>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
+        public AppModule()
+        {
+            this.RoleModules = new HashSet<RoleModule>();
+        }
         public int? Id { get; set; }
         public int? PId { get; set; }
         [StringLength(50)]
@@ -37,6 +41,7 @@ namespace Mock.Data.Models
         public DateTime? DeleteTime { get; set; }
         public int? LastModifyUserId { get; set; }
         public DateTime? LastModifyTime { get; set; }
+        public virtual ICollection<RoleModule> RoleModules { get; set; }
 
     }
 }

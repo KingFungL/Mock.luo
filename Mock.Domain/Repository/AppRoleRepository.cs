@@ -41,5 +41,18 @@ namespace Mock.Domain
             }).ToList();
             return new DataGrid { rows = entities, total = entities.Count() };
         }
+
+        public void SaveAuthorize(int roleId, List<RoleModule> roleModules)
+        {
+            using (var db = new RepositoryBase().BeginTrans())
+            {
+                db.Delete<RoleModule>(u => u.RoleId == roleId);
+                if (roleModules.Any())
+                {
+                    db.Insert(roleModules);
+                }
+                db.Commit();
+            }
+        }
     }
 }

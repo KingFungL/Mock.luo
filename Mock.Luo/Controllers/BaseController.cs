@@ -1,4 +1,6 @@
 ﻿using Mock.Code;
+using Mock.Data;
+using Mock.Luo.Generic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,7 @@ namespace Mock.Luo.Controllers
     public abstract class BaseController : Controller
     {
         OperatorProvider op = OperatorProvider.Provider;
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             return View();
         }
