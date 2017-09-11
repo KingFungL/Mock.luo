@@ -7,6 +7,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.SessionState;
 
 namespace Mock.Data
 {
@@ -54,8 +55,34 @@ namespace Mock.Data
         /// 登录token
         /// </summary>
         private string Admin_Token = "Admin_Token";
-    
+
         #endregion
+
+        #region 封装HTTP对象
+        #region Http上下文
+        /// <summary>
+        /// Http上下文
+        /// </summary>
+        HttpContext ContextHttp => HttpContext.Current;
+
+        #endregion
+
+        #region Response对象
+        public HttpResponse Response => ContextHttp.Response;
+
+        #endregion
+
+        #region Request对象
+        public HttpRequest Request => ContextHttp.Request;
+
+        #endregion
+
+        #region Session对象
+        public HttpSessionState Session => ContextHttp.Session;
+
+        #endregion
+        #endregion
+
 
         #region 当前登录用户信息cookie或者session CurrentUser
         /// <summary>

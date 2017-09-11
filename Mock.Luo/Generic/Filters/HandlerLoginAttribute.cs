@@ -34,7 +34,9 @@ namespace Mock.Luo.Generic.Filters
                 {
                     //当前登录信息被覆盖，说明存在多个浏览器登录的情况
                     string userid = op.CurrentUser.UserId.ToString();
-                    if (HttpRuntime.Cache[userid]?.ToString() != filterContext.HttpContext.Session.SessionID)
+                    ICache cache = CacheFactory.Cache();
+                    string sessionId = op.Session.SessionID;
+                    if (cache.GetCache<string>(userid) != sessionId)
                     {
                         //清空Session
                         filterContext.HttpContext.Session.Remove(userid);

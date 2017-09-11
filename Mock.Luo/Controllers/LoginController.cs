@@ -45,13 +45,17 @@ namespace Mock.Luo.Controllers
         /// <param name="token">唯一上下文token</param>
         /// <returns></returns>
 
-        public ActionResult CheckLogin(string loginName, string pwd, string code, string token = "")
+        public ActionResult CheckLogin(string loginName, string pwd, bool rememberMe = false, string code = "", string token = "")
         {
-            if (string.IsNullOrEmpty(loginName))
+            //if (code.IsNullOrEmpty())
+            //{
+            //    return Error("验证码不能为空！");
+            //}
+            if (loginName.IsNullOrEmpty())
             {
                 return Error("用户名不能为空！");
             }
-            if (string.IsNullOrEmpty(pwd))
+            if (pwd.IsNullOrEmpty())
             {
                 return Error("密码不能为空！");
             }
@@ -60,16 +64,18 @@ namespace Mock.Luo.Controllers
             {
                 if (token == OperatorProvider.Provider.CurrentToken)
                 {
-                    return Result(_service.CheckLogin(loginName, pwd));
+                    return Result(_service.CheckLogin(loginName, pwd, rememberMe));
                 }
             }
 
-            if (code != OperatorProvider.Provider.CurrentCode)
-            {
-                return Error("验证码出错");
-            }
+   
 
-            return Result(_service.CheckLogin(loginName, pwd));
+            //if (code.IsNotNullOrEmpty() && code.ToLower() != OperatorProvider.Provider.CurrentCode)
+            //{
+            //    return Error("验证码出错");
+            //}
+
+            return Result(_service.CheckLogin(loginName, pwd, rememberMe));
 
         }
     }

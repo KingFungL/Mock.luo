@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Mock.Code;
 using System.Linq.Expressions;
+using System.Web;
 
 namespace Mock.Domain
 {
@@ -42,7 +43,7 @@ namespace Mock.Domain
             {
                 userEntity.Create();
                 string userPassword = "1234";//默认密码
-                userEntity.UserSecretkey = Md5.md5(Utils.GuId(), 16).ToLower();
+                userEntity.UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
                 userEntity.LoginPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userPassword, 32).ToLower(), userEntity.UserSecretkey).ToLower(), 32).ToLower();
                 userEntity.LoginCount = 0;
 
@@ -128,18 +129,14 @@ namespace Mock.Domain
             return AjaxResult.Success("邮箱与用户名都可用！");
         }
 
-        public AjaxResult CheckLogin(string loginName, string pwd)
+        public AjaxResult CheckLogin(string loginName, string pwd,bool rememberMe)
         {
 
             AjaxResult ajaxResult;
             try
             {
                 OperatorProvider op = OperatorProvider.Provider;
-                //if (!oc.CurrentUserVcode.Equals(code.ToLower()))
-                //{
-                //    throw new Exception("验证码错误，请重新输入!");
-                //}
-                AppUser userEntity = this.IQueryable().Where(t => (t.LoginName == loginName||t.Email==loginName) && t.DeleteMark == false).FirstOrDefault();
+                AppUser userEntity = this.IQueryable().Where(t => (t.LoginName == loginName || t.Email == loginName) && t.DeleteMark == false).FirstOrDefault();
 
                 if (userEntity != null)
                 {
@@ -148,6 +145,23 @@ namespace Mock.Domain
                     //登录成功
                     if (dbPassword == userEntity.LoginPassword)
                     {
+                        op.CurrentUser = new OperatorModel
+                        {
+                            UserId = userEntity.Id,
+                            IsSystem = userEntity.LoginName == "admin" ? true : false,
+                            LoginName = userEntity.LoginName,
+                            LoginToken = Guid.NewGuid().ToString(),
+                            UserCode = "1234",
+                            LoginTime = DateTime.Now
+                        };
+                        ICache cache = CacheFactory.Cache();
+                        cache.WriteCache<string>(userEntity.Id.ToString(), op.Session.SessionID,DateTime.UtcNow.AddMinutes(60));
+                        //记住密码
+                        if (rememberMe == true)
+                        {
+
+                        }
+
                         ajaxResult = AjaxResult.Success("登录成功!");
                     }
                     else
@@ -166,6 +180,22 @@ namespace Mock.Domain
             }
             return ajaxResult;
 
+        }
+        /// <summary>
+        /// 重置密码
+        /// </summary>
+        /// <param name="keyValue">主键</param>
+        /// <param name="userPassword">用户密码</param>
+        public void ResetPassword(int keyValue, string userPassword)
+        {
+            AppUser userEntity = new AppUser();
+            userEntity.Id = keyValue;
+            userEntity.UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
+            userEntity.LoginPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userPassword, 32).ToLower(), userEntity.UserSecretkey).ToLower(), 32).ToLower();
+
+            string[] modifstr = { "UserSecretkey", "LoginPassword", };
+
+            this.Update(userEntity, modifstr);
         }
     }
 }

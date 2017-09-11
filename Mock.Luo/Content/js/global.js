@@ -67,7 +67,7 @@ $.layerClose = function () {
 $.layerConfirm = function (options) {
     var defaults = {
         title: '提示',
-        //skin: 'layui-layer-molv',
+        skin: 'layui-layer-molv',
         content: "",
         icon: 3,
         resize: false,
@@ -84,7 +84,7 @@ $.layerConfirm = function (options) {
         btn: options.btn,
         btnclass: options.btnclass,
         resize: options.resize,
-        //skin: options.skin,
+        skin: options.skin,
         anim: options.anim
     }, function (index) {
         if (options.callback && $.isFunction(options.callback)) {

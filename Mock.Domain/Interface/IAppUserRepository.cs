@@ -37,6 +37,8 @@ namespace Mock.Domain
         /// <param name="loginName">登录名</param>
         /// <param name="pwd">密码</param>
         /// <returns>成功与否</returns>
-        AjaxResult CheckLogin(string loginName, string pwd);
+        AjaxResult CheckLogin(string loginName, string pwd,bool rememberMe);
+
+        void ResetPassword(int keyValue, string userPassword);
     }
 }

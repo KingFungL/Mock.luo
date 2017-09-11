@@ -56,26 +56,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IRepository\ILeaveMsgRepository.cs" />
-    <Compile Include="IRepository\IAppRoleRepository.cs" />
-    <Compile Include="IRepository\IAppModuleRepository.cs" />
-    <Compile Include="IRepository\IItemsDetailRepository.cs" />
-    <Compile Include="IRepository\IItemsRepository.cs" />
-    <Compile Include="IRepository\IAppUserRepository.cs" />
-    <Compile Include="IRepository\IArticleRepository.cs" />
-    <Compile Include="IRepository\IReviewRepository.cs" />
-    <Compile Include="IRepository\IUploadRepository.cs" />
-    <Compile Include="IRepository\IUserRoleRepository.cs" />
+    <Compile Include="Interface\ILeaveMsgRepository.cs" />
+    <Compile Include="Interface\IAppRoleRepository.cs" />
+    <Compile Include="Interface\IAppModuleRepository.cs" />
+    <Compile Include="Interface\IItemsDetailRepository.cs" />
+    <Compile Include="Interface\IItemsRepository.cs" />
+    <Compile Include="Interface\IAppUserRepository.cs" />
+    <Compile Include="Interface\IArticleRepository.cs" />
+    <Compile Include="Interface\IReviewRepository.cs" />
+    <Compile Include="Interface\IUploadRepository.cs" />
+    <Compile Include="Interface\IUserRoleRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\UserRoleRepository.cs" />
-    <Compile Include="Repository\AppRoleRepository.cs" />
-    <Compile Include="Repository\ReviewRepository .cs" />
-    <Compile Include="Repository\AppModuleRepository.cs" />
-    <Compile Include="Repository\ItemsDetailRepository.cs" />
-    <Compile Include="Repository\ItemsRepositroy.cs" />
-    <Compile Include="Repository\AppUserRepositroy.cs" />
-    <Compile Include="Repository\ArticleRepositroy.cs" />
-    <Compile Include="Repository\UploadRepositroy.cs" />
+    <Compile Include="Implementations\UserRoleRepository.cs" />
+    <Compile Include="Implementations\AppRoleRepository.cs" />
+    <Compile Include="Implementations\ReviewRepository .cs" />
+    <Compile Include="Implementations\AppModuleRepository.cs" />
+    <Compile Include="Implementations\ItemsDetailRepository.cs" />
+    <Compile Include="Implementations\ItemsRepositroy.cs" />
+    <Compile Include="Implementations\AppUserRepositroy.cs" />
+    <Compile Include="Implementations\ArticleRepositroy.cs" />
+    <Compile Include="Implementations\UploadRepositroy.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mock.Code\Mock.Code.csproj">

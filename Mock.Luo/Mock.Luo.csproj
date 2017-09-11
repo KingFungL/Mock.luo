@@ -204,6 +204,7 @@
     <Content Include="Content\css\font-awesome4.7.min12.css" />
     <Content Include="Content\css\jquery.treegrid.css" />
     <Content Include="Content\css\mock.css" />
+    <Content Include="Content\css\plugins\jump.css" />
     <Content Include="Content\css\plugins\skins\all.css" />
     <Content Include="Content\css\plugins\skins\flat\aero%402x.png" />
     <Content Include="Content\css\plugins\skins\flat\aero.css" />
@@ -602,6 +603,8 @@
     <Content Include="Content\css\wizcard.css" />
     <Content Include="Content\js\plugins\icheck.js" />
     <Content Include="Content\js\plugins\icheck.min.js" />
+    <Content Include="Content\js\plugins\jquery.cookie.js" />
+    <Content Include="Content\js\plugins\jquery.md5.js" />
     <Content Include="Content\js\plugins\validator.js" />
     <Content Include="Content\js\plugins\wizcard.js" />
     <Content Include="Content\js\sidebar.js" />

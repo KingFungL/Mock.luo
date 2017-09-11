@@ -68,5 +68,11 @@ namespace Mock.Luo.Areas.Plat.Controllers
             return Success();
 
         }
+
+        public ActionResult ResetPassword(int Id)
+        {
+            _service.ResetPassword(Id, "1234");
+            return Success();
+        }
     }
 }

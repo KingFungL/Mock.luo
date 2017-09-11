@@ -311,7 +311,7 @@ com.get_selectid = function (dgelement, type) {
 com.edit = function (dgelement, type, callback) {
     var Id = com.get_selectid(dgelement, type);
     if (!Id) {
-        layer.msg('请先选择需要编辑的信息！');
+        layer.msg('在操作之前，请先选中一条记录！');
     } else {
         callback(Id);
     }

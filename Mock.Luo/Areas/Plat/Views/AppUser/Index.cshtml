@@ -24,7 +24,8 @@
                         <input type="text" class="form-control" v-model="Email">
                     </div>
                     <div class="col-sm-4" style="text-align:left;">
-                        <button type="button" style="margin-left:50px" id="btn_query" v-on:click="btn_query" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> 查询</button>
+                            <button type="button" v-on:click="btn_query" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> 查询</button>
+                            <button type="button" v-on:click="btn_clear" class="btn btn-danger"><i class="fa fa-undo"></i> 清空</button>
                     </div>
                 </div>
             </form>
@@ -40,6 +41,9 @@
                 </button>
                 <button id="btn_delete" type="button" class="btn btn-default" v-on:click="btn_delete">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                </button>
+                <button id="btn_reset_pwd" type="button" class="btn btn-default" v-on:click="btn_reset_pwd">
+                    <span class="fa fa-cog" aria-hidden="true"></span>重置密码
                 </button>
             </div>
         </div>
@@ -62,6 +66,11 @@
                 this.init_datagrid();
             },
             methods: {
+                btn_clear: function () {
+                    vm.LoginName = '';
+                    vm.Email = '';
+                    vm.btn_refresh();
+                },
                 btn_refresh: function () {
                     $('#dginfo').bootstrapTable('refresh');
                 },
@@ -69,7 +78,7 @@
                     this.editinfo('新增用户', 0);
                 },
                 btn_edit: function () {
-                    com.edit('#dginfo','boot', function (Id) {
+                    com.edit('#dginfo', 'boot', function (Id) {
                         vm.editinfo('编辑用户', Id);
                     });
                 },
@@ -84,6 +93,21 @@
                     this.LoginName = '';
                     $('#dginfo').bootstrapTable("refresh");
                 },
+                btn_reset_pwd: function () {
+                    com.edit('#dginfo', 'boot', function (Id) {
+                        $.layerConfirm({
+                            content: '你确定要将此用户的密码重置为初始值：1234',
+                            callback: function () {
+                                com.ajax({
+                                    url: '/Plat/AppUser/ResetPassword',
+                                    data: { Id: Id },
+                                    showMsg: true
+                                });
+                            }
+                        })
+                    });
+
+                },
                 editinfo: function (title, Id) {
                     $.layerOpen({
                         title: title,
@@ -97,7 +121,7 @@
                         }
                     });
                 },
-                get_Status: function (code) {
+                get_status: function (code) {
                     if (code == null || code == undefined || code == "") return null;
                     var obj = { 'Enable': true, 'Forbidden': false };
                     return obj[code];
@@ -127,7 +151,7 @@
                             { field: 'LoginCount', title: '登录次数', sortable: true },
                             {
                                 field: 'StatusCode', title: '状态', sortable: true, formatter: function (value, row) {
-                                    return com.format_enable(vm.get_Status(value))
+                                    return com.format_enable(vm.get_status(value))
                                 }
                             },
                             { field: 'LastLoginTime', title: '最后登录时间', sortable: true }]

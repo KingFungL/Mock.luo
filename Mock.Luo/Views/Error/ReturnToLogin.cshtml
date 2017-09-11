@@ -1,9 +1,54 @@
 ﻿
 @{
-    ViewBag.Title = "ReturnToLogin";
+    ViewBag.Title = "登录超时";
     Layout = "~/Views/Shared/_Index.cshtml";
 }
+<div class="content bg-white text-center pulldown overflow-hidden">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <!-- Error Titles -->
+            <h1 class="font-w300 text-city push-10 animated flipInX">登录超时</h1>
+            <p class="font-w300 push-20 animated fadeInUp">页面自动 <a id="href" href="/Login/Index">跳转</a> 等待时间： <b id="wait">10</b>秒</p>
+            <div class="push-50">
+                <a class="btn btn-minw btn-rounded btn-success" href="/Login/Index">立即跳转</a>
+                <button class="btn btn-minw btn-rounded btn-warning" type="button" onclick="stop()">禁止跳转</button>
+                <a class="btn btn-minw btn-rounded btn-default" href="/Login/Index">返回登录</a>
+            </div>
+            <!-- END Error Titles -->
 
-<h2>ReturnToLogin</h2>
+        </div>
+    </div>
+</div>
+<!-- END Error Content -->
+<!-- Error Footer -->
+<div class="content pulldown text-muted text-center">
+    极简 · 极速 · 极致<br>
+    Mock.Luo ，让开发更简单！<br>
+    由 <a class="link-effect" target="_blank" href="http://igeekfan.cn">Mock.CN</a> 倾情奉献
+</div>
+<!-- END Error Footer -->
 
-<a href="/Login/Mock" class="btn btn-primary">返回登录</a>
+@section css{
+    <link href="~/Content/css/plugins/jump.css" rel="stylesheet" />
+}
+@section scripts{
+
+    <script type="text/javascript">
+        (function () {
+            var wait = document.getElementById('wait'),
+                href = document.getElementById('href').href;
+            var interval = setInterval(function () {
+                var time = --wait.innerHTML;
+                if (time <= 0) {
+                    location.href = href;
+                    clearInterval(interval);
+                };
+            }, 1000);
+
+            // 禁止跳转
+            window.stop = function () {
+                clearInterval(interval);
+            }
+        })();
+    </script>
+}
