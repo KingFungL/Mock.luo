@@ -35,7 +35,7 @@
                 <div class="form-group help">
                     <input type="password" class="form-control" v-model="pwd" placeholder="密　码" isvalid="yes" checkexpession="NotNull" errormsg="密码">
                     <i class="fa fa-lock"></i>
-                    <a href="#" class="fa fa-question-circle"></a>
+                    <a href="#" v-on:click="forget_pwd" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="忘记密码"></a>
                 </div>
                 <div class="form-group">
                     <div class="main-checkbox">
@@ -83,6 +83,7 @@
             },
             mounted: function () {
                 this.init_check();
+                $('[data-toggle="tooltip"]').tooltip();
             },
             methods: {
                 init_check: function () {
@@ -122,6 +123,9 @@
                 btn_register: function () {
                     console.log('btn_register');
                     $.layerMsg('待完成！')
+                },
+                forget_pwd: function () {
+                    $.layerMsg('忘记密码','','info')
                 }
             }
         })

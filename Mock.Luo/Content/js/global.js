@@ -1,4 +1,6 @@
-﻿/**
+﻿
+
+/**
  * 创建模态窗。
  * @param {Object} options
  */
@@ -18,7 +20,7 @@ $.layerOpen = function (options) {
         btnclass: ['btn btn-primary', 'btn btn-danger'],
         yes: null
     };
-    var options = $.extend(defaults, options);
+    options = $.extend(defaults, options);
     if (!com.ispc()) {
         options.width = '100%';
         options.height = '100%';
@@ -77,7 +79,7 @@ $.layerConfirm = function (options) {
         btnclass: ['btn btn-primary', 'btn btn-danger'],
         callback: null
     };
-    var options = $.extend(defaults, options);
+    options = $.extend(defaults, options);
     layer.confirm(options.content, {
         title: options.title,
         icon: options.icon,
@@ -101,7 +103,7 @@ $.layerConfirm = function (options) {
  * @param {String} type 
  */
 $.layerMsg = function (content, type, callback) {
-    if (type != undefined) {
+    if (type !== undefined) {
         var icon = "";
 
         switch (type) {
@@ -194,7 +196,7 @@ $.validateUrl = function (url, funcSuc, funcErr, type) {
 }
 
 $.alertMsg = function (msg, title, funcSuc, icon) {
-    if (title == '' || title == undefined) title = '提示';
+    if (title === '' || title === undefined) title = '提示';
     if (layer) {
         var type = 1;
         if (icon) {
@@ -214,7 +216,7 @@ $.alertMsg = function (msg, title, funcSuc, icon) {
             , icon: type
             , yes: function (index) {
                 layer.close(index);
-                if (typeof (funcSuc) == 'function') {
+                if (typeof (funcSuc) === 'function') {
                     funcSuc();
                 }
             }
@@ -228,11 +230,7 @@ $.alertMsg = function (msg, title, funcSuc, icon) {
     }
 },
 
-    /**
-     * 绑定Select选项。
-     * @param {Object} options
-     */
-    /**
+  /**
    * 绑定Select选项。
    * @param {Object} options
    */
@@ -265,7 +263,7 @@ $.alertMsg = function (msg, title, funcSuc, icon) {
                     });
                     $element.select2(options);
                     $element.on("change", function (e) {
-                        if (options.change != null) {
+                        if (options.change !== null) {
                             options.change(data[$(this).find("option:selected").index()]);
                         }
                         $("#select2-" + $element.attr('id') + "-container").html($(this).find("option:selected").text());
@@ -287,7 +285,7 @@ $.fn.bindEnterEvent = function ($event) {
     var $selector = $(this);
     $.each($selector, function () {
         $(this).unbind("keydown").bind("keydown", function (event) {
-            if (event.keyCode == 13) {
+            if (event.keyCode === 13) {
                 if ($.isFunction($event)) {
                     $event();
                 } else {
@@ -364,8 +362,9 @@ $.fn.gridSelectedRowValue = function () {
 $.getQueryString = function (name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
     var r = window.location.search.substr(1).match(reg);
-    if (r != null) return unescape(r[2]); return null;
-}
+    if (r !== null) return unescape(r[2]);
+    return null;
+};
 
 /**
  * 序列化和反序列化表单字段。
@@ -374,10 +373,10 @@ $.getQueryString = function (name) {
  */
 $.fn.formSerialize = function (formdate, callback) {
     var $form = $(this);
-    if (!!formdate) {
+    if (formdate) {
         for (var key in formdate) {
             var $field = $form.find("[name=" + key + "]");
-            if ($field.length == 0) {
+            if ($field.length === 0) {
                 continue;
             }
             var value = $.trim(formdate[key]);
@@ -387,7 +386,7 @@ $.fn.formSerialize = function (formdate, callback) {
             }
             switch (type) {
                 case "checkbox":
-                    value == "true" ? $field.attr("checked", 'checked') : $field.removeAttr("checked");
+                    value === "true" ? $field.attr("checked", 'checked') : $field.removeAttr("checked");
                     break;
                 case "select2":
                     if (!$field[0].multiple) {
@@ -399,7 +398,7 @@ $.fn.formSerialize = function (formdate, callback) {
                     break;
                 case "radio":
                     $field.each(function (index, $item) {
-                        if ($item.value == value) {
+                        if ($item.value === value) {
                             $item.checked = true;
                         }
                     });
@@ -426,7 +425,7 @@ $.fn.formSerialize = function (formdate, callback) {
                 postdata[id] = $this.is(":checked");
                 break;
             default:
-                var value = $this.val() == "" ? "&nbsp;" : $this.val();
+                var value = $this.val() === "" ? "&nbsp;" : $this.val();
                 if (!$.getQueryString("id")) {
                     value = value.replace(/&nbsp;/g, '');
                 }
@@ -438,7 +437,7 @@ $.fn.formSerialize = function (formdate, callback) {
     //    postdata["__RequestVerificationToken"] = $('[name=__RequestVerificationToken]').val();
     //}
     return postdata;
-}
+};
 
 
 /*
@@ -481,15 +480,15 @@ $.fn.dataGrid = function (options) {
         cardView: false,                    //是否显示详细视图
         onToggle: function (cardView) {
             var element = $element.parent('.fixed-table-body');
-            if (cardView == true) {
-                element.removeClass('table-responsive')
+            if (cardView === true) {
+                element.removeClass('table-responsive');
             } else {
                 element.addClass('table-responsive');
             }
         },
         onLoadSuccess: function (data) {
             $element.parent('.fixed-table-body').addClass('table-responsive');
-            if (typeof (options.callback) == 'function') {
+            if (typeof options.callback=== 'function') {
                 options.callback(data);
             }
         }
@@ -513,26 +512,11 @@ $.fn.dataGrid = function (options) {
 
 
 /**/
-$.fn.jqGridRowValue = function () {
-    var $grid = $(this);
-    var selectedRowIds = $grid.jqGrid("getGridParam", "selarrrow");
-    if (selectedRowIds != "") {
-        var json = [];
-        var len = selectedRowIds.length;
-        for (var i = 0; i < len; i++) {
-            var rowData = $grid.jqGrid('getRowData', selectedRowIds[i]);
-            json.push(rowData);
-        }
-        return json;
-    } else {
-        return $grid.jqGrid('getRowData', $grid.jqGrid('getGridParam', 'selrow'));
-    }
-}
 
 $.fn.jqGridRowValue = function () {
     var $grid = $(this);
     var selectedRowIds = $grid.jqGrid("getGridParam", "selarrrow");
-    if (selectedRowIds != "") {
+    if (selectedRowIds !== ""&&selectedRowIds.length>0) {
         var json = [];
         var len = selectedRowIds.length;
         for (var i = 0; i < len; i++) {
@@ -569,7 +553,7 @@ $.fn.comboBoxTree = function (options) {
         f = {
             rendering: function () {
                 var t, r;
-                return u.find(".ui-select-text").length == 0 && u.html("<div class=\"ui-select-text\" style='color:#999;'>" + i.description + "<\/div>"), t = '<div class="ui-select-option">', t += '<div class="ui-select-option-content" style="max-height: ' + i.maxHeight + '"><\/div>', i.allowSearch && (t += '<div class="ui-select-option-search"><input type="text" class="form-control" style="padding:0px;" placeholder="搜索关键字" /><span class="input-query" title="回车搜索"><i class="fa fa-search"><\/i><\/span><\/div>'), t += "<\/div>", r = $(t), r.attr("id", e + "-option"), i.appendTo ? $(i.appendTo).prepend(r) : $("body").prepend(r), $("#" + e + "-option")
+                return u.find(".ui-select-text").length === 0 && u.html("<div class=\"ui-select-text\" style='color:#999;'>" + i.description + "<\/div>"), t = '<div class="ui-select-option">', t += '<div class="ui-select-option-content" style="max-height: ' + i.maxHeight + '"><\/div>', i.allowSearch && (t += '<div class="ui-select-option-search"><input type="text" class="form-control" style="padding:0px;" placeholder="搜索关键字" /><span class="input-query" title="回车搜索"><i class="fa fa-search"><\/i><\/span><\/div>'), t += "<\/div>", r = $(t), r.attr("id", e + "-option"), i.appendTo ? $(i.appendTo).prepend(r) : $("body").prepend(r), $("#" + e + "-option")
             }, loadtreeview: function (n, t) {
                 o.treeview({
                     onnodeclick: function (t) {
@@ -579,11 +563,11 @@ $.fn.comboBoxTree = function (options) {
                         }
                         u.attr("data-value", t.id).attr("data-text", t.text);
                         u.find(".ui-select-text").html(t.text).css("color", "#000");
-                        u.trigger("change")
+                        u.trigger("change");
                     }, height: n.height,
                     data: t,
                     description: n.description
-                })
+                });
             }, loadData: function (i) {
                 var r = [];
                 r = i.data ? i.data : com.asyncGet({
@@ -594,8 +578,8 @@ $.fn.comboBoxTree = function (options) {
                 i.dataItemName ? (i.data = [], $.each(r, function (n, t) {
                     var r = top.learun.data.get(["dataItem", i.dataItemName, t[i.text]]);
                     r != "" && (t[i.text] = r);
-                    i.data.push(t)
-                })) : i.data = r
+                    i.data.push(t);
+                })) : i.data = r;
             }, searchData: function (t, i) {
                 var u = !1,
                     r = [];
@@ -606,8 +590,8 @@ $.fn.comboBoxTree = function (options) {
                     s = !1;
                     e.text.indexOf(i) != -1 && (s = !0);
                     e.hasChildren && (e.ChildNodes = f.searchData(t.ChildNodes, i), e.ChildNodes.length > 0 ? s = !0 : e.hasChildren = !1);
-                    s && (u = !0, r.push(e))
-                }), r
+                    s && (u = !0, r.push(e));
+                }), r;
             }
         },
         r = f.rendering(),
@@ -617,10 +601,10 @@ $.fn.comboBoxTree = function (options) {
             var t = $(this),
                 i = $(this).val(),
                 r = f.searchData(t[0].opt.data, i);
-            f.loadtreeview(t[0].opt, r)
+            f.loadtreeview(t[0].opt, r);
         }
     }).focus(function () {
-        $(this).select()
+        $(this).select();
     })[0].opt = i), i.icon && (r.find("i").remove(), r.find("img").remove()), u.find(".ui-select-text").unbind("click"), u.find(".ui-select-text").bind("click", function (t) {
         var s;
         if (u.attr("readonly") == "readonly" || u.attr("disabled") == "disabled") return !1;
@@ -642,24 +626,24 @@ $.fn.comboBoxTree = function (options) {
             }), r.attr("data-show", !0));
             r.css("border-top", "1px solid #ccc");
             i.appendTo && r.css("position", "inherit");
-            r.find(".ui-select-option-search").find("input").select()
+            r.find(".ui-select-option-search").find("input").select();
         } else r.attr("data-show") ? r.hide() : r.slideUp(150);
-        t.stopPropagation()
+        t.stopPropagation();
     }), u.find("li div").click(function (t) {
         var t = t ? t : window.event,
             i = t.srcElement || t.target;
-        $(i).hasClass("bbit-tree-ec-icon") || (r.slideUp(150), t.stopPropagation())
+        $(i).hasClass("bbit-tree-ec-icon") || (r.slideUp(150), t.stopPropagation());
     }), $(document).click(function (t) {
         var t = t ? t : window.event,
             i = t.srcElement || t.target;
         $(i).hasClass("bbit-tree-ec-icon") || $(i).hasClass("form-control") || (r.attr("data-show") ? r.hide() : r.slideUp(150), u.removeClass("ui-select-focus"), t.stopPropagation())
-    }), u
-}
+    }), u;
+};
 $.fn.comboBoxTreeSetValue = function (i) {
     if (!!i) {
         var r = $(this),
             u = $("#" + r.attr("id") + "-option").find(".ui-select-option-content");
-        return u.find("ul").find("[data-value=" + i + "]").trigger("click"), r
+        return u.find("ul").find("[data-value=" + i + "]").trigger("click"), r;
     }
-}
+};
 

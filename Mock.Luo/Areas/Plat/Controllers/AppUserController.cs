@@ -68,7 +68,11 @@ namespace Mock.Luo.Areas.Plat.Controllers
             return Success();
 
         }
-
+       /// <summary>
+       /// 重置用户密码
+       /// </summary>
+       /// <param name="Id">主键</param>
+       /// <returns></returns>
         public ActionResult ResetPassword(int Id)
         {
             _service.ResetPassword(Id, "1234");

@@ -14,7 +14,7 @@ namespace Mock.Domain
     public class AppRoleRepository : RepositoryBase<AppRole>, IAppRoleRepository
     {
 
-
+        #region 角色下拉框
         public dynamic GetRoleJson()
         {
             var entities = this.IQueryable().Where(u => u.DeleteMark == false && u.IsEnableMark == true).OrderBy(u => u.SortCode).Select(u => new
@@ -25,7 +25,9 @@ namespace Mock.Domain
 
             return entities;
         }
+        #endregion
 
+        #region 不分页的角色列表数据 DataGrid实体
         public DataGrid GetDataGrid(string search)
         {
             Expression<Func<AppRole, bool>> predicate = u => u.DeleteMark == false
@@ -40,8 +42,10 @@ namespace Mock.Domain
                 u.IsEnableMark
             }).ToList();
             return new DataGrid { rows = entities, total = entities.Count() };
-        }
+        } 
+        #endregion
 
+        #region 保存角色配置权限信息
         public void SaveAuthorize(int roleId, List<RoleModule> roleModules)
         {
             using (var db = new RepositoryBase().BeginTrans())
@@ -53,6 +57,7 @@ namespace Mock.Domain
                 }
                 db.Commit();
             }
-        }
+        } 
+        #endregion
     }
 }

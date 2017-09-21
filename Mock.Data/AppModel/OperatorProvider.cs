@@ -145,8 +145,8 @@ namespace Mock.Data
         /// </summary>
         public List<AppModule> ModulePermission
         {
-            get => DESEncrypt.Decrypt(WebHelper.GetSession(Admin_Module_Permission)?.ToString()).ToObject<List<AppModule>>();
-            set => WebHelper.WriteSession(Admin_Module_Permission, DESEncrypt.Encrypt(value.ToJson()));
+            get => DESEncrypt.Decrypt(WebHelper.GetSession(Admin_Module_Permission+ CurrentUser.UserId)?.ToString()).ToObject<List<AppModule>>();
+            set => WebHelper.WriteSession(Admin_Module_Permission+ CurrentUser.UserId, DESEncrypt.Encrypt(value.ToJson()));
         } 
         #endregion
         /// <summary>

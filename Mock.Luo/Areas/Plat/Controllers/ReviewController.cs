@@ -21,6 +21,10 @@ namespace Mock.Luo.Areas.Plat.Controllers
         {
             this._service = service;
         }
+        /// <summary>
+        /// 得到最新的10条评论的数据
+        /// </summary>
+        /// <returns></returns>
         public ActionResult GetRecentReView()
         {
             var rows = _service.GetRecentReview(10);

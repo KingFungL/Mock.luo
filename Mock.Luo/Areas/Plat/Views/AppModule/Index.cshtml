@@ -29,13 +29,13 @@
             <div class="table-responsive">
                 <table id="treetable" class="table table-bordered table-hover table-striped fancytree-fade-expander">
                     <colgroup>
-                        <col width="30px"></col>
-                        <col width="300px"></col>
-                        <col width="200px"></col>
-                        <col width="100px"></col>
-                        <col width="100px"></col
-                        <col width="100px"></col>
-                        <col width="100px"></col>
+                        <col style="width:30px;"/>
+                        <col style="width:300px;"/>
+                        <col style="width:200px;"/>
+                        <col style="width:100px;">
+                        <col style="width:100px;"/>
+                        <col style="width:100px;"/>
+                        <col style="width:100px;"/>
                     </colgroup>
                     <thead>
                         <tr> <th></th>  <th>菜单名称</th> <th style="text-align:center;">链接地址</th> <th style="text-align:center;">排序码</th> <th style="text-align:center;">展开</th> <th style="text-align:center;">菜单</th><th style="text-align:center;">图标</th><th style="text-align:center;">目标</th> </tr>
@@ -136,7 +136,7 @@
                         var node = select_nodes[0].data;
                         if (node.TypeCode == 'Menu' || node.TypeCode == 'PMenu') {
                             this.editinfo('编辑', node.Id);
-                        }else{
+                        } else {
                             $.layerMsg('我不能这个地方就被你改变！请选择我所属的菜单项，小姐姐');
                         }
                     } else {

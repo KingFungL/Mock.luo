@@ -16,6 +16,7 @@ namespace Mock.Domain
     /// </summary>]
     public class ItemsRepositroy : RepositoryBase<Items>, IItemsRepository
     {
+        #region 字典分类jqGrid插件下树形表格数据
         public List<TreeGridModel> GetTreeGrid()
         {
 
@@ -45,7 +46,9 @@ namespace Mock.Domain
             }
             return treeList;
         }
+        #endregion
 
+        #region 字典类别zTree树形数据
         public dynamic GetzTreeJson()
         {
             var itemsTreeJson = this.IQueryable(u => u.DeleteMark == false && u.IsEnableMark == true).OrderBy(u => u.SortCode).Select(u => new
@@ -58,7 +61,9 @@ namespace Mock.Domain
             }).ToList();
             return itemsTreeJson;
         }
+        #endregion
 
+        #region 得到字典类别下拉树
         public List<TreeSelectModel> GetTreeJson()
         {
             List<TreeSelectModel> treeList = this.IQueryable().Where(u => u.DeleteMark == false && u.IsEnableMark == true).OrderBy(r => r.SortCode)
@@ -71,6 +76,7 @@ namespace Mock.Domain
                                     }).ToList();
             treeList.Insert(0, new TreeSelectModel { id = "-1", text = "==请选择==", parentId = "0" });
             return treeList;
-        }
+        } 
+        #endregion
     }
 }

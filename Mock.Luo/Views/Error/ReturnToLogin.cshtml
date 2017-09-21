@@ -8,11 +8,11 @@
         <div class="col-sm-6 col-sm-offset-3">
             <!-- Error Titles -->
             <h1 class="font-w300 text-city push-10 animated flipInX">登录超时</h1>
-            <p class="font-w300 push-20 animated fadeInUp">页面自动 <a id="href" href="/Login/Index">跳转</a> 等待时间： <b id="wait">10</b>秒</p>
+            <p class="font-w300 push-20 animated fadeInUp">页面自动 <a id="href" href="/Login/Index" target="_top">跳转</a> 等待时间： <b id="wait">10</b>秒</p>
             <div class="push-50">
-                <a class="btn btn-minw btn-rounded btn-success" href="/Login/Index">立即跳转</a>
+                <a class="btn btn-minw btn-rounded btn-success" href="/Login/Index" target="_top">立即跳转</a>
                 <button class="btn btn-minw btn-rounded btn-warning" type="button" onclick="stop()">禁止跳转</button>
-                <a class="btn btn-minw btn-rounded btn-default" href="/Login/Index">返回登录</a>
+                <a class="btn btn-minw btn-rounded btn-default" href="/Login/Index" target="_top">返回登录</a>
             </div>
             <!-- END Error Titles -->
 
@@ -40,7 +40,7 @@
             var interval = setInterval(function () {
                 var time = --wait.innerHTML;
                 if (time <= 0) {
-                    location.href = href;
+                    top.location.href = href;
                     clearInterval(interval);
                 };
             }, 1000);

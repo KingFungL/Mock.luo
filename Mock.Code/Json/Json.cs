@@ -17,13 +17,17 @@ namespace Mock.Code
         }
         public static string ToJson(this object obj)
         {
-            var timeConverter = new IsoDateTimeConverter { DateTimeFormat = "yyyy-MM-dd HH:mm:ss" };
-            return JsonConvert.SerializeObject(obj,timeConverter);
+            JsonSerializerSettings jsSettings = new JsonSerializerSettings();
+            jsSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            jsSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+            return JsonConvert.SerializeObject(obj, jsSettings);
         }
         public static string ToJson(this object obj, string datetimeformats)
         {
-            var timeConverter = new IsoDateTimeConverter { DateTimeFormat = datetimeformats };
-            return JsonConvert.SerializeObject(obj, timeConverter);
+            JsonSerializerSettings jsSettings = new JsonSerializerSettings();
+            jsSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            jsSettings.DateFormatString = datetimeformats;
+            return JsonConvert.SerializeObject(obj, jsSettings);
         }
         public static T ToObject<T>(this string Json)
         {

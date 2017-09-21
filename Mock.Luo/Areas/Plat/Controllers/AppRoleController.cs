@@ -23,7 +23,10 @@ namespace Mock.Luo.Areas.Plat.Controllers
             this._service = service;
             this._urService = _urService;
         }
-
+        /// <summary>
+        /// 角色下拉框
+        /// </summary>
+        /// <returns></returns>
         public ActionResult GetRoleJson()
         {
             return Result(_service.GetRoleJson());
@@ -34,18 +37,29 @@ namespace Mock.Luo.Areas.Plat.Controllers
             return Result(_service.GetDataGrid(search));
         }
         /// <summary>
-        /// 为角色分配用户
+        /// 为角色分配用户视图
         /// </summary>
         /// <returns></returns>
         public ActionResult AllotUser()
         {
             return View();
         }
-
+        /// <summary>
+        /// 该角色下分配的用户数据
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
         public ActionResult GetAllotUserGrid(int roleId)
         {
             return Result(_urService.GetAllotUserGrid(roleId));
         }
+
+        /// <summary>
+        /// 为角色分配用户
+        /// </summary>
+        /// <param name="userIds">以逗号分隔的用户Id字符串</param>
+        /// <param name="roleId">单个角色Id</param>
+        /// <returns></returns>
         public ActionResult SaveMembers(string userIds, int roleId)
         {
             List<UserRole> urList = new List<UserRole>();
@@ -63,12 +77,21 @@ namespace Mock.Luo.Areas.Plat.Controllers
             }
             return Result(_urService.SaveMembers(urList, roleId));
         }
+        /// <summary>
+        /// 为角色分配权限视图
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult AllotAuthorize()
         {
             return View();
         }
-
+        /// <summary>
+        /// 保存角色下的权限信息
+        /// </summary>
+        /// <param name="roleId">角色Id</param>
+        /// <param name="data">权限树数据</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult SaveAuthorize(int roleId,string data)
         {

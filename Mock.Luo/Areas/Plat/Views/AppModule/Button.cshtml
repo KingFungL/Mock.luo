@@ -28,9 +28,10 @@
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">排序码</label>
+                <label class="layui-form-label">图标</label>
                 <div class="layui-input-inline">
-                    <input type="number" v-model="SortCode" class="layui-input">
+                    <input type="text" v-model="Icon" class="layui-input" placeholder="双击我选择图标" v-on:dblclick="com.select_icon('Icon','ButtonForm')" style="cursor:pointer;">
+                    <span class="input-button" v-on:click="com.select_icon('Icon','ButtonForm')" title="选取图标">...</span>
                 </div>
             </div>
         </div>
@@ -52,10 +53,21 @@
                 </div>
             </div>
         </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">排序码</label>
+                <div class="layui-input-inline">
+                    <input type="number" v-model="SortCode" class="layui-input">
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 @section css{
     <link href="~/Content/js/wdTree/tree.css" rel="stylesheet" />
+    <style>
+        .layui-form .input-button { font-weight: bold; border: none; right: 8px; top: 50%; width: 12px; height: 16px; margin-top: -12px; cursor: pointer; overflow: hidden; position: absolute; z-index: 100; }
+    </style>
 }
 @section scripts{
     <script src="~/Content/js/wdTree/jquery.tree.js"></script>
@@ -76,11 +88,20 @@
         };
         $.each(buttonJson, function (i, v) {
             if (v.Id == json.Id) {
+                v.PId == '' && (v.PId = -1);
                 json = v;
                 return false;
             }
         });
         json.ParentId = $.getQueryString('PId');
+        var moduleButtonJson = [];
+        $.each(buttonJson, function (i, v) {
+            moduleButtonJson.push({
+                Id: v.Id,
+                Name: v.Name,
+                PId: v.PId
+            });
+        });
 
         var vm = new Vue({
             el: '#v-app',
@@ -88,12 +109,18 @@
             mounted: function () {
                 $("#PId").comboBoxTree({
                     url: "/Plat/AppModule/ListToTreeJson",
-                    param: { moduleButtonJson: JSON.stringify(buttonJson), Id: json.ParentId },
+                    param: { moduleButtonJson: JSON.stringify(moduleButtonJson), Id: json.ParentId },
                     description: "==请选择==",
                     height: "120px",
                     allowSearch: true,
                     click: function (node) {
-                        vm.PId = node.id;
+                        if (node.id == vm.Id) {
+                            $.layerMsg('你不能选择自身作为您的父节点！', '', function () {
+                                $("#PId").comboBoxTreeSetValue("-1");
+                            });
+                        } else {
+                            vm.PId = node.id;
+                        }
                     }
                 });
                 layui.form.on('select(TypeCode)', function (data) {
@@ -111,7 +138,7 @@
                     }
                     //没有选择上级菜单或按钮，默认就属于当前菜单
                     if (vm.PId == -1) {
-                        vm.PId =  json.ParentId;
+                        vm.PId = json.ParentId;
                     }
                     callback(vm.$data);
                 }

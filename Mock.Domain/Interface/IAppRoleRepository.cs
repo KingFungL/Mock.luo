@@ -23,7 +23,7 @@ namespace Mock.Domain
 
         DataGrid GetDataGrid(string search);
         /// <summary>
-        /// 保存角色配置权限信息
+        /// 保存角色下的权限信息
         /// </summary>
         /// <param name="roleId"></param>
         /// <param name="roleModules"></param>

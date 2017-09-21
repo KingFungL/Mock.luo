@@ -15,9 +15,9 @@
             <div class="layui-container" style="margin-top:15px;">
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label">名称</label>
+                        <label class="layui-form-label"><span style="color:red">*</span>名称</label>
                         <div class="layui-input-inline">
-                            <input type="text" v-model="Name" required lay-verify="required" placeholder="请输入菜单名称" autocomplete="off" class="layui-input">
+                            <input type="text" v-model="Name" required lay-verify="required" placeholder="请输入菜单名称" autocomplete="off" class="layui-input" isvalid="yes" checkexpession="NotNull">
                         </div>
                     </div>
                     <div class="layui-inline">
@@ -52,14 +52,14 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">图标</label>
                         <div class="layui-input-inline">
-                            <input type="text" v-model="Icon" class="layui-input" placeholder="双击我选择图标" v-on:dblclick="select_icon" style="cursor:pointer;">
-                            <span class="input-button" v-on:click="select_icon" title="选取图标">...</span>
+                            <input type="text" v-model="Icon" class="layui-input" placeholder="双击我选择图标" v-on:dblclick="com.select_icon('Icon')" style="cursor:pointer;">
+                            <span class="input-button" v-on:click="com.select_icon('Icon')" title="选取图标">...</span>
                         </div>
                     </div>
                     <div class="layui-inline">
-                        <label class="layui-form-label">目标</label>
+                        <label class="layui-form-label"><span style="color:red">*</span>目标</label>
                         <div class="layui-input-inline">
-                            <select id="Target" name="Target" v-model="Target" lay-filter="Target">
+                            <select id="Target" name="Target" v-model="Target" lay-filter="Target" isvalid="yes" checkexpession="NotNull">
                                 <option value="-1" disabled>==请选择==</option>
                                 <option value="expand">无页面</option>
                                 <option value="iframe">框架页</option>
@@ -117,7 +117,7 @@
         json.btn_prev = true;
         json.btn_next = true;
         json.btn_finish = true;
-        json.autoId = -1;
+        json.autoId = -2;
         var vm = new Vue({
             el: '#v-app',
             data: json,
@@ -200,10 +200,12 @@
                         treeGridModel: "adjacency",
                         ExpandColumn: "Name",
                         height: $(window).height() - 190,
+                        width: $(window).width() - 40,
                         colModel: [{ label: "主键", name: "Id", hidden: true, key: true },//这个Id一定要有，一定要有，一定要有。没有则会出现树无法伸缩的情况
                         { label: "名称", name: "Name", width: 100, align: "left", sortable: false },
                         { label: "编码", name: "EnCode", width: 100, align: "left", sortable: false },
-                        { label: "地址", name: "LinkUrl", width: 300, align: "left", sortable: false },
+                        { label: "地址", name: "LinkUrl", width: 250, align: "left", sortable: false },
+                        { label: "图标", name: "Icon", width: 40, align: "left", sortable: false, formatter: function (cellvalue, options, rowObject) { return '<i class="' + cellvalue + '"></i>' } },
                         {
                             label: "类型", name: "TypeCode", width: 100, align: "left", sortable: false, formatter: function (cellvalue, options, rowObject) {
                                 if (cellvalue == 'Permission') {
@@ -221,6 +223,9 @@
 
                 },
                 btn_finsh_click: function () {
+                    if (!$('#v-app').Validform()) {
+                        return false;
+                    }
                     //如果是未选中菜单项，就直接点击完成，则直接调用通用的菜单项编辑方法
                     if (vm.IsMenu == false) {
                         console.info('直接提交，不想改后台.')
@@ -258,16 +263,6 @@
                         }
                     })
                 },
-                select_icon: function () {
-                    $.layerOpen({
-                        id: "select_icon",
-                        title: '选取图标',
-                        content: '/Plat/AppModule/Icon?controlId=Icon',
-                        width: "1000px",
-                        height: "600px",
-                        btn: []
-                    })
-                },
                 btn_add: function () {
                     this.editinfo('新增', vm.autoId--);
                 },
@@ -288,7 +283,9 @@
                         });
                     }
                 },
-                btn_copy: function () { },
+                btn_copy: function () {
+                    $.layerMsg('别点我，要脸，没做！');
+                },
                 editinfo: function (title, Id) {
                     $.layerOpen({
                         id: "ButtonForm",
@@ -323,6 +320,9 @@
                         data: { moduleButtonJson: JSON.stringify(buttonJson), Id: json.Id },
                         success: function (data) {
                             $grid.clearGridData();
+                            if ($grid.parent().next('.unwritten') != undefined) {
+                                $grid.parent().next('.unwritten').html('');
+                            }
                             $grid[0].addJSONData(data);
                         },
                     });

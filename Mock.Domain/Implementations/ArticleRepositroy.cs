@@ -14,10 +14,11 @@ namespace Mock.Domain
     /// </summary>]
     public class ArticleRepositroy : RepositoryBase<Article>, IArticleRepository
     {
+        #region 后台管理的分页列表数据
         public DataGrid GetDataGrid(Pagination pag)
         {
 
-            var dglist = this.IQueryable(u=>u.DeleteMark==false).Where(pag).Select(t => new
+            var dglist = this.IQueryable(u => u.DeleteMark == false).Where(pag).Select(t => new
             {
                 t.Id,
                 t.ItemsDetail.ItemName,
@@ -39,42 +40,8 @@ namespace Mock.Domain
 
             return new DataGrid { rows = dglist, total = pag.total };
 
-        }
-
-        public dynamic GetFormById(int Id)
-        {
-            var d = this.IQueryable(u => u.Id == Id).Select(u => new
-            {
-            }).FirstOrDefault();
-            return d;
-        }
-
-        public void Edit(Article entity)
-        {
-
-            if (entity.Id == 0)
-            {
-                entity.Create();
-                entity.ViewHits = 0;
-                entity.CommentQuantity = 0;
-                entity.PointQuantity = 0;
-                this.Insert(entity);
-            }
-            else
-            {
-                entity.Modify(entity.Id);
-                string[] modifystr = { "FTypeCode", "Excerpt", "Title", "Keywords", "Source", "Excerpt", "Content", "thumbnail", "IsAudit", "Recommend", "IsStickie" };
-                this.Update(entity, modifystr);
-            }
-
-        }
-
-        public void DeleteForm(int keyValue)
-        {
-            Article entity = new Article { Id = keyValue };
-            entity.Remove();
-            this.Update(entity, "IsVisible");
-        }
+        } 
+        #endregion
 
         /// <summary>
         /// 最新的文章

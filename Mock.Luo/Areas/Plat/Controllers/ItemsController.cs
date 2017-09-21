@@ -21,11 +21,19 @@ namespace Mock.Luo.Areas.Plat.Controllers
         {
             this._service = service;
         }
+        /// <summary>
+        /// 字典下拉树数据
+        /// </summary>
+        /// <returns></returns>
 
         public ActionResult GetTreeJson()
         {
             return Content(_service.GetTreeJson().ComboboxTreeJson());
         }
+        /// <summary>
+        /// zTree左树结构的数据
+        /// </summary>
+        /// <returns></returns>
 
         public ActionResult GetzTreeJson()
         {
@@ -35,6 +43,30 @@ namespace Mock.Luo.Areas.Plat.Controllers
         public ActionResult GetTreeGrid()
         {
             return Content(_service.GetTreeGrid().TreeGridJson());
+        }
+
+        /// <summary>
+        /// 编码需要验证唯一性
+        /// </summary>
+        /// <param name="viewModel">基础资料类别表</param>
+        /// <param name="id">主键id</param>
+        /// <returns></returns>
+        public override ActionResult Edit(ItemsViewModel viewModel, int id = 0)
+        {
+            int codeCount = 0;
+            if (id == 0)
+            {
+                codeCount = _service.IQueryable(u => u.EnCode == viewModel.EnCode).Count();
+            }
+            else
+            {
+                codeCount = _service.IQueryable(u => u.EnCode == viewModel.EnCode && u.Id != id).Count();
+            }
+            if (codeCount > 0)
+            {
+                return Error("编码不唯一!");
+            }
+            return base.Edit(viewModel, id);
         }
     }
 }

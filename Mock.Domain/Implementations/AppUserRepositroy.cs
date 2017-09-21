@@ -12,10 +12,19 @@ using System.Web;
 namespace Mock.Domain
 {
     /// <summary>
-    /// 仓储实现层 ArticleRepositroy
+    /// 仓储实现层 AppUserRepositroy
     /// </summary>]
     public class AppUserRepositroy : RepositoryBase<AppUser>, IAppUserRepository
     {
+        #region 构造方法
+        private IAppModuleRepository _ModuleService;
+        public AppUserRepositroy(IAppModuleRepository _ModuleService)
+        {
+            this._ModuleService = _ModuleService;
+        } 
+        #endregion
+
+        #region 根据条件得到用户列表数据
         public DataGrid GetDataGrid(Pagination pag, string LoginName, string Email)
         {
 
@@ -34,8 +43,10 @@ namespace Mock.Domain
                 UserRoleList = u.UserRoles.Select(r => r.AppRole.RoleName)
             }).ToList();
             return new DataGrid { rows = dglist, total = pag.total };
-        }
+        } 
+        #endregion
 
+        #region  新增用户，编辑用户信息
         public void SubmitForm(AppUser userEntity, string roleIds)
         {
 
@@ -86,9 +97,10 @@ namespace Mock.Domain
                     db.Commit();
                 }
             }
-        }
+        } 
+        #endregion
 
-
+        #region  判断用户是否重复，用户的LoginName是否重复，Email是否重复
         public AjaxResult IsRepeat(AppUser userEntity)
         {
 
@@ -128,8 +140,10 @@ namespace Mock.Domain
             }
             return AjaxResult.Success("邮箱与用户名都可用！");
         }
+        #endregion
 
-        public AjaxResult CheckLogin(string loginName, string pwd,bool rememberMe)
+        #region 验证登录
+        public AjaxResult CheckLogin(string loginName, string pwd, bool rememberMe)
         {
 
             AjaxResult ajaxResult;
@@ -145,6 +159,7 @@ namespace Mock.Domain
                     //登录成功
                     if (dbPassword == userEntity.LoginPassword)
                     {
+                        //保存用户信息
                         op.CurrentUser = new OperatorModel
                         {
                             UserId = userEntity.Id,
@@ -154,13 +169,18 @@ namespace Mock.Domain
                             UserCode = "1234",
                             LoginTime = DateTime.Now
                         };
+                        //缓存存放单点登录信息
                         ICache cache = CacheFactory.Cache();
-                        cache.WriteCache<string>(userEntity.Id.ToString(), op.Session.SessionID,DateTime.UtcNow.AddMinutes(60));
+                        op.Session[userEntity.Id.ToString()] = userEntity.LoginName;//必须使用这个存储一下session，否则sessionid在每一次请求的时候，都会为变更
+                        cache.WriteCache<string>(userEntity.Id.ToString(), op.Session.SessionID, DateTime.UtcNow.AddMinutes(60));
                         //记住密码
                         if (rememberMe == true)
                         {
 
                         }
+
+                        //登录权限分配,根据用户Id获取用户所拥有的权限，可以在登录之后的Home界面中统一获取。
+                        //op.ModulePermission = _ModuleService.GetUserModules(userEntity.Id);
 
                         ajaxResult = AjaxResult.Success("登录成功!");
                     }
@@ -181,11 +201,10 @@ namespace Mock.Domain
             return ajaxResult;
 
         }
-        /// <summary>
-        /// 重置密码
-        /// </summary>
-        /// <param name="keyValue">主键</param>
-        /// <param name="userPassword">用户密码</param>
+        #endregion
+
+        #region 重置密码
+
         public void ResetPassword(int keyValue, string userPassword)
         {
             AppUser userEntity = new AppUser();
@@ -196,6 +215,7 @@ namespace Mock.Domain
             string[] modifstr = { "UserSecretkey", "LoginPassword", };
 
             this.Update(userEntity, modifstr);
-        }
+        } 
+        #endregion
     }
 }

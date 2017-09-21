@@ -58,11 +58,11 @@ namespace Mock.Luo.Controllers
         /// <param name="viewModel">实体对象</param>
         /// <returns></returns>
         [HttpPost]
-        public virtual ActionResult Edit(TViewModel viewModel, int Id = 0)
+        public virtual ActionResult Edit(TViewModel viewModel, int id = 0)
         {
             var userid = OperatorProvider.Provider.CurrentUser.UserId;
             //新增
-            if (Id == 0)
+            if (id == 0)
             {
                 TEntityModel entity = Mapper.Map<TViewModel, TEntityModel>(viewModel);
 
@@ -83,10 +83,10 @@ namespace Mock.Luo.Controllers
             }
             else
             {
-                var tEntityModel = _ibase.FindEntity(Id);
+                var tEntityModel = _ibase.FindEntity(id);
 
                 if (tEntityModel == null)
-                    return Error($"Id为{Id}未找到任何类型为{viewModel.GetType().Name}的实体对象");
+                    return Error($"Id为{id}未找到任何类型为{viewModel.GetType().Name}的实体对象");
 
                 TEntityModel entity = Mapper.Map(viewModel, tEntityModel);
 

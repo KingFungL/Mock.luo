@@ -59,7 +59,7 @@ namespace Mock.Data
             {
                 this.dbTransaction.Dispose();
             }
-            this.dbcontext.Dispose();
+            //this.dbcontext.Dispose();
         }
         public int Insert<TEntity>(TEntity entity) where TEntity : class
         {

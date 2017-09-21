@@ -24,5 +24,13 @@ namespace Mock.Domain
         /// <param name="Encode"></param>
         /// <returns></returns>
         List<TreeSelectModel> GetCombobox(string Encode);
+        /// <summary>
+        /// 根据条件和主表Id获取分表列表数据
+        /// </summary>
+        /// <param name="itemId">主键</param>
+        /// <param name="keyword">搜索关键字</param>
+        /// <returns></returns>
+
+        List<ItemsDetail> GetList(int itemId = 0, string keyword = "");
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mock.Data.Models
 {
+    
     public partial class AppModule : IEntity<AppUser>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         public AppModule()

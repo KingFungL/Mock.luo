@@ -23,8 +23,8 @@ namespace Mock.Luo.Areas.Plat.Controllers
             this._service = service;
         }
 
-        #region 根据用户id得到用户菜单权限
-        public ActionResult GetUserModule(int userid = 1)
+        #region 根据当前登录的用户得到用户菜单权限
+        public ActionResult GetUserModule()
         {
             List<AppModule> userModuleEntities = _service.GetAppModuleList(u => u.TypeCode != "Button" && u.TypeCode != "Permission");
 
@@ -112,7 +112,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
                 treeModel.isLeaf = hasChildren;
                 treeModel.parentId = item.PId.ToString();
                 treeModel.expanded = hasChildren;
-                treeModel.entityJson = JsonHelper.SerializeObject(new { item.Id, item.PId, item.Name, item.SortCode, item.EnCode, item.LinkUrl, item.TypeCode });
+                treeModel.entityJson = JsonHelper.SerializeObject(new { item.Id, item.PId, item.Icon, item.Name, item.SortCode, item.EnCode, item.LinkUrl, item.TypeCode });
                 treeList.Add(treeModel);
             }
             return Content(treeList.TreeGridJson(Id));
@@ -153,11 +153,15 @@ namespace Mock.Luo.Areas.Plat.Controllers
                 });
             }
 
-            treeList.Insert(0, new TreeSelectModel { id = "-1", text = "==请选择==", parentId = "0" });
+            treeList.Insert(0, new TreeSelectModel { id = "-1", text = "==请选择==", parentId = Convert.ToString(Id) });
 
             return Content(treeList.ComboboxTreeJson(Id));
         }
-
+        /// <summary>
+        /// 根据角色id获取分配权限
+        /// </summary>
+        /// <param name="roleId">角色id</param>
+        /// <returns></returns>
         public ActionResult GetRoleModuleAuth(int roleId)
         {
             return Result(_service.GetRoleModuleAuth(roleId));

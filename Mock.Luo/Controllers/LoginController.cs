@@ -68,8 +68,6 @@ namespace Mock.Luo.Controllers
                 }
             }
 
-   
-
             //if (code.IsNotNullOrEmpty() && code.ToLower() != OperatorProvider.Provider.CurrentCode)
             //{
             //    return Error("验证码出错");

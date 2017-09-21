@@ -27,6 +27,11 @@ namespace Mock.Data.Models
         #endregion
 
         #region 把权限菜单数据转换成符合带有递归关系的集合
+        /// <summary>
+        /// 把权限菜单数据转换成符合带有递归关系的集合
+        /// </summary>
+        /// <param name="listMenus">菜单模块数据集合</param>
+        /// <returns></returns>
         public static List<TreeNode> ConvertTreeNodes(List<AppModule> listMenus)
         {
             List<TreeNode> listTreeNodes = new List<TreeNode>();

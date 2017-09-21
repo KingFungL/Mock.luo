@@ -1096,7 +1096,7 @@
     <Content Include="Views\Home\DatalistView.cshtml" />
     <Content Include="Views\Home\MainView.cshtml" />
     <Content Include="Views\Home\BlogView.cshtml" />
-    <Content Include="数据字典.docx" />
+    <Content Include="Files\数据字典.docx" />
     <Content Include="Views\Shared\_Index.cshtml" />
     <Content Include="Content\js\layui\font\iconfont.eot" />
     <Content Include="Content\js\layui\font\iconfont.ttf" />
@@ -1109,6 +1109,7 @@
     <Content Include="Views\Error\E500.cshtml" />
     <Content Include="Views\Error\E404.cshtml" />
     <Content Include="Views\Error\LockScreen.cshtml" />
+    <Content Include="Files\概要设计说明.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -20,7 +20,7 @@ namespace Mock.Domain
         /// <returns></returns>
         AjaxResult SaveMembers(List<UserRole> entities, int roleId);
         /// <summary>
-        /// 根据角色id得到分配的用户
+        /// 根据角色id得到分配的用户数据
         /// </summary>
         /// <param name="roleId"></param>
         /// <returns></returns>

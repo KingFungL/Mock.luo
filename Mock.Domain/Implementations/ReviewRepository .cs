@@ -15,11 +15,12 @@ namespace Mock.Domain
     /// </summary>]
     public class ReviewRepository : RepositoryBase<Review>, IReviewRepository
     {
-        public DataGrid GetDataGrid(Pagination pag, string Email,int AId)
+        #region 根据条件得到文章的评论分页数据，默认是全部,可根据文章id查看评论内容 
+        public DataGrid GetDataGrid(Pagination pag, string Email, int AId)
         {
-            Expression<Func<Review, bool>> predicate = u => u.DeleteMark == false 
-            &&(Email == "" || u.AuEmail.Contains(Email))
-            &&(AId==0||u.AId==AId);
+            Expression<Func<Review, bool>> predicate = u => u.DeleteMark == false
+            && (Email == "" || u.AuEmail.Contains(Email))
+            && (AId == 0 || u.AId == AId);
 
             var dglist = this.IQueryable(predicate).Where(pag).Select(u => new
             {
@@ -39,16 +40,20 @@ namespace Mock.Domain
 
             return new DataGrid { rows = dglist, total = pag.total };
         }
+        #endregion
 
+        #region 得到最新的count条回复信息
         public dynamic GetRecentReview(int count)
         {
-           return this.IQueryable().OrderByDescending(u => u.Id).Take(count).Select(r => new {
-               r.Id,
-               r.Text,
-               r.AuEmail,
-               r.AuName,
-               r.CreatorTime
-           }).ToList();
-        }
+            return this.IQueryable().OrderByDescending(u => u.Id).Take(count).Select(r => new
+            {
+                r.Id,
+                r.Text,
+                r.AuEmail,
+                r.AuName,
+                r.CreatorTime
+            }).ToList();
+        } 
+        #endregion
     }
 }

@@ -1,64 +1,78 @@
 ﻿
+window.$ui = {};
 $(function () {
-
-    com.ajax({
-        url: '/Plat/AppModule/GetUserModule?userid=1',
-        async:false,
-        success: function (menulist) {
-            $index.initMenu(menulist);
-        }
-    })
+    $ui.initIndex();
+    //com.ajax({
+    //    url: '/Plat/AppModule/GetUserModule',
+    //    async:false,
+    //    success: function (data) {
+    //        $ui.initMenu(data);
+    //    }
+    //});
 });
-
-var $index = {};
-
-$index.initMenu = function (menulist) {
-
-    //var menulist=$ui.get_static_menu();
-    var $sidemenu = $('#side-menu');
-    var html = '';
-    for (var i = 0; i < menulist.length; i++) {
-        var template = '<li>\
+(function ($, $ui) {
+    $.extend($ui, {
+        initMenu: function (menulist) {
+            //var menulist=$ui.get_static_menu();
+            var $sidemenu = $('#side-menu');
+            var html = '';
+            for (var i = 0; i < menulist.length; i++) {
+                var template = '<li>\
                 <a href="#">\
                     <i class="{0}"></i>\
                     <span class="nav-label">{1}</span>\
                     <span class="fa arrow"></span>\
-                </a>'
+                </a>';
 
-        var jsonobj = menulist[i];
-        html += com.format_str(template, jsonobj.iconcls, jsonobj.text);
-        html += '<ul class="nav nav-second-level collapse">';
+                var jsonobj = menulist[i];
+                html += com.format_str(template, jsonobj.iconcls, jsonobj.text);
+                html += '<ul class="nav nav-second-level collapse">';
 
-        var temple = '<li>\
+                var temple = '<li>\
                           <a class="J_menuItem" href="{0}" target="{1}"><i class="{2}"></i>{3}\
                       ';
-        if (jsonobj.children.length > 0) {
+                if (jsonobj.children.length > 0) {
 
-            for (var j = 0; j < jsonobj.children.length; j++) {
-                var m = jsonobj.children[j];
-                html += com.format_str(temple, m.href, m.target, m.iconcls, m.text);
-                var json3 = m;
-                if (m && m.children && m.children.length > 0) {
-                    html += '<span class="fa arrow"></span></a>';
-                    html += '<ul class="nav nav-third-level">'
-                    var template3 = '<li>\
+                    for (var j = 0; j < jsonobj.children.length; j++) {
+                        var m = jsonobj.children[j];
+                        html += com.format_str(temple, m.href, m.target, m.iconcls, m.text);
+                        var json3 = m;
+                        if (m && m.children && m.children.length > 0) {
+                            html += '<span class="fa arrow"></span></a>';
+                            html += '<ul class="nav nav-third-level">';
+                            var template3 = '<li>\
                                            <a class="J_menuItem" href="{0}"  target="{1}"><i class="{2}"></i>{3}</a>\
-                                     </li>'
-                    for (var k = 0; k < m.children.length; k++) {
-                        var t = m.children[k]
-                        html += com.format_str(template3, t.href, t.target,t.iconcls, t.text);
+                                     </li>';
+                            for (var k = 0; k < m.children.length; k++) {
+                                var t = m.children[k];
+                                html += com.format_str(template3, t.href, t.target, t.iconcls, t.text);
+                            }
+                            html += '</ul>';
+                        } else {
+                            html += '</a>';
+                        }
                     }
-                    html += '</ul>';
-                } else {
-                    html += '</a>'
                 }
+                html += ' </li>';
+                html += '</ul></li>';
             }
+            $sidemenu.append(html);
+        },
+        data: {},
+        initIndex: function () {
+            com.ajax({
+                async: false,
+                url: '/Home/GetClientsJson',
+                success: function (data) {
+                    $ui.data = data;
+                    $ui.initMenu(data.authorizeMenu);
+                }
+            });
         }
-        html += ' </li>';
-        html += '</ul></li>';
-    }
-    $sidemenu.append(html);
-}
+    });
+})(jQuery, window.$ui);
+
+
 
 //三级菜单
 
@@ -86,7 +100,7 @@ $index.initMenu = function (menulist) {
 */
 
 
-$index.get_static_menu = function () {
+$ui.get_static_menu = function () {
     var menulist = [{
         'text': '主页',
         'id': 1,
@@ -126,7 +140,7 @@ $index.get_static_menu = function () {
             'iconCls': 'fa fa-tablet',
             'href': '/Home/DatalistView',
             'sortcode': 3,
-            'target': '_self',
+            'target': '_self'
         }]
     }, {
         'text': '表单',
@@ -177,9 +191,9 @@ $index.get_static_menu = function () {
             'iconCls': 'fa fa-thumbs-o-up',
             'sortcode': 7,
             'href': '/Mock/Code/CssFormatIndex',
-            'target': '_self',
+            'target': '_self'
         }]
     }
     ];
     return menulist;
-}
+};

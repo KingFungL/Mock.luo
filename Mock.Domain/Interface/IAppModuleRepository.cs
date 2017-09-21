@@ -14,17 +14,11 @@ namespace Mock.Domain
     {
 
         /// <summary>
-        /// 根据用户ID得到菜单权限 GetUserMenus
+        /// 根据条件得到模块表数据
         /// </summary>
-        /// <param name="userid">用户ID</param>
-        /// <returns>用户菜单List</returns>
+        /// <param name="predicate">查询条件</param>
+        /// <returns></returns>
         List<AppModule> GetAppModuleList(Expression<Func<AppModule,bool>>predicate);
-
-        /// <summary>
-        /// 从session中取出当前登录用户对应的菜单并转成递归结构 GetUserMenusTree
-        /// </summary>
-        /// <returns>用户菜单JsonTree</returns>
-        string GetUserMenusTree();
         /// <summary>
         /// 得到树形treegrid菜单列表数据
         /// </summary>
@@ -67,5 +61,12 @@ namespace Mock.Domain
         /// <param name="roleId"></param>
         /// <returns></returns>
         dynamic GetRoleModuleAuth(int roleId);
+
+        /// <summary>
+        /// 根据用户ID得到权限模块 GetUserMenus
+        /// </summary>
+        /// <param name="userid">用户ID</param>
+        /// <returns>用户菜单List</returns>
+         List<AppModule> GetUserModules(int? userId);
     }
 }

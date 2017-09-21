@@ -30,11 +30,11 @@ com.ajax = function (options) {
         showMsg: false,
         showLoading: true
     };
-    var options = $.extend(defaults, options);
+    options = $.extend(defaults, options);
 
 
     var index = 0;
-    if (options.showLoading == true) {
+    if (options.showLoading === true) {
         index = layer.load(0, { shade: false });
     }
 
@@ -45,7 +45,7 @@ com.ajax = function (options) {
         async: options.async,
         dataType: "json",
         success: function (data) {
-            if (options.showLoading == true) {
+            if (options.showLoading === true) {
                 layer.close(index);
             }
 
@@ -119,7 +119,7 @@ com.get_params = function () {
 };
 com.get_urlparams = function (urlParameters) {
     var requestParameters = new Object();
-    if (urlParameters.indexOf('?') != -1) {
+    if (urlParameters.indexOf('?') !== -1) {
         var parameters = decodeURI(urlParameters.substr(1));
         parameterArray = parameters.split('&');
         for (var i = 0; i < parameterArray.length; i++) {
@@ -160,7 +160,7 @@ com.format_enable = function (value, row) {
 
 com.format_yes = function (value, row) {
     var text = '数据为空', label_class = 'warning';
-    if (value == true) {
+    if (value === true) {
         text = '是';
         label_class = 'success';
     } else {
@@ -271,7 +271,7 @@ com.delete = function (url, element, type) {
                 success: function (dataJson) {
                     $.procAjaxMsg(dataJson, function () {
                         layer.msg(dataJson.message);
-                        if (type == 'boot') {
+                        if (type === 'boot') {
                             $(element).bootstrapTable("refresh");
                         } else {
                             $(element).trigger('reloadGrid').jqGrid('resetSelection');
@@ -288,7 +288,7 @@ com.delete = function (url, element, type) {
 /*得到选中的节点id（单选）*/
 com.get_selectid = function (dgelement, type) {
     if (!dgelement) {
-        dgelement = '#dginfo'
+        dgelement = '#dginfo';
     }
     var Id = 0;
     var $grid = $(dgelement);
@@ -298,15 +298,15 @@ com.get_selectid = function (dgelement, type) {
         //当得到的行记录不是数组时，则为对象
         if (!(row instanceof Array)) {
             Id = row.Id;
-        };
+        }
     } else {
-        if ($grid.bootstrapTable('getSelections')[0] != undefined) {
+        if ($grid.bootstrapTable('getSelections')[0] !== undefined) {
             var row = $(dgelement).bootstrapTable('getSelections')[0];
             Id = row.Id;
-        };
+        }
     }
     return Id;
-}
+};
 //编辑前统一提示信息,当Id为0时，说明未选中任何记录，其他时，将Id,作为回调函数的参数
 com.edit = function (dgelement, type, callback) {
     var Id = com.get_selectid(dgelement, type);
@@ -315,7 +315,7 @@ com.edit = function (dgelement, type, callback) {
     } else {
         callback(Id);
     }
-}
+};
 
 
 
@@ -332,31 +332,31 @@ com.ispc = function () {
         }
     }
     return flag;
-}
+};
 com.asyncGet = function (t) {
-    var i = null,
-        t = $.extend({
-            type: "GET",
-            dataType: "json",
-            async: !1,
-            cache: !1,
-            success: function (n) {
-                i = n
-            }
-        }, t);
-    return $.ajax(t), i
-}
+    var i = null;
+    t = $.extend({
+        type: "GET",
+        dataType: "json",
+        async: !1,
+        cache: !1,
+        success: function (n) {
+            i = n;
+        }
+    }, t);
+    return $.ajax(t), i;
+};
 
 com.tabiframe_Name = function () {
-    return top.$(".J_iframe:visible").attr("name")
+    return top.$(".J_iframe:visible").attr("name");
 };
 /*得到当前可见的iframe对象*/
 com.currentIframe = function () {
-    return top.frames[com.tabiframe_Name()].contentWindow != undefined ? top.frames[com.tabiframe_Name()].contentWindow : top.frames[com.tabiframe_Name()]
-}
+    return top.frames[com.tabiframe_Name()].contentWindow !== undefined ? top.frames[com.tabiframe_Name()].contentWindow : top.frames[com.tabiframe_Name()];
+};
 com.checkedRow = function (n) {
     var i = !0;
-    if (n == undefined || n == "" || n == "null" || n == "undefined" || (n instanceof Array)) {
+    if (n === undefined || n === "" || n === "null" || n === "undefined" || n instanceof Array) {
         $.layerMsg("请先选中一条记录后再操作！"); return false;
     } else {
         return true;
@@ -371,7 +371,16 @@ com.checkedRow = function (n) {
             } else {
                 return top.$(element).children('iframe')[0].name;
             }
-        }
-    })
+        }, select_icon: function (controlId,formId) {
+            $.layerOpen({
+                id: "select_icon",
+                title: '选取图标',
+                content: '/Plat/AppModule/Icon?controlId=' + controlId + '&formId=' + formId,
+                width: "1000px",
+                height: "600px",
+                btn: []
+            });
+        },
+    });
 
 })(window.jQuery, window.com);

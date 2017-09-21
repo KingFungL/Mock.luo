@@ -12,9 +12,10 @@ namespace Mock.Domain
 {
     public class UserRoleRepository : RepositoryBase<UserRole>, IUserRoleRepository
     {
+        #region 根据角色id得到分配的用户数据
         public dynamic GetAllotUserGrid(int roleId)
         {
-            var usersActiveList = this.db.Set<AppUser>().AsNoTracking().Where(u=>u.DeleteMark==false).Select(u => new
+            var usersActiveList = this.db.Set<AppUser>().AsNoTracking().Where(u => u.DeleteMark == false).Select(u => new
             {
                 u.Id,
                 u.NickName,
@@ -28,7 +29,9 @@ namespace Mock.Domain
             }).OrderByDescending(u => u.IsActive == true).ToList();
             return usersActiveList;
         }
+        #endregion
 
+        #region 保存角色对应的用户
         public AjaxResult SaveMembers(List<UserRole> entities, int roleId)
         {
             AjaxResult msg;
@@ -49,5 +52,6 @@ namespace Mock.Domain
             }
             return msg;
         }
+        #endregion
     }
 }
