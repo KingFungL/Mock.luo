@@ -156,6 +156,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Generic\Filters\HandlerAuthorizeAttribute.cs" />
     <Compile Include="Generic\Filters\HandlerErrorAttribute.cs" />
@@ -202,6 +203,7 @@
     <Content Include="Content\css\bootstrap-table.min12.css" />
     <Content Include="Content\css\bootstrap.min14ed.css" />
     <Content Include="Content\css\font-awesome4.7.min12.css" />
+    <Content Include="Content\css\global.bolg.css" />
     <Content Include="Content\css\jquery.treegrid.css" />
     <Content Include="Content\css\mock.css" />
     <Content Include="Content\css\plugins\jump.css" />
@@ -1110,6 +1112,7 @@
     <Content Include="Views\Error\E404.cshtml" />
     <Content Include="Views\Error\LockScreen.cshtml" />
     <Content Include="Files\概要设计说明.md" />
+    <Content Include="Views\App\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

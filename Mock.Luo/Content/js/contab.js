@@ -43,6 +43,7 @@
                 $(".J_mainContent").find("iframe.J_iframe").hide().parents(".J_mainContent").append(n);
                 $(".J_menuTabs .page-tabs-content").append(p);
                 $ui.animate($(".J_menuTab.active"));
+                layer.load(com.get_randNum(0, 2), { shade: [0.1, '#fff'], time: 1000 });
             }
             return false;
         },
@@ -77,7 +78,7 @@
         f: function (l) {
             var k = 0;
             $(l).each(function () {
-                k += $(this).outerWidth(true)
+                k += $(this).outerWidth(true);
             });
             return k;
         },

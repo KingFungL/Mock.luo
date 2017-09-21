@@ -29,16 +29,16 @@
             <div class="table-responsive">
                 <table id="treetable" class="table table-bordered table-hover table-striped fancytree-fade-expander">
                     <colgroup>
-                        <col style="width:30px;"/>
-                        <col style="width:300px;"/>
-                        <col style="width:200px;"/>
+                        <col style="width:30px;" />
+                        <col style="width:300px;" />
+                        <col style="width:200px;" />
                         <col style="width:100px;">
-                        <col style="width:100px;"/>
-                        <col style="width:100px;"/>
-                        <col style="width:100px;"/>
+                        <col style="width:100px;" />
+                        <col style="width:100px;" />
+                        <col style="width:100px;" />
                     </colgroup>
                     <thead>
-                        <tr> <th></th>  <th>菜单名称</th> <th style="text-align:center;">链接地址</th> <th style="text-align:center;">排序码</th> <th style="text-align:center;">展开</th> <th style="text-align:center;">菜单</th><th style="text-align:center;">图标</th><th style="text-align:center;">目标</th> </tr>
+                        <tr> <th></th>  <th>菜单名称</th> <th style="text-align:center;">链接地址</th> <th style="text-align:center;">排序码</th> <th style="text-align:center;">类别</th> <th style="text-align:center;">编码</th><th style="text-align:center;">图标</th><th style="text-align:center;">目标</th> </tr>
                     </thead>
                     <tbody>
                         <tr> <td></td> <td></td> <td></td><td></td><td></td><td></td> <td></td><td></td> </tr>
@@ -112,8 +112,8 @@
                             var d = node.data;
                             $tdList.eq(2).css('text-align', 'center').text(d.LinkUrl);
                             $tdList.eq(3).css('text-align', 'center').text(d.SortCode);
-                            $tdList.eq(4).css('text-align', 'center').html(com.format_yes(d.Expanded));
-                            $tdList.eq(5).css('text-align', 'center').html(com.format_yes(d.TypeCode == 'Menu' ? true : false));
+                            $tdList.eq(4).css('text-align', 'center').html(vm.format_typecode(d.TypeCode));
+                            $tdList.eq(5).css('text-align', 'center').html(d.EnCode);
                             $tdList.eq(6).css('text-align', 'center').html('<i class="' + d.Icon + '"></i>');
                             var target = {
                                 "expand": "无页面",
@@ -176,6 +176,22 @@
                             });
                         }
                     });
+                },
+                format_typecode: function (type_code) {
+                    var text = '数据为空', label_class = 'warning';
+                    switch (type_code) {
+                        case 'PMenu': text = '父菜单';
+                            label_class = 'success'; break;
+                        case 'Menu': text = "菜单";
+                            label_class = 'danger'; break;
+                        case 'Button': text = "按钮";
+                            label_class = 'warning'; break;
+                        case 'Permission': text = "权限";
+                            label_class = 'info'; break;
+                        default: text = '数据为空', label_class = 'warning'; break;
+                    }
+
+                    return com.format_str('<span class="label label-{0}">{1}</span>', label_class, text);
                 }
             }
         });

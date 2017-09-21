@@ -2,7 +2,7 @@
 
 /**
  * 创建模态窗。
- * @param {Object} options
+ * @param {Object} options 参数配置
  */
 $.layerOpen = function (options) {
     var defaults = {
@@ -52,7 +52,7 @@ $.layerOpen = function (options) {
         }
     });
 
-}
+};
 
 /**
  * 关闭模态窗。
@@ -60,11 +60,11 @@ $.layerOpen = function (options) {
 $.layerClose = function () {
     var index = parent.layer.getFrameIndex(window.name);
     parent.layer.close(index);
-}
+};
 
 /**
  * 创建询问框。
- * @param {Object} options
+ * @param {Object} options 参数配置
  */
 $.layerConfirm = function (options) {
     var defaults = {
@@ -96,11 +96,12 @@ $.layerConfirm = function (options) {
     }, function () {
         return true;
     });
-}
+};
 /**
  * 创建一个信息弹窗。
- * @param {String} content 
- * @param {String} type 
+ * @param {String} content  显示内容
+ * @param {String} type 类型：1，2，3，4，5，6或者字符串'warning','ok','success','err','error','question','lock','longface','info','nopermission'
+  * @param {Function} callback 回调函数 
  */
 $.layerMsg = function (content, type, callback) {
     if (type !== undefined) {
@@ -144,7 +145,7 @@ $.layerMsg = function (content, type, callback) {
             }
         });
     }
-}
+};
 
 $.procAjaxMsg = function (json, funcSuc, funcErr) {
     if (!json.state) {
@@ -179,7 +180,7 @@ $.procAjaxMsg = function (json, funcSuc, funcErr) {
             $.alertMsg(json.message, '系统提示', null, state);
             break;
     }
-}
+};
 
 $.validateUrl = function (url, funcSuc, funcErr, type) {
     $.ajax({
@@ -193,7 +194,7 @@ $.validateUrl = function (url, funcSuc, funcErr, type) {
             }
         }
     });
-}
+};
 
 $.alertMsg = function (msg, title, funcSuc, icon) {
     if (title === '' || title === undefined) title = '提示';
@@ -228,53 +229,53 @@ $.alertMsg = function (msg, title, funcSuc, icon) {
             funcSuc();
         }
     }
-},
+};
 
-  /**
-   * 绑定Select选项。
-   * @param {Object} options
-   */
-    $.fn.bindSelect = function (options) {
-        var defaults = {
-            id: "id",
-            text: "text",
-            search: true,
-            multiple: false,
-            title: "==请选择==",
-            url: "",
-            param: [],
-            change: null
-        };
-        var options = $.extend(defaults, options);
-        options.placeholder = options.title;
-        options.minimumResultsForSearch = options.search == true ? 0 : -1;
+/**
+ * 绑定Select选项。
+ * @param {Object} options 参数配置
+ */
+$.fn.bindSelect = function (options) {
+    var defaults = {
+        id: "id",
+        text: "text",
+        search: true,
+        multiple: false,
+        title: "==请选择==",
+        url: "",
+        param: [],
+        change: null
+    };
+    options = $.extend(defaults, options);
+    options.placeholder = options.title;
+    options.minimumResultsForSearch = options.search == true ? 0 : -1;
 
-        var $element = $(this);
-        if (options.url != "") {
-            $.ajax({
-                url: options.url,
-                data: options.param,
-                type: "post",
-                dataType: "json",
-                async: false,
-                success: function (data) {
-                    $.each(data, function (i) {
-                        $element.append($("<option></option>").val(data[i][options.id]).html(data[i][options.text]));
-                    });
-                    $element.select2(options);
-                    $element.on("change", function (e) {
-                        if (options.change !== null) {
-                            options.change(data[$(this).find("option:selected").index()]);
-                        }
-                        $("#select2-" + $element.attr('id') + "-container").html($(this).find("option:selected").text());
-                        return false;
-                    });
-                }
-            });
-        } else {
-            $element.select2(options);
-        }
+    var $element = $(this);
+    if (options.url != "") {
+        $.ajax({
+            url: options.url,
+            data: options.param,
+            type: "post",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                $.each(data, function (i) {
+                    $element.append($("<option></option>").val(data[i][options.id]).html(data[i][options.text]));
+                });
+                $element.select2(options);
+                $element.on("change", function (e) {
+                    if (options.change !== null) {
+                        options.change(data[$(this).find("option:selected").index()]);
+                    }
+                    $("#select2-" + $element.attr('id') + "-container").html($(this).find("option:selected").text());
+                    return false;
+                });
+            }
+        });
+    } else {
+        $element.select2(options);
     }
+};
 
 
 /**
@@ -294,7 +295,7 @@ $.fn.bindEnterEvent = function ($event) {
             }
         });
     });
-}
+};
 
 /**
  * 绑定Change提交事件。
@@ -310,11 +311,12 @@ $.fn.bindChangeEvent = function ($event) {
             } else {
                 $event.click();
             }
-        })
+        });
     });
 };
 /**
- * 控制授权按钮
+ * 控制授权按钮 
+ * @param {callback} 回调函数
  */
 $.fn.authorizeButton = function (callback) {
     var url = location.pathname + location.search;
@@ -333,16 +335,16 @@ $.fn.authorizeButton = function (callback) {
                 });
                 $toolbar.html(_buttons);
             }
-            if (typeof (callback) == 'function') {
-                callback()
+            if (typeof callback === 'function') {
+                callback();
             }
         }
-    })
+    });
 
-}
+};
 
 /**
- * 获取数据表格选中行主键值。
+ * @ return 获取数据表格选中行主键值
  */
 $.fn.gridSelectedRowValue = function () {
     var $selectedRows = $(this).children('tbody').find("input[type=checkbox]:checked");
@@ -353,11 +355,12 @@ $.fn.gridSelectedRowValue = function () {
         }
     }
     return result;
-}
+};
 
 /**
  * 获取URL指定参数值。
- * @param {String} name
+ * @param {String} name 参数name值
+ * @returns 获取URL指定参数值。
  */
 $.getQueryString = function (name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -368,18 +371,18 @@ $.getQueryString = function (name) {
 
 /**
  * 序列化和反序列化表单字段。
- * @param {Object} formdate
- * @param {Function} callback 
+ * @param {Object} formdata this is form表单数据
+ * @param {Function} callback 回调函数
  */
-$.fn.formSerialize = function (formdate, callback) {
+$.fn.formSerialize = function (formdata, callback) {
     var $form = $(this);
-    if (formdate) {
-        for (var key in formdate) {
+    if (formdata) {
+        for (var key in formdata) {
             var $field = $form.find("[name=" + key + "]");
             if ($field.length === 0) {
                 continue;
             }
-            var value = $.trim(formdate[key]);
+            var value = $.trim(formdata[key]);
             var type = $field.attr('type');
             if ($field.hasClass('select2')) {
                 type = "select2";
@@ -407,8 +410,7 @@ $.fn.formSerialize = function (formdate, callback) {
                     $field.val(value);
                     break;
             }
-
-        };
+        }
         // 特殊的表单字段可以在回调函数中手动赋值。
         if (callback && $.isFunction(callback)) {
             callback(formdate);
@@ -488,7 +490,7 @@ $.fn.dataGrid = function (options) {
         },
         onLoadSuccess: function (data) {
             $element.parent('.fixed-table-body').addClass('table-responsive');
-            if (typeof options.callback=== 'function') {
+            if (typeof options.callback === 'function') {
                 options.callback(data);
             }
         }
@@ -516,7 +518,7 @@ $.fn.dataGrid = function (options) {
 $.fn.jqGridRowValue = function () {
     var $grid = $(this);
     var selectedRowIds = $grid.jqGrid("getGridParam", "selarrrow");
-    if (selectedRowIds !== ""&&selectedRowIds.length>0) {
+    if (selectedRowIds !== "" && selectedRowIds.length > 0) {
         var json = [];
         var len = selectedRowIds.length;
         for (var i = 0; i < len; i++) {
@@ -527,7 +529,7 @@ $.fn.jqGridRowValue = function () {
     } else {
         return $grid.jqGrid('getRowData', $grid.jqGrid('getGridParam', 'selrow'));
     }
-}
+};
 
 $.fn.comboBoxTree = function (options) {
     var u = $(this),
@@ -553,13 +555,13 @@ $.fn.comboBoxTree = function (options) {
         f = {
             rendering: function () {
                 var t, r;
-                return u.find(".ui-select-text").length === 0 && u.html("<div class=\"ui-select-text\" style='color:#999;'>" + i.description + "<\/div>"), t = '<div class="ui-select-option">', t += '<div class="ui-select-option-content" style="max-height: ' + i.maxHeight + '"><\/div>', i.allowSearch && (t += '<div class="ui-select-option-search"><input type="text" class="form-control" style="padding:0px;" placeholder="搜索关键字" /><span class="input-query" title="回车搜索"><i class="fa fa-search"><\/i><\/span><\/div>'), t += "<\/div>", r = $(t), r.attr("id", e + "-option"), i.appendTo ? $(i.appendTo).prepend(r) : $("body").prepend(r), $("#" + e + "-option")
+                return u.find(".ui-select-text").length === 0 && u.html("<div class=\"ui-select-text\" style='color:#999;'>" + i.description + "<\/div>"), t = '<div class="ui-select-option">', t += '<div class="ui-select-option-content" style="max-height: ' + i.maxHeight + '"><\/div>', i.allowSearch && (t += '<div class="ui-select-option-search"><input type="text" class="form-control" style="padding:0px;" placeholder="搜索关键字" /><span class="input-query" title="回车搜索"><i class="fa fa-search"><\/i><\/span><\/div>'), t += "<\/div>", r = $(t), r.attr("id", e + "-option"), i.appendTo ? $(i.appendTo).prepend(r) : $("body").prepend(r), $("#" + e + "-option");
             }, loadtreeview: function (n, t) {
                 o.treeview({
                     onnodeclick: function (t) {
                         if (n.click) {
                             var i = "ok";
-                            if (i = n.click(t), i == "false") return !1
+                            if (i = n.click(t), i == "false") return !1;
                         }
                         u.attr("data-value", t.id).attr("data-text", t.text);
                         u.find(".ui-select-text").html(t.text).css("color", "#000");
@@ -597,7 +599,7 @@ $.fn.comboBoxTree = function (options) {
         r = f.rendering(),
         o = $("#" + e + "-option").find(".ui-select-option-content");
     return f.loadData(i), f.loadtreeview(i, i.data), i.allowSearch && (r.find(".ui-select-option-search").find("input").bind("keypress", function () {
-        if (event.keyCode == "13") {
+        if (event.keyCode === "13") {
             var t = $(this),
                 i = $(this).val(),
                 r = f.searchData(t[0].opt.data, i);
@@ -630,17 +632,17 @@ $.fn.comboBoxTree = function (options) {
         } else r.attr("data-show") ? r.hide() : r.slideUp(150);
         t.stopPropagation();
     }), u.find("li div").click(function (t) {
-        var t = t ? t : window.event,
-            i = t.srcElement || t.target;
+        t = t ? t : window.event;
+        var i = t.srcElement || t.target;
         $(i).hasClass("bbit-tree-ec-icon") || (r.slideUp(150), t.stopPropagation());
     }), $(document).click(function (t) {
-        var t = t ? t : window.event,
-            i = t.srcElement || t.target;
-        $(i).hasClass("bbit-tree-ec-icon") || $(i).hasClass("form-control") || (r.attr("data-show") ? r.hide() : r.slideUp(150), u.removeClass("ui-select-focus"), t.stopPropagation())
+        t = t ? t : window.event
+        var i = t.srcElement || t.target;
+        $(i).hasClass("bbit-tree-ec-icon") || $(i).hasClass("form-control") || (r.attr("data-show") ? r.hide() : r.slideUp(150), u.removeClass("ui-select-focus"), t.stopPropagation());
     }), u;
 };
 $.fn.comboBoxTreeSetValue = function (i) {
-    if (!!i) {
+    if (i) {
         var r = $(this),
             u = $("#" + r.attr("id") + "-option").find(".ui-select-option-content");
         return u.find("ul").find("[data-value=" + i + "]").trigger("click"), r;

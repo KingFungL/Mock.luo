@@ -35,7 +35,7 @@ namespace Mock.Domain
         }
         #endregion
 
-        #region MyRegion 根据条件得到模块表数据
+        #region  根据条件得到模块表数据
 
         public List<AppModule> GetAppModuleList(Expression<Func<AppModule, bool>> predicate)
         {
@@ -50,7 +50,8 @@ namespace Mock.Domain
                 SortCode = u.SortCode,
                 Target = u.Target,
                 Expanded = u.Expanded,
-                TypeCode = u.TypeCode
+                TypeCode = u.TypeCode,
+                EnCode = u.EnCode
             }).ToList();
         }
         #endregion

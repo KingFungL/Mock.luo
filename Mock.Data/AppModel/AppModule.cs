@@ -86,8 +86,8 @@ namespace Mock.Data.Models
                             item.SortCode,
                             item.Icon,
                             item.Target,
-                            item.Expanded,
-                            item.TypeCode
+                            item.TypeCode,
+                            item.EnCode
                         },
                         children = new List<TreeNode>()
                     };

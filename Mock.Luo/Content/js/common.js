@@ -292,16 +292,17 @@ com.get_selectid = function (dgelement, type) {
     }
     var Id = 0;
     var $grid = $(dgelement);
+    var row;
     //如果是jqGrid的列表，使用jqGrid的方法获取主键值
     if (type === 'jq') {
-        var row = $grid.jqGridRowValue();
+         row = $grid.jqGridRowValue();
         //当得到的行记录不是数组时，则为对象
         if (!(row instanceof Array)) {
             Id = row.Id;
         }
     } else {
         if ($grid.bootstrapTable('getSelections')[0] !== undefined) {
-            var row = $(dgelement).bootstrapTable('getSelections')[0];
+            row = $(dgelement).bootstrapTable('getSelections')[0];
             Id = row.Id;
         }
     }
@@ -366,7 +367,7 @@ com.checkedRow = function (n) {
 ; (function ($, com) {
     $.extend(com, {
         get_layui_iframe_name: function (element) {
-            if (element == null || element == undefined || element == "") {
+            if (element === null || element === undefined || element === "") {
                 return top.$('#Form').children('iframe')[0].name;
             } else {
                 return top.$(element).children('iframe')[0].name;
@@ -381,6 +382,19 @@ com.checkedRow = function (n) {
                 btn: []
             });
         },
+        get_randNum: function (minNum, maxNum) {
+            switch (arguments.length) {
+                case 1:
+                    return parseInt(Math.random() * minNum + 1, 10);
+                    break;
+                case 2:
+                    return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+                    break;
+                default:
+                    return 0;
+                    break;
+            }
+        }
     });
 
 })(window.jQuery, window.com);
