@@ -12,8 +12,9 @@ namespace Mock.Luo
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "App", action = "Index", id = UrlParameter.Optional }
             );
+              
         }
     }
 }

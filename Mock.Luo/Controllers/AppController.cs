@@ -11,6 +11,6 @@ namespace Mock.Luo.Controllers
     public class AppController : BaseController
     {
         // GET: App
-   
+
     }
 }

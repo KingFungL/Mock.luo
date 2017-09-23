@@ -16,7 +16,7 @@ namespace Mock.Luo.Controllers
         {
             return View();
         }
-        public virtual ActionResult Detail()
+        public virtual ActionResult Detail(int Id)
         {
             return View();
         }

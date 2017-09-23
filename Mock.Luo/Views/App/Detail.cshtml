@@ -1,0 +1,304 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutBlog.cshtml";
+    ViewBag.Title = "文章！";
+}
+
+
+@section css{
+    <style>
+        .navcates { background-color: #fff; clear: both; overflow: hidden; width: 100%; height: auto; padding: 2px 12px 0 20px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border: 1px #eee solid; margin-bottom: -1px; }
+        .single-content, .page-content { width: 100%; background-color: #fff; border: 1px #eee solid; padding: 12px 20px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+        .navcates i.fa { margin-right: 3px; font-size: 1.2em; }
+        .navcates a { color: #666; line-height: 36px; margin: 0 2px; }
+        .post-head { border-bottom: 1px solid #eee; overflow: hidden; padding-bottom: 10px; }
+            .post-head h4 { width: 100%; display: block; height: 35px; line-height: 30px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+                .post-head h4 a { color: #1f1f1f; }
+                    .post-head h4 a:hover, .info a:hover, .info .category:hover i, .info .comment:hover i, .info .more:hover i, .info .category:hover a, .info .comment:hover a, .info .more:hover a { color: red; }
+        .info { overflow: hidden; color: #999; height: auto; font-size: 12px; }
+        .left { float: left; }
+        .info span { margin-right: 4px; display: inline-block; }
+            .info span i.fa { margin-right: 5px; }
+        .info i { color: #d4d4d4; }
+        .info a { color: #999; }
+
+        .entry { padding-bottom: 12px; }
+            .entry h2 { margin: 24px 0 12px; padding: 8px 12px 12px 4px; }
+            .entry h2, .entry h3, .entry h4, .entry h5 { color: #555; font-weight: bold; border-bottom: 1px solid #eee; position: relative; color: #f24c27; }
+            .entry img { max-width: 85%; height: auto; padding: 5px; border-radius: 3px; /* border: 2px solid #eee; */ }
+
+
+        .authorarea { position: relative; background-color: #fafafa; border: 1px solid transparent; -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05); box-shadow: 0 1px 1px rgba(0,0,0,.05); border-color: #ebedf1; overflow: hidden; padding: 10px; margin-bottom: 20px; margin-top: 15px; }
+        .authorinfo { display: inline-block; }
+        .authorarea .author-avater { float: left; }
+        .author-des { margin-left: 65px; }
+        .authorarea .author-avater img { border: 1px solid #DDD; position: relative; width: 50px; border-radius: 100%; }
+            .authorarea .author-avater img:hover { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); -ms-transform: rotate(360deg); transform: rotate(360deg); }
+        img { opacity: 1 !important; -webkit-transition: -webkit-transform .3s linear; -moz-transition: -moz-transform .3s linear; -o-transition: -o-transform .3s linear; transition: transform .3s linear; }
+        .author-des .author-description { font-size: 12px; color: #929292; line-height: 1.7; margin-top: 10px; }
+        .post-author-name { font-size: 15px; margin-right: 25px; }
+            .post-author-name > a:hover { color: red; }
+        .post-author-url a, .post-author-weibo a { font-size: 12px; text-decoration: none; padding: 1px 8px; white-space: nowrap; margin-left: 25px; -webkit-border-radius: 20px; -moz-border-radius: 20px; border-radius: 20px; border-style: solid; border-width: 1px; }
+        .post-author-url a { border-color: #EC1464; color: #EC1464; }
+            .post-author-url a:hover { background-color: #EC1464; color: #fff; }
+        .post-author-weibo a { border-color: #32a5e7; color: #32a5e7; }
+            .post-author-weibo a:hover { background-color: #32a5e7; color: #fff; }
+        #social { margin: 50px auto; position: relative; }
+            #social .social-main { position: relative; margin: 0 auto; width: 243px; }
+        .social-main span { float: left; }
+        .like a { background: #f74840; width: 120px; display: block; border: 1px solid #ddd; }
+        .like a { float: left; padding-left: 25px; }
+        .social-main i { color: #fff; margin: 0 5px 0 0; }
+        .shang-empty { position: absolute; left: 90px; /* top: 0px; */ /* width: 62px; */ height: 38px; overflow: hidden; }
+            .shang-empty span { background: #fff; width: 60px; height: 60px; display: block; margin: -10px 0 0 0; border-radius: 60px; border: 1px solid #ddd; }
+        .social-main span { float: left; }
+        .tipso_style { cursor: pointer; }
+        .share-s a { background: #39c; width: 120px; display: block; padding-left: 15px; border: 1px solid #ddd; }
+        .share-s a, .shang-s a { text-align: center; }
+
+        .social-main a { color: #fff; line-height: 36px; border-radius: 20px; }
+            .social-main a:hover .fa-thumbs-up { color: #d03f42; }
+            .social-main a:hover .fa-share-alt { color: #91c24f; }
+            .social-main a:hover { text-decoration: none; background: #f1f1f1; color: #444; transition: all 0.2s ease-in 0s; }
+        .shang-p a { position: absolute; background: #ffab2e; left: 96px; top: -5px; width: 48px; height: 48px; font-size: 16px; line-height: 45px; color: #fff; display: block; border: 1px solid #ddd; border-radius: 40px; left: 101px\9; top: 0\9; width: 38px\9; height: 38px\9; line-height: 35px\9; }
+        .social-main a:hover .fa-thumbs-up { color: #d03f42; }
+
+
+        .nav-single { padding: 10px; }
+            .nav-single a div.meta-nav { padding: 10px 20px; background: #fff; white-space: nowrap; word-wrap: normal; text-overflow: ellipsis; overflow: hidden; border: 1px solid #ddd; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); border-radius: 8px; }
+                .nav-single a div.meta-nav:hover { color: #fff; background: #2f889a; border: 1px solid #2f889a; }
+
+
+        .hot_article ul li { border-bottom: 1px solid #F2F2F2; margin-bottom: 10px; }
+            .hot_article ul li a { margin-left: 10px; }
+            .hot_article ul li span { float: right }
+
+        ul.divCatalog { margin: 4px 5px 20px; height: 100%; overflow: hidden; padding-bottom: 1px; }
+        #divCatalog li { line-height: 20px; white-space: nowrap; word-wrap: normal; text-overflow: ellipsis; overflow: hidden; float: left; width: 49.666%; margin: 0 -3px -1px 2px; padding: 0; border-bottom: none; position: inherit; }
+            #divCatalog li a { text-align: center; padding: 10px 0; display: block; border: 1px solid #ddd; height: 100%; }
+        .sidebar-widget ul li a { height: 30px; width: 100%; display: block; white-space: nowrap; }
+        #divCatalog li a:hover { background: #F24C27; color: #FFF; font-size: 16px; }
+    </style>
+}
+
+
+
+<div class="container" style="margin-top:80px;">
+    <div class="row">
+        <div class="col-md-8 col-xs-12">
+            <div class="navcates">
+                <i class="fa fa-home"></i>当前位置：<a href="http://z.mrpan.me/">MrPan小站</a> » <a href="http://z.mrpan.me/category-zjd.html" title="查看 正经De 中的全部文章">正经De</a> » <a href="http://z.mrpan.me/post/5gb-30g.html" rel="bookmark" target="_blank" title="正在阅读 有益网络: 免费国内虚拟主机 / 腾讯云 / 5GB 空间 / 30G 流量 / 提供已备案域名">有益网络: 免费国内虚拟主机 / 腾讯云 / 5GB 空间 / 30G 流量 / 提供已备案域名</a>
+            </div>
+            <div class="content single-content">
+                <header class="post-head">
+                    <h4><a href="http://z.mrpan.me/post/5gb-30g.html" target="_blank" title="正在阅读 有益网络: 免费国内虚拟主机 / 腾讯云 / 5GB 空间 / 30G 流量 / 提供已备案域名">有益网络: 免费国内虚拟主机 / 腾讯云 / 5GB 空间 / 30G 流量 / 提供已备案域名</a></h4>
+                    <div class="info left">
+                        <!-- 文章信息 -->
+                        <span class="category"><i class="fa fa-list-alt"></i><a href="http://z.mrpan.me/category-zjd.html">正经De</a></span>
+                        <span class="date"><i class="fa fa-clock-o"></i>2017-09-23</span>
+                        <span class="view"><i class="fa fa-eye"></i>浏览(2)</span>
+                        <span class="comment"><i class="fa fa-comment"></i><a href="http://z.mrpan.me/post/5gb-30g.html#comment">评论(0)</a></span>
+                    </div>
+                </header>
+                <div class="entry">
+                    <h2 style="letter-spacing: -0.04em; font-weight: 500; line-height: 1.3em; color: rgb(74, 74, 74);  margin: 1em 0px; font-size: 2.1rem; white-space: normal; background-color: rgb(255, 255, 255);">简介</h2><ul style="margin-bottom: 0.5em; color: rgb(93, 104, 111); font-family: &quot; letter-spacing: -0.3px; white-space: normal; background-color: rgb(255, 255, 255);" class=" list-paddingleft-2">
+                        <li>
+                            <p>
+                                <a href="https://liyuans.com/t/aHR0cHM6Ly9teS4xNTBjbi5jb20vZnJlZS8=" target="_blank">申请地址</a>
+                            </p>
+                        </li>
+                        <li><p>一个叫有益网络的 idc 活动，免费撸终身 512MB 虚拟主机，这里先丑话说在前头，终生是终生，至于他 idc 跑不跑路就是另一回事了，<br>不过既然是免费的还是很有必要去撸一撸的，这活动今天在 望星湖畔博客 发现的，他 2017 年 1 月份发布的这条资讯，目前仍可开通。</p></li>
+                    </ul><p><a pjax="no" style="cursor: url(&quot;image/pointer.cur&quot;), pointer; color: rgb(52, 158, 243); font-family: &quot;Hiragino Sans GB&quot;, 华文细黑, STHeiti, 微软雅黑, &quot;Microsoft YaHei&quot;, SimHei, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 15.4px; letter-spacing: -0.3px; white-space: normal; background-color: rgb(255, 255, 255);" name="_label1"></a></p><h2 style="letter-spacing: -0.04em; font-weight: 500; line-height: 1.3em; color: rgb(74, 74, 74); font-family: &quot;Hiragino Sans GB&quot;, 华文细黑, STHeiti, 微软雅黑, &quot;Microsoft YaHei&quot;, SimHei, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; margin: 1em 0px; font-size: 2.1rem; white-space: normal; background-color: rgb(255, 255, 255);">过程</h2><ul style="margin-bottom: 0.5em; color: rgb(93, 104, 111); font-family: &quot;Hiragino Sans GB&quot;, 华文细黑, STHeiti, 微软雅黑, &quot;Microsoft YaHei&quot;, SimHei, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 15.4px; letter-spacing: -0.3px; white-space: normal; background-color: rgb(255, 255, 255);" class=" list-paddingleft-2"><li><p>经过测试，主机是江苏电信的虚拟主机，使用了腾讯云提供的 DDOS 防护和 CDN。FTP 空间是江苏电信的。<br>用来做个小站还是绰绰有余的了，当然自个一定要每天备份，<br>这种免费的承若等于没有。由于是用的国内主机，所以需要备案域名才能绑定使用。否则只能用送的免费三级域名了。</p></li></ul><p style="margin-top: 1.5em; margin-bottom: 0px; color: rgb(93, 104, 111); font-family: &quot;Hiragino Sans GB&quot;, 华文细黑, STHeiti, 微软雅黑, &quot;Microsoft YaHei&quot;, SimHei, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 15.4px; letter-spacing: -0.3px; white-space: normal; background-color: rgb(255, 255, 255);"><a href="https://ws1.sinaimg.cn/large/6f8a2832gy1ffs0ezxufxj20wj0j8dht.jpg" rel="box" class="fancybox" alt="有益网路" data-evernote-hover-show="true" style="display: block; width: auto; margin-left: auto; margin-right: auto; border-radius: 7px;"><img src="https://ws1.sinaimg.cn/large/6f8a2832gy1ffs0ezxufxj20wj0j8dht.jpg" original="https://ws1.sinaimg.cn/large/6f8a2832gy1ffs0ezxufxj20wj0j8dht.jpg" style="display: inline;"></a></p><ul style="margin-bottom: 0.5em; color: rgb(93, 104, 111); font-family: &quot;Hiragino Sans GB&quot;, 华文细黑, STHeiti, 微软雅黑, &quot;Microsoft YaHei&quot;, SimHei, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 15.4px; letter-spacing: -0.3px; white-space: normal; background-color: rgb(255, 255, 255);" class=" list-paddingleft-2"><li><p>获得免费主机的步骤也很简单，只需要注册登录，然后打开开通页面，扫码关注微信号就可以开通终身的虚拟主机了，点击申请后，需要等待 5 分钟左右。去干点别的，然后就会提示你开通完毕。 这时候重新登陆就会看到开通成功了。</p></li></ul><p style="margin-top: 1.5em; margin-bottom: 0px; color: rgb(93, 104, 111); font-family: &quot;Hiragino Sans GB&quot;, 华文细黑, STHeiti, 微软雅黑, &quot;Microsoft YaHei&quot;, SimHei, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 15.4px; letter-spacing: -0.3px; white-space: normal; background-color: rgb(255, 255, 255);"><a href="https://ws1.sinaimg.cn/large/6f8a2832gy1ffs0gsez2oj20q50g7god.jpg" rel="box" class="fancybox" alt="有益网络" data-evernote-hover-show="true" style="display: block; width: auto; margin-left: auto; margin-right: auto; border-radius: 7px;"><img src="https://ws1.sinaimg.cn/large/6f8a2832gy1ffs0gsez2oj20q50g7god.jpg" original="https://ws1.sinaimg.cn/large/6f8a2832gy1ffs0gsez2oj20q50g7god.jpg" style="display: inline;"></a></p><p><br></p>
+                    <div id="social">
+                        <div class="social-main">
+                            <span class="like">
+                                <a href="javascript:;" data-action="ding" data-id="2402" title="点赞" class="favorite done">
+                                    <i class="fa fa-thumbs-up"></i>赞 <i class="count">
+                                        1
+                                    </i>
+                                </a>
+                            </span>
+                            <div class="shang-p">
+                                <div class="shang-empty"><span></span></div>
+                                <span class="tipso_style" id="tip-p" data-tipso="">
+                                    <span class="shang-s"><a title="赞助本站">赏</a></span>
+                                </span>
+                            </div>
+                            <div class="share-sd">
+                                <span class="share-s"><a href="javascript:void(0)" id="share-s" title="分享"><i class="fa fa-share-alt"></i>分享</a></span>
+                                <div id="share" style="display: none;">
+                                    <ul class="bdsharebuttonbox bdshare-button-style1-16" data-bd-bind="1506151460593">
+                                        <li><a title="更多" class="bds_more fa fa-plus-square" data-cmd="more" onclick="return false;" href="#"></a></li>
+                                        <li><a title="分享到QQ空间" class="fa fa-qq" data-cmd="qzone" onclick="return false;" href="#"></a></li>
+                                        <li><a title="分享到新浪微博" class="fa fa-weibo" data-cmd="tsina" onclick="return false;" href="#"></a></li>
+                                        <li><a title="分享到腾讯微博" class="fa fa-pinterest-square" data-cmd="tqq" onclick="return false;" href="#"></a></li>
+                                        <li><a title="分享到人人网" class="fa fa-renren" data-cmd="renren" onclick="return false;" href="#"></a></li>
+                                        <li><a title="分享到微信" class="fa fa-weixin" data-cmd="weixin" onclick="return false;" href="#"></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tags">
+                    标签：
+                </div>
+                <div class="authorarea">
+                    <div class="authorinfo">
+                        <div class="author-avater">
+                            <img class="avaterimg" alt="作者：yefenghu" title="作者：yefenghu" src="http://z.mrpan.me/zb_users/avatar/1.png" height="50" width="50">
+                        </div>
+                        <div class="author-des">
+                            <div class="author-meta">
+                                <span class="post-author-name"><a href="http://z.mrpan.me/author-1.html" title="由yefenghu发布" rel="author">yefenghu</a></span>
+                                <span class="post-author-tatus"><a href="http://z.mrpan.me/author-1.html" target="_blank">258篇文章</a></span>
+                                <span class="post-author-url"><a href="http://z.mrpan.me/" rel="nofollow" target="_blank">站点</a></span>
+                                <span class="post-author-weibo"><a href="http://weibo.com/yefenghu" rel="nofollow" target="_blank">微博</a></span>
+                            </div>
+                            <p class="author-description">舞台上有你，就演好角色； 舞台上没你，就静静地做观众；</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row nav-single">
+                    <a href="#">
+                        <div class="col-md-6 col-xs-6 text-center meta-nav">
+                            <span>
+                                <i class="fa fa-angle-left"></i> 上一篇
+                            </span>
+                            <br />
+                            原来AA制的意义在这里
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="col-md-6  col-xs-6 text-center meta-nav">
+                            <span>
+                                下一篇<i class="fa fa-angle-right"></i>
+                            </span>
+                            <br />
+                            人品差，再努力也没有用
+                        </div>
+                    </a>
+
+                </div>
+
+                <!--推荐文章-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="cat-box fadeInUp" data-wow-delay="0.3s">
+                            <h3 class="cat-title"><a href="http://www.99bsy.com/?cat=17" title=""><i class="fa fa-heartbeat"></i>Wordpress<i class="fa fa-angle-right"></i></a></h3>
+                            <div class="cat-site">
+                                <ul class="cat-list">
+                                    <li class="list-date">08/04</li>
+                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=2165" rel="bookmark">WordPress登陆失败自动发送邮件提醒</a></li>
+                                    <li class="list-date">08/02</li>
+                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=2227" rel="bookmark">WordPress博客统计排除管理员留言的方法</a></li>
+                                    <li class="list-date">08/01</li>
+                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=2202" rel="bookmark" style="margin-left: 0px;">纯代码给WordPress增加说说功能</a></li>
+                                    <li class="list-date">07/15</li>
+                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=1656" rel="bookmark" style="margin-left: 0px;">如何在WordPress文章中插入视频并自适应</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="cat-box  fadeInUp" data-wow-delay="0.3s">
+                            <h3 class="cat-title"><a href="http://www.99bsy.com/?cat=276" title=""><i class="fa fa-heartbeat"></i>轻松时刻<i class="fa fa-angle-right"></i></a></h3>
+                            <div class="cat-site">
+                                <ul class="cat-list">
+                                    <li class="list-date">08/20</li>
+                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=2380" rel="bookmark">热！热！热！</a></li>
+                                    <li class="list-date">08/13</li>
+                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=2363" rel="bookmark">小心笑掉下巴！笑死我了</a></li>
+                                    <li class="list-date">07/30</li>
+                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=1917" rel="bookmark">幽默笑话：口误</a></li>
+                                    <li class="list-date">07/15</li>
+                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=1707" rel="bookmark">沁园春·热</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!---评论-->
+                <div class="scroll-comments">
+                    <div class="comment-respond">
+                        <h3> <i class="fa fa-comments"></i>&nbsp;吐槽一下</h3>
+                        <form>
+                            <input type="hidden" name="comment_post_ID" value="1234" />
+                            <input type="hidden" name="comment_parent" id="comment_parent" value="0">
+                            <label>QQ</label><input class="form-control" maxlength="12" name="u" type="text" placeholder="请输入您的QQ" />
+                            <label for="author">昵称（必填）</label> <input type="text" class="form-control" name="author" id="author" placeholder="输入你的昵称" />
+                            <label for="email">邮箱（必填）</label><input type="text" class="form-control" name="email" id="email" placeholder="请输入正确的email" />
+                            <label for="url">网址</label><input type="text" class="form-control" name="url" id="url" placeholder="这里可以输入你的个人网站" />
+                            <label>评论内容（必填)</label>
+                            <textarea class="layui-textarea" id="layui_edit"></textarea>
+                        </form>
+                    </div>
+                    <div class="text-right">
+                        <input type="button" name="submit" value="提交吐槽" class="btn btn-primary" style="padding: 8px;width:200px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-xs-12" id="right-sidebar">
+
+            <aside class="widget fadeInUp" data-wow-delay="0.3s">
+                <h3 class="widget-title">博主推荐</h3>
+                <div class="hot_article">
+                    <ul>
+                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2424" style="margin-left:4px;">你什么都舍不得扔，还谈什么生活质量</a></li>
+                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2422" style="margin-left: 4px;">你可以做好人，但你身上要有刺</a></li>
+                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2418" style="margin-left: 4px;">别让父母在你面前变得小心翼翼</a></li>
+                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2414" style="margin-left: 4px;">人缘太好的人，不适合做朋友？</a></li>
+                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2409" style="margin-left: 4px;">好的教育，就是得拼爹</a></li>
+                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2406">人品差，再努力也没有用</a></li>
+                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2395" style="margin-left: 4px;">原来AA制的意义在这里</a></li>
+                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2372" style="margin-left: 4px;">鞋的启示</a></li>
+                    </ul>
+                </div>
+
+                <div class="clear"></div>
+            </aside>
+
+            <aside class="widget fadeInUp" data-wow-delay="0.3s" id="divCatalog">
+                <h3 class="widget-title">分类目录</h3>
+                <div class="hot_article">
+                    <ul class="divCatalog"><li class="li-cate"><a href="http://z.mrpan.me/links.html">友链|网站</a></li><li class="li-cate"><a href="http://z.mrpan.me/archives.html">文章归档</a></li><li class="li-cate"><a href="http://z.mrpan.me/category-zjd.html">正经De</a></li>                                 <li class="li-cate"><a href="http://z.mrpan.me/category-bzjd.html">不正经De</a></li><li class="li-cate"><a href="http://z.mrpan.me/category-jc.html">教程</a></li><li class="li-cate"><a href="http://z.mrpan.me/category-zy.html">资源</a></li><li class="li-cate"><a href="http://z.mrpan.me/category-swgj.html">上网工具</a></li><li class="li-cate"><a href="http://z.mrpan.me/category-swzh.html">上网账号</a></li></ul>
+                </div>
+                <div class="clear"></div>
+            </aside>
+            <aside class="widget fadeInUp" data-wow-delay="0.3s" id="file_calendar">
+                <h3 class="widget-title">文章归档</h3>
+                <div class="hot_article">
+                    <ul>
+                        <li><i class="fa fa-calendar" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2424">2017年九月</a></li>
+                        <li><i class="fa fa-calendar" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2422">2017年九月</a></li>
+                        <li><i class="fa fa-calendar" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2418">2017年九月</a></li>
+                        <li><i class="fa fa-calendar" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2406">2017年九月</a></li>
+                        <li><i class="fa fa-calendar" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2395"> 2017年九月</a></li>
+                        <li><i class="fa fa-calendar" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2372">2017年九月</a></li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </aside>
+
+        </div>
+
+    </div>
+</div>
+@section scripts{
+    <script>
+        //自定义工具栏
+        layui.use('layedit', function () {
+            var layedit = layui.layedit;
+            layedit.build('layui_edit', { height: 100 });
+        });
+        $('.hot_post a,.hot_comment a,.hot_article a,.random_post a,.related_post a,.post_cat a,.widget_recent_entries a,.cat-list a,.tab-bd a').hover(function () {
+            $(this).stop().animate({ 'marginLeft': '20px' }, 0);
+        }, function () {
+            $(this).stop().animate({ 'marginLeft': '10px' }, 0);
+        });
+
+    </script>
+}
