@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Mock.Data.Models
 {
     [Table("PointArticle")]
-    public class PointArtice
+    public class PointArticle
     {
         [Key]
         public int Id { get; set; }
@@ -18,7 +18,7 @@ namespace Mock.Data.Models
         public Article Article { get; set; }
         public int UserId { get; set; }
         [ForeignKey("UserId")]
-        public AppUser AppUser { get; set; }
+        public virtual AppUser AppUser { get; set; }
         public DateTime? AddTime { get; set; }
     }
 

@@ -21,9 +21,9 @@ namespace Mock.Luo.Areas.Plat.Controllers
             this._service = service;
         }
 
-        public ActionResult GetDataGrid(Pagination pag)
+        public ActionResult GetDataGrid(Pagination pag,string search="")
         {
-            return Content(_service.GetDataGrid(pag).ToJson());
+            return Content(_service.GetDataGrid(pag, search).ToJson());
         }
 
         /// <summary>

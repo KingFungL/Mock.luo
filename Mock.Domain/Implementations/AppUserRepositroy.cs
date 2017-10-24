@@ -21,7 +21,7 @@ namespace Mock.Domain
         public AppUserRepositroy(IAppModuleRepository _ModuleService)
         {
             this._ModuleService = _ModuleService;
-        } 
+        }
         #endregion
 
         #region 根据条件得到用户列表数据
@@ -43,7 +43,7 @@ namespace Mock.Domain
                 UserRoleList = u.UserRoles.Select(r => r.AppRole.RoleName)
             }).ToList();
             return new DataGrid { rows = dglist, total = pag.total };
-        } 
+        }
         #endregion
 
         #region  新增用户，编辑用户信息
@@ -97,7 +97,7 @@ namespace Mock.Domain
                     db.Commit();
                 }
             }
-        } 
+        }
         #endregion
 
         #region  判断用户是否重复，用户的LoginName是否重复，Email是否重复
@@ -150,7 +150,9 @@ namespace Mock.Domain
             try
             {
                 OperatorProvider op = OperatorProvider.Provider;
-                AppUser userEntity = this.IQueryable().Where(t => (t.LoginName == loginName || t.Email == loginName) && t.DeleteMark == false).FirstOrDefault();
+                AppUser userEntity = new AppUser { };
+
+                userEntity = this.IQueryable().Where(t => (t.LoginName == loginName || t.Email == loginName) && t.DeleteMark == false).FirstOrDefault();
 
                 if (userEntity != null)
                 {
@@ -181,7 +183,7 @@ namespace Mock.Domain
 
                         //登录权限分配,根据用户Id获取用户所拥有的权限，可以在登录之后的Home界面中统一获取。
                         //op.ModulePermission = _ModuleService.GetUserModules(userEntity.Id);
-
+                        op.ModulePermission = null;
                         ajaxResult = AjaxResult.Success("登录成功!");
                     }
                     else
@@ -215,7 +217,11 @@ namespace Mock.Domain
             string[] modifstr = { "UserSecretkey", "LoginPassword", };
 
             this.Update(userEntity, modifstr);
-        } 
+        }
         #endregion
+
+
+
+
     }
 }

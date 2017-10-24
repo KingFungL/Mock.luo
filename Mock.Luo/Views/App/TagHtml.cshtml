@@ -1,0 +1,16 @@
+﻿@{ Layout = null;}
+@* 标签分部视图 *@
+@using Mock.Code;
+
+<aside class="widget fadeInUp" data-wow-delay="0.3s">
+    <h3 class="widget-title">热门标签</h3>
+    <div class="tagcloud">
+        @{
+            foreach (var i in ViewData["Tag"] as List<TreeSelectModel>)
+            {
+                <a href="http://www.99bsy.com/?tag=  @i.id">@i.text</a>
+            }
+        }
+    </div>
+    <div class="clear"></div>
+</aside>

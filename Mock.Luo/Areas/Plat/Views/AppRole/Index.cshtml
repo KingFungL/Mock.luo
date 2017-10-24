@@ -5,7 +5,7 @@
 
 <section class="content-header">
     <ol class="breadcrumb" style="margin-bottom:0px;">
-        <li><a href="#"><i class="fa fa-dashboard"></i> 后台管理</a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> 系统管理</a></li>
         <li class="active">角色信息管理</li>
     </ol>
 </section>
@@ -115,7 +115,10 @@
                         { field: 'RoleName', title: '角色名', align: 'center' },
                         { field: 'IsEnableMark', title: '是否启用', formatter: com.format_enable, align: 'center' },
                         { field: 'SortCode', title: '排序码', align: 'center' },
-                        { field: 'Remark', title: '备注' }]
+                        { field: 'Remark', title: '备注' }],
+                        callback: function () {
+                            $('.pull-right.search .form-control').attr('placeholder', '输入角色名');
+                        }
                     });
                 }
             }

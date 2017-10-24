@@ -1,0 +1,18 @@
+﻿@{ Layout = null;}
+@* 最新文章分部视图 *@
+@using Mock.Data.Dto;
+<aside class="widget fadeInUp" data-wow-delay="0.3s">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="hot_article">
+        <ul>
+            @{
+                List<ArticleDto> lastestArticles = ViewData["LatestArticles"] as List<ArticleDto>;
+                foreach (var item in lastestArticles)
+                {
+                    <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="@item.Id" style="margin-left:4px;">@item.Title</a></li>
+                }
+            }
+        </ul>
+    </div>
+    <div class="clear"></div>
+</aside>

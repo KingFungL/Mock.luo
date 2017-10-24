@@ -1,0 +1,46 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Index.cshtml";
+    ViewBag.Title = "点赞查看";
+}
+
+<div class="layui-fluid" style="margin-top:20px;" id="v-app">
+    <table id="dginfo"></table>
+</div>
+
+@section css{
+}
+@section scripts{
+    <script>
+        var Id = $.getQueryString('Id');
+        var vm = new Vue({
+            el: '#v-app',
+            mounted: function () {
+                this.init_datagrid();
+            },
+            methods: {
+                init_datagrid: function () {
+                    $('#dginfo').dataGrid({
+                        url: '/Plat/PointArticle/GetDataGrid',
+                        sortOrder: "desc",
+                        search: false,
+                        sortName: 'Id',
+                        pagination:false,
+                        queryParams: function (params) {
+                            params.AId = Id;
+                            return params;
+                        },
+                        columns: [
+                            { field: 'Title', title: '点赞文章', sortable: true },
+                            { field: 'Email', title: '邮件', sortable: true },
+                            { field: 'LoginName', title: '登录名', sortable: true },
+                            { field: 'NickName', title: '昵称', sortable: true },
+                            { field: 'AddTime', title: '点赞时间', sortable: true },
+                        ]
+                    });
+                }
+            }
+        });
+    </script>
+
+}

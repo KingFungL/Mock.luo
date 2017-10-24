@@ -9,17 +9,15 @@ using System.Threading.Tasks;
 
 namespace Mock.Domain
 {
-    public interface ILeaveMsgRepository : IRepositoryBase<Review>
+    public interface ILeaveMsgRepository : IRepositoryBase<LeaveMsg>
     {
-
-
         /// <summary>
-        /// 
+        /// 根据留言标题与创建人邮件查询留言内容
         /// </summary>
-        /// <returns>DataGrid实体</returns>
-
-        DataGrid GetDataGrid(Pagination pag);
+        /// <param name="pag">分页</param>
+        /// <param name="param">标题/邮件</param>
+        /// <returns></returns>
+        DataGrid GetDataGrid(Pagination pag,string param);
         
-
     }
 }

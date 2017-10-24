@@ -10,7 +10,7 @@ namespace Mock.Code
     {
         static LogFactory()
         {
-            FileInfo configFile = new FileInfo(HttpContext.Current.Server.MapPath("/Configs/log4net.config"));
+            FileInfo configFile = new FileInfo(HttpContext.Current.Server.MapPath("/Generic/Configs/log4net.config"));
             log4net.Config.XmlConfigurator.Configure(configFile);
         }
         public static Log GetLogger(Type type)

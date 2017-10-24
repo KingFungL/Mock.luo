@@ -1,9 +1,14 @@
 ﻿@{
     Layout = "~/Views/Shared/_Index.cshtml";
-    ViewBag.Title = "评论文章管理";
+    ViewBag.Title = "文章审核";
 }
 
-
+<section class="content-header">
+    <ol class="breadcrumb" style="margin-bottom:0px;">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 博客管理</a></li>
+        <li class="active">文章审核</li>
+    </ol>
+</section>
 <div class="layui-fluid" style="margin-top:20px;" id="v-app">
     <div id="toolbar" class="btn-group" style="margin-bottom:15px;">
         <button type="button" class="btn btn-default" v-on:click="btn_refresh">

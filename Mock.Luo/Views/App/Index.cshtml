@@ -7,13 +7,14 @@
         .sidebar-widget ul { overflow: hidden; margin-top: 6px; }
             .sidebar-widget ul li { line-height: 30px; padding: 4px; border-bottom: 1px #eee solid; color: #999; position: relative; }
         #divStatistics { padding-bottom: 20px; }
-                #divStatistics ul li { padding-left: 15px; float: left; width: 50%; border-bottom: none; border: 1px #eee solid; margin-bottom: -1px; margin-right: -1px; cursor: pointer; }
-                    #divStatistics ul li:hover { background: #EEE; color: #666; }
+            #divStatistics ul li { padding-left: 15px; float: left; width: 50%; border-bottom: none; border: 1px #eee solid; margin-bottom: -1px; margin-right: -1px; cursor: pointer; }
+                #divStatistics ul li:hover { background: #EEE; color: #666; }
+        .archive-content { display: -webkit-box; overflow: hidden; white-space: normal !important; text-overflow: ellipsis; word-wrap: break-word; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
     </style>
 
 }
 
-<div class="container" style="margin-top:80px;">
+<div class="container" style="margin-top:80px;" id="v-app">
     <div class="row">
         <div class="col-xs-12 col-md-8">
             <!--轮播图片-->
@@ -67,184 +68,63 @@
             </div>
             <!--main-inner start-->
             <div class="main-inner">
-                <div class="flbox">
-                    <article class="post">
-                        <figure class="thumbnail box-hide box-show">
-                            <a href="http://boke112.com/4303.html">
-                                <img src="http://boke112.com/wp-content/themes/Three/timthumb.php?src=http://boke112.com/img/2017/170921_sanbuyao.jpg&amp;w=300&amp;h=200&amp;zc=1" alt="博客新手们应坚持的“三要三不要”（下）">
-                            </a>
-                        </figure>
-                        <span class="new-ico">NEW</span>
-                        <header class="entry-header">
-                            <h4 class="entry-title">
-                                <a href="http://boke112.com/4303.html">博客新手们应坚持的“三要三不要”（下）</a>
-                            </h4>
-                        </header><!-- .entry-header -->
-                        <div class="entry-content">
-                            <span class="entry-meta">
-                                <span class="date" data-toggle="tooltip" title="2017/09/21 07:31">
-                                    <i class="fa fa-clock-o"></i>
-                                    &nbsp;16小时前
-                                </span>
-                                <span class="cat">
-                                    <i class="fa fa-folder"></i>&nbsp;
-                                    <a href="http://boke112.com/category/bzzx/" rel="category tag">建站经验</a>
-                                </span>
-                                <span class="views">
-                                    <i class="fa-user fa">
-                                    </i>&nbsp;
-                                    <a href="http://boke112.com/author/22/" data-toggle="tooltip" title="由公共账号发布" rel="author">
-                                        公共账号
+                @{
+                    List<ArticleDto> LatestArticles = ViewData["LatestArticles"] as List<ArticleDto>;
+                    foreach (var item in LatestArticles)
+                    {
+                        <div class="flbox">
+                            <article class="post">
+                                <figure class="thumbnail box-hide box-show">
+                                    <a href="http://boke112.com/4303.html">
+                                        <img src="@item.thumbnail" alt="@item.Title">
                                     </a>
-                                </span> <span class="comment">
-                                    <i class="fa fa-comment">
-                                    </i>&nbsp;
-                                    <a href="http://boke112.com/4303.html#comments">19 条评论</a>
-                                </span>
-                            </span>
-                            <br>
-                            <div class="archive-content">
-                                在前几天发布的《博客新手们应坚持的“三要三不要”（上）》一文中写了博客三要原则，今天我们继续分享博客的三不要原则，希望能够帮助到新入行的...
-                            </div>
-                            <div class="clear">
+                                </figure>
+                                <span class="new-ico">NEW</span>
+                                <header class="entry-header">
+                                    <h4 class="entry-title">
+                                        <a href="/App/Detail/@item.Id?TypeName=@item.TypeName">@item.Title</a>
+                                    </h4>
+                                </header>
+                                <div class="entry-content">
+                                    <span class="entry-meta">
+                                        <span class="date" data-toggle="tooltip" title="@item.CreatorTime">
+                                            <i class="fa fa-clock-o"></i>
+                                            &nbsp;@item.TimeSpan
+                                        </span>
+                                        <span class="cat">
+                                            <i class="fa fa-folder"></i>&nbsp;
+                                            <a href="/category/@item.TypeCode/">@item.TypeName</a>
+                                        </span>
+                                        <span class="views">
+                                            <i class="fa-user fa">
+                                            </i>&nbsp;
+                                            <a href="/@item.CreatorUserId/" data-toggle="tooltip" title="由公共账号发布" rel="author">
+                                                @item.NickName
+                                            </a>
+                                        </span> <span class="comment">
+                                            <i class="fa fa-comment">
+                                            </i>&nbsp;
+                                            <a href="@item.Id#comments">@item.CommentQuantity 条评论</a>
+                                        </span>
+                                    </span>
+                                    <br>
+                                    <div class="archive-content">
+                                        @item.Excerpt
+                                        @* 摘要 *@
+                                    </div>
+                                    @*<script>
+                                            var content = decodeURIComponent('@item.Content');
+                                            $('.content-@item.Id').html(content);
+                                        </script>*@
+                                    <div class="clear">
 
-                            </div>
+                                    </div>
+                                </div>
+                            </article>
                         </div>
-                    </article>
-                </div>
-                <div class="flbox">
-                    <article class="post">
-                        <figure class="thumbnail box-hide box-show">
-                            <a href="http://boke112.com/4303.html">
-                                <img src="http://boke112.com/wp-content/themes/Three/timthumb.php?src=http://boke112.com/img/2017/170921_sanbuyao.jpg&amp;w=300&amp;h=200&amp;zc=1" alt="博客新手们应坚持的“三要三不要”（下）">
-                            </a>
-                        </figure>
-                        <span class="new-ico">NEW</span>
-                        <header class="entry-header">
-                            <h4 class="entry-title">
-                                <a href="http://boke112.com/4303.html">博客新手们应坚持的“三要三不要”（下）</a>
-                            </h4>
-                        </header><!-- .entry-header -->
-                        <div class="entry-content">
-                            <span class="entry-meta">
-                                <span class="date" data-toggle="tooltip" title="2017/09/21 07:31">
-                                    <i class="fa fa-clock-o"></i>
-                                    &nbsp;16小时前
-                                </span>
-                                <span class="cat">
-                                    <i class="fa fa-folder"></i>&nbsp;
-                                    <a href="http://boke112.com/category/bzzx/" rel="category tag">建站经验</a>
-                                </span>
-                                <span class="views">
-                                    <i class="fa-user fa">
-                                    </i>&nbsp;
-                                    <a href="http://boke112.com/author/22/" data-toggle="tooltip" title="由公共账号发布" rel="author">
-                                        公共账号
-                                    </a>
-                                </span> <span class="comment">
-                                    <i class="fa fa-comment">
-                                    </i>&nbsp;
-                                    <a href="http://boke112.com/4303.html#comments">19 条评论</a>
-                                </span>
-                            </span>
-                            <br>
-                            <div class="archive-content">
-                                在前几天发布的《博客新手们应坚持的“三要三不要”（上）》一文中写了博客三要原则，今天我们继续分享博客的三不要原则，希望能够帮助到新入行的...
-                            </div>
-                            <div class="clear">
+                    }
+                }
 
-                            </div>
-                        </div>
-                    </article>
-                </div><div class="flbox">
-                    <article class="post">
-                        <figure class="thumbnail box-hide box-show">
-                            <a href="http://boke112.com/4303.html">
-                                <img src="http://boke112.com/wp-content/themes/Three/timthumb.php?src=http://boke112.com/img/2017/170921_sanbuyao.jpg&amp;w=300&amp;h=200&amp;zc=1" alt="博客新手们应坚持的“三要三不要”（下）">
-                            </a>
-                        </figure>
-                        <span class="new-ico">NEW</span>
-                        <header class="entry-header">
-                            <h4 class="entry-title">
-                                <a href="http://boke112.com/4303.html">博客新手们应坚持的“三要三不要”（下）</a>
-                            </h4>
-                        </header><!-- .entry-header -->
-                        <div class="entry-content">
-                            <span class="entry-meta">
-                                <span class="date" title="2017/09/21 07:31">
-                                    <i class="fa fa-clock-o"></i>
-                                    &nbsp;16小时前
-                                </span>
-                                <span class="cat">
-                                    <i class="fa fa-folder"></i>&nbsp;
-                                    <a href="http://boke112.com/category/bzzx/" rel="category tag">建站经验</a>
-                                </span>
-                                <span class="views">
-                                    <i class="fa-user fa">
-                                    </i>&nbsp;
-                                    <a href="http://boke112.com/author/22/" title="由公共账号发布" rel="author">
-                                        公共账号
-                                    </a>
-                                </span> <span class="comment">
-                                    <i class="fa fa-comment">
-                                    </i>&nbsp;
-                                    <a href="http://boke112.com/4303.html#comments">19 条评论</a>
-                                </span>
-                            </span>
-                            <br>
-                            <div class="archive-content">
-                                在前几天发布的《博客新手们应坚持的“三要三不要”（上）》一文中写了博客三要原则，今天我们继续分享博客的三不要原则，希望能够帮助到新入行的...
-                            </div>
-                            <div class="clear">
-
-                            </div>
-                        </div>
-                    </article>
-                </div><div class="flbox">
-                    <article class="post">
-                        <figure class="thumbnail box-hide box-show">
-                            <a href="http://boke112.com/4303.html">
-                                <img src="http://boke112.com/wp-content/themes/Three/timthumb.php?src=http://boke112.com/img/2017/170921_sanbuyao.jpg&amp;w=300&amp;h=200&amp;zc=1" alt="博客新手们应坚持的“三要三不要”（下）">
-                            </a>
-                        </figure>
-                        <span class="new-ico">NEW</span>
-                        <header class="entry-header">
-                            <h4 class="entry-title">
-                                <a href="http://boke112.com/4303.html">博客新手们应坚持的“三要三不要”（下）</a>
-                            </h4>
-                        </header><!-- .entry-header -->
-                        <div class="entry-content">
-                            <span class="entry-meta">
-                                <span class="date" title="2017/09/21 07:31">
-                                    <i class="fa fa-clock-o"></i>
-                                    &nbsp;16小时前
-                                </span>
-                                <span class="cat">
-                                    <i class="fa fa-folder"></i>&nbsp;
-                                    <a href="http://boke112.com/category/bzzx/" rel="category tag">建站经验</a>
-                                </span>
-                                <span class="views">
-                                    <i class="fa-user fa">
-                                    </i>&nbsp;
-                                    <a href="http://boke112.com/author/22/" title="由公共账号发布" rel="author">
-                                        公共账号
-                                    </a>
-                                </span> <span class="comment">
-                                    <i class="fa fa-comment">
-                                    </i>&nbsp;
-                                    <a href="http://boke112.com/4303.html#comments">19 条评论</a>
-                                </span>
-                            </span>
-                            <br>
-                            <div class="archive-content">
-                                在前几天发布的《博客新手们应坚持的“三要三不要”（上）》一文中写了博客三要原则，今天我们继续分享博客的三不要原则，希望能够帮助到新入行的...
-                            </div>
-                            <div class="clear">
-
-                            </div>
-                        </div>
-                    </article>
-                </div>
             </div>
             <!--main-inner end-->
         </div>
@@ -276,165 +156,54 @@
                 <div class="author-info-widget-marker"></div>
             </div>
 
-            <aside class="widget fadeInUp" data-wow-delay="0.3s">
-                <h3 class="widget-title">热门标签</h3>
-                <div class="tagcloud">
-                    <a href="http://www.99bsy.com/?tag=%e4%b8%ba%e4%bb%80%e4%b9%88">为什么</a>
-                    <a href="http://www.99bsy.com/?tag=%e9%a9%be%e7%85%a7">驾照</a>
-                    <a href="http://www.99bsy.com/?tag=%e4%ba%ba%e5%93%81">人品</a>
-                    <a href="http://www.99bsy.com/?tag=%e7%9f%a5%e5%b7%b1">知己</a>
-                    <a href="http://www.99bsy.com/?tag=%e8%af%84%e8%ae%ba">评论</a>
-                    <a href="http://www.99bsy.com/?tag=%e7%94%9f%e6%b4%bb">生活</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%96%87%e7%ab%a0">文章</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%8f%92%e4%bb%b6">插件</a>
-                    <a href="http://www.99bsy.com/?tag=%e5%91%bd%e8%bf%90">命运</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%95%b0%e5%ad%a6">数学</a>
-                    <a href="http://www.99bsy.com/?tag=%e5%ad%99%e6%82%9f%e7%a9%ba">孙悟空</a>
-                    <a href="http://www.99bsy.com/?tag=%e7%83%ad">热</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%94%af%e4%bb%98%e5%ae%9d">支付宝</a>
-                    <a href="http://www.99bsy.com/?tag=%e7%a4%be%e4%ba%a4">社交</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%95%99%e7%bb%83">教练</a>
-                    <a href="http://www.99bsy.com/?tag=%e9%a9%be%e6%a0%a1">驾校</a>
-                    <a href="http://www.99bsy.com/?tag=%e7%94%9f%e6%b4%bb">生活</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%96%87%e7%ab%a0">文章</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%8f%92%e4%bb%b6">插件</a>
-                    <a href="http://www.99bsy.com/?tag=%e5%91%bd%e8%bf%90">命运</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%95%b0%e5%ad%a6">数学</a>
-                    <a href="http://www.99bsy.com/?tag=%e5%ad%99%e6%82%9f%e7%a9%ba">孙悟空</a>
-                    <a href="http://www.99bsy.com/?tag=%e7%83%ad">热</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%94%af%e4%bb%98%e5%ae%9d">支付宝</a>
-                    <a href="http://www.99bsy.com/?tag=%e7%a4%be%e4%ba%a4">社交</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%95%99%e7%bb%83">教练</a>
-                    <a href="http://www.99bsy.com/?tag=%e9%a9%be%e6%a0%a1">驾校</a>
-                    <a href="http://www.99bsy.com/?tag=%e7%94%9f%e6%b4%bb">生活</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%96%87%e7%ab%a0">文章</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%8f%92%e4%bb%b6">插件</a>
-                    <a href="http://www.99bsy.com/?tag=%e5%91%bd%e8%bf%90">命运</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%95%b0%e5%ad%a6">数学</a>
-                    <a href="http://www.99bsy.com/?tag=%e5%ad%99%e6%82%9f%e7%a9%ba">孙悟空</a>
-                    <a href="http://www.99bsy.com/?tag=%e7%83%ad">热</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%94%af%e4%bb%98%e5%ae%9d">支付宝</a>
-                    <a href="http://www.99bsy.com/?tag=%e7%a4%be%e4%ba%a4">社交</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%95%99%e7%bb%83">教练</a>
-                    <a href="http://www.99bsy.com/?tag=%e9%a9%be%e6%a0%a1">驾校</a><a href="http://www.99bsy.com/?tag=%e7%94%9f%e6%b4%bb">生活</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%96%87%e7%ab%a0">文章</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%8f%92%e4%bb%b6">插件</a>
-                    <a href="http://www.99bsy.com/?tag=%e5%91%bd%e8%bf%90">命运</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%95%b0%e5%ad%a6">数学</a>
-                    <a href="http://www.99bsy.com/?tag=%e5%ad%99%e6%82%9f%e7%a9%ba">孙悟空</a>
-                    <a href="http://www.99bsy.com/?tag=%e7%83%ad">热</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%94%af%e4%bb%98%e5%ae%9d">支付宝</a>
-                    <a href="http://www.99bsy.com/?tag=%e7%a4%be%e4%ba%a4">社交</a>
-                    <a href="http://www.99bsy.com/?tag=%e6%95%99%e7%bb%83">教练</a>
-                    <a href="http://www.99bsy.com/?tag=%e9%a9%be%e6%a0%a1">驾校</a>
-                </div>
+            @{Html.RenderPartial("TagHtml", ViewData["Tag"]); }
 
-                <div class="clear"></div>
-            </aside>
-
+            @using Mock.Data.Models;
             <aside class="widget fadeInUp" data-wow-delay="0.3s">
                 <h3 class="widget-title">点击排行</h3>
                 <div id="hot_article" class="hot_article">
                     <ul>
-                        <li>
-                            <span class="hotp-title"><span class="li-number">1</span><a href="http://www.99bsy.com/?p=2275" rel="bookmark" style="margin-left: 0px;">“妈妈，我长大要送您去最好的养老院”…</a></span>
-                        </li>
-                        <li>
-                            <span class="hotp-title"><span class="li-number">2</span><a href="http://www.99bsy.com/?p=2202" rel="bookmark" style="margin-left: 0px;">纯代码给WordPress增加说说功能</a></span>
-                        </li>
-                        <li>
-                            <span class="hotp-title"><span class="li-number">3</span><a href="http://www.99bsy.com/?p=2750" rel="bookmark">西游之决战花果山  第一章</a></span>
-                        </li>
-                        <li>
-                            <span class="hotp-title"><span class="li-numbers">4</span><a href="http://www.99bsy.com/?p=1900" rel="bookmark">屁股精神</a></span>
-                        </li>
-                        <li>
-                            <span class="hotp-title"><span class="li-numbers">5</span><a href="http://www.99bsy.com/?p=1895" rel="bookmark" style="margin-left: 0px;">子若不如我，留钱做什么？子若强于我，要钱做什么？</a></span>
-                        </li>
-                        <li>
-                            <span class="hotp-title"><span class="li-numbers">6</span><a href="http://www.99bsy.com/?p=1822" rel="bookmark" style="margin-left: 0px;">好久不见，那就见见吧</a></span>
-                        </li>
-                        <li>
-                            <span class="hotp-title"><span class="li-numbers">7</span><a href="http://www.99bsy.com/?p=1789" rel="bookmark" style="margin-left: 0px;">[转账]向你转账86400.00元</a></span>
-                        </li>
-                        <li>
-                            <span class="hotp-title"><span class="li-numbers">8</span><a href="http://www.99bsy.com/?p=1444" rel="bookmark">“春宵一刻值千金”的下句是什么？这么多年语文白学了！</a></span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="clear"></div>
-            </aside>
-
-            <aside class="widget fadeInUp" data-wow-delay="0.3s">
-                <h3 class="widget-title">最新文章</h3>
-                <div class="hot_article">
-                    <ul>
-                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2424" style="margin-left:4px;">你什么都舍不得扔，还谈什么生活质量</a></li>
-                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2422" style="margin-left: 4px;">你可以做好人，但你身上要有刺</a></li>
-                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2418" style="margin-left: 4px;">别让父母在你面前变得小心翼翼</a></li>
-                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2414" style="margin-left: 4px;">人缘太好的人，不适合做朋友？</a></li>
-                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2409" style="margin-left: 4px;">好的教育，就是得拼爹</a></li>
-                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2406">人品差，再努力也没有用</a></li>
-                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2395" style="margin-left: 4px;">原来AA制的意义在这里</a></li>
-                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2372" style="margin-left: 4px;">鞋的启示</a></li>
+                        @{
+                            List<Article> HotArticles = ViewData["HotArticles"] as List<Article>;
+                            string li_number = "li-number";
+                            int i = 0;
+                            foreach (var item in HotArticles)
+                            {
+                                if (i == 3)
+                                {
+                                    li_number += "s";
+                                }
+                                i++;
+                                <li>
+                                    <span class="hotp-title"><span class="@li_number">@i</span><a href="p=@item.Id" rel="bookmark" style="margin-left: 0px;">@item.Title</a></span>
+                                </li>
+                            }
+                        }
                     </ul>
                 </div>
                 <div class="clear"></div>
             </aside>
 
+            @{Html.RenderPartial("LatestArticles", ViewData["LatestArticles"]); }
+
+
+            @using Mock.Data.Dto;
             <aside class="widget fadeInUp" data-wow-delay="0.3s">
                 <h3 class="widget-title">最新吐槽</h3>
                 <div class="hot_article">
                     <ul>
-                        <li>
-                            <a href="http://www.99bsy.com/?p=2422#anchor-comment-522" data-toggle='tooltip' title="你可以做好人，但你身上要有刺" rel="external nofollow">
-                                <img alt="" src="http://www.99bsy.com/wp-content/uploads/gravatar/f3e087c61b2bde33960eb0e99de3314b-s64.jpg" class="avatar avatar-64" width="64" height="64">						<span class="comment_author"><strong>Koolight</strong></span>
-                                我们都越来越不在乎太多东西了！
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://www.99bsy.com/?p=2424#anchor-comment-519" data-toggle='tooltip' title="你什么都舍不得扔，还谈什么生活质量" rel="external nofollow">
-                                <img alt="" src="http://www.99bsy.com/wp-content/uploads/gravatar/864d45a64dc9abc1c18d3393b08ae947-s64.jpg" class="avatar avatar-64" width="64" height="64">						<span class="comment_author"><strong>懿古今</strong></span>
-                                其实很多东西我们觉得有用就保留下来，然后就慢慢变成一大堆垃圾，所以有时候该扔还是要扔，留着也就是占地方而已
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://www.99bsy.com/?p=2424#anchor-comment-518" data-toggle='tooltip' title="你什么都舍不得扔，还谈什么生活质量" rel="external nofollow">
-                                <img alt="" src="http://www.99bsy.com/wp-content/uploads/gravatar/5d8c2110f30a2abaa4cda1458062f021-s64.jpg" class="avatar avatar-64" width="64" height="64">						<span class="comment_author"><strong>闲鱼</strong></span>
-                                喜欢把旧东西收集起，总想着以后可能用得上........
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://www.99bsy.com/?p=2424#anchor-comment-514" data-toggle='tooltip' title="你什么都舍不得扔，还谈什么生活质量" rel="external nofollow">
-                                <img alt="" src="http://www.99bsy.com/wp-content/uploads/gravatar/9c6a1fce04e292bbf8f208ca8077d0f6-s64.jpg" class="avatar avatar-64" width="64" height="64">						<span class="comment_author"><strong>宅小猫</strong></span>
-                                简单点说就是：旧的不去，新的也就不会来 <img src="http://www.99bsy.com/wp-content/themes/begin/img/smilies/icon_biggrin.gif" alt=":grin:" class="wp-smiley" style="height: 1em; max-height: 1em;"> ，想不想换换最新的iphone X <img src="http://www.99bsy.com/wp-content/themes/begin/img/smilies/icon_lol.gif" alt=":lol:" class="wp-smiley" style="height: 1em; max-height: 1em;">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://www.99bsy.com/?p=2424#anchor-comment-513" data-toggle='tooltip' title="你什么都舍不得扔，还谈什么生活质量" rel="external nofollow">
-                                <img alt="" src="http://www.99bsy.com/wp-content/uploads/gravatar/f3e087c61b2bde33960eb0e99de3314b-s64.jpg" class="avatar avatar-64" width="64" height="64">						<span class="comment_author"><strong>Koolight</strong></span>
-                                旧的不去，新的不来？
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://www.99bsy.com/?p=2424#anchor-comment-512" data-toggle='tooltip' title="你什么都舍不得扔，还谈什么生活质量" rel="external nofollow">
-                                <img alt="" src="http://www.99bsy.com/wp-content/uploads/gravatar/21920cd9aa5898e458fe7fe99ead1e1c-s64.jpg" class="avatar avatar-64" width="64" height="64">						<span class="comment_author"><strong>夏日博客</strong></span>
-                                不要省，要会花，但也要会赚。
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://www.99bsy.com/?p=2424#anchor-comment-510" data-toggle='tooltip' title="你什么都舍不得扔，还谈什么生活质量" rel="external nofollow">
-                                <img alt="" src="http://www.99bsy.com/wp-content/uploads/gravatar/5fe4cf2fe0d1e589db3f745d808b1e8b-s64.jpg" class="avatar avatar-64" width="64" height="64">						<span class="comment_author"><strong>小小参谋</strong></span>
-                                最近九哥在忙什么？国庆来郑州吃烩面吧
-                            </a>
-                        </li>
-                        <li style="border: none;">
-                            <a href="http://www.99bsy.com/?p=2424#anchor-comment-508" title="你什么都舍不得扔，还谈什么生活质量" rel="external nofollow">
-                                <img alt="" src="http://www.99bsy.com/wp-content/uploads/gravatar/77e1ff5af0f7fe057d8fe1e713ca3ba4-s64.jpg" class="avatar avatar-64" width="64" height="64">						<span class="comment_author"><strong>很文博客</strong></span>
-                                写得很好，人要有舍有得！
-                            </a>
-                        </li>
+                        @{
+                            List<ReplyDto> SpitslotList = ViewData["SpitslotList"] as List<ReplyDto>;
+                            foreach (var item in SpitslotList)
+                            {
+                                <li>
+                                    <a href="http://www.99bsy.com/?p=@item.AId#anchor-comment-@item.Id" data-toggle='tooltip' title="@item.ArticleTitle" rel="external nofollow">
+                                        <img alt="" src="@item.HeadHref" class="avatar avatar-64" width="64" height="64">						<span class="comment_author"><strong>@item.NickName</strong></span>
+                                        @item.Text
+                                    </a>
+                                </li>
+                            }
+                        }
                     </ul>
                 </div>
 
@@ -516,5 +285,20 @@
         $(function () {
             $('.scroll-c').css('display', 'none');
         });
+
+
+
+        var vm = new Vue({
+            el: '#v-app',
+            data: {},
+            methods: {
+                get_article: function () {
+                    com.ajax({
+                        url: '/Plat/Article/GetDataGrid',
+
+                    })
+                }
+            }
+        })
     </script>
 }

@@ -13,7 +13,7 @@
                     <td colspan="3">
                         <multiselect v-model="FId" :hide-selected="false" label="text" track-by="id" placeholder="--请选择分类--" :options="FTypeOptions" :multiple="false"
                                      :searchable="true" :clear-on-select="false"
-                                     :close-on-select="true">
+                                     :close-on-select="true" >
                             <span slot="noResult">Oops! No elements found. Consider changing the search query.</span>
                         </multiselect>
                     </td>
@@ -21,21 +21,21 @@
                 <tr>
                     <th>关键词</th>
                     <td>
-                        <input id="Keywords" name="Keywords" v-model="Keywords" title="请输入标题" class="form-control" type="text">
+                        <input id="Keywords" name="Keywords" v-model="Keywords" title="请输入标题" class="form-control" type="text" checkexpession="LenStr"  length="400">
                     </td>
                     <th>文章来源</th>
-                    <td><input id="Source" name="Source" v-model="Source" class="form-control" type="text"></td>
+                    <td><input id="Source" name="Source" v-model="Source" class="form-control" type="text" checkexpession="LenStr"  length="400"></td>
                 </tr>
                 <tr>
                     <th>文章标题<span style="color:red">*</span></th>
                     <td colspan="3">
-                        <input id="Title" name="Title" v-model="Title" data-placement="right" title="请输入标题" class="form-control" type="text">
+                        <input id="Title" name="Title" v-model="Title" data-placement="right" title="请输入标题" class="form-control" type="text" isvalid="yes" checkexpession="NotNull" length="200" errmsg="请输入标题" >
                     </td>
                 </tr>
                 <tr>
                     <th>摘要</th>
                     <td colspan="3">
-                        <textarea name="Excerpt" v-model="Excerpt" id="Excerpt" style="width: 98%; height: 50px;" class="form-control"></textarea>
+                        <textarea name="Excerpt" v-model="Excerpt" id="Excerpt" style="width: 98%; height: 50px;" class="form-control" isvalid="yes" checkexpession="LenStrOrNull"  length="400"></textarea>
                     </td>
                 </tr>
                 <tr>
@@ -154,6 +154,10 @@
         },
         methods: {
             submit: function (callback) {
+                if (!$('#v-app').Validform()) {
+                    return false;
+                }
+
                 var content = ue.getContent();
                 vm.Content = encodeURIComponent(content);
                 vm.FId = vm.FId.id;

@@ -1,5 +1,6 @@
 ﻿using Mock.Code;
 using Mock.Data;
+using Mock.Data.Dto;
 using Mock.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Mock.Domain
         /// 得到最新的count条回复信息
         /// </summary>
         /// <returns>最新回复消息</returns>
-        dynamic GetRecentReview(int count);
+        List<ReplyDto> GetRecentReview(int count);
         /// <summary>
         /// 根据条件得到文章的评论分页数据，默认是全部,可根据文章id查看评论内容 
         /// </summary>
@@ -24,5 +25,7 @@ namespace Mock.Domain
         /// <param name="AId">文章主键</param>
         /// <returns>DataGrid实体</returns>
         DataGrid GetDataGrid(Pagination pag, string Email,int AId);
+
+
     }
 }

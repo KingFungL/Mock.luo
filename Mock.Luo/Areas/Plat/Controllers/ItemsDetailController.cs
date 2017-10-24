@@ -22,9 +22,9 @@ namespace Mock.Luo.Areas.Plat.Controllers
         {
             this._service = service;
         }
-        public ActionResult GetDataGrid(Pagination pag, string ItemName = "", string EnCode = "")
+        public ActionResult GetDataGrid(Pagination pag, string search = "",string EnCode="")
         {
-            return Result(_service.GetDataGrid(pag, ItemName, EnCode));
+            return Result(_service.GetDataGrid(pag, search, EnCode));
         }
         /// <summary>
         /// 根据主表的编码，获取分表ItemsDetail的关联数据，做为下拉列表数据

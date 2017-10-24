@@ -17,10 +17,10 @@ namespace Mock.Domain
     {
         #region 字典详情分页数据 DataGrid实体
 
-        public DataGrid GetDataGrid(Pagination pag, string ItemName, string EnCode)
+        public DataGrid GetDataGrid(Pagination pag, string search, string EnCode)
         {
             Expression<Func<ItemsDetail, bool>> predicate = u => u.DeleteMark == false
-            && (ItemName == "" || u.ItemName.Contains(ItemName))
+            && (search == "" || u.ItemName.Contains(search)||u.ItemCode.Contains(search))
             && (EnCode == "" || u.Items.EnCode == EnCode);
             var dglist = this.IQueryable(predicate).Where(pag).Select(u => new
             {

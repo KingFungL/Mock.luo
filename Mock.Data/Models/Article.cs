@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mock.Code.Helper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,23 +12,27 @@ namespace Mock.Data.Models
     [Table("Article")]
     public class Article : IEntity<Article>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
+        public Article()
+        {
+            this.Reviews = new HashSet<Review>();
+        }
         public int? Id { get; set; }
         public int? FId { get; set; }
         [ForeignKey("FId")]
         public ItemsDetail ItemsDetail { get; set; }
-        [StringLength(50)]
+        [StringLength(200)]
         public string Title { get; set; }
-        [StringLength(200)]
+        [StringLength(400)]
         public string Keywords { get; set; }
-        [StringLength(200)]
+        [StringLength(400)]
         public string Source { get; set; }
-        [StringLength(200)]
+        [StringLength(400)]
         public string Excerpt { get; set; }
         public string Content { get; set; }
         public int? ViewHits { get; set; }
         public int? CommentQuantity { get; set; }
         public int? PointQuantity { get; set; }
-        [StringLength(200)]
+        [StringLength(400)]
         public string thumbnail { get; set; }
         public bool? IsAudit { get; set; }
         public bool? Recommend { get; set; }
@@ -43,5 +48,7 @@ namespace Mock.Data.Models
         public DateTime? LastModifyTime { get; set; }
 
         public virtual ICollection<Review> Reviews { get; set; }
+
+     
     }
 }

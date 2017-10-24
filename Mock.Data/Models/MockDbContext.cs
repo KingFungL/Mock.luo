@@ -25,9 +25,17 @@ namespace Mock.Data.Models
         public DbSet<Upload> Upload { get; set; }
         public DbSet<Items> Items { get; set; }
         public DbSet<ItemsDetail> ItemsDetail { get; set; }
-        public DbSet<PointArtice> PointArtice { get; set; }
+        public DbSet<PointArticle> PointArticle { get; set; }
         public DbSet<ThirdUser> ThirdUser { get; set; }
-        public DbSet<Review> Review { get; set; }
+        public DbSet<Reply> Relpy { get; set; }
+
+        //public DbSet<Review> Review { get; set; }
+        //public DbSet<ReLeave> ReLeave { get; set; }
+        public DbSet<LogInfo> LogInfo { get; set; }
+        public DbSet<LoginLog> LoginLog { get; set; }
+
+        public DbSet<LeaveMsg> LeaveMsg { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();//移除复数表名的契约

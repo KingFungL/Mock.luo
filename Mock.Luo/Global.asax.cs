@@ -27,6 +27,7 @@ namespace Mock.Luo
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutofacConfig.Register();
             AutoMapperConfig.RegisterMappings();
+
         }
     }
 }

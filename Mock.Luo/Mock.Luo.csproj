@@ -156,6 +156,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Plat\Controllers\LeaveMsgController.cs" />
+    <Compile Include="Areas\Plat\Controllers\LogInfoController.cs" />
+    <Compile Include="Areas\Plat\Controllers\PointArticleController.cs" />
+    <Compile Include="Areas\Plat\Models\LeaveMsgViewModel.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Generic\Filters\HandlerAuthorizeAttribute.cs" />
@@ -351,7 +355,6 @@
     <Content Include="Content\Images\logo_110.jpg" />
     <Content Include="Content\Images\mo.jpg" />
     <Content Include="Content\Images\ph.jpg" />
-    <Content Include="Content\Images\photos2.jpg" />
     <Content Include="Content\Images\php.png" />
     <Content Include="Content\Images\r_title_bg.jpg" />
     <Content Include="Content\Images\time.jpg" />
@@ -407,27 +410,6 @@
     <Content Include="Content\js\fancytree\skin-win7\ui.fancytree.min.css" />
     <Content Include="Content\js\fancytree\skin-win7\vline-rtl.gif" />
     <Content Include="Content\js\fancytree\skin-win7\vline.gif" />
-    <Content Include="Content\js\fancytree\skin-win8-n\icons-rtl.gif" />
-    <Content Include="Content\js\fancytree\skin-win8-n\icons.gif" />
-    <Content Include="Content\js\fancytree\skin-win8-n\loading.gif" />
-    <Content Include="Content\js\fancytree\skin-win8-n\ui.fancytree.css" />
-    <Content Include="Content\js\fancytree\skin-win8-n\ui.fancytree.min.css" />
-    <Content Include="Content\js\fancytree\skin-win8-n\vline-rtl.gif" />
-    <Content Include="Content\js\fancytree\skin-win8-n\vline.gif" />
-    <Content Include="Content\js\fancytree\skin-win8-xxl\icons-rtl.gif" />
-    <Content Include="Content\js\fancytree\skin-win8-xxl\icons.gif" />
-    <Content Include="Content\js\fancytree\skin-win8-xxl\loading.gif" />
-    <Content Include="Content\js\fancytree\skin-win8-xxl\ui.fancytree.css" />
-    <Content Include="Content\js\fancytree\skin-win8-xxl\ui.fancytree.min.css" />
-    <Content Include="Content\js\fancytree\skin-win8-xxl\vline-rtl.gif" />
-    <Content Include="Content\js\fancytree\skin-win8-xxl\vline.gif" />
-    <Content Include="Content\js\fancytree\skin-win8\icons-rtl.gif" />
-    <Content Include="Content\js\fancytree\skin-win8\icons.gif" />
-    <Content Include="Content\js\fancytree\skin-win8\loading.gif" />
-    <Content Include="Content\js\fancytree\skin-win8\ui.fancytree.css" />
-    <Content Include="Content\js\fancytree\skin-win8\ui.fancytree.min.css" />
-    <Content Include="Content\js\fancytree\skin-win8\vline-rtl.gif" />
-    <Content Include="Content\js\fancytree\skin-win8\vline.gif" />
     <Content Include="Content\js\fancytree\skin-xp\icons-rtl.gif" />
     <Content Include="Content\js\fancytree\skin-xp\icons.gif" />
     <Content Include="Content\js\fancytree\skin-xp\loading.gif" />
@@ -463,14 +445,10 @@
     <Content Include="Content\js\fancytree\skin-awesome\ui.fancytree.less" />
     <Content Include="Content\js\fancytree\skin-bootstrap-n\ui.fancytree.less" />
     <Content Include="Content\js\fancytree\skin-bootstrap\ui.fancytree.less" />
-    <Content Include="Content\js\fancytree\skin-custom-1\README.md" />
     <Content Include="Content\js\fancytree\skin-lion\ui.fancytree.less" />
     <Content Include="Content\js\fancytree\skin-themeroller\ui.fancytree.less" />
     <Content Include="Content\js\fancytree\skin-vista\ui.fancytree.less" />
     <Content Include="Content\js\fancytree\skin-win7\ui.fancytree.less" />
-    <Content Include="Content\js\fancytree\skin-win8-n\ui.fancytree.less" />
-    <Content Include="Content\js\fancytree\skin-win8-xxl\ui.fancytree.less" />
-    <Content Include="Content\js\fancytree\skin-win8\ui.fancytree.less" />
     <Content Include="Content\js\fancytree\skin-xp\ui.fancytree.less" />
     <Content Include="Areas\Plat\Views\ItemsDetail\Index.cshtml" />
     <Content Include="Areas\Plat\Js\ajax-tree-taxonomy.json" />
@@ -491,6 +469,9 @@
     <Content Include="Areas\Plat\Views\AppModule\ButtonList.cshtml" />
     <Content Include="Areas\Plat\Views\AppModule\Button.cshtml" />
     <Content Include="Areas\Plat\Views\AppRole\AllotAuthorize.cshtml" />
+    <Content Include="Areas\Plat\Views\PointArticle\Index.cshtml" />
+    <Content Include="Areas\Plat\Views\LeaveMsg\Index.cshtml" />
+    <Content Include="Areas\Plat\Views\LogInfo\Index.cshtml" />
     <None Include="Content\js\jquery.validate-vsdoc.js" />
     <Content Include="Content\js\jquery.validate.js" />
     <Content Include="Content\js\jquery.validate.min.js" />
@@ -607,6 +588,7 @@
     <Content Include="Content\js\plugins\icheck.min.js" />
     <Content Include="Content\js\plugins\jquery.cookie.js" />
     <Content Include="Content\js\plugins\jquery.md5.js" />
+    <Content Include="Content\js\plugins\jquery.slimscroll.min.js" />
     <Content Include="Content\js\plugins\validator.js" />
     <Content Include="Content\js\plugins\wizcard.js" />
     <Content Include="Content\js\sidebar.js" />
@@ -892,9 +874,6 @@
     <Content Include="Content\js\ueditor\lang\zh-cn\images\music.png" />
     <Content Include="Content\js\ueditor\lang\zh-cn\images\upload.png" />
     <Content Include="Content\js\ueditor\lang\zh-cn\zh-cn.js" />
-    <Content Include="Content\js\ueditor\net\Bin\Newtonsoft.Json.dll" />
-    <Content Include="Content\js\ueditor\net\Bin\Newtonsoft.Json.pdb" />
-    <Content Include="Content\js\ueditor\net\Bin\Newtonsoft.Json.xml" />
     <Content Include="Content\js\ueditor\net\net.sln" />
     <Content Include="Content\js\ueditor\themes\default\css\ueditor.css" />
     <Content Include="Content\js\ueditor\themes\default\css\ueditor.min.css" />
@@ -971,7 +950,6 @@
     <Content Include="Content\js\ueditor\third-party\highcharts\themes\skies.js" />
     <Content Include="Content\js\ueditor\third-party\jquery-1.10.2.js" />
     <Content Include="Content\js\ueditor\third-party\jquery-1.10.2.min.js" />
-    <Content Include="Content\js\ueditor\third-party\snapscreen\UEditorSnapscreen.exe" />
     <Content Include="Content\js\ueditor\third-party\SyntaxHighlighter\shCore.js" />
     <Content Include="Content\js\ueditor\third-party\SyntaxHighlighter\shCoreDefault.css" />
     <Content Include="Content\js\ueditor\third-party\video-js\font\vjs.svg" />
@@ -1039,7 +1017,6 @@
     <Content Include="Areas\Mock\Views\Web.config" />
     <Content Include="Content\js\uploadify\fileico_v5.png" />
     <Content Include="Content\fonts\fontawesome-webfont93e3.woff2" />
-    <Content Include="Content\Images\image.png" />
     <Content Include="Areas\Mock\Views\Editor\MarkDownView.cshtml" />
     <Content Include="Areas\Mock\Views\Editor\SimditorView.cshtml" />
     <Content Include="Generic\Configs\database.config" />
@@ -1068,6 +1045,10 @@
     <Content Include="Content\js\uploadify\uploadify-cancel.png" />
     <Content Include="Content\js\uploadify\uploadify.css" />
     <Content Include="Content\js\uploadify\uploadify.swf" />
+    <Content Include="Upload\admin\ID2KOG66G_KHZ_R5R2.jpg" />
+    <Content Include="Upload\admin\69Q34W3UKSNM6074.jpg" />
+    <Content Include="Upload\admin\ACD6NDP09W9AE78A6K.jpg" />
+    <Content Include="Upload\admin\IMG_20170505_134455.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1115,6 +1096,10 @@
     <Content Include="Views\App\Index.cshtml" />
     <Content Include="Views\App\Detail.cshtml" />
     <Content Include="Views\Shared\_LayoutBlog.cshtml" />
+    <Content Include="Generic\Configs\log4net.config" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <Content Include="Views\App\TagHtml.cshtml" />
+    <Content Include="Views\App\LatestArticles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -3,7 +3,6 @@
     ViewBag.Title = "文章！";
 }
 
-
 @section css{
     <style>
         .navcates { background-color: #fff; clear: both; overflow: hidden; width: 100%; height: auto; padding: 2px 12px 0 20px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border: 1px #eee solid; margin-bottom: -1px; }
@@ -79,35 +78,31 @@
         #divCatalog li a:hover { background: #F24C27; color: #FFF; font-size: 16px; }
     </style>
 }
-
+@using Mock.Data.Models
+@{
+    Article entry = ViewData["Article"] as Article;
+}
 
 
 <div class="container" style="margin-top:80px;">
     <div class="row">
         <div class="col-md-8 col-xs-12">
             <div class="navcates">
-                <i class="fa fa-home"></i>当前位置：<a href="http://z.mrpan.me/">MrPan小站</a> » <a href="http://z.mrpan.me/category-zjd.html" title="查看 正经De 中的全部文章">正经De</a> » <a href="http://z.mrpan.me/post/5gb-30g.html" rel="bookmark" target="_blank" title="正在阅读 有益网络: 免费国内虚拟主机 / 腾讯云 / 5GB 空间 / 30G 流量 / 提供已备案域名">有益网络: 免费国内虚拟主机 / 腾讯云 / 5GB 空间 / 30G 流量 / 提供已备案域名</a>
+                <i class="fa fa-home"></i>当前位置：<a href="http://z.mrpan.me/">MrPan小站</a> » <a href="http://z.mrpan.me/category-zjd.html" title="查看 正经De 中的全部文章">正经De</a> » <a href="http://z.mrpan.me/post/5gb-30g.html" rel="bookmark" target="_blank" title="正在阅读 有益网络: 免费国内虚拟主机 / 腾讯云 / 5GB 空间 / 30G 流量 / 提供已备案域名">@entry.Title</a>
             </div>
             <div class="content single-content">
                 <header class="post-head">
-                    <h4><a href="http://z.mrpan.me/post/5gb-30g.html" target="_blank" title="正在阅读 有益网络: 免费国内虚拟主机 / 腾讯云 / 5GB 空间 / 30G 流量 / 提供已备案域名">有益网络: 免费国内虚拟主机 / 腾讯云 / 5GB 空间 / 30G 流量 / 提供已备案域名</a></h4>
+                    <h4><a href="http://z.mrpan.me/post/5gb-30g.html" target="_blank" title="正在阅读 @entry.Title">@entry.Title</a></h4>
                     <div class="info left">
                         <!-- 文章信息 -->
-                        <span class="category"><i class="fa fa-list-alt"></i><a href="http://z.mrpan.me/category-zjd.html">正经De</a></span>
-                        <span class="date"><i class="fa fa-clock-o"></i>2017-09-23</span>
-                        <span class="view"><i class="fa fa-eye"></i>浏览(2)</span>
-                        <span class="comment"><i class="fa fa-comment"></i><a href="http://z.mrpan.me/post/5gb-30g.html#comment">评论(0)</a></span>
+                        <span class="category"><i class="fa fa-list-alt"></i><a href="/category/ @entry.FId">@ViewBag.TypeName</a></span>
+                        <span class="date"><i class="fa fa-clock-o"></i>@entry.CreatorTime</span>
+                        <span class="view"><i class="fa fa-eye"></i>浏览(@entry.ViewHits)</span>
+                        <span class="comment"><i class="fa fa-comment"></i><a href="/app/detail/@entry.Id#comment">评论(@entry.CommentQuantity)</a></span>
                     </div>
                 </header>
                 <div class="entry">
-                    <h2 style="letter-spacing: -0.04em; font-weight: 500; line-height: 1.3em; color: rgb(74, 74, 74);  margin: 1em 0px; font-size: 2.1rem; white-space: normal; background-color: rgb(255, 255, 255);">简介</h2><ul style="margin-bottom: 0.5em; color: rgb(93, 104, 111); font-family: &quot; letter-spacing: -0.3px; white-space: normal; background-color: rgb(255, 255, 255);" class=" list-paddingleft-2">
-                        <li>
-                            <p>
-                                <a href="https://liyuans.com/t/aHR0cHM6Ly9teS4xNTBjbi5jb20vZnJlZS8=" target="_blank">申请地址</a>
-                            </p>
-                        </li>
-                        <li><p>一个叫有益网络的 idc 活动，免费撸终身 512MB 虚拟主机，这里先丑话说在前头，终生是终生，至于他 idc 跑不跑路就是另一回事了，<br>不过既然是免费的还是很有必要去撸一撸的，这活动今天在 望星湖畔博客 发现的，他 2017 年 1 月份发布的这条资讯，目前仍可开通。</p></li>
-                    </ul><p><a pjax="no" style="cursor: url(&quot;image/pointer.cur&quot;), pointer; color: rgb(52, 158, 243); font-family: &quot;Hiragino Sans GB&quot;, 华文细黑, STHeiti, 微软雅黑, &quot;Microsoft YaHei&quot;, SimHei, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 15.4px; letter-spacing: -0.3px; white-space: normal; background-color: rgb(255, 255, 255);" name="_label1"></a></p><h2 style="letter-spacing: -0.04em; font-weight: 500; line-height: 1.3em; color: rgb(74, 74, 74); font-family: &quot;Hiragino Sans GB&quot;, 华文细黑, STHeiti, 微软雅黑, &quot;Microsoft YaHei&quot;, SimHei, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; margin: 1em 0px; font-size: 2.1rem; white-space: normal; background-color: rgb(255, 255, 255);">过程</h2><ul style="margin-bottom: 0.5em; color: rgb(93, 104, 111); font-family: &quot;Hiragino Sans GB&quot;, 华文细黑, STHeiti, 微软雅黑, &quot;Microsoft YaHei&quot;, SimHei, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 15.4px; letter-spacing: -0.3px; white-space: normal; background-color: rgb(255, 255, 255);" class=" list-paddingleft-2"><li><p>经过测试，主机是江苏电信的虚拟主机，使用了腾讯云提供的 DDOS 防护和 CDN。FTP 空间是江苏电信的。<br>用来做个小站还是绰绰有余的了，当然自个一定要每天备份，<br>这种免费的承若等于没有。由于是用的国内主机，所以需要备案域名才能绑定使用。否则只能用送的免费三级域名了。</p></li></ul><p style="margin-top: 1.5em; margin-bottom: 0px; color: rgb(93, 104, 111); font-family: &quot;Hiragino Sans GB&quot;, 华文细黑, STHeiti, 微软雅黑, &quot;Microsoft YaHei&quot;, SimHei, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 15.4px; letter-spacing: -0.3px; white-space: normal; background-color: rgb(255, 255, 255);"><a href="https://ws1.sinaimg.cn/large/6f8a2832gy1ffs0ezxufxj20wj0j8dht.jpg" rel="box" class="fancybox" alt="有益网路" data-evernote-hover-show="true" style="display: block; width: auto; margin-left: auto; margin-right: auto; border-radius: 7px;"><img src="https://ws1.sinaimg.cn/large/6f8a2832gy1ffs0ezxufxj20wj0j8dht.jpg" original="https://ws1.sinaimg.cn/large/6f8a2832gy1ffs0ezxufxj20wj0j8dht.jpg" style="display: inline;"></a></p><ul style="margin-bottom: 0.5em; color: rgb(93, 104, 111); font-family: &quot;Hiragino Sans GB&quot;, 华文细黑, STHeiti, 微软雅黑, &quot;Microsoft YaHei&quot;, SimHei, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 15.4px; letter-spacing: -0.3px; white-space: normal; background-color: rgb(255, 255, 255);" class=" list-paddingleft-2"><li><p>获得免费主机的步骤也很简单，只需要注册登录，然后打开开通页面，扫码关注微信号就可以开通终身的虚拟主机了，点击申请后，需要等待 5 分钟左右。去干点别的，然后就会提示你开通完毕。 这时候重新登陆就会看到开通成功了。</p></li></ul><p style="margin-top: 1.5em; margin-bottom: 0px; color: rgb(93, 104, 111); font-family: &quot;Hiragino Sans GB&quot;, 华文细黑, STHeiti, 微软雅黑, &quot;Microsoft YaHei&quot;, SimHei, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 15.4px; letter-spacing: -0.3px; white-space: normal; background-color: rgb(255, 255, 255);"><a href="https://ws1.sinaimg.cn/large/6f8a2832gy1ffs0gsez2oj20q50g7god.jpg" rel="box" class="fancybox" alt="有益网络" data-evernote-hover-show="true" style="display: block; width: auto; margin-left: auto; margin-right: auto; border-radius: 7px;"><img src="https://ws1.sinaimg.cn/large/6f8a2832gy1ffs0gsez2oj20q50g7god.jpg" original="https://ws1.sinaimg.cn/large/6f8a2832gy1ffs0gsez2oj20q50g7god.jpg" style="display: inline;"></a></p><p><br></p>
+                        @Html.Raw(entry.Content)
                     <div id="social">
                         <div class="social-main">
                             <span class="like">

@@ -26,7 +26,7 @@ namespace Mock.Luo.App_Start
 
             builder.RegisterAssemblyTypes(service).AsImplementedInterfaces();
 
-            builder.RegisterType<RedisHelper>().As<IRedisHelper>().SingleInstance();
+            //builder.RegisterType<RedisHelper>().As<IRedisHelper>().SingleInstance();
 
             //创建一个Autofac的容器
             var container = builder.Build();

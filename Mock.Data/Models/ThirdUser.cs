@@ -16,9 +16,10 @@ namespace Mock.Data.Models
         public string BindSource { get; set; }
         [StringLength(50)]
         public string BindUserCode { get; set; }
+
+        public DateTime? AddTime { get; set; }
         public int? UserId { get; set; }
         [ForeignKey("UserId")]
-        public AppUser AppUser { get; set; }
-        public DateTime? AddTime { get; set; }
+        public virtual AppUser AppUser { get; set; }
     }
 }

@@ -4,7 +4,7 @@
 }
 <section class="content-header">
     <ol class="breadcrumb" style="margin-bottom:0px;">
-        <li><a href="#"><i class="fa fa-dashboard"></i> 平台管理</a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> 博客管理</a></li>
         <li class="active">字典管理</li>
     </ol>
 </section>
@@ -48,7 +48,8 @@
         var vm = new Vue({
             el: '#v-app',
             data: {
-                treeObj: {}
+                treeObj: {},
+                EnCode:''
             },
             mounted: function () {
                 this.treeObj = this.init_tree();
@@ -62,7 +63,6 @@
                         search: true,
                         sortName: 'Id,SortCode',
                         queryParams: function (params) {
-                            params.ItemName = params.search;
                             return params;
                         },
                         columns: [{ checkbox: true },
@@ -70,7 +70,10 @@
                         { field: 'ItemName', title: '名称', sortable: true, align: 'center' },
                         { field: 'SortCode', title: '排序码', sortable: true, align: 'center' },
                         { field: 'IsEnableMark', title: '是否启用', formatter: com.format_enable, align: 'center' },
-                        { field: 'Remark', title: '备注', sortable: true }]
+                        { field: 'Remark', title: '备注', sortable: true }],
+                        callback: function () {
+                            $('.pull-right.search .form-control').attr('placeholder', '输入编码/名称');
+                        }
                     });
                 },
                 init_tree: function () {
@@ -89,6 +92,7 @@
                         },
                         callback: {
                             onClick: function (event, treeId, treeNode, clickFlag) {
+                                vm.EnCode = treeNode.EnCode;
                                 $('#dginfo').bootstrapTable('refresh', { query: { 'EnCode': treeNode.EnCode } })
                             },
                         }
@@ -131,7 +135,7 @@
                         content: '/Plat/ItemsDetail/Form?FId=' + FId + '&id=' + Id,
                         yes: function (iframebody, iframeWin, index) {
                             iframeWin.vm.submit(function () {
-                                $('#dginfo').bootstrapTable("refresh");
+                                $('#dginfo').bootstrapTable("refresh", { query: { 'EnCode': vm.EnCode } });
                             });
                         }
                     });

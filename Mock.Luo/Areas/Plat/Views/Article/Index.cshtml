@@ -5,7 +5,7 @@
 
 <section class="content-header">
     <ol class="breadcrumb" style="margin-bottom:0px;">
-        <li><a href="#"><i class="fa fa-dashboard"></i> 平台管理</a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> 博客管理</a></li>
         <li class="active">文章管理</li>
     </ol>
 </section>
@@ -75,7 +75,6 @@
                         uniqueId: "Id",
                         search: true,
                         queryParams: function (params) {
-                            params.Title = params.search;
                             return params;
                         },
                         columns: [{ checkbox: true },
@@ -91,7 +90,15 @@
                                 }
                             }
                         },
-                        { field: 'PointQuantity', title: '点赞量', align: 'center' },
+                        {
+                            field: 'PointQuantity', title: '点赞量', align: 'center', formatter: function (value,row) {
+                                   if (value != null) {
+                                       return com.format_str('<a  href="javascript:vm.show_point({0})" style="color: #2fa4e7;" title="点我查看点赞" data-toggle="tooltip">{1}</a>', row.Id, value);
+                                } else {
+                                    return '_';
+                                } 
+                            }
+                        },
                         { field: 'ViewHits', title: '阅读次数', align: 'center' },
                         {
                             field: 'IsAudit', title: '关键字/来源/摘要/缩略图', align: 'center', formatter: function (value, row, index) {
@@ -114,16 +121,21 @@
                         { field: 'CreatorTime', title: '发布时间', align: 'center' }],
                         callback: function () {
                             $("[data-toggle='tooltip']").tooltip();
-                        }
+                            $('.pull-right.search .form-control').attr('placeholder', '输入标题/作者');                        }
                     });
                 }, show_review: function (Id) {
                     $.layerOpen({
                         content: '/Plat/Review/Index?Id=' + Id,
                         width: '70%',
                         height: '69%'
-                    })
+                    });
+                }, show_point: function (Id) {
+                    $.layerOpen({
+                        content: '/Plat/PointArticle/Index?Id=' + Id,
+                        width: '70%',
+                        height: '69%'
+                    });
                 }
-
             }
         });
 

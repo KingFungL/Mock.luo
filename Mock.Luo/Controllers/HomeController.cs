@@ -14,13 +14,13 @@ namespace Mock.Luo.Controllers
 {
     public class HomeController : BaseController
     {
-        private readonly IRedisHelper iRedisHelper;
+        // private readonly IRedisHelper iRedisHelper;
         private readonly IItemsDetailRepository _itemsDetailSevice;
         private readonly IItemsRepository _itemsService;
         private readonly IAppModuleRepository _appModuleService;
-        public HomeController(IRedisHelper iRedisHelper, IItemsDetailRepository _itemsDetailSevice, IItemsRepository _itemsService, IAppModuleRepository _appModuleService)
+        public HomeController(IItemsDetailRepository _itemsDetailSevice, IItemsRepository _itemsService, IAppModuleRepository _appModuleService)
         {
-            this.iRedisHelper = iRedisHelper;
+            // this.iRedisHelper = iRedisHelper;
             this._itemsDetailSevice = _itemsDetailSevice;
             this._itemsService = _itemsService;
             this._appModuleService = _appModuleService;

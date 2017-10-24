@@ -65,6 +65,8 @@
     <Compile Include="AppModel\OperatorModel.cs" />
     <Compile Include="AppModel\OperatorProvider.cs" />
     <Compile Include="AppModel\TreeNode.cs" />
+    <Compile Include="Dto\ArticleDto.cs" />
+    <Compile Include="Dto\ReplyDto.cs" />
     <Compile Include="Extensions\CollectionsExtensions.cs" />
     <Compile Include="Extensions\DataTableExtensions.cs" />
     <Compile Include="Extensions\DbContextFactory.cs" />
@@ -92,6 +94,10 @@
     <Compile Include="Migrations\201709070706234_3.Designer.cs">
       <DependentUpon>201709070706234_3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710221530031_123.cs" />
+    <Compile Include="Migrations\201710221530031_123.Designer.cs">
+      <DependentUpon>201710221530031_123.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppModule.cs" />
     <Compile Include="Models\AppRole.cs" />
@@ -99,8 +105,11 @@
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\Items.cs" />
     <Compile Include="Models\ItemsDetail.cs" />
+    <Compile Include="Models\LeaveMsg.cs" />
+    <Compile Include="Models\LogInfo.cs" />
+    <Compile Include="Models\LoginLog.cs" />
     <Compile Include="Models\MockDbContext.cs" />
-    <Compile Include="Models\PointArtice.cs" />
+    <Compile Include="Models\PointArticle.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\RoleModule.cs" />
     <Compile Include="Models\ThirdUser.cs" />
@@ -140,6 +149,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709070706234_3.resx">
       <DependentUpon>201709070706234_3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710221530031_123.resx">
+      <DependentUpon>201710221530031_123.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

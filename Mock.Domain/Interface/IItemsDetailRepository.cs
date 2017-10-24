@@ -16,7 +16,7 @@ namespace Mock.Domain
         /// </summary>
         /// <param name="pag"></param>
         /// <returns></returns>
-        DataGrid GetDataGrid(Pagination pag,string ItemName,string EnCode);
+        DataGrid GetDataGrid(Pagination pag,string search,string EnCode);
 
         /// <summary>
         /// 分类，根据items下的Encode获取ItemDetail的分类数据

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Mock.Code;
 using System.Linq.Expressions;
+using Mock.Data.Dto;
 
 namespace Mock.Domain
 {
@@ -43,15 +44,15 @@ namespace Mock.Domain
         #endregion
 
         #region 得到最新的count条回复信息
-        public dynamic GetRecentReview(int count)
+        public List<ReplyDto> GetRecentReview(int count)
         {
-            return this.IQueryable().OrderByDescending(u => u.Id).Take(count).Select(r => new
-            {
-                r.Id,
-                r.Text,
-                r.AuEmail,
-                r.AuName,
-                r.CreatorTime
+            return this.IQueryable().OrderByDescending(u => u.Id).Take(count).ToList().Select(r => new ReplyDto {
+                Id=r.Id,
+                AId=r.AId,
+                ArticleTitle=r.Article.Title,
+                Text=r.Text,
+                NickName=r.AppUser.NickName,
+                HeadHref=r.AppUser.HeadHref
             }).ToList();
         } 
         #endregion

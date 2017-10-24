@@ -14,6 +14,12 @@ namespace Mock.Data.Models
         public AppUser()
         {
             this.UserRoles = new HashSet<UserRole>();
+            this.Articles = new HashSet<Article>();
+            this.LeaveMsgs = new HashSet<LeaveMsg>();
+            this.Uploads = new HashSet<Upload>();
+            this.ThirdUsers = new HashSet<ThirdUser>();
+            this.Reviews = new HashSet<Review>();
+            this.ReLeaves = new HashSet<ReLeave>();
         }
         [Key]
         public int? Id { get; set; }
@@ -44,7 +50,6 @@ namespace Mock.Data.Models
         public string LastLogIp { get; set; }
         [StringLength(50)]
         public string StatusCode { get; set; }
-        public virtual ICollection<UserRole> UserRoles { get; set; }
         public int? CreatorUserId { get; set; }
         public DateTime? CreatorTime { get; set; }
         public bool? DeleteMark { get; set; }
@@ -52,5 +57,19 @@ namespace Mock.Data.Models
         public DateTime? DeleteTime { get; set; }
         public int? LastModifyUserId { get; set; }
         public DateTime? LastModifyTime { get; set; }
+
+
+        public virtual ICollection<UserRole> UserRoles { get; set; }
+
+        public virtual ICollection<Article> Articles { get; set; }
+
+        public virtual ICollection<LeaveMsg> LeaveMsgs { get; set; }
+
+        public virtual ICollection<Upload> Uploads { get; set; }
+
+        public virtual ICollection<ThirdUser> ThirdUsers { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<ReLeave> ReLeaves { get; set; }
+
     }
 }
