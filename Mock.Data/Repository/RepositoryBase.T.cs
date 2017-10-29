@@ -29,7 +29,7 @@ namespace Mock.Data
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public DbContext db
+        public DbContext Db
         {
             get
             {

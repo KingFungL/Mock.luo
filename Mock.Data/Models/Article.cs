@@ -15,6 +15,7 @@ namespace Mock.Data.Models
         public Article()
         {
             this.Reviews = new HashSet<Review>();
+            this.TagArts = new HashSet<TagArt>();
         }
         public int? Id { get; set; }
         public int? FId { get; set; }
@@ -37,6 +38,11 @@ namespace Mock.Data.Models
         public bool? IsAudit { get; set; }
         public bool? Recommend { get; set; }
         public bool? IsStickie { get; set; }
+        /// <summary>
+        /// 随笔档案   如2019年1月
+        /// </summary>
+        [StringLength(50)]
+        public string Archive { get; set; }
         public int? CreatorUserId { get; set; }
         [ForeignKey(" CreatorUserId")]
         public AppUser AppUser { get; set; }
@@ -48,6 +54,8 @@ namespace Mock.Data.Models
         public DateTime? LastModifyTime { get; set; }
 
         public virtual ICollection<Review> Reviews { get; set; }
+
+        public virtual ICollection<TagArt> TagArts { get; set; }
 
      
     }

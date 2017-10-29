@@ -15,7 +15,7 @@ namespace Mock.Domain
         #region 根据角色id得到分配的用户数据
         public dynamic GetAllotUserGrid(int roleId)
         {
-            var usersActiveList = this.db.Set<AppUser>().AsNoTracking().Where(u => u.DeleteMark == false).Select(u => new
+            var usersActiveList = this.Db.Set<AppUser>().AsNoTracking().Where(u => u.DeleteMark == false).Select(u => new
             {
                 u.Id,
                 u.NickName,

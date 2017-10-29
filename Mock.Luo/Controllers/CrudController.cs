@@ -60,6 +60,11 @@ namespace Mock.Luo.Controllers
         [HttpPost]
         public virtual ActionResult Edit(TViewModel viewModel, int id = 0)
         {
+            if (!ModelState.IsValid)
+            {
+                return Error(ModelState.Values.Where(u => u.Errors.Count > 0).FirstOrDefault().Errors[0].ErrorMessage);
+            }
+
             var userid = OperatorProvider.Provider.CurrentUser.UserId;
             //新增
             if (id == 0)
@@ -73,6 +78,7 @@ namespace Mock.Luo.Controllers
                     d.CreatorUserId = userid;
                     d.DeleteMark = false;
                     TEntityModel tEntityModel = d as TEntityModel;
+                   
 
                     if (tEntityModel != null && _ibase.Insert(tEntityModel) > 0)
                     {
@@ -96,7 +102,7 @@ namespace Mock.Luo.Controllers
                     d.LastModifyTime = DateTime.Now;
                     d.LastModifyUserId = userid;
                     TEntityModel tUpdateEntityModel = d as TEntityModel;
-
+           
                     if (tUpdateEntityModel != null && _ibase.Update(tUpdateEntityModel) > 0)
                     {
                         return Success("编辑成功");

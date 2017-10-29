@@ -209,7 +209,10 @@ $.fn.Validform = function () {
                     if (!e(bt)) return n = wt + "必须为E-mail格式！\n", t = !1, ValidationMessage($(this), n), !1;
                     break;
                 case "EmailOrNull":
-                    if (!o(bt)) return n = wt + "E-mail格式或空！\n", t = !1, ValidationMessage($(this), n), !1;
+                    if (!o(bt)) return n = wt + "为E-mail格式或空！\n", t = !1, ValidationMessage($(this), n), !1;
+                    break;
+                case "EmailAndNotNull":
+                    if (!o(bt) || r(bt)) return n = wt + "为E-mail格式且不能为空！\n", t = !1, ValidationMessage($(this), n), !1;
                     break;
                 case "EnglishStr":
                     if (!s(bt)) return n = wt + "必须为字符串！\n", t = !1, ValidationMessage($(this), n), !1;

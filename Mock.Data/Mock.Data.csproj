@@ -65,13 +65,18 @@
     <Compile Include="AppModel\OperatorModel.cs" />
     <Compile Include="AppModel\OperatorProvider.cs" />
     <Compile Include="AppModel\TreeNode.cs" />
+    <Compile Include="Dto\ArtDetailDto.cs" />
     <Compile Include="Dto\ArticleDto.cs" />
+    <Compile Include="Dto\ArtRelateDto.cs" />
+    <Compile Include="Dto\BaseDto.cs" />
     <Compile Include="Dto\ReplyDto.cs" />
+    <Compile Include="Dto\SiteStatistics.cs" />
     <Compile Include="Extensions\CollectionsExtensions.cs" />
     <Compile Include="Extensions\DataTableExtensions.cs" />
     <Compile Include="Extensions\DbContextFactory.cs" />
     <Compile Include="Extensions\DbHelper.cs" />
     <Compile Include="Extensions\EntityInterfaceExtensions.cs" />
+    <Compile Include="Extensions\SqlFunctionExtensions.cs" />
     <Compile Include="Infrastructure\DeleteAudited.cs" />
     <Compile Include="Infrastructure\IAduited.cs" />
     <Compile Include="Infrastructure\ICreationAudited.cs" />
@@ -112,6 +117,7 @@
     <Compile Include="Models\PointArticle.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\RoleModule.cs" />
+    <Compile Include="Models\TagArt.cs" />
     <Compile Include="Models\ThirdUser.cs" />
     <Compile Include="Models\Upload.cs" />
     <Compile Include="Models\UserRole.cs" />

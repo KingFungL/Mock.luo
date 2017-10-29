@@ -1,4 +1,5 @@
 ﻿using Mock.Code;
+using Mock.Luo.Controllers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Mock.Luo.Areas.Mock.Controllers
 {
-    public class UploadController : Controller
+    public class UploadController : BaseController
     {
         // GET: Mock/Upload
         #region 上传图片视图 ImageView
@@ -18,9 +19,7 @@ namespace Mock.Luo.Areas.Mock.Controllers
         }
         #endregion
 
-        #region 上传单个图片  Image
-        [HttpPost]
-        public ActionResult Image()
+        private AjaxResult UploadImg()
         {
             var file = Request.Files[0];
 
@@ -28,17 +27,21 @@ namespace Mock.Luo.Areas.Mock.Controllers
             string postfix = extionName.Substring(1, extionName.Length - 1);
 
             string[] img_type = { "jpg", "jpeg", "gif", "png", "bmp", "webp" };
-            AjaxResult amm;
             if (!img_type.Contains(postfix))
             {
-                amm = AjaxResult.Error("请使用常用的图片类型！你的类型为:" + extionName);
+                return AjaxResult.Error("请使用常用的图片类型！你的类型为:" + extionName);
             }
             else
             {
-                amm = UploadFile(file);
+                return UploadFile(file);
             }
+        }
 
-            return Content(amm.ToJson());
+        #region 上传单个图片  Image
+        [HttpPost]
+        public ActionResult Image()
+        {
+            return Content(UploadImg().ToJson());
         }
         #endregion
 
@@ -77,6 +80,47 @@ namespace Mock.Luo.Areas.Mock.Controllers
             return result;
         }
         #endregion
+
+        /// <summary>
+        /// layui文本编辑图片上传接口
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Skip]
+        public ActionResult LayuiImage()
+        {
+
+            AjaxResult amm = UploadImg();
+          
+            if (amm.state== ResultType.error.ToString())
+            {
+                var codeMsg = new
+                {
+                    code = 1,
+                    msg =amm.message,
+                    data = new
+                    {
+                        src = "",
+                        titile = Request.Files[0].FileName
+                    }
+                };
+                return Result(codeMsg);
+            }
+            else
+            {
+                var codeMsg = new
+                {
+                    code = 0,
+                    msg = "上传成功",
+                    data = new
+                    {
+                        src = amm.data,
+                        titile = ""
+                    }
+                };
+                return Result(codeMsg);
+            }
+        }
 
     }
 }

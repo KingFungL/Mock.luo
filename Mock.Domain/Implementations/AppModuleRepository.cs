@@ -286,9 +286,9 @@ SELECT * FROM TEMP ORDER BY SortCode";
         public List<AppModule> GetUserModules(int? userId)
         {
             //1.根据用户编号得到角色编号(集合)
-            List<int> roleIdList = this.db.Set<UserRole>().Where(u => u.UserId == userId).Select(u => u.RoleId).ToList();
+            List<int> roleIdList = this.Db.Set<UserRole>().Where(u => u.UserId == userId).Select(u => u.RoleId).ToList();
             //2.根据角色ID取出菜单编号
-            List<int> menuIdList = this.db.Set<RoleModule>().Where(u => roleIdList.Contains(u.RoleId)).Select(u => u.ModuleId).ToList();
+            List<int> menuIdList = this.Db.Set<RoleModule>().Where(u => roleIdList.Contains(u.RoleId)).Select(u => u.ModuleId).ToList();
 
             //根据菜单编号得到菜单的具体信息
             List<AppModule> listModules = this.IQueryable(p => (menuIdList.Contains((int)p.Id))).ToList();

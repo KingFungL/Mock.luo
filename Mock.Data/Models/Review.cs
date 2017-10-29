@@ -13,20 +13,42 @@ namespace Mock.Data.Models
     {
         public int? Id { get; set; }
         public int? PId { get; set; }
-        [StringLength(500)]
         public string Text { get; set; }
         [StringLength(50)]
         public string Ip { get; set; }
         [StringLength(50)]
         public string Agent { get; set; }
+        //系统
         [StringLength(50)]
+        public string System { get; set; }
+        /// <summary>
+        /// 地理位置
+        /// </summary>
+        [StringLength(50)]
+        public string GeoPosition { get; set; }
+        /// <summary>
+        /// 使用的网络供应商
+        /// </summary> 
+        [StringLength(50)]
+        public string QQ { get; set; }
+        [StringLength(50, ErrorMessage = "昵称不能超过50字符")]
         public string AuName { get; set; }
-        [StringLength(50)]
+
+        [StringLength(400, ErrorMessage = "个人网址不能超过400字符")]
+        public string PersonalWebsite { get; set; }
+        [StringLength(50, ErrorMessage = "邮件不能超过50字符")]
         public string AuEmail { get; set; }
+        [StringLength(50)]
+        public string UserHost { get; set; }
         /// <summary>
         /// 是否已审核
         /// </summary>
         public bool? IsAduit { get; set; }
+        /// <summary>
+        /// 评论人的头像，如果未登录状态下，则随机生成一个头像地址。已登录状态下，取用户表的头像地址
+        /// </summary>
+        [StringLength(500)]
+        public string HeadHref { get; set; }
         public int? CreatorUserId { get; set; }
         public DateTime? CreatorTime { get; set; }
         public bool? DeleteMark { get; set; }

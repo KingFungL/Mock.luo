@@ -1,4 +1,5 @@
 ﻿using Mock.Code.Helper;
+using Mock.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +11,16 @@ namespace Mock.Data.Dto
     public class ArticleDto
     {
         public int? Id { get; set; }
-        public int? FId { get; set; }
 
-        //类别编码
+        //类别Id
+        public int? FId { get; set; }
+        //类别编码  
         public string TypeCode { get; set; }
         //类别名称 
         public string TypeName { get; set; }
         //发布人
         public string NickName { get; set; }
-        //多少小时/秒前
+        //几小时/秒前
         public string TimeSpan { get; set; }
         public string Title { get; set; }
         public string Keywords { get; set; }
@@ -33,7 +35,6 @@ namespace Mock.Data.Dto
         public bool? IsAudit { get; set; }
         public bool? Recommend { get; set; }
         public bool? IsStickie { get; set; }
-
         public int? CreatorUserId { get; set; }
         public DateTime? CreatorTime { get; set; }
     }

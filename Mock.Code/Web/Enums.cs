@@ -84,4 +84,33 @@ namespace Mock.Data
         /// </summary>
         Permission
     }
+
+
+    public enum EnCode
+    {
+        /// <summary>
+        /// 通用字典
+        /// </summary>
+        Common,
+        /// <summary>
+        /// 机构分类
+        /// </summary>
+        Dep,
+        /// <summary>
+        /// 目标分类
+        /// </summary>
+        Target,
+        /// <summary>
+        /// 用户配置
+        /// </summary>
+        Config,
+        /// <summary>
+        /// 文章类别
+        /// </summary>
+        FTypeCode,
+        /// <summary>
+        /// 标签
+        /// </summary>
+        Tag
+    }
 }

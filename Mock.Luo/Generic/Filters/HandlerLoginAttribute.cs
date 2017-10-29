@@ -17,9 +17,9 @@ namespace Mock.Luo.Generic.Filters
         {
 
             //当有skip验证时，去除验证登录
-            bool skipignore = !filterContext.ActionDescriptor.IsAttributeDefined<SkipAttribute>(false)
-                                       && !filterContext.ActionDescriptor.ControllerDescriptor.IsDefined(typeof(SkipAttribute), false);
-            if (skipignore == false) return;
+            bool skipignore = filterContext.ActionDescriptor.GetCustomAttributes(typeof(SkipAttribute),false).Length==1
+                                       || filterContext.ActionDescriptor.ControllerDescriptor.IsDefined(typeof(SkipAttribute), false);
+            if (skipignore == true) return;
 
             OperatorProvider op = OperatorProvider.Provider;
            
@@ -27,7 +27,7 @@ namespace Mock.Luo.Generic.Filters
             if (op.CurrentUser == null)
             {
                 StringBuilder sbScript = new StringBuilder();
-                sbScript.Append("<script type='text/javascript'>alert('请选登录!');top.location.href='/Login/Index?msg=noLogin'</script>");
+                sbScript.Append("<script type='text/javascript'>alert('请先登录!');top.location.href='/Login/Index?msg=noLogin'</script>");
                 filterContext.Result = new ContentResult() { Content = sbScript.ToString() };
             }
             else

@@ -10,7 +10,12 @@ namespace Mock.Luo.Generic.Filters
             base.OnException(context);
             context.ExceptionHandled = true;
             context.HttpContext.Response.StatusCode = 200;
-            context.Result = new ContentResult { Content = new AjaxResult { state = ResultType.error.ToString(), message = context.Exception.Message }.ToJson() };
+
+
+            ContentResult conResult = new ContentResult { Content = new AjaxResult { state = ResultType.error.ToString(), message = context.Exception.Message }.ToJson() };
+
+
+            context.Result = conResult;
 
             this.WriteLog(context);
         }

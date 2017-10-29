@@ -11,7 +11,13 @@ namespace Mock.Data.Models
     [Table("ItemsDetail")]
     public class ItemsDetail : IEntity<ItemsDetail>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
+        public ItemsDetail()
+        {
+            this.TagArts = new HashSet<TagArt>();
+        }
+
         public int? Id { get; set; }
+
         public int FId { get; set; }
         [ForeignKey("FId")]
         public Items Items { get; set; }
@@ -30,5 +36,7 @@ namespace Mock.Data.Models
         public DateTime? DeleteTime { get; set; }
         public int? DeleteUserId { get; set; }
         public bool? DeleteMark { get; set; }
+
+        public virtual ICollection<TagArt> TagArts { get; set; }
     }
 }

@@ -1,12 +1,14 @@
-﻿@{
+﻿@using Mock.Data.Dto
+@{
+    ArtDetailDto entry = ViewData["ArticleDto"] as ArtDetailDto;
     Layout = "~/Views/Shared/_LayoutBlog.cshtml";
-    ViewBag.Title = "文章！";
+    ViewBag.Title = @entry.Title;
 }
 
 @section css{
     <style>
         .navcates { background-color: #fff; clear: both; overflow: hidden; width: 100%; height: auto; padding: 2px 12px 0 20px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border: 1px #eee solid; margin-bottom: -1px; }
-        .single-content, .page-content { width: 100%; background-color: #fff; border: 1px #eee solid; padding: 12px 20px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+        .single-content, .page-content { margin-bottom: 10px; border-radius: 6px; width: 100%; background-color: #fff; border: 1px #eee solid; padding: 12px 20px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
         .navcates i.fa { margin-right: 3px; font-size: 1.2em; }
         .navcates a { color: #666; line-height: 36px; margin: 0 2px; }
         .post-head { border-bottom: 1px solid #eee; overflow: hidden; padding-bottom: 10px; }
@@ -24,7 +26,6 @@
             .entry h2 { margin: 24px 0 12px; padding: 8px 12px 12px 4px; }
             .entry h2, .entry h3, .entry h4, .entry h5 { color: #555; font-weight: bold; border-bottom: 1px solid #eee; position: relative; color: #f24c27; }
             .entry img { max-width: 85%; height: auto; padding: 5px; border-radius: 3px; /* border: 2px solid #eee; */ }
-
 
         .authorarea { position: relative; background-color: #fafafa; border: 1px solid transparent; -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05); box-shadow: 0 1px 1px rgba(0,0,0,.05); border-color: #ebedf1; overflow: hidden; padding: 10px; margin-bottom: 20px; margin-top: 15px; }
         .authorinfo { display: inline-block; }
@@ -44,16 +45,26 @@
         #social { margin: 50px auto; position: relative; }
             #social .social-main { position: relative; margin: 0 auto; width: 243px; }
         .social-main span { float: left; }
-        .like a { background: #f74840; width: 120px; display: block; border: 1px solid #ddd; }
-        .like a { float: left; padding-left: 25px; }
+        .like a { background: #f74840; width: 120px; display: block; border: 1px solid #ddd; float: left; padding-left: 25px; }
         .social-main i { color: #fff; margin: 0 5px 0 0; }
-        .shang-empty { position: absolute; left: 90px; /* top: 0px; */ /* width: 62px; */ height: 38px; overflow: hidden; }
+        .shang-empty { position: absolute; left: 90px; height: 38px; overflow: hidden; }
             .shang-empty span { background: #fff; width: 60px; height: 60px; display: block; margin: -10px 0 0 0; border-radius: 60px; border: 1px solid #ddd; }
         .social-main span { float: left; }
         .tipso_style { cursor: pointer; }
+        .bdshare-button-style1-16 { zoom: 1; }
+        #share { position: absolute; top: -60px; right: -68px; width: 302px; height: 68px; display: none; z-index: 999; }
         .share-s a { background: #39c; width: 120px; display: block; padding-left: 15px; border: 1px solid #ddd; }
         .share-s a, .shang-s a { text-align: center; }
+        #share .fa-qq { color: #7ab951; border: 1px solid #7ab951; background: #fff; }
+            #share .fa-qq:hover { background: #7ab951 !important; color: #fff !important; }
+        #share .fa-weibo { color: red; border: 1px solid red; background: #fff; }
+            #share .fa-weibo:hover { background: #ff0000 !important; color: #fff !important; }
+        #share .fa-weixin { color: #006f1d; border: 1px solid #006f1d; background: #fff; }
+            #share .fa-weixin:hover { background: #006f1d !important; color: #fff !important; }
 
+        #share .fa-plus-square { color: #7ab951; border: 1px solid #7ab951; background: #fff; }
+        #share a { float: left; background: #999; font-size: 20px; color: #fff; width: 40px; height: 40px; line-height: 40px; margin-left: 4px; padding-left: 0; text-align: center; border-radius: 20px; background: rgba(128, 128, 128, 0.9); }
+        .bdshare-button-style1-16 a, .bdshare-button-style1-16 .bds_more { float: left; font-size: 12px; padding-left: 17px; line-height: 16px; height: 16px; background-repeat: no-repeat; cursor: pointer; margin: 6px 6px 6px 0; }
         .social-main a { color: #fff; line-height: 36px; border-radius: 20px; }
             .social-main a:hover .fa-thumbs-up { color: #d03f42; }
             .social-main a:hover .fa-share-alt { color: #91c24f; }
@@ -61,11 +72,9 @@
         .shang-p a { position: absolute; background: #ffab2e; left: 96px; top: -5px; width: 48px; height: 48px; font-size: 16px; line-height: 45px; color: #fff; display: block; border: 1px solid #ddd; border-radius: 40px; left: 101px\9; top: 0\9; width: 38px\9; height: 38px\9; line-height: 35px\9; }
         .social-main a:hover .fa-thumbs-up { color: #d03f42; }
 
-
         .nav-single { padding: 10px; }
             .nav-single a div.meta-nav { padding: 10px 20px; background: #fff; white-space: nowrap; word-wrap: normal; text-overflow: ellipsis; overflow: hidden; border: 1px solid #ddd; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); border-radius: 8px; }
                 .nav-single a div.meta-nav:hover { color: #fff; background: #2f889a; border: 1px solid #2f889a; }
-
 
         .hot_article ul li { border-bottom: 1px solid #F2F2F2; margin-bottom: 10px; }
             .hot_article ul li a { margin-left: 10px; }
@@ -76,40 +85,60 @@
             #divCatalog li a { text-align: center; padding: 10px 0; display: block; border: 1px solid #ddd; height: 100%; }
         .sidebar-widget ul li a { height: 30px; width: 100%; display: block; white-space: nowrap; }
         #divCatalog li a:hover { background: #F24C27; color: #FFF; font-size: 16px; }
+        ol { border: 0; font-family: inherit; font-size: 100%; font-style: inherit; margin: 0; outline: 0; padding: 0; vertical-align: baseline; }
+            ol.comment-list, .comment-list ol { list-style: none; }
+        .comment-list li { position: relative; background: #fff; margin: 0 0 10px 0; padding: 9px 13px 15px 12px; border: 1px solid #ddd; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); border-radius: 8px; word-wrap: break-word; word-break: break-all; }
+        .comment-list .review-content { padding-left: 25px; padding-right: 5px; }
+        .comment-author { color: #999; }
+        .vcard .avatar { box-shadow: 0px 0px 1px; float: left; width: 55px; height: 55px; margin: 7px 10px 0 0; padding: 3px; border: 1px solid #ddd; border-radius: 10px; transition: all 0.8s ease 0s; -webkit-transition: all 0.8s ease 0s; -moz-transition: all 0.8s ease 0s; -o-transition: all 0.8s ease 0s; -ms-transition: 0.8s; }
+        .lv { font-size: 12px; color: #fff; padding: 0 4px; background: #c40000; border-radius: 4px; }
+        .comment-meta, .comment-meta a { color: #999; }
+        .reply { position: absolute; top: 15px; right: 20px; }
+            .reply a:hover { background: #2f889a; color: #fff !important; border: 1px solid #2f889a; transition: all 0.2s ease-in 0s; }
+            .reply a { background: #fff; line-height: 25px; display: block; padding: 0 10px; border: 1px solid #ddd; border-radius: 8px; }
+        .pldiban { background: #71daf5; border-radius: 8px; }
+        .vcard:hover .avatar { box-shadow: 0px 0px 10px #0c0; transform: rotate(720deg); -webkit-transform: rotate(720deg); -moz-transform: rotate(720deg); -o-transform: rotate(720deg); -ms-transform: rotate(720deg); border-radius: 64px !important; filter: alpha(opacity=100) !important; opacity: 1 !important; }
+        .floor { color: #999; }
+        .display { display: none; }
+        .visable { display: inline; }
+
+        .btn-submit { background: #daf2ff; cursor: pointer; border: 1px solid #ddd; border-radius: 15px; }
+            .btn-submit:hover { background: #2f889a; color: #fff; border: 1px solid #2f889a; transition: all 0.2s ease-in 0s; }
+        .at, .at a { font-size: 12px; color: #fff; padding: 2px 2px; border-radius: 4px; background: #333; }
+        .review-content span p { display: inline; }
     </style>
 }
-@using Mock.Data.Models
-@{
-    Article entry = ViewData["Article"] as Article;
-}
 
-
-<div class="container" style="margin-top:80px;">
+<div class="container" style="margin-top:80px;" id="v-app">
     <div class="row">
         <div class="col-md-8 col-xs-12">
             <div class="navcates">
-                <i class="fa fa-home"></i>当前位置：<a href="http://z.mrpan.me/">MrPan小站</a> » <a href="http://z.mrpan.me/category-zjd.html" title="查看 正经De 中的全部文章">正经De</a> » <a href="http://z.mrpan.me/post/5gb-30g.html" rel="bookmark" target="_blank" title="正在阅读 有益网络: 免费国内虚拟主机 / 腾讯云 / 5GB 空间 / 30G 流量 / 提供已备案域名">@entry.Title</a>
+                <i class="fa fa-home"></i>当前位置：<a href="/" target="_blank" title="entry.Title">首页</a><i class="fa fa-angle-right"></i>
+                <a href="/" target="_blank" title="entry.Title">@entry.TypeName</a><i class="fa fa-angle-right"></i>
+                <a href="/App/Detail/@entry.Id" rel="bookmark" target="_blank" title="entry.Title">@entry.Title</a>
             </div>
             <div class="content single-content">
                 <header class="post-head">
-                    <h4><a href="http://z.mrpan.me/post/5gb-30g.html" target="_blank" title="正在阅读 @entry.Title">@entry.Title</a></h4>
+                    <h4><a href="/App/Detail/@entry.Id" target="_blank" title="正在阅读 @entry.Title">@entry.Title</a></h4>
                     <div class="info left">
                         <!-- 文章信息 -->
-                        <span class="category"><i class="fa fa-list-alt"></i><a href="/category/ @entry.FId">@ViewBag.TypeName</a></span>
+                        <span class="category"><i class="fa fa-list-alt"></i><a href="/category/ @entry.FId">@entry.TypeName</a></span>
                         <span class="date"><i class="fa fa-clock-o"></i>@entry.CreatorTime</span>
                         <span class="view"><i class="fa fa-eye"></i>浏览(@entry.ViewHits)</span>
-                        <span class="comment"><i class="fa fa-comment"></i><a href="/app/detail/@entry.Id#comment">评论(@entry.CommentQuantity)</a></span>
+                        <span class="comment"><i class="fa fa-comment"></i><a href="/app/detail/@entry.Id#author-comment">评论(@entry.CommentQuantity)</a></span>
                     </div>
                 </header>
                 <div class="entry">
-                        @Html.Raw(entry.Content)
+                    @Html.Raw(entry.Content)
                     <div id="social">
                         <div class="social-main">
                             <span class="like">
                                 <a href="javascript:;" data-action="ding" data-id="2402" title="点赞" class="favorite done">
-                                    <i class="fa fa-thumbs-up"></i>赞 <i class="count">
-                                        1
-                                    </i>
+                                    <i class="fa fa-thumbs-up"></i>赞
+                                    @{
+                                        var pointQuantity = entry.PointQuantity == null ? 0 : entry.PointQuantity;
+                                    }
+                                    @pointQuantity
                                 </a>
                             </span>
                             <div class="shang-p">
@@ -122,11 +151,8 @@
                                 <span class="share-s"><a href="javascript:void(0)" id="share-s" title="分享"><i class="fa fa-share-alt"></i>分享</a></span>
                                 <div id="share" style="display: none;">
                                     <ul class="bdsharebuttonbox bdshare-button-style1-16" data-bd-bind="1506151460593">
-                                        <li><a title="更多" class="bds_more fa fa-plus-square" data-cmd="more" onclick="return false;" href="#"></a></li>
                                         <li><a title="分享到QQ空间" class="fa fa-qq" data-cmd="qzone" onclick="return false;" href="#"></a></li>
                                         <li><a title="分享到新浪微博" class="fa fa-weibo" data-cmd="tsina" onclick="return false;" href="#"></a></li>
-                                        <li><a title="分享到腾讯微博" class="fa fa-pinterest-square" data-cmd="tqq" onclick="return false;" href="#"></a></li>
-                                        <li><a title="分享到人人网" class="fa fa-renren" data-cmd="renren" onclick="return false;" href="#"></a></li>
                                         <li><a title="分享到微信" class="fa fa-weixin" data-cmd="weixin" onclick="return false;" href="#"></a></li>
                                     </ul>
                                 </div>
@@ -142,39 +168,68 @@
                 <div class="authorarea">
                     <div class="authorinfo">
                         <div class="author-avater">
-                            <img class="avaterimg" alt="作者：yefenghu" title="作者：yefenghu" src="http://z.mrpan.me/zb_users/avatar/1.png" height="50" width="50">
+                            <img class="avaterimg" alt="@entry.NickName" title="作者：@entry.NickName " src="@entry.HeadHref" height="50" width="50">
                         </div>
                         <div class="author-des">
                             <div class="author-meta">
-                                <span class="post-author-name"><a href="http://z.mrpan.me/author-1.html" title="由yefenghu发布" rel="author">yefenghu</a></span>
-                                <span class="post-author-tatus"><a href="http://z.mrpan.me/author-1.html" target="_blank">258篇文章</a></span>
-                                <span class="post-author-url"><a href="http://z.mrpan.me/" rel="nofollow" target="_blank">站点</a></span>
-                                <span class="post-author-weibo"><a href="http://weibo.com/yefenghu" rel="nofollow" target="_blank">微博</a></span>
+                                <span class="post-author-name"><a href="" title="由 @entry.NickName 发布" rel="author">@entry.NickName</a></span>
+                                @*<span class="post-author-tatus"><a href="/app/author-1" target="_blank">258篇文章</a></span>*@
+                                <span class="post-author-url"><a href="/app/category/zd" rel="nofollow" target="_blank">站点</a></span>
+                                <span class="post-author-weibo"><a href="/app/category/weibo" rel="nofollow" target="_blank">微博</a></span>
                             </div>
-                            <p class="author-description">舞台上有你，就演好角色； 舞台上没你，就静静地做观众；</p>
+                            <p class="author-description">@entry.PersonSignature </p>
                         </div>
                     </div>
                 </div>
+                @* 上下一个文章 *@
                 <div class="row nav-single">
-                    <a href="#">
-                        <div class="col-md-6 col-xs-6 text-center meta-nav">
-                            <span>
-                                <i class="fa fa-angle-left"></i> 上一篇
-                            </span>
-                            <br />
-                            原来AA制的意义在这里
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="col-md-6  col-xs-6 text-center meta-nav">
-                            <span>
-                                下一篇<i class="fa fa-angle-right"></i>
-                            </span>
-                            <br />
-                            人品差，再努力也没有用
-                        </div>
-                    </a>
-
+                    @if (entry.PreviousPage != null)
+                    {
+                        <a href="/App/Detail/@entry.PreviousPage.Id">
+                            <div class="col-md-6 col-xs-6 text-center meta-nav">
+                                <span>
+                                    <i class="fa fa-angle-left"></i> 上一篇
+                                </span>
+                                <br />
+                                @entry.PreviousPage.text
+                            </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#">
+                            <div class="col-md-6 col-xs-6 text-center meta-nav">
+                                <span>
+                                    <i class="fa fa-angle-left"></i>到起点了
+                                </span>
+                                <br />
+                                你点我也没有用!
+                            </div>
+                        </a>
+                    }
+                    @if (entry.NextPage != null)
+                    {
+                        <a href="/App/Detail/@entry.NextPage.Id">
+                            <div class="col-md-6  col-xs-6 text-center meta-nav">
+                                <span>
+                                    下一篇<i class="fa fa-angle-right"></i>
+                                </span>
+                                <br />
+                                @entry.NextPage.text
+                            </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#">
+                            <div class="col-md-6  col-xs-6 text-center meta-nav">
+                                <span>
+                                    已经到终点了<i class="fa fa-angle-right"></i>
+                                </span>
+                                <br />你点我也没有用!
+                            </div>
+                        </a>
+                    }
                 </div>
 
                 <!--推荐文章-->
@@ -186,12 +241,6 @@
                                 <ul class="cat-list">
                                     <li class="list-date">08/04</li>
                                     <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=2165" rel="bookmark">WordPress登陆失败自动发送邮件提醒</a></li>
-                                    <li class="list-date">08/02</li>
-                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=2227" rel="bookmark">WordPress博客统计排除管理员留言的方法</a></li>
-                                    <li class="list-date">08/01</li>
-                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=2202" rel="bookmark" style="margin-left: 0px;">纯代码给WordPress增加说说功能</a></li>
-                                    <li class="list-date">07/15</li>
-                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=1656" rel="bookmark" style="margin-left: 0px;">如何在WordPress文章中插入视频并自适应</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -203,12 +252,6 @@
                                 <ul class="cat-list">
                                     <li class="list-date">08/20</li>
                                     <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=2380" rel="bookmark">热！热！热！</a></li>
-                                    <li class="list-date">08/13</li>
-                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=2363" rel="bookmark">小心笑掉下巴！笑死我了</a></li>
-                                    <li class="list-date">07/30</li>
-                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=1917" rel="bookmark">幽默笑话：口误</a></li>
-                                    <li class="list-date">07/15</li>
-                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=1707" rel="bookmark">沁园春·热</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -219,40 +262,94 @@
                 <div class="scroll-comments">
                     <div class="comment-respond">
                         <h3> <i class="fa fa-comments"></i>&nbsp;吐槽一下</h3>
-                        <form>
-                            <input type="hidden" name="comment_post_ID" value="1234" />
-                            <input type="hidden" name="comment_parent" id="comment_parent" value="0">
-                            <label>QQ</label><input class="form-control" maxlength="12" name="u" type="text" placeholder="请输入您的QQ" />
-                            <label for="author">昵称（必填）</label> <input type="text" class="form-control" name="author" id="author" placeholder="输入你的昵称" />
-                            <label for="email">邮箱（必填）</label><input type="text" class="form-control" name="email" id="email" placeholder="请输入正确的email" />
-                            <label for="url">网址</label><input type="text" class="form-control" name="url" id="url" placeholder="这里可以输入你的个人网站" />
+                        <form id="review-form">
+                            <input type="hidden" name="AId" v-model="reply.AId" />
+                            <input type="hidden" name="PId" v-model="reply.PId">
+                            <label>QQ</label><input class="form-control" maxlength="12" v-model="reply.QQ" name="QQ" type="text" placeholder="请输入您的QQ" />
+                            <label for="AuName">昵称（必填）</label> <input type="text" class="form-control" isvalid="yes" checkexpession="NotNull" name="AuName" v-model="reply.AuName" placeholder="输入你的昵称" errormsg="昵称" />
+                            <label for="AuEmail">邮箱（必填）</label><input type="text" class="form-control" isvalid="yes" checkexpession="EmailAndNotNull" name="AuEmail" v-model="reply.AuEmail" placeholder="请输入正确的email" errormsg="邮箱" />
+                            <label for="PersonalWebsite">网址</label><input type="text" v-model="reply.PersonalWebsite" class="form-control" name="PersonalWebsite" placeholder="这里可以输入你的个人网站" />
                             <label>评论内容（必填)</label>
                             <textarea class="layui-textarea" id="layui_edit"></textarea>
                         </form>
                     </div>
                     <div class="text-right">
-                        <input type="button" name="submit" value="提交吐槽" class="btn btn-primary" style="padding: 8px;width:200px;" />
+                        <input type="button" class="btn btn-default" v-on:click="cancel" v-show="reply.PId!=0" value="取消" />
+                        <span>回复：</span>
+                        <input type="text" v-model="reply.PName" value="" readonly="readonly" disabled class="form-control" style="width:100px;display:inline;" />
+                        <input type="button" v-on:click="submit" value="提交吐槽" class="btn btn-submit" style="padding: 8px;width:200px;" />
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4 col-xs-12" id="right-sidebar">
+            @* 评论列表 *@
+            <ol class="comment-list">
+                <li class="fadeInUp" v-if="review.length==0">
+                    <div class="comment-body">
+                        <div class="comment-author vcard">
+                            <img class="avatar" src="~/Content/Images/120122x.jpg" style="display: block;">
+                            <strong>
+                                、天上有木月
+                            </strong>
+                            <span class="ua-info">
+                                <span class="WB-OS">
+                                    <img src="http://www.99bsy.com/wp-content/themes/begin/show-useragent/browsers/chrome.png"
+                                         title="Chrome" alt="Chrome"> <img src="http://www.99bsy.com/wp-content/themes/begin/show-useragent/browsers/windows_win7.png" title="windows 7"
+                                                                           alt="windows 7">
+                                </span> 江苏 南京 联通
+                            </span>
+                            <span class="lv">博主</span>
+                            <span class="comment-meta">
+                                <a href="/App/Detail/1#comment-712"></a><br>
+                                发表于 @DateTime.Now.ToString("")
+                                <span class="floor">
+                                    &nbsp;
+                                </span>
+                            </span>
 
+                        </div>
+                        <p>没有人评论，好凄凉啊，快来评论吧！！！</p>
+                    </div>
+                </li>
+                <template v-for="item in review">
+                    <li class="fadeInUp">
+                        <div v-bind:id="'author-comment-'+ item.Id"  class="comment-body">
+                            <div class="comment-author vcard">
+                                <img class="avatar" v-bind:src="item.HeadHref" style="display: block;">
+                                <strong>
+                                    <a href="#">{{item.AuName}}</a>
+                                </strong>
+                                <span class="ua-info">
+                                    <span class="WB-OS"><img src="http://www.99bsy.com/wp-content/themes/begin/show-useragent/browsers/chrome.png" v-bind:title="item.Agent" v-bind:alt="item.Agent"> <img src="http://www.99bsy.com/wp-content/themes/begin/show-useragent/browsers/windows_win7.png" v-bind:title="item.System" v-bind:alt="item.System"> </span>{{item.GeoPosition}} {{item.UseNet}}
+                                </span>
+                                <span class="comment-meta">
+                                    <a href="/App/Detail/1#comment-712"></a><br>
+                                    <span class="reply"><a rel="nofollow" v-on:click="reply_review(item.Id)" class="comment-reply-link" href="javascript:void(0)">回复</a></span>
+                                    发表于{{item.CreatorTime}}
+                                    <span class="floor">
+                                        &nbsp;
+                                    </span>
+                                </span>
+                            </div>
+                            <p class="review-content">
+                                <span class="at" v-show="item.PId!=0">@@<a v-bind:href="'#commit-'+ item.PId" v-text="item.PName"></a></span>
+                                <span v-html="decodeText(item.Text)"></span>
+                            </p>
+                        </div>
+                    </li>
+                </template>
+            </ol>
+            <div id="review-page" class="text-right"></div>
+        </div>
+
+        <div class="col-md-4 col-xs-12" id="right-sidebar">
             <aside class="widget fadeInUp" data-wow-delay="0.3s">
                 <h3 class="widget-title">博主推荐</h3>
                 <div class="hot_article">
                     <ul>
                         <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2424" style="margin-left:4px;">你什么都舍不得扔，还谈什么生活质量</a></li>
-                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2422" style="margin-left: 4px;">你可以做好人，但你身上要有刺</a></li>
-                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2418" style="margin-left: 4px;">别让父母在你面前变得小心翼翼</a></li>
-                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2414" style="margin-left: 4px;">人缘太好的人，不适合做朋友？</a></li>
-                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2409" style="margin-left: 4px;">好的教育，就是得拼爹</a></li>
-                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2406">人品差，再努力也没有用</a></li>
-                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2395" style="margin-left: 4px;">原来AA制的意义在这里</a></li>
-                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2372" style="margin-left: 4px;">鞋的启示</a></li>
+                        <li>
                     </ul>
                 </div>
-
                 <div class="clear"></div>
             </aside>
 
@@ -268,32 +365,174 @@
                 <div class="hot_article">
                     <ul>
                         <li><i class="fa fa-calendar" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2424">2017年九月</a></li>
-                        <li><i class="fa fa-calendar" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2422">2017年九月</a></li>
-                        <li><i class="fa fa-calendar" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2418">2017年九月</a></li>
-                        <li><i class="fa fa-calendar" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2406">2017年九月</a></li>
-                        <li><i class="fa fa-calendar" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2395"> 2017年九月</a></li>
-                        <li><i class="fa fa-calendar" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2372">2017年九月</a></li>
                     </ul>
                 </div>
                 <div class="clear"></div>
             </aside>
-
         </div>
-
     </div>
 </div>
 @section scripts{
+    <script src="~/Content/js/plugins/validator.js"></script>
     <script>
-        //自定义工具栏
-        layui.use('layedit', function () {
-            var layedit = layui.layedit;
-            layedit.build('layui_edit', { height: 100 });
-        });
+
+
         $('.hot_post a,.hot_comment a,.hot_article a,.random_post a,.related_post a,.post_cat a,.widget_recent_entries a,.cat-list a,.tab-bd a').hover(function () {
             $(this).stop().animate({ 'marginLeft': '20px' }, 0);
         }, function () {
             $(this).stop().animate({ 'marginLeft': '10px' }, 0);
         });
+
+        $('#share-s').click(function () {
+            var type = $('#share').css('display');
+            if (type == 'none') {
+                type = 'block';
+                $('#share').css('display', type);
+            } else {
+                type = 'none';
+                $('#share').css('display', type);
+            }
+        });
+        var vm = new Vue({
+            el: "#v-app",
+            data: {
+                AId: '@ViewBag.AId',
+                review: [],
+                limit: 5,
+                index: "",
+                reply: {
+                    AId:@ViewBag.AId,
+                    PId: 0,
+                    QQ: '',
+                    AuName: '',
+                    AuEmail: '',
+                    PersonalWebsite: '',
+                    Text: '',
+                    PName:'博主'
+                }
+            },
+            mounted: function () {
+                this.init_datagrid();
+                this.init_layedit();
+            },
+            methods: {
+                init_layedit: function () {
+                    layui.layedit.set({
+                        uploadImage: {
+                            url: '/Mock/Upload/LayuiImage' //接口url
+                            , type: 'post' //默认post
+                        }
+                    });
+                    //自定义工具栏
+                    window.setTimeout(function () {
+                        layui.use('layedit', function () {
+                            var layedit = layui.layedit;
+                            vm.index = layedit.build('layui_edit', { height: 100, tool: ['face','link'] });
+                        });
+                    }, 1000);
+                },
+                init_datagrid: function () {
+                    var that = this;
+                    this.get_itemgrid({ 'limit': this.limit, 'offset': 0, 'AId': @ViewBag.AId }, function (json) {
+                        that.layuipage(json.total);
+                    });
+                },
+                layuipage: function (total) {
+                    layui.laypage.render({
+                        elem: 'review-page',
+                        limit: vm.limit,
+                        count: total,
+                        curr: 1,
+                        groups: 5,
+                        layout: ['prev', 'page', 'next', 'skip'],
+                        jump: function (obj, first) {
+                            //首次不执行
+                            if (!first) {
+                                //1.跳转分页时也需要将查询参数携带给后台，才算真正的分页效果,
+                                var data = {
+                                    'limit': vm.limit,
+                                    'offset': (obj.curr - 1) * vm.limit,
+                                    'AId': @ViewBag.AId
+                                };
+                                vm.get_itemgrid(data);
+                            }
+                        }
+                    });
+                },
+                get_itemgrid: function (data,callback) {
+                    com.ajax({
+                        url: '/Plat/Review/GetDataGrid',
+                        data: data,
+                        success: function (json) {
+                            vm.$data.review = json.rows;
+                            if (typeof (callback) == 'function') {
+                                callback(json);
+                            }
+                            vm.init_hover();
+                        }
+                    })
+                },
+                init_hover: function () {
+                    window.setTimeout(function () {
+                        $('.comment-list .fadeInUp').each(function () {
+                            $(this).hover(function () {
+                                $(this).find(".ua-info").css('display', 'inline');
+                            }, function () {
+                                $(this).find(".ua-info").css('display', 'none');
+                            });
+                        })
+                    }, 1000);
+                },
+                submit: function () {
+                    if (!$('#review-form').Validform()) {
+                        return false;
+                    }
+                    var text = layui.layedit.getContent(vm.index);
+                    if ($.trim(text) == "") {
+                        $.layerMsg('请填写评论内容！', 'info');
+                        return;
+                    }
+                    var t = layui.layedit.getText(vm.index);
+                    if ($.trim(t) != "" && $.trim(t).length>500) {
+                        $.layerMsg('评论内容太多了！', 'info');
+                        return;
+                    }
+
+                    vm.reply.Text = encodeURIComponent(text);
+                    com.ajax({
+                        url: '/Plat/Review/Add',
+                        data: vm.reply,
+                        showMsg: true,
+                        success: function (d) {
+                            $('#layui_edit').val("");
+                            vm.index = layui.layedit.build('layui_edit', { height: 100, tool: ['face', 'link'] });
+                            vm.reply.QQ = ""; vm.reply.AuName = ""; vm.reply.AuEmail = ""; vm.reply.PersonalWebsite = "";
+                            vm.init_datagrid();
+                        }
+                    });
+                },
+                decodeText: function (d) {
+                    return decodeURIComponent(d);
+                },
+                reply_review: function (Id) {
+                    console.log(Id);
+                    $('html,body').animate({
+                        scrollTop: $('.scroll-comments').offset().top
+                    }, 800);
+                    $.each(vm.review, function (i, v) {
+                        if (v.Id == Id) {
+                            vm.reply.PName = v.AuName;
+                            vm.reply.PId = v.Id;
+                            return false;
+                        }
+                    });
+                },
+                cancel: function () {
+                    vm.reply.PId = 0;
+                    vm.reply.PName = "博主";
+                }
+            }
+        })
 
     </script>
 }

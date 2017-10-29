@@ -23,22 +23,25 @@ namespace Mock.Domain
             && (Email == "" || u.AuEmail.Contains(Email))
             && (AId == 0 || u.AId == AId);
 
-            var dglist = this.IQueryable(predicate).Where(pag).Select(u => new
+            var dglist = this.IQueryable(predicate).Where(pag).ToList().Select(u => new
             {
                 u.Id,
                 u.AId,
                 u.Article.Title,
+                PName = this.IQueryable(r=>r.Id==u.PId).Select(r=>r.AuName).FirstOrDefault(),
                 u.PId,
                 u.Text,
                 u.Ip,
                 u.Agent,
+                u.System,
+                u.GeoPosition,
+                u.UserHost,
                 u.AuName,
                 u.AuEmail,
                 u.IsAduit,
                 u.CreatorTime,
-                u.AppUser.LoginName
+                HeadHref=u.AppUser == null ? u.HeadHref :u.AppUser.HeadHref,
             }).ToList();
-
             return new DataGrid { rows = dglist, total = pag.total };
         }
         #endregion
@@ -46,13 +49,17 @@ namespace Mock.Domain
         #region 得到最新的count条回复信息
         public List<ReplyDto> GetRecentReview(int count)
         {
-            return this.IQueryable().OrderByDescending(u => u.Id).Take(count).ToList().Select(r => new ReplyDto {
-                Id=r.Id,
-                AId=r.AId,
-                ArticleTitle=r.Article.Title,
-                Text=r.Text,
-                NickName=r.AppUser.NickName,
-                HeadHref=r.AppUser.HeadHref
+            return this.IQueryable().OrderByDescending(u => u.Id).Take(count).Select(u=>new {
+                u.Article.Title,
+                HeadHref=u.AppUser!=null?u.AppUser.HeadHref:u.HeadHref,
+                u
+            }).ToList().Select(r => new ReplyDto {
+                Id=r.u.Id,
+                AId=r.u.AId,
+                ArticleTitle=r.Title,
+                Text=r.u.Text,
+                NickName=r.u.AuName,
+                HeadHref=r.HeadHref
             }).ToList();
         } 
         #endregion

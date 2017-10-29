@@ -76,17 +76,18 @@ namespace Mock.Data
         }
         public int Update<TEntity>(TEntity entity) where TEntity : class
         {
-            dbcontext.Set<TEntity>().Attach(entity);
-            PropertyInfo[] props = entity.GetType().GetProperties();
-            foreach (PropertyInfo prop in props)
-            {
-                if (prop.GetValue(entity, null) != null)
-                {
-                    if (prop.GetValue(entity, null).ToString() == "&nbsp;")
-                        dbcontext.Entry(entity).Property(prop.Name).CurrentValue = null;
-                    dbcontext.Entry(entity).Property(prop.Name).IsModified = true;
-                }
-            }
+            //dbcontext.Set<TEntity>().Attach(entity);
+            //PropertyInfo[] props = entity.GetType().GetProperties();
+            //foreach (PropertyInfo prop in props)
+            //{
+            //    if (prop.GetValue(entity, null) != null)
+            //    {
+            //        if (prop.GetValue(entity, null).ToString() == "&nbsp;")
+            //            dbcontext.Entry(entity).Property(prop.Name).CurrentValue = null;
+            //        dbcontext.Entry(entity).Property(prop.Name).IsModified = true;
+            //    }
+            //}
+            dbcontext.Entry(entity).State = EntityState.Modified;
             return dbTransaction == null ? this.Commit() : 0;
         }
 

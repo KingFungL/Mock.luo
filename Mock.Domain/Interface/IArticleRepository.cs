@@ -23,7 +23,13 @@ namespace Mock.Domain
         /// </summary>
         /// <param name="count">条数</param>
         /// <returns></returns>
-        List<ArticleDto> GetRecentArticle(int count);
+        List<ArtDetailDto> GetRecentArticle(int count);
+        /// <summary>
+        /// 抽象取数据
+        /// </summary>
+        /// <param name="artiQuaryable"></param>
+        /// <returns></returns>
+        List<ArtDetailDto> GetArticleList(IQueryable<Article> artiQuaryable);
         /// <summary>
         /// 得到博客列表页面
         /// </summary>

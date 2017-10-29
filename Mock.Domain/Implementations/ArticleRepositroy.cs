@@ -53,29 +53,38 @@ namespace Mock.Domain
         /// </summary>
         /// <param name="count"></param>
         /// <returns></returns>
-        public List<ArticleDto> GetRecentArticle(int count)
+        public List<ArtDetailDto> GetRecentArticle(int count)
         {
-            return this.IQueryable(u => u.DeleteMark == false).OrderByDescending(r => r.Id).Take(count).Select(r => new
+            IQueryable<Article> artiQuaryable = this.IQueryable(u => u.DeleteMark == false).OrderByDescending(r => r.Id).Take(count);
+            return GetArticleList(artiQuaryable);
+        }
+
+        public List<ArtDetailDto> GetArticleList(IQueryable<Article> artiQuaryable)
+        {
+            return artiQuaryable.Select(r => new
             {
                 u = r,
                 TypeName = r.ItemsDetail == null ? "" : r.ItemsDetail.ItemName,
                 NickName = r.AppUser.NickName,
-            }).ToList().Select(r => new ArticleDto
+                HeadHref = r.AppUser.HeadHref,
+                PersonSignature= r.AppUser.PersonSignature
+            }).ToList().Select(r => new ArtDetailDto
             {
                 Id = r.u.Id,
                 TypeName = r.TypeName,
                 NickName = r.NickName,
                 TimeSpan = TimeHelper.GetDateFromNow(r.u.CreatorTime.ToDateTime()),
                 Title = r.u.Title,
-                Content = r.u.Content,
+                Content =  r.u.Content,
                 CommentQuantity = r.u.CommentQuantity,
                 Excerpt = r.u.Excerpt,
                 CreatorUserId = r.u.CreatorUserId,
                 CreatorTime = r.u.CreatorTime,
                 ViewHits = r.u.ViewHits,
-                thumbnail=r.u.thumbnail
+                thumbnail = r.u.thumbnail,
+                HeadHref = r.HeadHref,
+                PersonSignature=r.PersonSignature
             }).ToList();
-
         }
 
         public DataGrid GetIndexGird(Pagination pag)
@@ -115,5 +124,6 @@ namespace Mock.Domain
                 Title = u.Title,
             }).ToList();
         }
+        
     }
 }

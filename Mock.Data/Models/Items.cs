@@ -11,6 +11,10 @@ namespace Mock.Data.Models
     [Table("Items")]
     public class Items : IEntity<Items>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
+        public Items()
+        {
+            ItemsDetail = new HashSet<ItemsDetail>();
+        }
         public int? Id { get; set; }
         public int PId { get; set; }
         [StringLength(50)]

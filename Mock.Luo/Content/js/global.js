@@ -420,18 +420,18 @@ $.fn.formSerialize = function (formdata, callback) {
     var postdata = {};
     $form.find('input,select,textarea').each(function (r) {
         var $this = $(this);
-        var id = $this.attr('id');
+        var name = $this.attr('name');
         var type = $this.attr('type');
         switch (type) {
             case "checkbox":
-                postdata[id] = $this.is(":checked");
+                postdata[name] = $this.is(":checked");
                 break;
             default:
                 var value = $this.val() === "" ? "&nbsp;" : $this.val();
                 if (!$.getQueryString("id")) {
                     value = value.replace(/&nbsp;/g, '');
                 }
-                postdata[id] = value;
+                postdata[name] = value;
                 break;
         }
     });

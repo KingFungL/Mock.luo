@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutBlog.cshtml";
-    ViewBag.Title = "罗云冲个人博客-小小程序员，信仰低调！";
+    ViewBag.Title = "、天上月木月 个人博客-小小程序员，信仰低调！";
 }
 @section css{
     <style>
@@ -32,8 +32,8 @@
                         <img src="https://res.xujun.org/img/banner/1.jpg">
                         <div class="carousel-caption">
                             <div class="banner-word">
-                                <h4>Mock个人博客</h4>
-                                <p>渡人如渡己，渡已，亦是渡</p>
+                                <h4>个人博客</h4>
+                                <p>渡人如渡己，渡已，亦是渡人</p>
                             </div>
                         </div>
                     </div>
@@ -69,20 +69,20 @@
             <!--main-inner start-->
             <div class="main-inner">
                 @{
-                    List<ArticleDto> LatestArticles = ViewData["LatestArticles"] as List<ArticleDto>;
+                    List<ArtDetailDto> LatestArticles = ViewData["LatestArticles"] as List<ArtDetailDto>;
                     foreach (var item in LatestArticles)
                     {
                         <div class="flbox">
                             <article class="post">
                                 <figure class="thumbnail box-hide box-show">
-                                    <a href="http://boke112.com/4303.html">
+                                    <a href="/App/Detail/@item.Id">
                                         <img src="@item.thumbnail" alt="@item.Title">
                                     </a>
                                 </figure>
                                 <span class="new-ico">NEW</span>
                                 <header class="entry-header">
                                     <h4 class="entry-title">
-                                        <a href="/App/Detail/@item.Id?TypeName=@item.TypeName">@item.Title</a>
+                                        <a href="/App/Detail/@item.Id">@item.Title</a>
                                     </h4>
                                 </header>
                                 <div class="entry-content">
@@ -98,13 +98,13 @@
                                         <span class="views">
                                             <i class="fa-user fa">
                                             </i>&nbsp;
-                                            <a href="/@item.CreatorUserId/" data-toggle="tooltip" title="由公共账号发布" rel="author">
+                                            <a href="/@item.CreatorUserId/" data-toggle="tooltip" title="由 @item.NickName 发布">
                                                 @item.NickName
                                             </a>
                                         </span> <span class="comment">
                                             <i class="fa fa-comment">
                                             </i>&nbsp;
-                                            <a href="@item.Id#comments">@item.CommentQuantity 条评论</a>
+                                            <a href="/App/Detail/@item.Id#author-comment">@item.CommentQuantity 条评论</a>
                                         </span>
                                     </span>
                                     <br>
@@ -175,7 +175,7 @@
                                 }
                                 i++;
                                 <li>
-                                    <span class="hotp-title"><span class="@li_number">@i</span><a href="p=@item.Id" rel="bookmark" style="margin-left: 0px;">@item.Title</a></span>
+                                    <span class="hotp-title"><span class="@li_number">@i</span><a href="/App/Detail/@item.Id" rel="bookmark" style="margin-left: 0px;">@item.Title</a></span>
                                 </li>
                             }
                         }
@@ -197,9 +197,9 @@
                             foreach (var item in SpitslotList)
                             {
                                 <li>
-                                    <a href="http://www.99bsy.com/?p=@item.AId#anchor-comment-@item.Id" data-toggle='tooltip' title="@item.ArticleTitle" rel="external nofollow">
+                                    <a href="/App/Detail/@item.AId#anchor-comment-@item.Id" data-toggle='tooltip' title="@item.ArticleTitle" rel="external nofollow">
                                         <img alt="" src="@item.HeadHref" class="avatar avatar-64" width="64" height="64">						<span class="comment_author"><strong>@item.NickName</strong></span>
-                                        @item.Text
+                                        @Html.Raw(Server.UrlDecode(item.Text))
                                     </a>
                                 </li>
                             }
@@ -212,69 +212,87 @@
 
             <aside class="widget fadeInUp" data-wow-delay="0.3s" id="divStatistics">
                 <h3 class="widget-title">站点信息</h3>
+                @{ SiteStatistics site = ViewData["Site"] as SiteStatistics;}
                 <ul class="divStatistics">
-                    <li>文章总数:251</li>
-                    <li>页面总数:2</li>
-                    <li>分类总数:10</li>
-                    <li>标签总数:63</li>
-                    <li>评论总数:33</li>
-                    <li>浏览总数:9344</li>
+                    <li>文章总数:@site.ArticleCount</li>
+                    <li>点赞总数:@site.PointViewCount</li>
+                    <li>类型总数:@site.ArticleTypeCount</li>
+                    <li>标签总数:@site.TagCount</li>
+                    <li>评论总数:@site.ReplyCount</li>
+                    <li>浏览总数:@site.ViewHitCount</li>
                 </ul>
                 <div class="clear"></div>
             </aside>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <div class="cat-box fadeInUp" data-wow-delay="0.3s">
-                <h3 class="cat-title"><a href="http://www.99bsy.com/?cat=17" title=""><i class="fa fa-heartbeat"></i>Wordpress<i class="fa fa-angle-right"></i></a></h3>
-                <div class="clear"></div>
-                <div class="cat-site">
-                    <h4 class="entry-title"><a href="http://www.99bsy.com/?p=2199" rel="bookmark">解决WordPress自定义页面分页问题</a></h4>						<figure class="thumbnail"><a href="http://www.99bsy.com/?p=2199"><img src="http://www.99bsy.com/wp-content/themes/begin/img/random/4.jpg" alt="解决WordPress自定义页面分页问题"></a></figure>
-                    <div class="cat-main">
-                        Wordpress页面分页功能有很多，插件也有很多，但是自定义页面的分页会让很多Wordpress使用者感到苦恼，因为一些自定义页面函数使用问题。网络上自定义输出文章的代码都是只考虑了功能的...
-                    </div>
 
+        @{ List<ArtDetailDto> FellLifeList = ViewData["FellLife"] as List<ArtDetailDto>;
+            ArticleDto fell = new ArticleDto { };
+            if (FellLifeList.Count > 0)
+            {
+                fell = FellLifeList[0];
+            }
+        }
+        @if (FellLifeList.Count>0)
+        {
+            <div class="col-md-6">
+                <div class="cat-box fadeInUp" data-wow-delay="0.3s">
+                    <h3 class="cat-title"><a href="/App/Category/@fell.TypeCode"><i class="fa fa-heartbeat"></i>@fell.TypeName<i class="fa fa-angle-right"></i></a></h3>
                     <div class="clear"></div>
+                    <div class="cat-site">
+                        <h4 class="entry-title"><a href="/App/Detail/@fell.Id" rel="bookmark">@fell.Title</a></h4>						<figure class="thumbnail"><a href="/App/Detail/@fell.Id"><img src="@fell.thumbnail" alt="@fell.Title"></a></figure>
+                        <div class="cat-main">
+                            @Html.Raw(fell.Content)
+                        </div>
+                        <div class="clear"></div>
 
-                    <ul class="cat-list">
-                        <li class="list-date">08/04</li>
-                        <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=2165" rel="bookmark">WordPress登陆失败自动发送邮件提醒</a></li>
-                        <li class="list-date">08/02</li>
-                        <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=2227" rel="bookmark">WordPress博客统计排除管理员留言的方法</a></li>
-                        <li class="list-date">08/01</li>
-                        <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=2202" rel="bookmark" style="margin-left: 0px;">纯代码给WordPress增加说说功能</a></li>
-                        <li class="list-date">07/15</li>
-                        <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=1656" rel="bookmark" style="margin-left: 0px;">如何在WordPress文章中插入视频并自适应</a></li>
-                    </ul>
+                        <ul class="cat-list">
+                            @{
+                                for (int j = 1; j < FellLifeList.Count; j++)
+                                {
+                                    <li class="list-date">@FellLifeList[j].CreatorTime.ToDateTime().ToString("yyyy/MM/dd")</li>
+                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="/App/Detail/@FellLifeList[j].Id">@FellLifeList[j].Title</a></li>
+                                }
+                            }
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="cat-box wow fadeInUp" data-wow-delay="0.3s">
-                <h3 class="cat-title"><a href="http://www.99bsy.com/?cat=276" title=""><i class="fa fa-heartbeat"></i>轻松时刻<i class="fa fa-angle-right"></i></a></h3>
-                <div class="clear"></div>
-                <div class="cat-site">
-                    <h4 class="entry-title"><a href="http://www.99bsy.com/?p=2400" rel="bookmark">噎死你的20个段子</a></h4><figure class="thumbnail"><a href="http://www.99bsy.com/?p=2400"><img src="http://www.99bsy.com/wp-content/themes/begin/img/random/17.jpg" alt="噎死你的20个段子"></a></figure>
-                    <div class="cat-main">
-                        01 生活不只是眼前的苟且，还有……长远的凑合。 &nbsp; 02 我们总认为，大脑是人体最聪明的器官，然而你想想，这个判断是大脑做出的。 &nbsp; 03 这瓶洗发露怎么十二块，不是写...
-                    </div>
-
+                                }
+        @{ List<ArtDetailDto> funcList = ViewData["JustFun"] as List<ArtDetailDto>;
+            ArticleDto func = new ArticleDto { };
+            if (funcList.Count > 0)
+            {
+                func = funcList[0];
+            }
+        }
+        @if (funcList.Count > 0)
+        {
+            <div class="col-md-6">
+                <div class="cat-box wow fadeInUp" data-wow-delay="0.3s">
+                    <h3 class="cat-title"><a href="/App/Category/@fell.TypeCode"><i class="fa fa-heartbeat"></i>轻松时刻<i class="fa fa-angle-right"></i></a></h3>
                     <div class="clear"></div>
-
-                    <ul class="cat-list">
-                        <li class="list-date">08/20</li>
-                        <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=2380" rel="bookmark">热！热！热！</a></li>
-                        <li class="list-date">08/13</li>
-                        <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=2363" rel="bookmark">小心笑掉下巴！笑死我了</a></li>
-                        <li class="list-date">07/30</li>
-                        <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=1917" rel="bookmark">幽默笑话：口误</a></li>
-                        <li class="list-date">07/15</li>
-                        <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=1707" rel="bookmark">沁园春·热</a></li>
-                    </ul>
+                    <div class="cat-site">
+                        <h4 class="entry-title"><a href="/app/detail/@func.Id" rel="bookmark">@func.Title</a></h4><figure class="thumbnail"><a href="/app/detail/@func.Id"><img src="@func.thumbnail" alt="@func.Title"></a></figure>
+                        <div class="cat-main">
+                            @Html.Raw(func.Content)
+                        </div>
+                        <div class="clear"></div>
+                        <ul class="cat-list">
+                            @{
+                                for (int j = 1; j < funcList.Count; j++)
+                                {
+                                    <li class="list-date">@funcList[j].CreatorTime.ToDateTime().ToString("yyyy/MM/dd")</li>
+                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="/App/Detail/@funcList[j].Id">@funcList[j].Title</a></li>
+                                }
+                            }
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
+                                }
+
     </div>
 </div>
 

@@ -19,7 +19,7 @@
 .li-numbers { float: left; background: #ccc; font-size: 12px; color: #fff; line-height: 150%; margin: 4px 5px 0 0; padding: 0 5px; border-radius: 8px; }
 .hot_article .avatar { width: 32px; height: 32px; border-radius: 5px; margin: 6px 8px 0 0; -webkit-transition: .8s; border: 1px solid #ddd; }
     .hot_article .avatar:hover { transform: rotate(720deg); border-radius: 64px !important; box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0) !important; }
-
+.hot_article ul li a p{display:inline;}
 /*多个a标签hover统一样式*/
 .cat-list a:hover, .entry-title > a:hover, .cat-box .cat-title a:hover, .hot_article a:hover { color: #04a4cc; text-decoration: none; }
 a { color: #444; }
@@ -91,10 +91,9 @@ img.alignnone { margin: 0 auto; display: block; max-width: 100%; width: auto; he
     margin-bottom:20px;
 }
 
-
-
-
-@media screen and (min-width: 900px) { #scroll li a:hover { background: #2f889a; color: #fff !important; border: 1px solid #2f889a; transition: all 0.2s ease-in 0s; }
+/*detail begin*/
+    /*detail end*/
+    @media screen and (min-width: 900px) { #scroll li a:hover { background: #2f889a; color: #fff !important; border: 1px solid #2f889a; transition: all 0.2s ease-in 0s; }
 }
 @media screen and (max-width: 900px) {
     .qr-site { display: none; }

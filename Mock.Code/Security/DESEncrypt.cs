@@ -33,8 +33,6 @@ namespace Mock.Code
             DESCryptoServiceProvider des = new DESCryptoServiceProvider();
             byte[] inputByteArray;
             inputByteArray = Encoding.Default.GetBytes(Text);
-            //des.Key = ASCIIEncoding.ASCII.GetBytes(System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(sKey, "md5").Substring(0, 8));
-            //des.IV = ASCIIEncoding.ASCII.GetBytes(System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(sKey, "md5").Substring(0, 8));
 
             des.Key = ASCIIEncoding.ASCII.GetBytes(DataHelper.Md5Hash(sKey).Substring(0, 8));
             des.IV = ASCIIEncoding.ASCII.GetBytes(DataHelper.Md5Hash(sKey).Substring(0, 8));
@@ -88,8 +86,6 @@ namespace Mock.Code
                 i = Convert.ToInt32(Text.Substring(x * 2, 2), 16);
                 inputByteArray[x] = (byte)i;
             }
-            //des.Key = ASCIIEncoding.ASCII.GetBytes(System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(sKey, "md5").Substring(0, 8));
-            //des.IV = ASCIIEncoding.ASCII.GetBytes(System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(sKey, "md5").Substring(0, 8));
 
             des.Key = ASCIIEncoding.ASCII.GetBytes(DataHelper.Md5Hash(sKey).Substring(0, 8));
             des.IV = ASCIIEncoding.ASCII.GetBytes(DataHelper.Md5Hash(sKey).Substring(0, 8));

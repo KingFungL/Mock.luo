@@ -13,7 +13,7 @@
                     <td colspan="3">
                         <multiselect v-model="FId" :hide-selected="false" label="text" track-by="id" placeholder="--请选择分类--" :options="FTypeOptions" :multiple="false"
                                      :searchable="true" :clear-on-select="false"
-                                     :close-on-select="true" >
+                                     :close-on-select="true">
                             <span slot="noResult">Oops! No elements found. Consider changing the search query.</span>
                         </multiselect>
                     </td>
@@ -21,21 +21,32 @@
                 <tr>
                     <th>关键词</th>
                     <td>
-                        <input id="Keywords" name="Keywords" v-model="Keywords" title="请输入标题" class="form-control" type="text" checkexpession="LenStr"  length="400">
+                        <input id="Keywords" name="Keywords" v-model="Keywords" title="请输入标题" class="form-control" type="text" checkexpession="LenStr" length="400">
                     </td>
                     <th>文章来源</th>
-                    <td><input id="Source" name="Source" v-model="Source" class="form-control" type="text" checkexpession="LenStr"  length="400"></td>
+                    <td><input id="Source" name="Source" v-model="Source" class="form-control" type="text" checkexpession="LenStr" length="400"></td>
                 </tr>
                 <tr>
                     <th>文章标题<span style="color:red">*</span></th>
                     <td colspan="3">
-                        <input id="Title" name="Title" v-model="Title" data-placement="right" title="请输入标题" class="form-control" type="text" isvalid="yes" checkexpession="NotNull" length="200" errmsg="请输入标题" >
+                        <input id="Title" name="Title" v-model="Title" data-placement="right" title="请输入标题" class="form-control" type="text" isvalid="yes" checkexpession="NotNull" length="200" errmsg="请输入标题">
                     </td>
                 </tr>
                 <tr>
                     <th>摘要</th>
                     <td colspan="3">
-                        <textarea name="Excerpt" v-model="Excerpt" id="Excerpt" style="width: 98%; height: 50px;" class="form-control" isvalid="yes" checkexpession="LenStrOrNull"  length="400"></textarea>
+                        <textarea name="Excerpt" v-model="Excerpt" id="Excerpt" style="width: 98%; height: 50px;" class="form-control" isvalid="yes" checkexpession="LenStrOrNull" length="400"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>标签</th>
+                    <td colspan="3">
+
+                        <div class="tagcloud">
+                            <template v-for="item in Tag">
+                                <a href="javascript:void(0);" v-bind:class="{ active: item.Active }"  v-text="item.text" v-on:click="toogle_tag(item.id)"></a>
+                            </template>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -100,6 +111,12 @@
                             </div>
                         </td>
                     </tr>
+                    <tr> <th><b>文章链接</b></th> </tr>
+                    <tr>
+                        <td>
+                            <input type="text" readonly="readonly" v-model="linkUrl" style="border:none;" />
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -108,6 +125,12 @@
 
 @section css{
     <link href="~/Content/css/vue-multiselect.min31f.css" rel="stylesheet" />
+    <style>
+        .tagcloud { padding: 5px 0 5px 2px; }
+            .tagcloud > a { font-size: 14px; text-decoration: none; float: left; margin: 4px; padding: 0 7px; line-height: 26px; text-align: center; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); }
+                .tagcloud > a:hover, .tagcloud > a.active { background: #2f889a; color: #fff !important; border: 1px solid #2f889a; transition: all 0.1s ease-in 0s; }
+    </style>
+
 }
 @section scripts{
     <script src="~/Content/js/vue/vue-multiselect.min.js"></script>
@@ -116,6 +139,7 @@
     <script src="~/Content/js/ueditor/toggletool.js"></script>
     <script>
         var json = JSON.parse(`@Html.Raw(ViewBag.ViewModel)`);
+        var tagAcitve = JSON.parse('@Html.Raw(ViewBag.TagActive)');
         Vue.component('Multiselect', VueMultiselect.Multiselect);
         if (json.Id == null) {
             json.IsAudit = true;
@@ -125,8 +149,13 @@
             json.CommentQuantity = 0;
             json.PointQuantity = 0;
             json.thumbnail = "/Content/Images/default-thumbnail.png";
+            json.linkUrl = "";
+            json.Archive ='@DateTime.Now.ToString("yyyy年MM")';
+        } else {
+            json.linkUrl = '/App/Detail/' + json.Id;
         }
         json.FId == null && (json.FId = -1);
+        json.Tag = [];
         var ue;
         var vm = new Vue({
         el: '#v-app',
@@ -151,6 +180,7 @@
                     ue.setContent(json.Content);
                 });
             }
+            this.get_tag_options();
         },
         methods: {
             submit: function (callback) {
@@ -161,6 +191,13 @@
                 var content = ue.getContent();
                 vm.Content = encodeURIComponent(content);
                 vm.FId = vm.FId.id;
+                var TagArray = [];
+                $.each(vm.Tag, function (i, v) {
+                    if (v.Active == true) {
+                        TagArray.push(v.id);
+                    }
+                });
+                vm.Tag = String(TagArray);
                 if (json.FId == -1) {
                     json.FId = null;
                 }
@@ -194,11 +231,47 @@
                 })
             },
             show_review: function () {
-                //javascript: open_iframe_dialog('/Plat/MoReview/Index?id=' + $('#ArticleId').val(), '评论列表')
                 $.layerOpen({
                     content: '/Plat/Review/Index?Id=' + vm.Id,
                     width: '70%',
                     height: '64%'
+                })
+            },
+            get_tag_options: function () {
+                com.ajax({
+                    url: '/Plat/ItemsDetail/GetCombobox?Encode=Tag',
+                    showLoading: false,
+                    success: function (data) {
+                        if (data && data.length > 0) {
+                            data.splice(0, 1);
+                            $.each(data, function (i, d) {
+                                    data[i].Active = false;
+                            });
+                        }
+                        if (tagAcitve && tagAcitve.length > 0) {
+                            $.each(tagAcitve, function (i, d) {
+                                $.each(data, function (j, v) {
+                                    if (v.id == d) {
+                                        data[j].Active = true;
+                                        return false;
+                                    }
+                                });
+                            });
+                        }
+                        vm.Tag = data;
+                    }
+                })
+            },
+            toogle_tag: function (Id) {
+                $.each(vm.Tag, function (i,d) {
+                    if (Id == d.id) {
+                        if (d.Active == true) {
+                            vm.Tag[i].Active = false;
+                        } else {
+                            vm.Tag[i].Active = true;
+                        }
+                        return false;
+                    }
                 })
             }
         },
