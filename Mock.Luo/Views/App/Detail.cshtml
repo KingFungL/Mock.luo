@@ -5,127 +5,30 @@
     ViewBag.Title = @entry.Title;
 }
 
-@section css{
-    <style>
-        .navcates { background-color: #fff; clear: both; overflow: hidden; width: 100%; height: auto; padding: 2px 12px 0 20px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border: 1px #eee solid; margin-bottom: -1px; }
-        .single-content, .page-content { margin-bottom: 10px; border-radius: 6px; width: 100%; background-color: #fff; border: 1px #eee solid; padding: 12px 20px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
-        .navcates i.fa { margin-right: 3px; font-size: 1.2em; }
-        .navcates a { color: #666; line-height: 36px; margin: 0 2px; }
-        .post-head { border-bottom: 1px solid #eee; overflow: hidden; padding-bottom: 10px; }
-            .post-head h4 { width: 100%; display: block; height: 35px; line-height: 30px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
-                .post-head h4 a { color: #1f1f1f; }
-                    .post-head h4 a:hover, .info a:hover, .info .category:hover i, .info .comment:hover i, .info .more:hover i, .info .category:hover a, .info .comment:hover a, .info .more:hover a { color: red; }
-        .info { overflow: hidden; color: #999; height: auto; font-size: 12px; }
-        .left { float: left; }
-        .info span { margin-right: 4px; display: inline-block; }
-            .info span i.fa { margin-right: 5px; }
-        .info i { color: #d4d4d4; }
-        .info a { color: #999; }
-
-        .entry { padding-bottom: 12px; }
-            .entry h2 { margin: 24px 0 12px; padding: 8px 12px 12px 4px; }
-            .entry h2, .entry h3, .entry h4, .entry h5 { color: #555; font-weight: bold; border-bottom: 1px solid #eee; position: relative; color: #f24c27; }
-            .entry img { max-width: 85%; height: auto; padding: 5px; border-radius: 3px; /* border: 2px solid #eee; */ }
-
-        .authorarea { position: relative; background-color: #fafafa; border: 1px solid transparent; -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05); box-shadow: 0 1px 1px rgba(0,0,0,.05); border-color: #ebedf1; overflow: hidden; padding: 10px; margin-bottom: 20px; margin-top: 15px; }
-        .authorinfo { display: inline-block; }
-        .authorarea .author-avater { float: left; }
-        .author-des { margin-left: 65px; }
-        .authorarea .author-avater img { border: 1px solid #DDD; position: relative; width: 50px; border-radius: 100%; }
-            .authorarea .author-avater img:hover { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); -ms-transform: rotate(360deg); transform: rotate(360deg); }
-        img { opacity: 1 !important; -webkit-transition: -webkit-transform .3s linear; -moz-transition: -moz-transform .3s linear; -o-transition: -o-transform .3s linear; transition: transform .3s linear; }
-        .author-des .author-description { font-size: 12px; color: #929292; line-height: 1.7; margin-top: 10px; }
-        .post-author-name { font-size: 15px; margin-right: 25px; }
-            .post-author-name > a:hover { color: red; }
-        .post-author-url a, .post-author-weibo a { font-size: 12px; text-decoration: none; padding: 1px 8px; white-space: nowrap; margin-left: 25px; -webkit-border-radius: 20px; -moz-border-radius: 20px; border-radius: 20px; border-style: solid; border-width: 1px; }
-        .post-author-url a { border-color: #EC1464; color: #EC1464; }
-            .post-author-url a:hover { background-color: #EC1464; color: #fff; }
-        .post-author-weibo a { border-color: #32a5e7; color: #32a5e7; }
-            .post-author-weibo a:hover { background-color: #32a5e7; color: #fff; }
-        #social { margin: 50px auto; position: relative; }
-            #social .social-main { position: relative; margin: 0 auto; width: 243px; }
-        .social-main span { float: left; }
-        .like a { background: #f74840; width: 120px; display: block; border: 1px solid #ddd; float: left; padding-left: 25px; }
-        .social-main i { color: #fff; margin: 0 5px 0 0; }
-        .shang-empty { position: absolute; left: 90px; height: 38px; overflow: hidden; }
-            .shang-empty span { background: #fff; width: 60px; height: 60px; display: block; margin: -10px 0 0 0; border-radius: 60px; border: 1px solid #ddd; }
-        .social-main span { float: left; }
-        .tipso_style { cursor: pointer; }
-        .bdshare-button-style1-16 { zoom: 1; }
-        #share { position: absolute; top: -60px; right: -68px; width: 302px; height: 68px; display: none; z-index: 999; }
-        .share-s a { background: #39c; width: 120px; display: block; padding-left: 15px; border: 1px solid #ddd; }
-        .share-s a, .shang-s a { text-align: center; }
-        #share .fa-qq { color: #7ab951; border: 1px solid #7ab951; background: #fff; }
-            #share .fa-qq:hover { background: #7ab951 !important; color: #fff !important; }
-        #share .fa-weibo { color: red; border: 1px solid red; background: #fff; }
-            #share .fa-weibo:hover { background: #ff0000 !important; color: #fff !important; }
-        #share .fa-weixin { color: #006f1d; border: 1px solid #006f1d; background: #fff; }
-            #share .fa-weixin:hover { background: #006f1d !important; color: #fff !important; }
-
-        #share .fa-plus-square { color: #7ab951; border: 1px solid #7ab951; background: #fff; }
-        #share a { float: left; background: #999; font-size: 20px; color: #fff; width: 40px; height: 40px; line-height: 40px; margin-left: 4px; padding-left: 0; text-align: center; border-radius: 20px; background: rgba(128, 128, 128, 0.9); }
-        .bdshare-button-style1-16 a, .bdshare-button-style1-16 .bds_more { float: left; font-size: 12px; padding-left: 17px; line-height: 16px; height: 16px; background-repeat: no-repeat; cursor: pointer; margin: 6px 6px 6px 0; }
-        .social-main a { color: #fff; line-height: 36px; border-radius: 20px; }
-            .social-main a:hover .fa-thumbs-up { color: #d03f42; }
-            .social-main a:hover .fa-share-alt { color: #91c24f; }
-            .social-main a:hover { text-decoration: none; background: #f1f1f1; color: #444; transition: all 0.2s ease-in 0s; }
-        .shang-p a { position: absolute; background: #ffab2e; left: 96px; top: -5px; width: 48px; height: 48px; font-size: 16px; line-height: 45px; color: #fff; display: block; border: 1px solid #ddd; border-radius: 40px; left: 101px\9; top: 0\9; width: 38px\9; height: 38px\9; line-height: 35px\9; }
-        .social-main a:hover .fa-thumbs-up { color: #d03f42; }
-
-        .nav-single { padding: 10px; }
-            .nav-single a div.meta-nav { padding: 10px 20px; background: #fff; white-space: nowrap; word-wrap: normal; text-overflow: ellipsis; overflow: hidden; border: 1px solid #ddd; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); border-radius: 8px; }
-                .nav-single a div.meta-nav:hover { color: #fff; background: #2f889a; border: 1px solid #2f889a; }
-
-        .hot_article ul li { border-bottom: 1px solid #F2F2F2; margin-bottom: 10px; }
-            .hot_article ul li a { margin-left: 10px; }
-            .hot_article ul li span { float: right }
-
-        ul.divCatalog { margin: 4px 5px 20px; height: 100%; overflow: hidden; padding-bottom: 1px; }
-        #divCatalog li { line-height: 20px; white-space: nowrap; word-wrap: normal; text-overflow: ellipsis; overflow: hidden; float: left; width: 49.666%; margin: 0 -3px -1px 2px; padding: 0; border-bottom: none; position: inherit; }
-            #divCatalog li a { text-align: center; padding: 10px 0; display: block; border: 1px solid #ddd; height: 100%; }
-        .sidebar-widget ul li a { height: 30px; width: 100%; display: block; white-space: nowrap; }
-        #divCatalog li a:hover { background: #F24C27; color: #FFF; font-size: 16px; }
-        ol { border: 0; font-family: inherit; font-size: 100%; font-style: inherit; margin: 0; outline: 0; padding: 0; vertical-align: baseline; }
-            ol.comment-list, .comment-list ol { list-style: none; }
-        .comment-list li { position: relative; background: #fff; margin: 0 0 10px 0; padding: 9px 13px 15px 12px; border: 1px solid #ddd; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); border-radius: 8px; word-wrap: break-word; word-break: break-all; }
-        .comment-list .review-content { padding-left: 25px; padding-right: 5px; }
-        .comment-author { color: #999; }
-        .vcard .avatar { box-shadow: 0px 0px 1px; float: left; width: 55px; height: 55px; margin: 7px 10px 0 0; padding: 3px; border: 1px solid #ddd; border-radius: 10px; transition: all 0.8s ease 0s; -webkit-transition: all 0.8s ease 0s; -moz-transition: all 0.8s ease 0s; -o-transition: all 0.8s ease 0s; -ms-transition: 0.8s; }
-        .lv { font-size: 12px; color: #fff; padding: 0 4px; background: #c40000; border-radius: 4px; }
-        .comment-meta, .comment-meta a { color: #999; }
-        .reply { position: absolute; top: 15px; right: 20px; }
-            .reply a:hover { background: #2f889a; color: #fff !important; border: 1px solid #2f889a; transition: all 0.2s ease-in 0s; }
-            .reply a { background: #fff; line-height: 25px; display: block; padding: 0 10px; border: 1px solid #ddd; border-radius: 8px; }
-        .pldiban { background: #71daf5; border-radius: 8px; }
-        .vcard:hover .avatar { box-shadow: 0px 0px 10px #0c0; transform: rotate(720deg); -webkit-transform: rotate(720deg); -moz-transform: rotate(720deg); -o-transform: rotate(720deg); -ms-transform: rotate(720deg); border-radius: 64px !important; filter: alpha(opacity=100) !important; opacity: 1 !important; }
-        .floor { color: #999; }
-        .display { display: none; }
-        .visable { display: inline; }
-
-        .btn-submit { background: #daf2ff; cursor: pointer; border: 1px solid #ddd; border-radius: 15px; }
-            .btn-submit:hover { background: #2f889a; color: #fff; border: 1px solid #2f889a; transition: all 0.2s ease-in 0s; }
-        .at, .at a { font-size: 12px; color: #fff; padding: 2px 2px; border-radius: 4px; background: #333; }
-        .review-content span p { display: inline; }
-    </style>
-}
-
 <div class="container" style="margin-top:80px;" id="v-app">
     <div class="row">
         <div class="col-md-8 col-xs-12">
             <div class="navcates">
                 <i class="fa fa-home"></i>当前位置：<a href="/" target="_blank" title="entry.Title">首页</a><i class="fa fa-angle-right"></i>
-                <a href="/" target="_blank" title="entry.Title">@entry.TypeName</a><i class="fa fa-angle-right"></i>
-                <a href="/App/Detail/@entry.Id" rel="bookmark" target="_blank" title="entry.Title">@entry.Title</a>
+                @if (entry.TypeName.IsNotNullOrEmpty())
+                {
+                    <a href="/App/Category/@entry.TypeCode" target="_blank" title="@entry.TypeName">@entry.TypeName</a><i class="fa fa-angle-right"></i>
+                }
+                <a href="/App/Detail/@entry.Id" rel="bookmark" target="_blank" title="@entry.Title">@entry.Title</a>
             </div>
             <div class="content single-content">
                 <header class="post-head">
                     <h4><a href="/App/Detail/@entry.Id" target="_blank" title="正在阅读 @entry.Title">@entry.Title</a></h4>
                     <div class="info left">
                         <!-- 文章信息 -->
-                        <span class="category"><i class="fa fa-list-alt"></i><a href="/category/ @entry.FId">@entry.TypeName</a></span>
+                        @if (entry.TypeName.IsNotNullOrEmpty())
+                        {
+                            <span class="category"><i class="fa fa-list-alt"></i><a href="/app/category/@entry.TypeCode">@entry.TypeName</a></span>
+                        }
+
                         <span class="date"><i class="fa fa-clock-o"></i>@entry.CreatorTime</span>
                         <span class="view"><i class="fa fa-eye"></i>浏览(@entry.ViewHits)</span>
-                        <span class="comment"><i class="fa fa-comment"></i><a href="/app/detail/@entry.Id#author-comment">评论(@entry.CommentQuantity)</a></span>
+                        <span class="comment"><i class="fa fa-comment"></i><a href="#review-form">评论(@entry.CommentQuantity)</a></span>
                     </div>
                 </header>
                 <div class="entry">
@@ -174,8 +77,9 @@
                             <div class="author-meta">
                                 <span class="post-author-name"><a href="" title="由 @entry.NickName 发布" rel="author">@entry.NickName</a></span>
                                 @*<span class="post-author-tatus"><a href="/app/author-1" target="_blank">258篇文章</a></span>*@
-                                <span class="post-author-url"><a href="/app/category/zd" rel="nofollow" target="_blank">站点</a></span>
-                                <span class="post-author-weibo"><a href="/app/category/weibo" rel="nofollow" target="_blank">微博</a></span>
+                                <template v-for="item in ArtTag">
+                                    <span class="post-author-weibo"><a :href="'/App/Category/'+item.code+'?Type=Tag'" target="_blank" v-text="item.text"></a></span>
+                                </template>
                             </div>
                             <p class="author-description">@entry.PersonSignature </p>
                         </div>
@@ -236,22 +140,26 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="cat-box fadeInUp" data-wow-delay="0.3s">
-                            <h3 class="cat-title"><a href="http://www.99bsy.com/?cat=17" title=""><i class="fa fa-heartbeat"></i>Wordpress<i class="fa fa-angle-right"></i></a></h3>
+                            <h3 class="cat-title"><a href="/App/Category/Relate" title=""><i class="fa fa-heartbeat"></i>相关文章<i class="fa fa-angle-right"></i></a></h3>
                             <div class="cat-site">
                                 <ul class="cat-list">
-                                    <li class="list-date">08/04</li>
-                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=2165" rel="bookmark">WordPress登陆失败自动发送邮件提醒</a></li>
+                                    <template v-for="item in RelateArt">
+                                        <li class="list-date" v-text="item.code"></li>
+                                        <li class="list-title"><i class="fa fa-angle-right"></i><a :href="'/App/Detail/'+item.Id" v-text="item.text"></a></li>
+                                    </template>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="cat-box  fadeInUp" data-wow-delay="0.3s">
-                            <h3 class="cat-title"><a href="http://www.99bsy.com/?cat=276" title=""><i class="fa fa-heartbeat"></i>轻松时刻<i class="fa fa-angle-right"></i></a></h3>
+                            <h3 class="cat-title"><a href="/App/Category/Random" title=""><i class="fa fa-heartbeat"></i>随机文章<i class="fa fa-angle-right"></i></a></h3>
                             <div class="cat-site">
                                 <ul class="cat-list">
-                                    <li class="list-date">08/20</li>
-                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="http://www.99bsy.com/?p=2380" rel="bookmark">热！热！热！</a></li>
+                                    <template v-for="item in RandomArt">
+                                        <li class="list-date" v-text="item.code"></li>
+                                        <li class="list-title"><i class="fa fa-angle-right"></i><a :href="'/App/Detail/'+item.Id" rel="bookmark" v-text="item.text"></a></li>
+                                    </template>
                                 </ul>
                             </div>
                         </div>
@@ -266,18 +174,20 @@
                             <input type="hidden" name="AId" v-model="reply.AId" />
                             <input type="hidden" name="PId" v-model="reply.PId">
                             <label>QQ</label><input class="form-control" maxlength="12" v-model="reply.QQ" name="QQ" type="text" placeholder="请输入您的QQ" />
-                            <label for="AuName">昵称（必填）</label> <input type="text" class="form-control" isvalid="yes" checkexpession="NotNull" name="AuName" v-model="reply.AuName" placeholder="输入你的昵称" errormsg="昵称" />
-                            <label for="AuEmail">邮箱（必填）</label><input type="text" class="form-control" isvalid="yes" checkexpession="EmailAndNotNull" name="AuEmail" v-model="reply.AuEmail" placeholder="请输入正确的email" errormsg="邮箱" />
+                            <label for="AuName">昵称<strong>（必填)</strong></label> <input type="text" class="form-control" isvalid="yes" checkexpession="NotNull" name="AuName" v-model="reply.AuName" placeholder="输入你的昵称" errormsg="昵称" />
+                            <label for="AuEmail">邮箱<strong>（必填)</strong></label><input type="text" class="form-control" isvalid="yes" checkexpession="EmailAndNotNull" name="AuEmail" v-model="reply.AuEmail" placeholder="请输入正确的email" errormsg="邮箱" />
                             <label for="PersonalWebsite">网址</label><input type="text" v-model="reply.PersonalWebsite" class="form-control" name="PersonalWebsite" placeholder="这里可以输入你的个人网站" />
-                            <label>评论内容（必填)</label>
-                            <textarea class="layui-textarea" id="layui_edit"></textarea>
+                            <label>评论内容<strong>（必填)</strong></label>
+                            <div class="">
+                                <textarea class="layui-textarea layui-editor" name="layui_edit" id="layui_edit"></textarea>
+                            </div>
                         </form>
                     </div>
                     <div class="text-right">
                         <input type="button" class="btn btn-default" v-on:click="cancel" v-show="reply.PId!=0" value="取消" />
                         <span>回复：</span>
                         <input type="text" v-model="reply.PName" value="" readonly="readonly" disabled class="form-control" style="width:100px;display:inline;" />
-                        <input type="button" v-on:click="submit" value="提交吐槽" class="btn btn-submit" style="padding: 8px;width:200px;" />
+                        <input type="button" v-on:click="submit" value="提交吐槽" class="btn btn-submit" />
                     </div>
                 </div>
             </div>
@@ -312,7 +222,7 @@
                 </li>
                 <template v-for="item in review">
                     <li class="fadeInUp">
-                        <div v-bind:id="'author-comment-'+ item.Id"  class="comment-body">
+                        <div v-bind:id="'author-comment-'+ item.Id" class="comment-body">
                             <div class="comment-author vcard">
                                 <img class="avatar" v-bind:src="item.HeadHref" style="display: block;">
                                 <strong>
@@ -331,7 +241,7 @@
                                 </span>
                             </div>
                             <p class="review-content">
-                                <span class="at" v-show="item.PId!=0">@@<a v-bind:href="'#commit-'+ item.PId" v-text="item.PName"></a></span>
+                                <span class="at" v-show="item.PId!=0">@@<a v-bind:href="'#author-comment-'+ item.PId" v-text="item.PName"></a></span>
                                 <span v-html="decodeText(item.Text)"></span>
                             </p>
                         </div>
@@ -346,8 +256,16 @@
                 <h3 class="widget-title">博主推荐</h3>
                 <div class="hot_article">
                     <ul>
-                        <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2424" style="margin-left:4px;">你什么都舍不得扔，还谈什么生活质量</a></li>
-                        <li>
+                        <template v-if="RecommendArt&&RecommendArt.length==0">
+                            <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="javascript:void(0);" style="margin-left:4px;">竟然一条推荐都没有，神奇了！！！</a></li>
+                            <li>
+                        </template>
+                        <template v-for="item in RecommendArt">
+                            <li>
+                                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                <a :href="'/App/Detail/'+item.Id" style="margin-left:4px;" v-text="item.text"></a>
+                            </li>
+                        </template>
                     </ul>
                 </div>
                 <div class="clear"></div>
@@ -356,7 +274,13 @@
             <aside class="widget fadeInUp" data-wow-delay="0.3s" id="divCatalog">
                 <h3 class="widget-title">分类目录</h3>
                 <div class="hot_article">
-                    <ul class="divCatalog"><li class="li-cate"><a href="http://z.mrpan.me/links.html">友链|网站</a></li><li class="li-cate"><a href="http://z.mrpan.me/archives.html">文章归档</a></li><li class="li-cate"><a href="http://z.mrpan.me/category-zjd.html">正经De</a></li>                                 <li class="li-cate"><a href="http://z.mrpan.me/category-bzjd.html">不正经De</a></li><li class="li-cate"><a href="http://z.mrpan.me/category-jc.html">教程</a></li><li class="li-cate"><a href="http://z.mrpan.me/category-zy.html">资源</a></li><li class="li-cate"><a href="http://z.mrpan.me/category-swgj.html">上网工具</a></li><li class="li-cate"><a href="http://z.mrpan.me/category-swzh.html">上网账号</a></li></ul>
+                    <ul class="divCatalog">
+                        <template v-for="item in Category">
+                            <li class="li-cate"><a :href="'/App/Detail/Category/'+item.code" v-text="item.text"></a></li>
+                        </template>
+
+                        @*<li class="li-cate"><a href="http://z.mrpan.me/archives.html">文章归档</a></li>*@
+                    </ul>
                 </div>
                 <div class="clear"></div>
             </aside>
@@ -364,7 +288,12 @@
                 <h3 class="widget-title">文章归档</h3>
                 <div class="hot_article">
                     <ul>
-                        <li><i class="fa fa-calendar" aria-hidden="true"></i><a href="http://www.99bsy.com/?p=2424">2017年九月</a></li>
+                        <template v-for="item in ArchiveFile">
+                            <li>
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                <a style="margin-left: 4px;" :href="'/App/Items/'+item.text" v-text="item.text"></a><span class="num" v-text="'('+item.code+')'"></span>
+                            </li>
+                        </template>
                     </ul>
                 </div>
                 <div class="clear"></div>
@@ -372,6 +301,10 @@
         </div>
     </div>
 </div>
+
+@section css{
+    <link href="~/Content/js/layui/css/font_24081_lyaxcfn8fp1iqkt9.css" rel="stylesheet" />
+}
 @section scripts{
     <script src="~/Content/js/plugins/validator.js"></script>
     <script>
@@ -409,11 +342,19 @@
                     PersonalWebsite: '',
                     Text: '',
                     PName:'博主'
-                }
+                },
+                RelateArt: [],
+                Category: [],
+                RecommendArt: [],
+                ArchiveFile: [],
+                RandomArt: [],
+                ArtTag:[]
             },
             mounted: function () {
                 this.init_datagrid();
                 this.init_layedit();
+
+                this.get_relate_list();
             },
             methods: {
                 init_layedit: function () {
@@ -425,9 +366,13 @@
                     });
                     //自定义工具栏
                     window.setTimeout(function () {
-                        layui.use('layedit', function () {
-                            var layedit = layui.layedit;
-                            vm.index = layedit.build('layui_edit', { height: 100, tool: ['face','link'] });
+                        //layui.use('layedit', function () {
+                        //    var layedit = layui.layedit;
+                        //    //vm.index = layedit.build('layui_edit', { height: 100, tool: ['face','link'] });
+
+                        //});
+                        vm.index = com.layEditor({
+                            elem: '.layui-editor'
                         });
                     }, 1000);
                 },
@@ -487,32 +432,34 @@
                     if (!$('#review-form').Validform()) {
                         return false;
                     }
-                    var text = layui.layedit.getContent(vm.index);
+                    var text = $('#layui_edit').val();
                     if ($.trim(text) == "") {
                         $.layerMsg('请填写评论内容！', 'info');
                         return;
                     }
-                    var t = layui.layedit.getText(vm.index);
-                    if ($.trim(t) != "" && $.trim(t).length>500) {
+                    if ($.trim(text) != "" && $.trim(text).length>500) {
                         $.layerMsg('评论内容太多了！', 'info');
                         return;
                     }
 
-                    vm.reply.Text = encodeURIComponent(text);
+                    vm.reply.Text = com.escape(text);
+
                     com.ajax({
                         url: '/Plat/Review/Add',
                         data: vm.reply,
                         showMsg: true,
                         success: function (d) {
                             $('#layui_edit').val("");
-                            vm.index = layui.layedit.build('layui_edit', { height: 100, tool: ['face', 'link'] });
                             vm.reply.QQ = ""; vm.reply.AuName = ""; vm.reply.AuEmail = ""; vm.reply.PersonalWebsite = "";
                             vm.init_datagrid();
                         }
                     });
                 },
                 decodeText: function (d) {
-                    return decodeURIComponent(d);
+                   var content = /^\{html\}/.test(d)
+                        ? d.replace(/^\{html\}/, '')
+                        : com.content(d);
+                    return content;
                 },
                 reply_review: function (Id) {
                     console.log(Id);
@@ -530,6 +477,22 @@
                 cancel: function () {
                     vm.reply.PId = 0;
                     vm.reply.PName = "博主";
+                },
+                get_relate_list: function () {
+                    com.ajax({
+                        url: '/App/GetRelateList',
+                        data: { Id: '@ViewBag.AId' },
+                        showLoading:false,
+                        success: function (data) {
+                            vm.RelateArt = data.RelateArt;
+                            vm.Category = data.Category;
+                            vm.RecommendArt = data.RecommendArt;
+                            vm.ArchiveFile = data.ArchiveFile;
+                            vm.RandomArt = data.RandomArt;
+                            vm.ArtTag = data.ArtTag;
+
+                        }
+                    })
                 }
             }
         })

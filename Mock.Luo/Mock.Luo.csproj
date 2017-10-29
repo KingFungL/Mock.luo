@@ -480,6 +480,7 @@
     <Content Include="Content\js\jquery.validate.unobtrusive.min.js" />
     <Content Include="Content\js\knockout-2.2.0.debug.js" />
     <Content Include="Content\js\knockout-2.2.0.js" />
+    <Content Include="Content\js\layui\css\font_24081_lyaxcfn8fp1iqkt9.css" />
     <Content Include="Content\js\layui\css\layui.css" />
     <Content Include="Content\js\layui\css\layui.mobile.css" />
     <Content Include="Content\js\layui\css\modules\code.css" />
@@ -568,6 +569,7 @@
     <Content Include="Content\js\layui\lay\modules\carousel.js" />
     <Content Include="Content\js\layui\lay\modules\code.js" />
     <Content Include="Content\js\layui\lay\modules\element.js" />
+    <Content Include="Content\js\layui\lay\modules\face.js" />
     <Content Include="Content\js\layui\lay\modules\flow.js" />
     <Content Include="Content\js\layui\lay\modules\form.js" />
     <Content Include="Content\js\layui\lay\modules\jquery.js" />

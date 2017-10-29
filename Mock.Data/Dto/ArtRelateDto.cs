@@ -9,16 +9,30 @@ namespace Mock.Data.Dto
     //文章详情侧栏与下栏数据源
    public class ArtRelateDto
     {
-        //相关文章
+        /// <summary>
+        /// 相关文章
+        /// </summary>
         public List<BaseDto> RelateArt { get; set; }
-        //推荐文章
+        /// <summary>
+        /// 推荐文章
+        /// </summary>
         public List<BaseDto> RecommendArt { get; set; }
-        //分类
+        /// <summary>
+        /// 分类
+        /// </summary>
         public List<BaseDto> Category { get; set; }
-        //文章归档
+        /// <summary>
+        /// 文章归档
+        /// </summary>
         public List<BaseDto> ArchiveFile { get; set; }
-        //随机文章
+        /// <summary>
+        /// 随机文章
+        /// </summary>
         public List<BaseDto> RandomArt { get; set; }
+        /// <summary>
+        /// 文章标签
+        /// </summary>
+        public List<BaseDto> ArtTag { get; set; }
 
     }
 }

@@ -65,6 +65,7 @@ namespace Mock.Domain
             {
                 u = r,
                 TypeName = r.ItemsDetail == null ? "" : r.ItemsDetail.ItemName,
+                TypeCode=r.ItemsDetail==null?"":r.ItemsDetail.ItemCode,
                 NickName = r.AppUser.NickName,
                 HeadHref = r.AppUser.HeadHref,
                 PersonSignature= r.AppUser.PersonSignature
@@ -72,6 +73,7 @@ namespace Mock.Domain
             {
                 Id = r.u.Id,
                 TypeName = r.TypeName,
+                TypeCode=r.TypeCode,
                 NickName = r.NickName,
                 TimeSpan = TimeHelper.GetDateFromNow(r.u.CreatorTime.ToDateTime()),
                 Title = r.u.Title,

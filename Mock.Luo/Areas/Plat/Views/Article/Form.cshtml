@@ -41,7 +41,6 @@
                 <tr>
                     <th>标签</th>
                     <td colspan="3">
-
                         <div class="tagcloud">
                             <template v-for="item in Tag">
                                 <a href="javascript:void(0);" v-bind:class="{ active: item.Active }"  v-text="item.text" v-on:click="toogle_tag(item.id)"></a>

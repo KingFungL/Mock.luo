@@ -89,6 +89,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
                 Article entity = Mapper.Map<ArticleViewModel, Article>(viewModel);
                 entity.Create();
                 entity.TagArts = tagArtList;
+                entity.Archive = DateTime.Now.ToString("yyy年-MM月");
                 _service.Insert(entity);
             }
             else

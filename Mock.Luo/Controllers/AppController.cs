@@ -148,10 +148,10 @@ namespace Mock.Luo.Controllers
             return View();
         }
 
-        public ActionResult GetRelateList(int Id, List<int> tagIdList)
+        public ActionResult GetRelateList(int Id)
         {
 
-            //目录分类
+            //文章归档
             var archiveList = _articleRepository.IQueryable(u => u.DeleteMark == false && u.IsAudit == true).GroupBy(u => u.Archive).Select(u => new
             {
                 u.Key,
@@ -160,7 +160,7 @@ namespace Mock.Luo.Controllers
             }).ToList();
 
             IQueryable<Article> iQ = _articleRepository.IQueryable(u => u.DeleteMark == false);
-            //目录分类
+            //文章归档
             List<BaseDto> archiveFile = archiveList.Select(u => new BaseDto
             {
                 text = u.Archive,
@@ -170,12 +170,34 @@ namespace Mock.Luo.Controllers
             //从文章列表中取出5条博主最后新增时间的置顶文章
             List<BaseDto> recommendArt = _articleRepository.IQueryable(u => u.DeleteMark == false && u.IsAudit == true).OrderByDescending(u => u.CreatorTime).Take(5).ToList().Select(u => new BaseDto { Id = u.Id, text = u.Title }).ToList();
 
-            //取出分类目录
-            List<BaseDto> category = _itemsDetailRepository.IQueryable(u => u.Items.EnCode == EnCode.FTypeCode.ToString()).ToList().Select(u => new BaseDto { Id = u.Id, text = u.ItemName }).ToList();
+            //取出分类目录:分类编码，分类名称
+            List<BaseDto> category = _itemsDetailRepository.IQueryable(u => u.Items.EnCode == EnCode.FTypeCode.ToString()).Select(u => new BaseDto { Id = u.Id, text = u.ItemName, code = u.Items.EnCode }).ToList();
+
+            //取出分类FId,和文章对应的标签多个Id
+            var iTagFid = iQ.Where(r => r.Id == Id).Select(r => new {
+                r.FId,
+                TagArts = r.TagArts.Select(u => new { u.AId,u.TagId,u.ItemsDetail.ItemCode,u.ItemsDetail.ItemName})
+            }).FirstOrDefault();
+
+            int? FId = iTagFid.FId;
+            List<int> tagIdList = iTagFid.TagArts.Select(u => u.TagId).ToList();
+            Expression<Func<Article, bool>> predicate = u => u.FId == FId;
+
+            //文章对应的多个标签
+            List<BaseDto> ArtTag = new List<BaseDto>();
+
+            if (tagIdList.Count > 0)
+            {
+                predicate = predicate.Or(u => u.TagArts.Select(r => tagIdList.Contains(r.Id)).Count() > 0);
+                ArtTag = iTagFid.TagArts.Select(u => new BaseDto {
+                    Id = u.TagId,
+                    text = u.ItemName,
+                    code = u.ItemCode
+                }).ToList();
+            }
 
             //有关本文章的相关文章5条
-            List<BaseDto> relateArt = iQ.Where(u => u.FId == Id ||
-            u.TagArts.Select(r => tagIdList.Contains(r.Id)).Count() > 0)
+            List<BaseDto> relateArt = iQ.Where(predicate)
             .OrderByNewId().Take(5).ToList().Select(u => new BaseDto { Id = u.Id, text = u.Title }).ToList();
 
             //随机文章
@@ -187,7 +209,8 @@ namespace Mock.Luo.Controllers
                 Category = category,
                 RecommendArt = recommendArt,
                 ArchiveFile = archiveFile,
-                RandomArt = randomArt
+                RandomArt = randomArt,
+                ArtTag = ArtTag
             };
 
             return Result(ardList);

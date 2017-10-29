@@ -1,17 +1,11 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutBlog.cshtml";
-    ViewBag.Title = "、天上月木月 个人博客-小小程序员，信仰低调！";
+    ViewBag.Title = "、天上有木月 个人博客-小小程序员，信仰低调！";
 }
 @section css{
     <style>
-        .sidebar-widget ul { overflow: hidden; margin-top: 6px; }
-            .sidebar-widget ul li { line-height: 30px; padding: 4px; border-bottom: 1px #eee solid; color: #999; position: relative; }
-        #divStatistics { padding-bottom: 20px; }
-            #divStatistics ul li { padding-left: 15px; float: left; width: 50%; border-bottom: none; border: 1px #eee solid; margin-bottom: -1px; margin-right: -1px; cursor: pointer; }
-                #divStatistics ul li:hover { background: #EEE; color: #666; }
-        .archive-content { display: -webkit-box; overflow: hidden; white-space: normal !important; text-overflow: ellipsis; word-wrap: break-word; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+      
     </style>
-
 }
 
 <div class="container" style="margin-top:80px;" id="v-app">
@@ -190,7 +184,7 @@
             @using Mock.Data.Dto;
             <aside class="widget fadeInUp" data-wow-delay="0.3s">
                 <h3 class="widget-title">最新吐槽</h3>
-                <div class="hot_article">
+                <div class="hot_article message-widget">
                     <ul>
                         @{
                             List<ReplyDto> SpitslotList = ViewData["SpitslotList"] as List<ReplyDto>;
@@ -241,9 +235,9 @@
                     <h3 class="cat-title"><a href="/App/Category/@fell.TypeCode"><i class="fa fa-heartbeat"></i>@fell.TypeName<i class="fa fa-angle-right"></i></a></h3>
                     <div class="clear"></div>
                     <div class="cat-site">
-                        <h4 class="entry-title"><a href="/App/Detail/@fell.Id" rel="bookmark">@fell.Title</a></h4>						<figure class="thumbnail"><a href="/App/Detail/@fell.Id"><img src="@fell.thumbnail" alt="@fell.Title"></a></figure>
+                        <h4 class="entry-title"><i class="fa fa-angle-right"></i><a href="/App/Detail/@fell.Id" rel="bookmark">@fell.Title</a></h4>						<figure class="thumbnail"><a href="/App/Detail/@fell.Id"><img src="@fell.thumbnail" alt="@fell.Title"></a></figure>
                         <div class="cat-main">
-                            @Html.Raw(fell.Content)
+                            @Html.Raw(fell.Excerpt)
                         </div>
                         <div class="clear"></div>
 
@@ -274,9 +268,9 @@
                     <h3 class="cat-title"><a href="/App/Category/@fell.TypeCode"><i class="fa fa-heartbeat"></i>轻松时刻<i class="fa fa-angle-right"></i></a></h3>
                     <div class="clear"></div>
                     <div class="cat-site">
-                        <h4 class="entry-title"><a href="/app/detail/@func.Id" rel="bookmark">@func.Title</a></h4><figure class="thumbnail"><a href="/app/detail/@func.Id"><img src="@func.thumbnail" alt="@func.Title"></a></figure>
+                        <h4 class="entry-title"><i class="fa fa-angle-right"></i><a href="/app/detail/@func.Id" rel="bookmark">@func.Title</a></h4><figure class="thumbnail"><a href="/app/detail/@func.Id"><img src="@func.thumbnail" alt="@func.Title"></a></figure>
                         <div class="cat-main">
-                            @Html.Raw(func.Content)
+                            @Html.Raw(func.Excerpt)
                         </div>
                         <div class="clear"></div>
                         <ul class="cat-list">
@@ -284,7 +278,7 @@
                                 for (int j = 1; j < funcList.Count; j++)
                                 {
                                     <li class="list-date">@funcList[j].CreatorTime.ToDateTime().ToString("yyyy/MM/dd")</li>
-                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="/App/Detail/@funcList[j].Id">@funcList[j].Title</a></li>
+                                    <li class="list-title" style="width: 80%;"><i class="fa fa-angle-right"></i><a href="/App/Detail/@funcList[j].Id">@funcList[j].Title</a></li>
                                 }
                             }
                         </ul>
