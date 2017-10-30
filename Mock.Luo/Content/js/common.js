@@ -63,6 +63,7 @@ com.ajax = function (options) {
                         }
                     });
                 }, function () {
+                    console.log(data);
                     //操作失败时
                     $.layerMsg(data.message, data.state);
                 })
@@ -77,6 +78,7 @@ com.ajax = function (options) {
             console.log(status);
             console.log(error);
             var msg = xhr.responseText;
+            console.log(xhr)
             var errMsg = top.layer.open({
                 title: '错误提示',
                 area: ['500px', '400px'],
@@ -394,6 +396,22 @@ com.checkedRow = function (n) {
                         return 0;
                         break;
                 }
+            },
+            parseJson: function (myJSONString) {
+                if (myJSONString && myJSONString.length > 0) {
+                    myJSONString = myJSONString.replace(/\n/g, "</br>").replace(/\r/g, "\\\\r");
+                    return JSON.parse(myJSONString);
+                } else {
+                    return "";
+                }
+            },
+            replaceSpce: function (myJSONString) {
+                if (myJSONString && myJSONString.length > 0) {
+                    myJSONString = myJSONString.replace(/\n/g, "").replace(/\r/g, "");
+                    return JSON.parse(myJSONString);
+                } else {
+                    return "";
+                }
             }
         });
 
@@ -597,3 +615,11 @@ com.focusInsert = function (obj, str) {
         obj.value = result.join('');
     }
 };
+
+com.decodeText=function (d) {
+    var content = /^\{html\}/.test(d)
+        ? d.replace(/^\{html\}/, '')
+        : com.content(d);
+    return content;
+}
+

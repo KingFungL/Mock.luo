@@ -35,7 +35,7 @@
                 <tr>
                     <th>摘要</th>
                     <td colspan="3">
-                        <textarea name="Excerpt" v-model="Excerpt" id="Excerpt" style="width: 98%; height: 50px;" class="form-control" isvalid="yes" checkexpession="LenStrOrNull" length="400"></textarea>
+                        <textarea name="Excerpt" v-model="Excerpt" id="Excerpt" style="width: 98%; height: 80px;" class="form-control" isvalid="yes" checkexpession="LenStrOrNull" length="400"></textarea>
                     </td>
                 </tr>
                 <tr>
@@ -43,7 +43,7 @@
                     <td colspan="3">
                         <div class="tagcloud">
                             <template v-for="item in Tag">
-                                <a href="javascript:void(0);" v-bind:class="{ active: item.Active }"  v-text="item.text" v-on:click="toogle_tag(item.id)"></a>
+                                <a href="javascript:void(0);" v-bind:class="{ active: item.Active }" v-text="item.text" v-on:click="toogle_tag(item.id)"></a>
                             </template>
                         </div>
                     </td>
@@ -113,7 +113,10 @@
                     <tr> <th><b>文章链接</b></th> </tr>
                     <tr>
                         <td>
-                            <input type="text" readonly="readonly" v-model="linkUrl" style="border:none;" />
+                            <label style="width: 88px">
+                                <a :href="linkUrl" target="_blank" style="color: #2fa4e7;" v-text="linkUrl">
+                                </a>
+                            </label>
                         </td>
                     </tr>
                 </tbody>
@@ -135,9 +138,9 @@
     <script src="~/Content/js/vue/vue-multiselect.min.js"></script>
     <script src="~/Content/js/ueditor/ueditor.config.js"></script>
     <script src="~/Content/js/ueditor/ueditor.all.min.js"></script>
-    <script src="~/Content/js/ueditor/toggletool.js"></script>
+    @*<script src="~/Content/js/ueditor/toggletool.js"></script>*@
     <script>
-        var json = JSON.parse(`@Html.Raw(ViewBag.ViewModel)`);
+        var json = com.replaceSpce(`@Html.Raw(ViewBag.ViewModel)`);
         var tagAcitve = JSON.parse('@Html.Raw(ViewBag.TagActive)');
         Vue.component('Multiselect', VueMultiselect.Multiselect);
         if (json.Id == null) {

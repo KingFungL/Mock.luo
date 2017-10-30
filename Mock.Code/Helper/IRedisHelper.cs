@@ -12,6 +12,14 @@ namespace Mock.Code
     public interface IRedisHelper
     {
         /// <summary>
+        /// Redis单元工作
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        T UnitOfWork<T>(string key, Func<T> func) where T : class;
+        /// <summary>
         ///     设置 key 并保存字符串（如果 key 已存在，则覆盖值）
         /// </summary>
         /// <param name="redisKey"></param>

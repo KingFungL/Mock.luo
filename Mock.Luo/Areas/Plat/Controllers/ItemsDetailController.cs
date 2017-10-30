@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Mock.Code;
+using Mock.Code.Helper;
 using Mock.Data;
 using Mock.Data.Models;
 using Mock.Domain;
@@ -47,7 +48,6 @@ namespace Mock.Luo.Areas.Plat.Controllers
             if (id == 0)
             {
                 codeCount = _service.IQueryable(u => u.ItemCode == viewModel.ItemCode).Count();
-
             }
             else
             {
@@ -57,6 +57,10 @@ namespace Mock.Luo.Areas.Plat.Controllers
             {
                 return Error("编码不唯一!");
             }
+            _redisHelper.KeyDeleteAsync(string.Format(ConstHelper.ItemsDetail_ALL, "GetCombobox"));
+
+            _redisHelper.KeyDeleteAsync(string.Format(ConstHelper.Article, "category"));
+
             return base.Edit(viewModel, id);
         }
     }

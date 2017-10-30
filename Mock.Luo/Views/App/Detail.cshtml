@@ -12,7 +12,7 @@
                 <i class="fa fa-home"></i>当前位置：<a href="/" target="_blank" title="entry.Title">首页</a><i class="fa fa-angle-right"></i>
                 @if (entry.TypeName.IsNotNullOrEmpty())
                 {
-                    <a href="/App/Category/@entry.TypeCode" target="_blank" title="@entry.TypeName">@entry.TypeName</a><i class="fa fa-angle-right"></i>
+                    <a href="/App/Category?category=@entry.TypeCode" target="_blank" title="@entry.TypeName">@entry.TypeName</a><i class="fa fa-angle-right"></i>
                 }
                 <a href="/App/Detail/@entry.Id" rel="bookmark" target="_blank" title="@entry.Title">@entry.Title</a>
             </div>
@@ -23,7 +23,7 @@
                         <!-- 文章信息 -->
                         @if (entry.TypeName.IsNotNullOrEmpty())
                         {
-                            <span class="category"><i class="fa fa-list-alt"></i><a href="/app/category/@entry.TypeCode">@entry.TypeName</a></span>
+                            <span class="category"><i class="fa fa-list-alt"></i><a href="/app/category?category=@entry.TypeCode">@entry.TypeName</a></span>
                         }
 
                         <span class="date"><i class="fa fa-clock-o"></i>@entry.CreatorTime</span>
@@ -78,7 +78,7 @@
                                 <span class="post-author-name"><a href="" title="由 @entry.NickName 发布" rel="author">@entry.NickName</a></span>
                                 @*<span class="post-author-tatus"><a href="/app/author-1" target="_blank">258篇文章</a></span>*@
                                 <template v-for="item in ArtTag">
-                                    <span class="post-author-weibo"><a :href="'/App/Category/'+item.code+'?Type=Tag'" target="_blank" v-text="item.text"></a></span>
+                                    <span class="post-author-weibo"><a :href="'/App/Category?tag='+item.code" target="_blank" v-text="item.text"></a></span>
                                 </template>
                             </div>
                             <p class="author-description">@entry.PersonSignature </p>
@@ -101,7 +101,7 @@
                     }
                     else
                     {
-                        <a href="#">
+                        <a href="javascript:void(0);">
                             <div class="col-md-6 col-xs-6 text-center meta-nav">
                                 <span>
                                     <i class="fa fa-angle-left"></i>到起点了
@@ -125,7 +125,7 @@
                     }
                     else
                     {
-                        <a href="#">
+                        <a href="javascript:void(0);">
                             <div class="col-md-6  col-xs-6 text-center meta-nav">
                                 <span>
                                     已经到终点了<i class="fa fa-angle-right"></i>
@@ -140,7 +140,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="cat-box fadeInUp" data-wow-delay="0.3s">
-                            <h3 class="cat-title"><a href="/App/Category/Relate" title=""><i class="fa fa-heartbeat"></i>相关文章<i class="fa fa-angle-right"></i></a></h3>
+                            <h3 class="cat-title"><a href="/App/Category?category=Relate" title=""><i class="fa fa-heartbeat"></i>相关文章<i class="fa fa-angle-right"></i></a></h3>
                             <div class="cat-site">
                                 <ul class="cat-list">
                                     <template v-for="item in RelateArt">
@@ -153,7 +153,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="cat-box  fadeInUp" data-wow-delay="0.3s">
-                            <h3 class="cat-title"><a href="/App/Category/Random" title=""><i class="fa fa-heartbeat"></i>随机文章<i class="fa fa-angle-right"></i></a></h3>
+                            <h3 class="cat-title"><a href="/App/Category?category=Random" title=""><i class="fa fa-heartbeat"></i>随机文章<i class="fa fa-angle-right"></i></a></h3>
                             <div class="cat-site">
                                 <ul class="cat-list">
                                     <template v-for="item in RandomArt">
@@ -242,7 +242,7 @@
                             </div>
                             <p class="review-content">
                                 <span class="at" v-show="item.PId!=0">@@<a v-bind:href="'#author-comment-'+ item.PId" v-text="item.PName"></a></span>
-                                <span v-html="decodeText(item.Text)"></span>
+                                <span v-html="com.decodeText(item.Text)"></span>
                             </p>
                         </div>
                     </li>
@@ -276,10 +276,8 @@
                 <div class="hot_article">
                     <ul class="divCatalog">
                         <template v-for="item in Category">
-                            <li class="li-cate"><a :href="'/App/Detail/Category/'+item.code" v-text="item.text"></a></li>
+                            <li class="li-cate"><a :href="'/App/Category?category='+item.code" v-text="item.text"></a></li>
                         </template>
-
-                        @*<li class="li-cate"><a href="http://z.mrpan.me/archives.html">文章归档</a></li>*@
                     </ul>
                 </div>
                 <div class="clear"></div>
@@ -291,7 +289,7 @@
                         <template v-for="item in ArchiveFile">
                             <li>
                                 <i class="fa fa-calendar" aria-hidden="true"></i>
-                                <a style="margin-left: 4px;" :href="'/App/Items/'+item.text" v-text="item.text"></a><span class="num" v-text="'('+item.code+')'"></span>
+                                <a style="margin-left: 4px;" :href="'/App/Category?archive='+item.text" target="_blank" v-text="item.text"></a><span class="num" v-text="'('+item.code+')'"></span>
                             </li>
                         </template>
                     </ul>
@@ -308,24 +306,25 @@
 @section scripts{
     <script src="~/Content/js/plugins/validator.js"></script>
     <script>
+        $(function () {
+            $('.hot_post a,.hot_comment a,.hot_article a,.random_post a,.related_post a,.post_cat a,.widget_recent_entries a,.cat-list a,.tab-bd a').hover(function () {
+                $(this).stop().animate({ 'marginLeft': '20px' }, 0);
+            }, function () {
+                $(this).stop().animate({ 'marginLeft': '10px' }, 0);
+            });
 
-
-        $('.hot_post a,.hot_comment a,.hot_article a,.random_post a,.related_post a,.post_cat a,.widget_recent_entries a,.cat-list a,.tab-bd a').hover(function () {
-            $(this).stop().animate({ 'marginLeft': '20px' }, 0);
-        }, function () {
-            $(this).stop().animate({ 'marginLeft': '10px' }, 0);
+            $('#share-s').click(function () {
+                var type = $('#share').css('display');
+                if (type == 'none') {
+                    type = 'block';
+                    $('#share').css('display', type);
+                } else {
+                    type = 'none';
+                    $('#share').css('display', type);
+                }
+            });
         });
-
-        $('#share-s').click(function () {
-            var type = $('#share').css('display');
-            if (type == 'none') {
-                type = 'block';
-                $('#share').css('display', type);
-            } else {
-                type = 'none';
-                $('#share').css('display', type);
-            }
-        });
+       
         var vm = new Vue({
             el: "#v-app",
             data: {
@@ -351,10 +350,9 @@
                 ArtTag:[]
             },
             mounted: function () {
+                this.get_relate_list();
                 this.init_datagrid();
                 this.init_layedit();
-
-                this.get_relate_list();
             },
             methods: {
                 init_layedit: function () {
@@ -397,7 +395,7 @@
                                 var data = {
                                     'limit': vm.limit,
                                     'offset': (obj.curr - 1) * vm.limit,
-                                    'AId': @ViewBag.AId
+                                    'AId': '@ViewBag.AId'
                                 };
                                 vm.get_itemgrid(data);
                             }
@@ -406,7 +404,7 @@
                 },
                 get_itemgrid: function (data,callback) {
                     com.ajax({
-                        url: '/Plat/Review/GetDataGrid',
+                        url: '/Plat/Review/GetReviewGrid',
                         data: data,
                         success: function (json) {
                             vm.$data.review = json.rows;
@@ -454,12 +452,6 @@
                             vm.init_datagrid();
                         }
                     });
-                },
-                decodeText: function (d) {
-                   var content = /^\{html\}/.test(d)
-                        ? d.replace(/^\{html\}/, '')
-                        : com.content(d);
-                    return content;
                 },
                 reply_review: function (Id) {
                     console.log(Id);

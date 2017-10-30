@@ -91,12 +91,12 @@
                             }
                         },
                         {
-                            field: 'PointQuantity', title: '点赞量', align: 'center', formatter: function (value,row) {
-                                   if (value != null) {
-                                       return com.format_str('<a  href="javascript:vm.show_point({0})" style="color: #2fa4e7;" title="点我查看点赞" data-toggle="tooltip">{1}</a>', row.Id, value);
+                            field: 'PointQuantity', title: '点赞量', align: 'center', formatter: function (value, row) {
+                                if (value != null) {
+                                    return com.format_str('<a  href="javascript:vm.show_point({0})" style="color: #2fa4e7;" title="点我查看点赞" data-toggle="tooltip">{1}</a>', row.Id, value);
                                 } else {
                                     return '_';
-                                } 
+                                }
                             }
                         },
                         { field: 'ViewHits', title: '阅读次数', align: 'center' },
@@ -118,10 +118,16 @@
 
                             }
                         },
-                        { field: 'CreatorTime', title: '发布时间', align: 'center' }],
+                        { field: 'CreatorTime', title: '发布时间', align: 'center' },
+                        {
+                            field: 'Id', title: '操作', align: 'center', formatter: function (value, row) {
+                                return '<a href="/App/Detail/' + row.Id + '" target="_blank" title="查看原文">查看原文</a>';
+                            }
+                        }],
                         callback: function () {
                             $("[data-toggle='tooltip']").tooltip();
-                            $('.pull-right.search .form-control').attr('placeholder', '输入标题/作者');                        }
+                            $('.pull-right.search .form-control').attr('placeholder', '输入标题/作者');
+                        }
                     });
                 }, show_review: function (Id) {
                     $.layerOpen({

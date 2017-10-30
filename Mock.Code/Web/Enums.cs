@@ -113,4 +113,23 @@ namespace Mock.Data
         /// </summary>
         Tag
     }
+
+    public enum CategoryCode
+    {
+        //分类为随机文章
+        Random,
+        /// <summary>
+        /// 学习
+        /// </summary>
+        Study,
+        /// <summary>
+        /// 轻松时刻
+        /// </summary>
+        justfun,
+        /// <summary>
+        /// 人生感悟
+        /// </summary>
+        feelinglife
+
+    }
 }

@@ -4,7 +4,6 @@
 }
 @section css{
     <style>
-      
     </style>
 }
 
@@ -85,10 +84,13 @@
                                             <i class="fa fa-clock-o"></i>
                                             &nbsp;@item.TimeSpan
                                         </span>
-                                        <span class="cat">
-                                            <i class="fa fa-folder"></i>&nbsp;
-                                            <a href="/category/@item.TypeCode/">@item.TypeName</a>
-                                        </span>
+                                        @if (item.TypeCode.IsNotNullOrEmpty())
+                                        {
+                                            <span class="cat">
+                                                <i class="fa fa-folder"></i>&nbsp;
+                                                <a href="/app/category?category=@item.TypeCode" target="_blank">@item.TypeName</a>
+                                            </span>
+                                        }
                                         <span class="views">
                                             <i class="fa-user fa">
                                             </i>&nbsp;
@@ -102,8 +104,8 @@
                                         </span>
                                     </span>
                                     <br>
-                                    <div class="archive-content">
-                                        @item.Excerpt
+                                    <div class="archive-content" >
+                                      @item.Excerpt
                                         @* 摘要 *@
                                     </div>
                                     @*<script>
@@ -193,7 +195,7 @@
                                 <li>
                                     <a href="/App/Detail/@item.AId#anchor-comment-@item.Id" data-toggle='tooltip' title="@item.ArticleTitle" rel="external nofollow">
                                         <img alt="" src="@item.HeadHref" class="avatar avatar-64" width="64" height="64">						<span class="comment_author"><strong>@item.NickName</strong></span>
-                                        @Html.Raw(Server.UrlDecode(item.Text))
+                                        <span v-html="com.decodeText('@item.Text')"></span>
                                     </a>
                                 </li>
                             }
@@ -228,11 +230,11 @@
                 fell = FellLifeList[0];
             }
         }
-        @if (FellLifeList.Count>0)
+        @if (FellLifeList.Count > 0)
         {
             <div class="col-md-6">
                 <div class="cat-box fadeInUp" data-wow-delay="0.3s">
-                    <h3 class="cat-title"><a href="/App/Category/@fell.TypeCode"><i class="fa fa-heartbeat"></i>@fell.TypeName<i class="fa fa-angle-right"></i></a></h3>
+                    <h3 class="cat-title"><a href="/App/Category?category=@fell.TypeCode"><i class="fa fa-heartbeat"></i>@fell.TypeName<i class="fa fa-angle-right"></i></a></h3>
                     <div class="clear"></div>
                     <div class="cat-site">
                         <h4 class="entry-title"><i class="fa fa-angle-right"></i><a href="/App/Detail/@fell.Id" rel="bookmark">@fell.Title</a></h4>						<figure class="thumbnail"><a href="/App/Detail/@fell.Id"><img src="@fell.thumbnail" alt="@fell.Title"></a></figure>
@@ -246,7 +248,7 @@
                                 for (int j = 1; j < FellLifeList.Count; j++)
                                 {
                                     <li class="list-date">@FellLifeList[j].CreatorTime.ToDateTime().ToString("yyyy/MM/dd")</li>
-                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="/App/Detail/@FellLifeList[j].Id">@FellLifeList[j].Title</a></li>
+                                    <li class="list-title" style="width: 80%;"><i class="fa fa-angle-right"></i><a href="/App/Detail/@FellLifeList[j].Id">@FellLifeList[j].Title</a></li>
                                 }
                             }
                         </ul>
@@ -265,7 +267,7 @@
         {
             <div class="col-md-6">
                 <div class="cat-box wow fadeInUp" data-wow-delay="0.3s">
-                    <h3 class="cat-title"><a href="/App/Category/@fell.TypeCode"><i class="fa fa-heartbeat"></i>轻松时刻<i class="fa fa-angle-right"></i></a></h3>
+                    <h3 class="cat-title"><a href="/App/Category?category=@fell.TypeCode"><i class="fa fa-heartbeat"></i>轻松时刻<i class="fa fa-angle-right"></i></a></h3>
                     <div class="clear"></div>
                     <div class="cat-site">
                         <h4 class="entry-title"><i class="fa fa-angle-right"></i><a href="/app/detail/@func.Id" rel="bookmark">@func.Title</a></h4><figure class="thumbnail"><a href="/app/detail/@func.Id"><img src="@func.thumbnail" alt="@func.Title"></a></figure>

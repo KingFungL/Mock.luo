@@ -8,7 +8,7 @@
         @{
             foreach (var i in ViewData["Tag"] as List<TreeSelectModel>)
             {
-                <a href="/App/Detail/@i.id">@i.text</a>
+                <a href="/App/Category?tag=@i.data">@i.text</a>
             }
         }
     </div>

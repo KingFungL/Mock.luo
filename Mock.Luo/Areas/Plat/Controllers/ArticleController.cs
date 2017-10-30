@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using AutoMapper;
 using Mock.Code;
+using Mock.Code.Helper;
 using Mock.Data;
 using Mock.Data.Models;
 using Mock.Domain;
@@ -16,6 +17,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
     public class ArticleController : CrudController<Article, ArticleViewModel>
     {
         // GET: Plat/Article
+
         IArticleRepository _service;
         IItemsDetailRepository _itemsDetailRepository;
         public ArticleController(IArticleRepository service, IItemsDetailRepository itemsDetailRepository, IComponentContext container) : base(container)
@@ -23,6 +25,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
             this._service = service;
             this._itemsDetailRepository = itemsDetailRepository;
         }
+
         public override ActionResult Form(int Id)
         {
             //取出文章对应的多个标签Id
@@ -52,11 +55,25 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// </summary>
         /// <param name="pag"></param>
         /// <returns></returns>
-        public ActionResult GetIndexGird(Pagination pag)
+        [Skip]
+        public ActionResult GetIndexGird(Pagination pag, string category = "", string tag = "", string archive = "")
         {
-            DataGrid dg = _service.GetIndexGird(pag);
+            if (category.IsNullOrEmpty() && tag.IsNullOrEmpty() && archive.IsNullOrEmpty())
+            {
+                throw new ArgumentNullException("参数异常!!");
+            }
+            if (pag.sort.IsNullOrEmpty())
+            {
+                pag.sort = "Id";
+            }
+            if (pag.order.IsNullOrEmpty())
+            {
+                pag.order = "desc";
+            }
+            DataGrid dg = _service.GetCategoryTagGrid(pag, category, tag, archive);
             return Content(dg.ToJson());
         }
+
         /// <summary>
         /// 文章新增，编辑，由于后期加了一个文章可以有多个标签，一个标签可对应多个文章，就是多对多的关系，
         /// 所以，这里就需要重新对数据进行处理后，提交数据库
@@ -84,12 +101,13 @@ namespace Mock.Luo.Areas.Plat.Controllers
                     });
                 }
             }
+            Article entity;
             if (id == 0)
             {
-                Article entity = Mapper.Map<ArticleViewModel, Article>(viewModel);
+                entity = Mapper.Map<ArticleViewModel, Article>(viewModel);
                 entity.Create();
                 entity.TagArts = tagArtList;
-                entity.Archive = DateTime.Now.ToString("yyy年-MM月");
+                entity.Archive = DateTime.Now.ToString("yyy年MM月");
                 _service.Insert(entity);
             }
             else
@@ -99,7 +117,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
                 if (tEntityModel == null)
                     return Error($"Id为{id}未找到任何类型为{viewModel.GetType().Name}的实体对象");
 
-                Article entity = Mapper.Map(viewModel, tEntityModel);
+                entity = Mapper.Map(viewModel, tEntityModel);
 
                 entity.Modify(id);
                 using (var db = new RepositoryBase().BeginTrans())
@@ -110,6 +128,17 @@ namespace Mock.Luo.Areas.Plat.Controllers
                     db.Commit();
                 }
             }
+            //要根据新增或修改的文章类型，来判断是否删除缓存中的数据
+            string itemCode = entity.ItemsDetail.ItemCode;
+            if (itemCode.Equals(CategoryCode.justfun))
+            {
+                _redisHelper.KeyDeleteAsync(string.Format(ConstHelper.App, "JustFun"));
+            }
+            if (itemCode.Equals(CategoryCode.feelinglife))
+            {
+                _redisHelper.KeyDeleteAsync(string.Format(ConstHelper.App, "FellLife"));
+            }
+
             return Success();
         }
     }

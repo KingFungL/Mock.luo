@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mock.Data.Dto
 {
+    [Serializable]
    public class ArtDetailDto:ArticleDto
     {      
         //作者头像

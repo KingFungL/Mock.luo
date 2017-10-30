@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Mock.Code;
+using Mock.Code.Helper;
 using Mock.Data;
 using Mock.Data.Models;
 using Mock.Domain;
@@ -8,6 +9,7 @@ using Mock.Luo.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -19,10 +21,12 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
         private readonly IReviewRepository _reviewRepositroy;
         private readonly IArticleRepository _articleRepository;
-        public ReviewController(IReviewRepository reviewRepositroy, IArticleRepository articleRepository)
+        private readonly IRedisHelper _redisHelper;
+        public ReviewController(IReviewRepository reviewRepositroy, IArticleRepository articleRepository,IRedisHelper _redisHelper)
         {
-            this._reviewRepositroy =reviewRepositroy;
+            this._reviewRepositroy = reviewRepositroy;
             this._articleRepository = articleRepository;
+            this._redisHelper = _redisHelper;
         }
         /// <summary>
         /// 得到最新的10条评论的数据
@@ -34,7 +38,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
             return Result(rows);
         }
         [Skip]
-        public ActionResult GetDataGrid(Pagination pag, string Email = "", int AId = 0)
+        public ActionResult GetReviewGrid(Pagination pag, int AId)
         {
             if (pag.sort.IsNullOrEmpty())
             {
@@ -48,7 +52,12 @@ namespace Mock.Luo.Areas.Plat.Controllers
             {
                 pag.limit = 10;
             }
-            return Result(_reviewRepositroy.GetDataGrid(pag, Email, AId));
+            return Result(_reviewRepositroy.GetDataGrid(u => u.IsAduit == true, pag, "", AId));
+        }
+
+        public ActionResult GetDataGrid(Pagination pag, string Email = "", int AId = 0)
+        {
+            return Result(_reviewRepositroy.GetDataGrid(ExtLinq.True<Review>(), pag, Email, AId));
         }
 
         /// <summary>
@@ -72,7 +81,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
             {
                 return Error("Email不能为空！");
             }
-            else if(!Validate.IsEmail(reViewModel.AuEmail))
+            else if (!Validate.IsEmail(reViewModel.AuEmail))
             {
                 return Error("邮箱格式不正确！");
             }
@@ -82,14 +91,14 @@ namespace Mock.Luo.Areas.Plat.Controllers
             }
             if (!ModelState.IsValid)
             {
-                return Error(ModelState.Values.Where(u=>u.Errors.Count>0).FirstOrDefault().Errors[0].ErrorMessage);
+                return Error(ModelState.Values.Where(u => u.Errors.Count > 0).FirstOrDefault().Errors[0].ErrorMessage);
             }
             OperatorProvider op = OperatorProvider.Provider;
 
             //未登录状态下，将生成一个随机头像
-            if (op.CurrentUser==null)
+            if (op.CurrentUser == null)
             {
-                reViewModel.HeadHref ="/Content/user/"+ new Random(DateTime.Now.Second).Next(1,361)+".png";
+                reViewModel.HeadHref = "/Content/user/" + new Random(DateTime.Now.Second).Next(1, 361) + ".png";
             }
             else
             {
@@ -97,7 +106,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
             reViewModel.Create();
 
-            reViewModel.System =Net.GetOSNameByUserAgent(Request.UserAgent);
+            reViewModel.System = Net.GetOSNameByUserAgent(Request.UserAgent);
             reViewModel.UserHost = Net.Host;
             reViewModel.Ip = Net.Ip;
             reViewModel.GeoPosition = Net.GetLocation(reViewModel.Ip);
@@ -106,12 +115,13 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
             _reviewRepositroy.Insert(reViewModel);
 
-            var artEntity=_articleRepository.IQueryable(u => u.Id == reViewModel.AId).FirstOrDefault();
+            var artEntity = _articleRepository.IQueryable(u => u.Id == reViewModel.AId).FirstOrDefault();
             artEntity.CommentQuantity += 1;
 
             _articleRepository.Update(artEntity, "CommentQuantity");
+            _redisHelper.KeyDeleteAsync(string.Format(ConstHelper.Review, "GetRecentReview"));
 
-            return Success("留言成功");
+            return Success("吐槽成功");
         }
 
     }

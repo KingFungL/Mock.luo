@@ -14,9 +14,11 @@ namespace Mock.Luo.Controllers
     {
 
         private readonly IRepositoryBase<TEntityModel> _ibase;
+        protected readonly IRedisHelper _redisHelper;
         public CrudController(IComponentContext container)
         {
             _ibase = container.Resolve<IRepositoryBase<TEntityModel>>();
+            this._redisHelper = container.Resolve<IRedisHelper>();
         }
 
         public virtual ActionResult Form(int Id)

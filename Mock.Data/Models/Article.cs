@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace Mock.Data.Models
 {
     [Table("Article")]
+    [Serializable]
     public class Article : IEntity<Article>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         public Article()

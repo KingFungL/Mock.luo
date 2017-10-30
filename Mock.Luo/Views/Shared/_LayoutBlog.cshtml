@@ -22,9 +22,18 @@
     <![endif]-->
     <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
     <style>
+        /*html{height:100%;}*/
     </style>
 </head>
 <body>
+    <ul id="scroll">
+        <li class="log log-no"><a class="log-button" title="文章目录"><i class="fa fa-bars"></i></a><div class="log-prompt" style="display: none;"><div class="log-arrow">文章目录</div></div></li>
+        <li><a class="scroll-h" title="返回顶部"><i class="fa fa-angle-up"></i></a></li>
+        <li><a class="scroll-c" title="评论"><i class="fa fa-comment-o"></i></a></li>
+        <li><a class="scroll-b" title="转到底部"><i class="fa fa-angle-down"></i></a></li>
+        <li class="qr-site"><a href="javascript:void(0)" class="qr" title="本页二维码"><i class="fa fa-qrcode"></i><span class="qr-img"><span id="output"><img class="alignnone" src="~/Content/Images/120122x.jpg" alt="icon"></span><span class="arrow arrow-z"><i class="fa fa-caret-right"></i></span><span class="arrow arrow-y"><i class="fa fa-caret-right"></i></span></span></a></li>
+    </ul>
+
     <nav class="navbar navbar-inverse navbar-fixed-top clearfix">
         <div class="container">
             <div class="navbar-header">
@@ -40,12 +49,12 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="/"><span class="glyphicon glyphicon-home"></span> 本站首页 <span class="sr-only">(current)</span></a></li>
-                    <li><a href="/App/Category/study"><span class="glyphicon glyphicon-book"></span> 学习</a></li>
-                    <li><a href="/App/Category/technology"><span class="glyphicon glyphicon-header"></span> 技术相关</a></li>
+                    <li><a href="/App/Category?category=study"><span class="glyphicon glyphicon-book"></span> 学习</a></li>
+                    <li><a href="/App/Category?category=technology"><span class="glyphicon glyphicon-header"></span> 技术相关</a></li>
                     <li><a href="/App/Detail/9"><span class="glyphicon glyphicon-stats"></span> 关于我</a></li>
                     <li><a href="/App/LeaveMsg"><span class="glyphicon glyphicon-compressed"></span> 留言互动</a></li>
-                    <li class="text-right"><a href="/Login/Index"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
-                    <li class="text-right"><a href="/Login/R"><span class="glyphicon glyphicon-log-in"></span> 注册</a></li>
+                    <li class="text-right"><a href="/Login/Index" target="_blank"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+                    <li class="text-right"><a href="/Login/Register" target="_blank"><span class="glyphicon glyphicon-log-in"></span> 注册</a></li>
                 </ul>
             </div>
         </div>
@@ -61,7 +70,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-12">
                         <ul class="footer_links">
-                            <li><i class="fa fa-angellist"></i><a href="/" target="_blank">关于我</a></li>
+                            <li><i class="fa fa-angellist"></i><a href="/App/Detail/9" target="_blank">关于我</a></li>
                             <li><i class="fa fa-code"></i><a href="/" target="_blank">代码高亮</a></li>
                         </ul>
                     </div>
@@ -103,13 +112,7 @@
         </div>
     </footer>
 
-    <ul id="scroll">
-        <li class="log log-no"><a class="log-button" title="文章目录"><i class="fa fa-bars"></i></a><div class="log-prompt" style="display: none;"><div class="log-arrow">文章目录</div></div></li>
-        <li><a class="scroll-h" title="返回顶部"><i class="fa fa-angle-up"></i></a></li>
-        <li><a class="scroll-c" title="评论"><i class="fa fa-comment-o"></i></a></li>
-        <li><a class="scroll-b" title="转到底部"><i class="fa fa-angle-down"></i></a></li>
-        <li class="qr-site"><a href="javascript:void(0)" class="qr" title="本页二维码"><i class="fa fa-qrcode"></i><span class="qr-img"><span id="output"><img class="alignnone" src="~/Content/Images/120122x.jpg" alt="icon"></span><span class="arrow arrow-z"><i class="fa fa-caret-right"></i></span><span class="arrow arrow-y"><i class="fa fa-caret-right"></i></span></span></a></li>
-    </ul>
+    
 
 
     <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.js"></script>

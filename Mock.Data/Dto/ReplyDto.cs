@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Mock.Data.Dto
 {
     //最新吐槽回复dto
+    [Serializable]
     public class ReplyDto
     {
         public int? Id { get; set; }

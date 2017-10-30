@@ -82,6 +82,7 @@ namespace Mock.Data
             }
             return iret;
         }
+
         /// <summary>
         /// userQuery,x => new User { FaceUrl = faceUrl, AvatarUrl = avatarUrl}
         /// </summary>

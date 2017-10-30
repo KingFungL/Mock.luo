@@ -26,6 +26,22 @@ namespace Mock.Code
     /// </summary>
     public class RedisHelper : IRedisHelper
     {
+        public T UnitOfWork<T>(string key, Func<T> func) where T : class
+        {
+            T viewModel = JsonHelper.DeserializeJsonToObject<T>(this.StringGet(key) ?? "");
+            if (viewModel == null)
+            {
+                T entity = func();
+
+                if (entity != null)
+                {
+                    viewModel = entity;
+                    this.StringSet(key, JsonHelper.SerializeObject(viewModel), new TimeSpan(1, 0, 0));
+                }
+            }
+            return viewModel;
+        }
+
         /// <summary>
         /// 获取 Redis 连接对象
         /// </summary>

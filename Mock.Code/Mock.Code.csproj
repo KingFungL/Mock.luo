@@ -76,6 +76,7 @@
     <Compile Include="Cache\Cache.cs" />
     <Compile Include="Cache\CacheFactory.cs" />
     <Compile Include="Cache\ICache.cs" />
+    <Compile Include="Helper\ConstHelper.cs" />
     <Compile Include="Helper\FileHelper.cs" />
     <Compile Include="Helper\IRedisHelper.cs" />
     <Compile Include="Helper\JsonHelper.cs" />

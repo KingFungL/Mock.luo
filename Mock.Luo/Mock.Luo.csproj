@@ -1465,6 +1465,7 @@
     <Content Include="Views\App\LatestArticles.cshtml" />
     <Content Include="Views\App\Category.cshtml" />
     <Content Include="Views\App\LeaveMsg.cshtml" />
+    <Content Include="Views\App\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

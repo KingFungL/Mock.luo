@@ -4,27 +4,29 @@ UE.registerUI('mybtn', function (editor, uiName) {
     editor.registerCommand(uiName, {
         execCommand: function () {
             var getEditorId = editor.key;
-           // console.log(editor.key);//获取引入编辑器时UE.getEditor("myeditor")中的myeditor
+            console.log(editor.key);//获取引入编辑器时UE.getEditor("myeditor")中的myeditor
             this.destroy();
             if (toolbarstate == 0) {
-                UE.getEditor(getEditorId, {
-                    toolbars: [[
-                        'fullscreen', 'source', '|', 'undo', 'redo', '|',
-                        'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
-                        'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
-                        'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
-                        'directionalityltr', 'directionalityrtl', 'indent', '|',
-                        'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
-                        'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
-                        'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe', 'insertcode', 'webapp', 'pagebreak', 'template', 'background', '|',
-                        'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
-                        'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
-                        'print', 'preview', 'searchreplace', 'drafts', 'help'
-                    ]]
-                });
+                window.setTimeout(function () {
+                    UE.getEditor(getEditorId, {
+                        toolbars: [[
+                            'fullscreen', 'source', '|', 'undo', 'redo', '|',
+                            'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+                            'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+                            'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
+                            'directionalityltr', 'directionalityrtl', 'indent', '|',
+                            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
+                            'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+                            'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe', 'insertcode', 'webapp', 'pagebreak', 'template', 'background', '|',
+                            'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
+                            'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
+                            'print', 'preview', 'searchreplace', 'drafts', 'help'
+                        ]]
+                    });
+
+                }, 500)
                 toolbarstate = 1;
             } else {
-              
                 UE.getEditor(getEditorId, {
                     toolbars: [[
                         'fullscreen', 'source',  '|',
