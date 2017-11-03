@@ -149,7 +149,6 @@ namespace Mock.Domain
             AjaxResult ajaxResult;
             try
             {
-                OperatorProvider op = OperatorProvider.Provider;
                 AppUser userEntity = new AppUser { };
 
                 userEntity = this.IQueryable().Where(t => (t.LoginName == loginName || t.Email == loginName) && t.DeleteMark == false).FirstOrDefault();
@@ -161,29 +160,14 @@ namespace Mock.Domain
                     //登录成功
                     if (dbPassword == userEntity.LoginPassword)
                     {
-                        //保存用户信息
-                        op.CurrentUser = new OperatorModel
-                        {
-                            UserId = userEntity.Id,
-                            IsSystem = userEntity.LoginName == "admin" ? true : false,
-                            LoginName = userEntity.LoginName,
-                            LoginToken = Guid.NewGuid().ToString(),
-                            UserCode = "1234",
-                            LoginTime = DateTime.Now
-                        };
-                        //缓存存放单点登录信息
-                        ICache cache = CacheFactory.Cache();
-                        op.Session[userEntity.Id.ToString()] = userEntity.LoginName;//必须使用这个存储一下session，否则sessionid在每一次请求的时候，都会为变更
-                        cache.WriteCache<string>(userEntity.Id.ToString(), op.Session.SessionID, DateTime.UtcNow.AddMinutes(60));
+                        //根据登录实体，去缓存用户数据
+                        this.SaveUserSession(userEntity);
+
                         //记住密码
                         if (rememberMe == true)
                         {
 
                         }
-
-                        //登录权限分配,根据用户Id获取用户所拥有的权限，可以在登录之后的Home界面中统一获取。
-                        //op.ModulePermission = _ModuleService.GetUserModules(userEntity.Id);
-                        op.ModulePermission = null;
                         ajaxResult = AjaxResult.Success("登录成功!");
                     }
                     else
@@ -199,7 +183,12 @@ namespace Mock.Domain
             catch (Exception ex)
             {
                 ajaxResult = AjaxResult.Error(ex.Message);
+                Log log = LogFactory.GetLogger("登录日志记录");
+                log.Error(ex.Message);
+
             }
+
+
             return ajaxResult;
 
         }
@@ -220,7 +209,64 @@ namespace Mock.Domain
         }
         #endregion
 
+        /// <summary>
+        /// 使用session暂存登录用户信息
+        /// </summary>
+        /// <param name="userEntity"></param>
+        public void SaveUserSession(AppUser userEntity)
+        {
+            OperatorProvider op = OperatorProvider.Provider;
 
+            //保存用户信息
+            op.CurrentUser = new OperatorModel
+            {
+                UserId = userEntity.Id,
+                IsSystem = userEntity.LoginName == "admin" ? true : false,
+                LoginName = userEntity.LoginName,
+                LoginToken = Guid.NewGuid().ToString(),
+                UserCode = "1234",
+                LoginTime = DateTime.Now,
+                NickName = userEntity.NickName,
+                HeadHref = userEntity.HeadHref
+            };
+            //缓存存放单点登录信息
+            ICache cache = CacheFactory.Cache();
+            op.Session[userEntity.Id.ToString()] = userEntity.LoginName;//必须使用这个存储一下session，否则sessionid在每一次请求的时候，都会为变更
+            cache.WriteCache<string>(userEntity.Id.ToString(), op.Session.SessionID, DateTime.UtcNow.AddMinutes(60));
+
+            //登录权限分配,根据用户Id获取用户所拥有的权限，可以在登录之后的Home界面中统一获取。
+            //op.ModulePermission = _ModuleService.GetUserModules(userEntity.Id);
+            op.ModulePermission = null;
+        }
+
+
+        /// <summary>
+        /// 使用session暂存登录授权用户信息
+        /// </summary>
+        /// <param name="userEntity"></param>
+        public void SaveAuthSession(AppUser userEntity)
+        {
+            OperatorProvider op = OperatorProvider.Provider;
+
+            //保存用户信息
+            op.CurrentUser = new OperatorModel
+            {
+                UserId = userEntity.Id,
+                IsSystem = userEntity.LoginName == "admin" ? true : false,
+                LoginName = userEntity.LoginName,
+                LoginToken = Guid.NewGuid().ToString(),
+                UserCode = "1234",
+                LoginTime = DateTime.Now
+            };
+            //缓存存放单点登录信息
+            ICache cache = CacheFactory.Cache();
+            op.Session[userEntity.Id.ToString()] = userEntity.LoginName;//必须使用这个存储一下session，否则sessionid在每一次请求的时候，都会为变更
+            cache.WriteCache<string>(userEntity.Id.ToString(), op.Session.SessionID, DateTime.UtcNow.AddMinutes(60));
+
+            //登录权限分配,根据用户Id获取用户所拥有的权限，可以在登录之后的Home界面中统一获取。
+            //op.ModulePermission = _ModuleService.GetUserModules(userEntity.Id);
+            op.ModulePermission = null;
+        }
 
 
     }

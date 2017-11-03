@@ -74,7 +74,7 @@ public class Crawler
                 State = "Url is not an image";
                 return this;
             }
-            ServerUrl = PathFormatter.Format(Path.GetFileName(this.SourceUrl), Config.GetString("catcherPathFormat"));
+            ServerUrl = PathFormatter.Format(Path.GetFileName(this.SourceUrl), ueditor.Config.GetString("catcherPathFormat"));
             var savePath = Server.MapPath(ServerUrl);
             if (!Directory.Exists(Path.GetDirectoryName(savePath)))
             {

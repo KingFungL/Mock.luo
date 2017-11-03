@@ -20,7 +20,7 @@ namespace Mock.Code
         public static void SetValue(string key, string value)
         {
             System.Xml.XmlDocument xDoc = new System.Xml.XmlDocument();
-            xDoc.Load(HttpContext.Current.Server.MapPath("~/Configs/system.config"));
+            xDoc.Load(HttpContext.Current.Server.MapPath("~/Generic/Configs/system.config"));
             System.Xml.XmlNode xNode;
             System.Xml.XmlElement xElem1;
             System.Xml.XmlElement xElem2;
@@ -35,7 +35,7 @@ namespace Mock.Code
                 xElem2.SetAttribute("value", value);
                 xNode.AppendChild(xElem2);
             }
-            xDoc.Save(HttpContext.Current.Server.MapPath("~/Configs/system.config"));
+            xDoc.Save(HttpContext.Current.Server.MapPath("~/Generic/Configs/system.config"));
         }
     }
 }

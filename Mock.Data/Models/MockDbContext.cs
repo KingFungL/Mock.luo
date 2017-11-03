@@ -15,7 +15,6 @@ namespace Mock.Data.Models
         {
 
         }
-
         public DbSet<AppUser> AppUser { get; set; }
         public DbSet<AppRole> AppRole { get; set; }
         public DbSet<UserRole> UserRole { get; set; }
@@ -26,15 +25,13 @@ namespace Mock.Data.Models
         public DbSet<Items> Items { get; set; }
         public DbSet<ItemsDetail> ItemsDetail { get; set; }
         public DbSet<PointArticle> PointArticle { get; set; }
-        public DbSet<ThirdUser> ThirdUser { get; set; }
-        public DbSet<Reply> Relpy { get; set; }
+        public DbSet<AppUserAuth> AppUserAuth { get; set; }
 
-        //public DbSet<Review> Review { get; set; }
-        //public DbSet<ReLeave> ReLeave { get; set; }
         public DbSet<LogInfo> LogInfo { get; set; }
         public DbSet<LoginLog> LoginLog { get; set; }
-
-        public DbSet<LeaveMsg> LeaveMsg { get; set; }
+        public DbSet<Reply> Replay { get; set; }
+        public DbSet<Review> Review { get; set; }
+        public DbSet<GuestBook> GuestBook { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

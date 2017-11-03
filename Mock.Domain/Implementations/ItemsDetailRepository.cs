@@ -50,7 +50,7 @@ namespace Mock.Domain
         #region 分类，根据items下的Encode获取ItemDetail的分类数据
         public List<TreeSelectModel> GetCombobox(string Encode)
         {
-            return _iRedisHelper.UnitOfWork(string.Format(ConstHelper.ItemsDetail_ALL, "GetCombobox"), () =>
+            return _iRedisHelper.UnitOfWork(string.Format(ConstHelper.ItemsDetail_ALL, "GetCombobox-"+ Encode), () =>
                {
                    List<TreeSelectModel> treeList = this.IQueryable(r => r.Items.EnCode == Encode).OrderBy(u => u.SortCode).ToList().Select(u => new TreeSelectModel
                    {

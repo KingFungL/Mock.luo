@@ -56,6 +56,59 @@ namespace Mock.Domain
         }
         #endregion
 
+        public ArtDetailDto GetOneArticle(int Id)
+        {
+            ArtDetailDto artEntry = IQueryable(u => u.Id == Id && u.DeleteMark == false).Select(r => new ArtDetailDto
+            {
+                TypeName = r.ItemsDetail.ItemName,
+                TypeCode = r.ItemsDetail.ItemCode,
+                NickName = r.AppUser.NickName,
+                HeadHref = r.AppUser.HeadHref,
+                PersonSignature = r.AppUser.PersonSignature,
+                Id = r.Id,
+                Content = r.Content,
+                Title = r.Title,
+                CommentQuantity = r.CommentQuantity,
+                Excerpt = r.Excerpt,
+                CreatorUserId = r.CreatorUserId,
+                CreatorTime = r.CreatorTime,
+                ViewHits = r.ViewHits,
+                thumbnail = r.thumbnail,
+            }).FirstOrDefault();
+
+            artEntry.TimeSpan = TimeHelper.GetDateFromNow(artEntry.CreatorTime.ToDateTime());
+
+            return artEntry;
+        }
+
+        #region 抽象取文章 列表数据
+        public List<ArtDetailDto> GetArticleList(IQueryable<Article> artiQuaryable)
+        {
+            List<ArtDetailDto> artList = artiQuaryable.Select(r => new ArtDetailDto
+            {
+                TypeName = r.ItemsDetail.ItemName,
+                TypeCode = r.ItemsDetail.ItemCode,
+                NickName = r.AppUser.NickName,
+                HeadHref = r.AppUser.HeadHref,
+                PersonSignature = r.AppUser.PersonSignature,
+                Id = r.Id,
+                Title = r.Title,
+                CommentQuantity = r.CommentQuantity,
+                Excerpt = r.Excerpt,
+                CreatorUserId = r.CreatorUserId,
+                CreatorTime = r.CreatorTime,
+                ViewHits = r.ViewHits,
+                thumbnail = r.thumbnail,
+            }).ToList();
+
+            artList.ForEach(u =>
+            {
+                u.TimeSpan = TimeHelper.GetDateFromNow(u.CreatorTime.ToDateTime());
+            });
+            return artList;
+        }
+        #endregion
+
         #region 后台管理的分页列表数据
         public DataGrid GetDataGrid(Pagination pag, string search)
         {
@@ -68,7 +121,7 @@ namespace Mock.Domain
         #endregion
 
         /// <summary>
-        /// 最新的文章
+        /// 最新的文章| 缓存
         /// </summary>
         /// <param name="count"></param>
         /// <returns></returns>
@@ -81,38 +134,6 @@ namespace Mock.Domain
             });
         }
 
-
-        #region 抽象取文章的列表数据
-        public List<ArtDetailDto> GetArticleList(IQueryable<Article> artiQuaryable)
-        {
-            return artiQuaryable.Select(r => new
-            {
-                u = r,
-                TypeName = r.ItemsDetail == null ? "" : r.ItemsDetail.ItemName,
-                TypeCode = r.ItemsDetail == null ? "" : r.ItemsDetail.ItemCode,
-                NickName = r.AppUser.NickName,
-                HeadHref = r.AppUser.HeadHref,
-                PersonSignature = r.AppUser.PersonSignature
-            }).ToList().Select(r => new ArtDetailDto
-            {
-                Id = r.u.Id,
-                TypeName = r.TypeName,
-                TypeCode = r.TypeCode,
-                NickName = r.NickName,
-                Content = r.u.Content,
-                TimeSpan = TimeHelper.GetDateFromNow(r.u.CreatorTime.ToDateTime()),
-                Title = r.u.Title,
-                CommentQuantity = r.u.CommentQuantity,
-                Excerpt = r.u.Excerpt,
-                CreatorUserId = r.u.CreatorUserId,
-                CreatorTime = r.u.CreatorTime,
-                ViewHits = r.u.ViewHits,
-                thumbnail = r.u.thumbnail,
-                HeadHref = r.HeadHref,
-                PersonSignature = r.PersonSignature
-            }).ToList();
-        }
-        #endregion
 
         #region 根据评论量，点赞量，阅读次数得到最火文章 | 缓存
         public List<Article> GetHotArticle(int count)
@@ -186,11 +207,8 @@ namespace Mock.Domain
             });
 
         }
-        /// <summary>
-        /// 根据文章Id得到相关文章内容
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
+
+        #region 根据文章Id得到相关内容
         public ArtRelateDto GetRelateDtoByAId(int Id)
         {
 
@@ -222,7 +240,7 @@ namespace Mock.Domain
             //取出分类目录:分类编码，分类名称
             List<BaseDto> category = _iRedisHelper.UnitOfWork(string.Format(ConstHelper.Article, "category"), () =>
             {
-              return  base.Db.Set<ItemsDetail>().AsNoTracking().Where(u => u.Items.EnCode == EnCode.FTypeCode.ToString()).Select(u => new BaseDto { Id = u.Id, text = u.ItemName, code = u.ItemCode }).ToList();
+                return base.Db.Set<ItemsDetail>().AsNoTracking().Where(u => u.Items.EnCode == EnCode.FTypeCode.ToString()).Select(u => new BaseDto { Id = u.Id, text = u.ItemName, code = u.ItemCode }).ToList();
             });
 
             //取出分类FId,和文章对应的标签多个Id
@@ -252,7 +270,7 @@ namespace Mock.Domain
 
             //有关本文章的相关文章5条
             List<BaseDto> relateArt = iQ.Where(predicate)
-            .OrderByNewId().Take(5).ToList().Select(u => new BaseDto { Id = u.Id, text = u.Title }).ToList();
+            .OrderByNewId().Take(5).Select(u => new BaseDto { Id = u.Id, text = u.Title }).ToList();
 
             //随机文章
             List<BaseDto> randomArt = iQ.Select(u => new BaseDto { Id = u.Id, text = u.Title }).Take(5).ToList();
@@ -267,6 +285,7 @@ namespace Mock.Domain
                 ArtTag = ArtTag
             };
             return ardList;
-        }
+        } 
+        #endregion
     }
 }

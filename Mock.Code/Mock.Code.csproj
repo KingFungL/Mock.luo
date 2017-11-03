@@ -82,6 +82,7 @@
     <Compile Include="Helper\JsonHelper.cs" />
     <Compile Include="Helper\RedisHelper.cs" />
     <Compile Include="Helper\TimeHelper.cs" />
+    <Compile Include="Mail\IMailHelper.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Configs\Configs.cs" />
     <Compile Include="Configs\DBConnection.cs" />

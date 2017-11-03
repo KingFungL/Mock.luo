@@ -20,7 +20,7 @@ namespace Mock.Domain
                 u.Id,
                 u.NickName,
                 u.LoginName,
-                u.Sex,
+                u.Gender,
                 u.HeadHref,
                 u.LoginCount,
                 u.LastLoginTime,

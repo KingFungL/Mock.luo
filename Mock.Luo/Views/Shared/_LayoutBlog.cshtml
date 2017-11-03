@@ -1,6 +1,7 @@
 ﻿@{
     Layout = null;
 }
+@using Mock.Data;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,18 +44,32 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <span class="navbar-brand">、天上有木月</span>
+                <span class="navbar-brand"><a href="/"><img src="~/Content/Images/favico_64.png" style="margin:-8px auto;width:36px;cursor:pointer;" /></a></span>
             </div>
-
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="/"><span class="glyphicon glyphicon-home"></span> 本站首页 <span class="sr-only">(current)</span></a></li>
                     <li><a href="/App/Category?category=study"><span class="glyphicon glyphicon-book"></span> 学习</a></li>
                     <li><a href="/App/Category?category=technology"><span class="glyphicon glyphicon-header"></span> 技术相关</a></li>
                     <li><a href="/App/Detail/9"><span class="glyphicon glyphicon-stats"></span> 关于我</a></li>
-                    <li><a href="/App/LeaveMsg"><span class="glyphicon glyphicon-compressed"></span> 留言互动</a></li>
-                    <li class="text-right"><a href="/Login/Index" target="_blank"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
-                    <li class="text-right"><a href="/Login/Register" target="_blank"><span class="glyphicon glyphicon-log-in"></span> 注册</a></li>
+                    <li><a href="/App/GuestBook" target="_blank"><span class="glyphicon glyphicon-compressed"></span> 留言互动</a></li>
+                    @{
+                        OperatorProvider op = OperatorProvider.Provider;
+                        if (op.CurrentUser == null)
+                        {
+                            <li class="text-right"><a href="/Login/Index" target="_blank"><span class="glyphicon glyphicon-log-in"></span> 后台登录</a></li>
+                            <li class="text-right"><a id="qq_login" href="javascript:void(0)"><span class="glyphicon glyphicon-globe"></span> QQ登录</a></li>
+                        }
+                        else
+                        {
+                            <li class="text-right">
+                                <a href="javascript:void(0)">
+                                    <cite class="layui-hide-xs">@op.CurrentUser.NickName</cite>
+                                    <img src="@op.CurrentUser.HeadHref">
+                                </a>
+                            </li>
+                        }
+                    }
                 </ul>
             </div>
         </div>
@@ -101,7 +116,7 @@
                     Copyright © @DateTime.Now.Year <a id="footer_name" href="/" target="_blank">、天上有木月博客</a>
                     All Rights Reserved.  by <a href="/" target="_blank" rel="nofollow">igeekfan</a>.
                     &nbsp;|&nbsp;
-                    <a href="http://www.miitbeian.gov.cn/" target="_blank" rel="nofollow">粤ICP备号</a>
+                    <a href="http://www.miitbeian.gov.cn/" target="_blank" rel="nofollow">苏ICP备16046457号</a>
                     &nbsp;|&nbsp;
                     @*<a href="/site" target="_blank">网站地图</a>*@
                     &nbsp;|&nbsp;
@@ -112,8 +127,16 @@
         </div>
     </footer>
 
-    
 
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?b74709fc39f4f8555f6437c174875680";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
 
     <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.js"></script>
     <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
@@ -150,6 +173,20 @@
             });
             $(".qr").mouseout(function () {
                 $(this).children(".qr-img").hide();
+            });
+
+            $('#qq_login').click(function () {
+                $.layerOpen({
+                    title: '登录',
+                    btn: '关闭',
+                    type: 1,
+                    content: '<div class="row" style="margin:20px 0 0 10px;"><div class="col-md-4" style="text-align:center;"><a pjax="no" href="/App/Login">\
+                                 <img src="/Content/Images/qqlogin.png" ></a></div>\
+                             <div class="col-md-8" style="text-align:center;">其他接口开发中...o(╯□╰)o</div></div>',
+                    yes: function (index, layero) {
+                        layer.close(index); //如果设定了yes回调，需进行手工关闭
+                    }
+                });
             });
         });
     </script>

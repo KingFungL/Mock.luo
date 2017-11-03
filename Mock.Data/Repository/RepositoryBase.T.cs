@@ -120,7 +120,7 @@ namespace Mock.Data
         }
         public IQueryable<TEntity> IQueryable(Expression<Func<TEntity, bool>> predicate)
         {
-            return dbcontext.Set<TEntity>().Where(predicate);
+            return dbcontext.Set<TEntity>().AsNoTracking().Where(predicate);
         }
         public List<TEntity> FindList(string strSql)
         {

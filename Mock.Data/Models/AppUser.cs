@@ -15,11 +15,11 @@ namespace Mock.Data.Models
         {
             this.UserRoles = new HashSet<UserRole>();
             this.Articles = new HashSet<Article>();
-            this.LeaveMsgs = new HashSet<LeaveMsg>();
+            this.GuestBooks = new HashSet<GuestBook>();
             this.Uploads = new HashSet<Upload>();
-            this.ThirdUsers = new HashSet<ThirdUser>();
+            this.AppUserAuths = new HashSet<AppUserAuth>();
             this.Reviews = new HashSet<Review>();
-            this.ReLeaves = new HashSet<ReLeave>();
+            this.GuestBooks = new HashSet<GuestBook>();
         }
         [Key]
         public int? Id { get; set; }
@@ -35,7 +35,8 @@ namespace Mock.Data.Models
         public string Birthday { get; set; }
         [StringLength(50)]
         public string PersonalWebsite { get; set; }
-        public int? Sex { get; set; }
+        [StringLength(50)]
+        public string Gender { get; set; }
         [StringLength(50)]
         public string NickName { get; set; }
         [StringLength(50)]
@@ -57,19 +58,12 @@ namespace Mock.Data.Models
         public DateTime? DeleteTime { get; set; }
         public int? LastModifyUserId { get; set; }
         public DateTime? LastModifyTime { get; set; }
-
-
         public virtual ICollection<UserRole> UserRoles { get; set; }
-
         public virtual ICollection<Article> Articles { get; set; }
-
-        public virtual ICollection<LeaveMsg> LeaveMsgs { get; set; }
-
         public virtual ICollection<Upload> Uploads { get; set; }
-
-        public virtual ICollection<ThirdUser> ThirdUsers { get; set; }
+        public virtual ICollection<AppUserAuth> AppUserAuths { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
-        public virtual ICollection<ReLeave> ReLeaves { get; set; }
+        public virtual ICollection<GuestBook> GuestBooks { get; set; }
 
     }
 }

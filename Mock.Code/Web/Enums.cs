@@ -35,17 +35,17 @@ namespace Mock.Data
         /// 暂存
         /// </summary>
         [Description("暂存")]
-        tempsave = 0,
+        Tempsave = 0,
         /// <summary>
         /// 提交
         /// </summary>
         [Description("提交")]
-        submit = 1,
+        Submit = 1,
         /// <summary>
         /// 发布
         /// </summary>
         [Description("发布")]
-        release = 2,
+        Release = 2,
         /// <summary>
         /// 已审核
         /// </summary>
@@ -55,17 +55,17 @@ namespace Mock.Data
         /// 未审核
         /// </summary>
         [Description("未审核")]
-        notaudited = 4,
+        Notaudited = 4,
         /// <summary>
         /// 拉黑
         /// </summary>
         [Description("拉黑")]
-        defriend = 5,
+        Defriend = 5,
         /// <summary>
         /// 不可见，删除
         /// </summary>
         [Description("删除")]
-        deleted = 6,
+        Deleted = 6,
 
         /// <summary>
         /// 菜单
@@ -82,7 +82,15 @@ namespace Mock.Data
         /// <summary>
         /// 权限认证
         /// </summary>
-        Permission
+        Permission,
+        /// <summary>
+        /// 启用
+        /// </summary>
+        Enable,
+        /// <summary>
+        /// 禁用
+        /// </summary>
+        Forbidden
     }
 
 
@@ -132,4 +140,22 @@ namespace Mock.Data
         feelinglife
 
     }
+    /// <summary>
+    /// 第三方或本地登录类型
+    /// </summary>
+    public enum IdentityType
+    {
+        /// <summary>
+        /// QQ互联，
+        /// </summary>
+        QQ,
+        Email,
+        LoginName,
+        Phone,
+        WeChat,
+        Sina
+
+    }
+
+
 }

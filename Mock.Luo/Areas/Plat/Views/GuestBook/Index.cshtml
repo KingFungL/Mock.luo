@@ -1,0 +1,105 @@
+﻿@{
+    Layout = "~/Views/Shared/_Index.cshtml";
+    ViewBag.Title = "留言审核";
+}
+<section class="content-header">
+    <ol class="breadcrumb" style="margin-bottom:0px;">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 博客管理</a></li>
+        <li class="active">留言审核</li>
+    </ol>
+</section>
+<div class="layui-fluid" style="margin-top:20px;" id="v-app">
+    <div id="toolbar" class="btn-group" style="margin-bottom:15px;">
+        <button type="button" class="btn btn-default" v-on:click="btn_refresh">
+            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>刷新
+        </button>
+        <button type="button" class="btn btn-default" v-on:click="btn_aduit">
+            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>审核
+        </button>
+        <button type="button" class="btn btn-default" v-on:click="btn_black">
+            <span class="glyphicon glyphicon-bed" aria-hidden="true"></span>拉黑
+        </button>
+        <button type="button" class="btn btn-default" v-on:click="btn_delete">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+        </button>
+    </div>
+    <table id="dginfo"></table>
+</div>
+
+@section css{
+}
+@section scripts{
+    <script>
+        var vm = new Vue({
+            el: '#v-app',
+            mounted: function () {
+                this.init_datagrid();
+            },
+            methods: {
+                init_datagrid: function () {
+                    $('#dginfo').dataGrid({
+                        url: '/Plat/GuestBook/GetDataGrid',
+                        sortOrder: "desc",
+                        search: true,
+                        sortName: 'Id',
+                        queryParams: function (params) {
+                            return params;
+                        },
+                        columns: [{ checkbox: true },
+                        { field: 'LTitle', title: '留言标题', align: 'center' },
+                        { field: 'LContent', title: '留言内容', sortable: true, align: 'center' },
+                        {
+                            field: 'IsAduit', title: '状态', sortable: true, formatter: function (value, row) {
+                                return com.format_str('<span class="label label-{0}">{1}</span>', value == true ? "success" : "danger", value == true ? "审核通过" : "已拉黑");
+                            }
+                        }, { field: 'LoginName', title: '留言者' },
+                        { field: 'Email', title: '留言者邮件' },
+                        { field: 'CreatorTime', title: '留言时间', sortable: true },
+                        {
+                            field: 'CreatorTime', title: '操作', formatter: function (value,row) {
+                                    
+                            }
+                        }
+                        ],
+                        callback: function () {
+                            $('.pull-right.search .form-control').attr('placeholder', '输入邮件/留言标题');
+                        }
+                    });
+                },
+                btn_refresh: function () {
+                    $('#dginfo').bootstrapTable("refresh");
+                },
+                btn_aduit: function () {
+                    var id = com.get_selectid('#dginfo');
+                    if (id == 0) {
+                        $.layerMsg('请选择你要审核的留言！');
+                        return;
+                    }
+                    this.editinfo(true, id);
+                },
+                btn_black: function () {
+                    var id = com.get_selectid('#dginfo');
+                    if (id == 0) {
+                        $.layerMsg('请选择你要拉黑的留言！');
+                        return;
+                    }
+                    this.editinfo(false, id);
+                },
+                btn_delete: function () {
+                    com.delete('/Plat/GuestBook/Delete', '#dginfo');
+                },
+                editinfo: function (isaduit, id) {
+                    com.ajax({
+                        url: '/Plat/GuestBook/Aduit',
+                        data: { 'IsAduit': isaduit, 'Id': id },
+                        showMsg: true,
+                        success: function () {
+                            vm.btn_refresh();
+                        }
+                    })
+                }
+            }
+        });
+    </script>
+
+}

@@ -16,6 +16,7 @@
                 }
                 <a href="/App/Detail/@entry.Id" rel="bookmark" target="_blank" title="@entry.Title">@entry.Title</a>
             </div>
+
             <div class="content single-content">
                 <header class="post-head">
                     <h4><a href="/App/Detail/@entry.Id" target="_blank" title="正在阅读 @entry.Title">@entry.Title</a></h4>
@@ -191,6 +192,7 @@
                     </div>
                 </div>
             </div>
+
             @* 评论列表 *@
             <ol class="comment-list">
                 <li class="fadeInUp" v-if="review.length==0">
@@ -220,6 +222,7 @@
                         <p>没有人评论，好凄凉啊，快来评论吧！！！</p>
                     </div>
                 </li>
+
                 <template v-for="item in review">
                     <li class="fadeInUp">
                         <div v-bind:id="'author-comment-'+ item.Id" class="comment-body">
@@ -229,7 +232,11 @@
                                     <a href="#">{{item.AuName}}</a>
                                 </strong>
                                 <span class="ua-info">
-                                    <span class="WB-OS"><img src="http://www.99bsy.com/wp-content/themes/begin/show-useragent/browsers/chrome.png" v-bind:title="item.Agent" v-bind:alt="item.Agent"> <img src="http://www.99bsy.com/wp-content/themes/begin/show-useragent/browsers/windows_win7.png" v-bind:title="item.System" v-bind:alt="item.System"> </span>{{item.GeoPosition}} {{item.UseNet}}
+                                    <span class="WB-OS">
+                                     <img src="" v-bind:title="item.Agent" v-bind:alt="item.Agent">
+                                     <img src="" v-bind:title="item.System" v-bind:alt="item.System">
+                                   </span>
+                                    {{item.GeoPosition}} {{item.UserHost}}
                                 </span>
                                 <span class="comment-meta">
                                     <a href="/App/Detail/1#comment-712"></a><br>
@@ -250,53 +257,7 @@
             </ol>
             <div id="review-page" class="text-right"></div>
         </div>
-
-        <div class="col-md-4 col-xs-12" id="right-sidebar">
-            <aside class="widget fadeInUp" data-wow-delay="0.3s">
-                <h3 class="widget-title">博主推荐</h3>
-                <div class="hot_article">
-                    <ul>
-                        <template v-if="RecommendArt&&RecommendArt.length==0">
-                            <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="javascript:void(0);" style="margin-left:4px;">竟然一条推荐都没有，神奇了！！！</a></li>
-                            <li>
-                        </template>
-                        <template v-for="item in RecommendArt">
-                            <li>
-                                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                                <a :href="'/App/Detail/'+item.Id" style="margin-left:4px;" v-text="item.text"></a>
-                            </li>
-                        </template>
-                    </ul>
-                </div>
-                <div class="clear"></div>
-            </aside>
-
-            <aside class="widget fadeInUp" data-wow-delay="0.3s" id="divCatalog">
-                <h3 class="widget-title">分类目录</h3>
-                <div class="hot_article">
-                    <ul class="divCatalog">
-                        <template v-for="item in Category">
-                            <li class="li-cate"><a :href="'/App/Category?category='+item.code" v-text="item.text"></a></li>
-                        </template>
-                    </ul>
-                </div>
-                <div class="clear"></div>
-            </aside>
-            <aside class="widget fadeInUp" data-wow-delay="0.3s" id="file_calendar">
-                <h3 class="widget-title">文章归档</h3>
-                <div class="hot_article">
-                    <ul>
-                        <template v-for="item in ArchiveFile">
-                            <li>
-                                <i class="fa fa-calendar" aria-hidden="true"></i>
-                                <a style="margin-left: 4px;" :href="'/App/Category?archive='+item.text" target="_blank" v-text="item.text"></a><span class="num" v-text="'('+item.code+')'"></span>
-                            </li>
-                        </template>
-                    </ul>
-                </div>
-                <div class="clear"></div>
-            </aside>
-        </div>
+        @{Html.RenderPartial("_RightSidebar"); }
     </div>
 </div>
 
@@ -356,19 +317,8 @@
             },
             methods: {
                 init_layedit: function () {
-                    layui.layedit.set({
-                        uploadImage: {
-                            url: '/Mock/Upload/LayuiImage' //接口url
-                            , type: 'post' //默认post
-                        }
-                    });
-                    //自定义工具栏
+                    
                     window.setTimeout(function () {
-                        //layui.use('layedit', function () {
-                        //    var layedit = layui.layedit;
-                        //    //vm.index = layedit.build('layui_edit', { height: 100, tool: ['face','link'] });
-
-                        //});
                         vm.index = com.layEditor({
                             elem: '.layui-editor'
                         });
@@ -408,6 +358,7 @@
                         data: data,
                         success: function (json) {
                             vm.$data.review = json.rows;
+                            vm.total = json.total;
                             if (typeof (callback) == 'function') {
                                 callback(json);
                             }

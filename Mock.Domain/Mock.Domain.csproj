@@ -56,11 +56,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementations\AppUserAuthRepositroy.cs" />
     <Compile Include="Implementations\PointArticleRepository.cs" />
-    <Compile Include="Implementations\LeaveMsgRepository.cs" />
+    <Compile Include="Implementations\GuestBookRepository.cs" />
     <Compile Include="Implementations\ReviewRepository.cs" />
+    <Compile Include="Interface\IAppUserAuthRepository.cs" />
     <Compile Include="Interface\IPointArticleRepository.cs" />
-    <Compile Include="Interface\ILeaveMsgRepository.cs" />
+    <Compile Include="Interface\IGuestBookRepository.cs" />
     <Compile Include="Interface\IAppRoleRepository.cs" />
     <Compile Include="Interface\IAppModuleRepository.cs" />
     <Compile Include="Interface\IItemsDetailRepository.cs" />

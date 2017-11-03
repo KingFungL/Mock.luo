@@ -44,5 +44,10 @@ namespace Mock.Domain
         /// <param name="keyValue">主键</param>
         /// <param name="userPassword">用户密码</param>
         void ResetPassword(int keyValue, string userPassword);
+        /// <summary>
+        /// 根据登录的实体，通过session保存用户信息
+        /// </summary>
+        /// <param name="userEntity"></param>
+        void SaveUserSession(AppUser userEntity);
     }
 }

@@ -129,15 +129,24 @@ namespace Mock.Luo.Areas.Plat.Controllers
                 }
             }
             //要根据新增或修改的文章类型，来判断是否删除缓存中的数据
-            string itemCode = entity.ItemsDetail.ItemCode;
-            if (itemCode.Equals(CategoryCode.justfun))
+
+            if (entity.FId != null)
             {
-                _redisHelper.KeyDeleteAsync(string.Format(ConstHelper.App, "JustFun"));
+                string itemCode = _itemsDetailRepository.IQueryable(u => u.Id == entity.FId).Select(r => r.ItemCode).FirstOrDefault();
+                if (itemCode.IsNotNullOrEmpty())
+                {
+                    if (itemCode.Equals(CategoryCode.justfun))
+                    {
+                        _redisHelper.KeyDeleteAsync(string.Format(ConstHelper.App, "JustFun"));
+                    }
+                    if (itemCode.Equals(CategoryCode.feelinglife))
+                    {
+                        _redisHelper.KeyDeleteAsync(string.Format(ConstHelper.App, "FellLife"));
+                    }
+                }
             }
-            if (itemCode.Equals(CategoryCode.feelinglife))
-            {
-                _redisHelper.KeyDeleteAsync(string.Format(ConstHelper.App, "FellLife"));
-            }
+            _redisHelper.KeyDeleteAsync(string.Format(ConstHelper.Article, "GetRecentArticle"));
+            _redisHelper.KeyDelete(string.Format(ConstHelper.Article, "archiveFile"));
 
             return Success();
         }

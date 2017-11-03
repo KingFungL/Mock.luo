@@ -38,9 +38,9 @@ namespace Mock.Luo.App_Start
                 cfg.CreateMap<IDeleteAudited, Article>();
                 cfg.CreateMap<ArticleViewModel, Article>();
 
-                cfg.CreateMap<LeaveMsg, LeaveMsgViewModel>();
-                cfg.CreateMap<IDeleteAudited, LeaveMsg>();
-                cfg.CreateMap<LeaveMsgViewModel, LeaveMsg>();
+                cfg.CreateMap<GuestBook, GuestBookViewModel>();
+                cfg.CreateMap<IDeleteAudited, GuestBook>();
+                cfg.CreateMap<GuestBookViewModel, GuestBook>();
             });
         }
     }

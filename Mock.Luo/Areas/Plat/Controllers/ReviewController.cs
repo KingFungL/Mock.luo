@@ -19,15 +19,24 @@ namespace Mock.Luo.Areas.Plat.Controllers
     {
         // GET: Plat/Review
 
+        #region Constructor
         private readonly IReviewRepository _reviewRepositroy;
         private readonly IArticleRepository _articleRepository;
         private readonly IRedisHelper _redisHelper;
-        public ReviewController(IReviewRepository reviewRepositroy, IArticleRepository articleRepository,IRedisHelper _redisHelper)
+        private readonly IMailHelper _imailHelper;
+
+        public ReviewController(IReviewRepository reviewRepositroy,
+            IArticleRepository articleRepository,
+            IMailHelper _imailHelper,
+            IRedisHelper _redisHelper)
         {
             this._reviewRepositroy = reviewRepositroy;
             this._articleRepository = articleRepository;
             this._redisHelper = _redisHelper;
+            this._imailHelper = _imailHelper;
         }
+        #endregion
+
         /// <summary>
         /// 得到最新的10条评论的数据
         /// </summary>
@@ -37,27 +46,17 @@ namespace Mock.Luo.Areas.Plat.Controllers
             var rows = _reviewRepositroy.GetRecentReview(10);
             return Result(rows);
         }
-        [Skip]
-        public ActionResult GetReviewGrid(Pagination pag, int AId)
-        {
-            if (pag.sort.IsNullOrEmpty())
-            {
-                pag.sort = "Id";
-            }
-            if (pag.order.IsNullOrEmpty())
-            {
-                pag.order = "desc";
-            }
-            if (pag.limit > 10)
-            {
-                pag.limit = 10;
-            }
-            return Result(_reviewRepositroy.GetDataGrid(u => u.IsAduit == true, pag, "", AId));
-        }
 
+        /// <summary>
+        /// 后台：评论内容
+        /// </summary>
+        /// <param name="pag"></param>
+        /// <param name="Email"></param>
+        /// <param name="AId"></param>
+        /// <returns></returns>
         public ActionResult GetDataGrid(Pagination pag, string Email = "", int AId = 0)
         {
-            return Result(_reviewRepositroy.GetDataGrid(ExtLinq.True<Review>(), pag, Email, AId));
+            return Result(_reviewRepositroy.GetDataGrid(ExtLinq.True<Review>(), pag, Email, AId));//所有
         }
 
         /// <summary>
@@ -74,6 +73,38 @@ namespace Mock.Luo.Areas.Plat.Controllers
             return Success(IsAduit ? "审核成功！" : "拉黑成功！");
         }
 
+
+        /// <summary>
+        /// 前端：文章对应的评论分页数据
+        /// </summary>
+        /// <param name="pag">分页</param>
+        /// <param name="AId">文章ID</param>
+        /// <returns></returns>
+        [Skip]
+        public ActionResult GetReviewGrid(Pagination pag, int AId)
+        {
+            if (pag.sort.IsNullOrEmpty())
+            {
+                pag.sort = "Id";
+            }
+            if (pag.order.IsNullOrEmpty())
+            {
+                pag.order = "desc";
+            }
+            if (pag.limit > 10)
+            {
+                pag.limit = 10;
+            }
+            //审核通过的
+            return Result(_reviewRepositroy.GetDataGrid(u => u.IsAduit == true, pag, "", AId));
+        }
+
+        # region 前台用户评论文章
+        /// <summary>
+        /// 前台：用户评论文章
+        /// </summary>
+        /// <param name="reViewModel"></param>
+        /// <returns></returns>
         [Skip]
         public ActionResult Add(Review reViewModel)
         {
@@ -123,6 +154,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
             return Success("吐槽成功");
         }
+        #endregion
 
     }
 

@@ -57,8 +57,8 @@ namespace Mock.Luo.Areas.Plat.Controllers
             {
                 return Error("编码不唯一!");
             }
-            _redisHelper.KeyDeleteAsync(string.Format(ConstHelper.ItemsDetail_ALL, "GetCombobox"));
-
+            _redisHelper.KeyDeleteAsync(string.Format(ConstHelper.ItemsDetail_ALL, "GetCombobox-"+EnCode.FTypeCode.ToString()));
+            _redisHelper.KeyDeleteAsync(string.Format(ConstHelper.ItemsDetail_ALL, "GetCombobox-" + EnCode.Tag.ToString()));
             _redisHelper.KeyDeleteAsync(string.Format(ConstHelper.Article, "category"));
 
             return base.Edit(viewModel, id);

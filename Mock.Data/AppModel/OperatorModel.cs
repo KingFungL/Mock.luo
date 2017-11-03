@@ -14,6 +14,10 @@ namespace Mock.Data
         public string LoginToken { get; set; }
         public DateTime? LoginTime { get; set; }
 
+        public string NickName { get; set; }
+
+        public string HeadHref { get; set; }
+
         public bool? IsSystem { get; set; }
     }
 }

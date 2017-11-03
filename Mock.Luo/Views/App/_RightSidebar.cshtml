@@ -1,0 +1,49 @@
+﻿@{ Layout = null;}
+
+<div class="col-md-4 col-xs-12" id="right-sidebar">
+    <aside class="widget fadeInUp" data-wow-delay="0.3s">
+        <h3 class="widget-title">博主推荐</h3>
+        <div class="hot_article">
+            <ul>
+                <template v-if="RecommendArt&&RecommendArt.length==0">
+                    <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="javascript:void(0);" style="margin-left:4px;">竟然一条推荐都没有，神奇了！！！</a></li>
+                    <li>
+                </template>
+                <template v-for="item in RecommendArt">
+                    <li>
+                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                        <a :href="'/App/Detail/'+item.Id" style="margin-left:4px;" v-text="item.text"></a>
+                    </li>
+                </template>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </aside>
+
+    <aside class="widget fadeInUp" data-wow-delay="0.3s" id="divCatalog">
+        <h3 class="widget-title">分类目录</h3>
+        <div class="hot_article">
+            <ul class="divCatalog">
+                <template v-for="item in Category">
+                    <li class="li-cate"><a :href="'/App/Category?category='+item.code" v-text="item.text"></a></li>
+                </template>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </aside>
+
+    <aside class="widget fadeInUp" data-wow-delay="0.3s" id="file_calendar">
+        <h3 class="widget-title">文章归档</h3>
+        <div class="hot_article">
+            <ul>
+                <template v-for="item in ArchiveFile">
+                    <li>
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                        <a style="margin-left: 4px;" :href="'/App/Category?archive='+item.text" target="_blank" v-text="item.text"></a><span class="num" v-text="'('+item.code+')'"></span>
+                    </li>
+                </template>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </aside>
+</div>

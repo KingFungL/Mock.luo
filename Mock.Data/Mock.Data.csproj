@@ -83,42 +83,21 @@
     <Compile Include="Infrastructure\IDeleteAudited.cs" />
     <Compile Include="Infrastructure\IEntity.cs" />
     <Compile Include="Infrastructure\IModificationAudited.cs" />
-    <Compile Include="Migrations\201709030806353_6.cs" />
-    <Compile Include="Migrations\201709030806353_6.Designer.cs">
-      <DependentUpon>201709030806353_6.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709031242128_1.cs" />
-    <Compile Include="Migrations\201709031242128_1.Designer.cs">
-      <DependentUpon>201709031242128_1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709070647374_2.cs" />
-    <Compile Include="Migrations\201709070647374_2.Designer.cs">
-      <DependentUpon>201709070647374_2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709070706234_3.cs" />
-    <Compile Include="Migrations\201709070706234_3.Designer.cs">
-      <DependentUpon>201709070706234_3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710221530031_123.cs" />
-    <Compile Include="Migrations\201710221530031_123.Designer.cs">
-      <DependentUpon>201710221530031_123.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppModule.cs" />
     <Compile Include="Models\AppRole.cs" />
     <Compile Include="Models\AppUser.cs" />
+    <Compile Include="Models\AppUserAuth.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\Items.cs" />
     <Compile Include="Models\ItemsDetail.cs" />
-    <Compile Include="Models\LeaveMsg.cs" />
     <Compile Include="Models\LogInfo.cs" />
     <Compile Include="Models\LoginLog.cs" />
     <Compile Include="Models\MockDbContext.cs" />
     <Compile Include="Models\PointArticle.cs" />
-    <Compile Include="Models\Review.cs" />
+    <Compile Include="Models\Reply.cs" />
     <Compile Include="Models\RoleModule.cs" />
     <Compile Include="Models\TagArt.cs" />
-    <Compile Include="Models\ThirdUser.cs" />
     <Compile Include="Models\Upload.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -142,23 +121,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ExtensionModel\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709030806353_6.resx">
-      <DependentUpon>201709030806353_6.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709031242128_1.resx">
-      <DependentUpon>201709031242128_1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709070647374_2.resx">
-      <DependentUpon>201709070647374_2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709070706234_3.resx">
-      <DependentUpon>201709070706234_3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710221530031_123.resx">
-      <DependentUpon>201710221530031_123.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

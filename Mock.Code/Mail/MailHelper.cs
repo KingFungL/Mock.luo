@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace Mock.Code
 {
-    public class MailHelper
+    public class MailHelper:IMailHelper
     {
         /// <summary>
         /// 邮件服务器地址
@@ -38,6 +38,15 @@ namespace Mock.Code
             this.MailServer = MailServer;
             this.MailUserName = mailUserName;
         }
+
+        public void Set(string mailServer, string mailUserName, string mailPwd, string mailName)
+        {
+            this.MailName = MailName;
+            this.MailPassword = mailPwd;
+            this.MailServer = MailServer;
+            this.MailUserName = mailUserName;
+        }
+
         /// <summary>
         /// 同步发送邮件
         /// </summary>
@@ -48,8 +57,29 @@ namespace Mock.Code
         /// <param name="isBodyHtml">是否Html</param>
         /// <param name="enableSsl">是否SSL加密连接</param>
         /// <returns>是否成功</returns>
-        public bool Send(string to, string subject, string body, string encoding = "UTF-8", bool isBodyHtml = true, bool enableSsl = false)
+        public bool Send(string to, string title, string body, string encoding = "UTF-8", bool isBodyHtml = true, bool enableSsl = false)
         {
+            if (string.IsNullOrWhiteSpace(to))
+            {
+                throw new ArgumentException("no to address provided");
+            }
+
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                throw new ArgumentException("no title provided");
+            }
+
+            if (string.IsNullOrWhiteSpace(body))
+            {
+                throw new ArgumentException("no body provided");
+            }
+
+            if (!Validate.IsEmail(to))
+            {
+                throw new AggregateException("邮件格式不正确!");
+            }
+
+
             try
             {
                 MailMessage message = new MailMessage();
@@ -60,7 +90,7 @@ namespace Mock.Code
                 message.Body = body;
                 //GB2312
                 message.SubjectEncoding = Encoding.GetEncoding(encoding);
-                message.Subject = subject;
+                message.Subject = title;
                 message.IsBodyHtml = isBodyHtml;
 
                 SmtpClient smtpclient = new SmtpClient(MailServer, 25);
@@ -85,6 +115,26 @@ namespace Mock.Code
         /// <returns></returns>
         public void SendByThread(string to, string title, string body, int port = 25)
         {
+            if (string.IsNullOrWhiteSpace(to))
+            {
+                throw new ArgumentException("no to address provided");
+            }
+
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                throw new ArgumentException("no title provided");
+            }
+
+            if (string.IsNullOrWhiteSpace(body))
+            {
+                throw new ArgumentException("no body provided");
+            }
+
+            if(!Validate.IsEmail(to))
+            {
+                throw new AggregateException("邮件格式不正确!");
+            }
+
             new Thread(new ThreadStart(delegate ()
             {
                 try
@@ -101,18 +151,18 @@ namespace Mock.Code
                     //设置优先级
                     objMailMessage.Priority = MailPriority.High;
                     //消息发送人
-                    objMailMessage.From = new MailAddress(MailUserName, MailName, System.Text.Encoding.UTF8);
+                    objMailMessage.From = new MailAddress(MailUserName, MailName, Encoding.UTF8);
                     //收件人
                     objMailMessage.To.Add(to);
                     //标题
                     objMailMessage.Subject = title.Trim();
                     //标题字符编码
-                    objMailMessage.SubjectEncoding = System.Text.Encoding.UTF8;
+                    objMailMessage.SubjectEncoding =Encoding.UTF8;
                     //正文
                     objMailMessage.Body = body.Trim();
                     objMailMessage.IsBodyHtml = true;
                     //内容字符编码
-                    objMailMessage.BodyEncoding = System.Text.Encoding.UTF8;
+                    objMailMessage.BodyEncoding = Encoding.UTF8;
                     //发送
                     smtp.Send(objMailMessage);
                 }

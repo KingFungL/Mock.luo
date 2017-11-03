@@ -41,24 +41,35 @@ namespace Mock.Domain
                && (Email == "" || u.AuEmail.Contains(Email))
                && (AId == 0 || u.AId == AId));
 
-            var dglist = this.IQueryable(predicate).Where(pag).ToList().Select(u => new
+            var reviewList = base.IQueryable(u => u.AId == AId).Select(u => new
             {
-                u.Id,
-                u.AId,
-                u.Article.Title,
-                PName = this.IQueryable(r => r.Id == u.PId).Select(r => r.AuName).FirstOrDefault(),
                 u.PId,
-                u.Text,
-                u.Ip,
-                u.Agent,
-                u.System,
-                u.GeoPosition,
-                u.UserHost,
-                u.AuName,
-                u.AuEmail,
-                u.IsAduit,
-                u.CreatorTime,
+                u.Id,
+                u.AuName
+            }).ToList();
+
+            var dglist = base.IQueryable(predicate).Where(pag).Select(u=>new {
+                u.Article.Title,
                 HeadHref = u.AppUser == null ? u.HeadHref : u.AppUser.HeadHref,
+                u=u
+            }).ToList().Select(r => new
+            {
+                r.Title,
+                r.HeadHref,
+                r.u.Id,
+                r.u.AId,
+                PName = reviewList.Where(s => s.Id == r.u.PId).Select(s => s.AuName).FirstOrDefault(),
+                r.u.PId,
+                r.u.Text,
+                r.u.Ip,
+                r.u.Agent,
+                r.u.System,
+                r.u.GeoPosition,
+                r.u.UserHost,
+                r.u.AuName,
+                r.u.AuEmail,
+                r.u.IsAduit,
+                r.u.CreatorTime
             }).ToList();
             return new DataGrid { rows = dglist, total = pag.total };
         }
