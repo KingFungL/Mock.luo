@@ -100,6 +100,8 @@ namespace Mock.Domain
         }
         #endregion
 
+
+
         #region  判断用户是否重复，用户的LoginName是否重复，Email是否重复
         public AjaxResult IsRepeat(AppUser userEntity)
         {
@@ -131,7 +133,7 @@ namespace Mock.Domain
                 }
                 else
                 {
-                    var emailExpression = predicate.And(r => r.Email == userEntity.Email && r.Id != userEntity.Id);
+                    var emailExpression = predicate.And(r => userEntity.Email != "" && r.Email == userEntity.Email && r.Id != userEntity.Id);
                     if (this.IQueryable(emailExpression).Count() > 0)
                     {
                         return AjaxResult.Error("此邮箱已存在！");
@@ -238,36 +240,6 @@ namespace Mock.Domain
             //op.ModulePermission = _ModuleService.GetUserModules(userEntity.Id);
             op.ModulePermission = null;
         }
-
-
-        /// <summary>
-        /// 使用session暂存登录授权用户信息
-        /// </summary>
-        /// <param name="userEntity"></param>
-        public void SaveAuthSession(AppUser userEntity)
-        {
-            OperatorProvider op = OperatorProvider.Provider;
-
-            //保存用户信息
-            op.CurrentUser = new OperatorModel
-            {
-                UserId = userEntity.Id,
-                IsSystem = userEntity.LoginName == "admin" ? true : false,
-                LoginName = userEntity.LoginName,
-                LoginToken = Guid.NewGuid().ToString(),
-                UserCode = "1234",
-                LoginTime = DateTime.Now
-            };
-            //缓存存放单点登录信息
-            ICache cache = CacheFactory.Cache();
-            op.Session[userEntity.Id.ToString()] = userEntity.LoginName;//必须使用这个存储一下session，否则sessionid在每一次请求的时候，都会为变更
-            cache.WriteCache<string>(userEntity.Id.ToString(), op.Session.SessionID, DateTime.UtcNow.AddMinutes(60));
-
-            //登录权限分配,根据用户Id获取用户所拥有的权限，可以在登录之后的Home界面中统一获取。
-            //op.ModulePermission = _ModuleService.GetUserModules(userEntity.Id);
-            op.ModulePermission = null;
-        }
-
 
     }
 }

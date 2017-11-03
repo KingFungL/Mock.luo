@@ -11,7 +11,7 @@ namespace Mock.Luo.Controllers
 {
     public abstract class BaseController : Controller
     {
-        OperatorProvider op = OperatorProvider.Provider;
+        public OperatorProvider op = OperatorProvider.Provider;
         public virtual ActionResult Index()
         {
             return View();

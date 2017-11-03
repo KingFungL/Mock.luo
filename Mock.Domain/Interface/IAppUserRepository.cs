@@ -16,7 +16,7 @@ namespace Mock.Domain
         /// </summary>
         /// <param name="pag">分页条件</param>
         /// <param name="LoginName">登录名</param>
-        /// <param name="Email">邮件</param>
+        /// <param name="Email">邮箱</param>
         /// <returns></returns>
         DataGrid GetDataGrid(Pagination pag, string LoginName, string Email);
         /// <summary>

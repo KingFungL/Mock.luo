@@ -4,6 +4,7 @@ using RazorEngine;
 using RazorEngine.Templating;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -28,15 +29,28 @@ namespace Mock.Luo.Controllers
 
         public ActionResult GetUserInfo()
         {
-
-
-
-
-
             return View();
         }
 
+        public ActionResult ActiveEmailTemplate()
+        {
+            EmailViewModel model = new EmailViewModel();
+            model.ToUserName = "710277267@qq.com";
+            model.Link = "http://127.0.0.1/App/ActiveEmail?token=g123029820984208429842042&a=323323323223";
 
+
+            return View(model);
+        }
+
+        public ActionResult SendCodeTemplate()
+        {
+
+            EmailViewModel model = new EmailViewModel();
+            model.ToUserName = "710277267@qq.com";
+            model.Code = "1234";
+
+            return View(model);
+        }
 
     }
 }

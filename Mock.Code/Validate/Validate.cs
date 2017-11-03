@@ -176,7 +176,7 @@ namespace Mock.Code
         }
 
         /// <summary>
-        /// 是否是邮件地址
+        /// 是否是邮箱地址
         /// </summary>
         /// <param name="inputData">输入字符串</param>
         /// <returns></returns>

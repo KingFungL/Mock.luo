@@ -185,6 +185,12 @@ namespace Mock.Luo.Controllers
         }
         #endregion
 
+        #region 留言互动页面
+        /// <summary>
+        /// 留言互动页面
+        /// </summary>
+        /// <returns></returns>
+
         public ActionResult GuestBook()
         {
             Pagination pag = new Pagination
@@ -200,6 +206,7 @@ namespace Mock.Luo.Controllers
 
             return View();
         }
+        #endregion
 
         #region 获取文章相关内容：文章归档，置顶文章，分类，标签，相关文章，随机文章
         public ActionResult GetRelateList(int Id)
@@ -215,6 +222,7 @@ namespace Mock.Luo.Controllers
             return View();
         }
 
+        #region qq登录重定向页面
         /// <summary> 
         /// QQ登陆页面 
         /// </summary>
@@ -229,7 +237,9 @@ namespace Mock.Luo.Controllers
             var authenticationUrl = context.GetAuthorizationUrl(state, scope);
             return new RedirectResult(authenticationUrl);
         }
+        #endregion
 
+        #region qq互联回调页面
         /// <summary> 
         /// 回调页面 
         /// </summary>
@@ -314,21 +324,50 @@ namespace Mock.Luo.Controllers
                         IsSystem = false,
                         LoginName = appUserEntity.LoginName,
                         LoginToken = accessToken,
-                        LoginTime =now,
-                        NickName= appUserEntity.NickName,
-                        HeadHref=appUserEntity.HeadHref
+                        LoginTime = now,
+                        NickName = appUserEntity.NickName,
+                        HeadHref = appUserEntity.HeadHref
                     };
-
-
-
-
-
-
 
                     return Redirect(Url.Action("Index", "App"));
                 }
 
             }
+            return View();
+        }
+        #endregion
+
+        public ActionResult ActiveEmail(string t, string u)
+        {
+            string msg = "";
+            if (t.IsNullOrEmpty() || u.IsNullOrEmpty())
+            {
+                msg = "参数为空，你是要搞事情啊";
+            }
+            else
+            {
+                string emailByToken = _iredisHelper.StringGet(t);
+                int? userId = _iredisHelper.StringGet<int?>(u);
+
+                if (emailByToken.IsNullOrEmpty() || userId == null)
+                {
+                    msg = "你这token都已经过期了，我可是给了你1个小时的时间。。。再去拿token吧。";
+                }
+                else
+                {
+                    _appUserRepository.Update(_appUserRepository.IQueryable(r => r.Email == emailByToken && r.Id == userId), r => new AppUser
+                    {
+                        Email = emailByToken,
+                        EmailIsValid = true
+                    });
+                    msg = "您已成功验证该邮箱，你可以用这个邮箱登录系统了！";
+                    _iredisHelper.KeyDeleteAsync(t);
+                    _iredisHelper.KeyDeleteAsync(u);
+                }
+            }
+
+            ViewBag.Msg = msg;
+
             return View();
         }
     }

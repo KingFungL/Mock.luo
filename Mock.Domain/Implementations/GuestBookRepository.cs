@@ -16,10 +16,10 @@ namespace Mock.Domain
     public class GuestBookRepository : RepositoryBase<GuestBook>, IGuestBookRepository
     {
         /// <summary>
-        /// 根据留言标题与创建人邮件查询
+        /// 根据留言标题与创建人邮箱查询
         /// </summary>
         /// <param name="pag">分页</param>
-        /// <param name="param">标题/邮件</param>
+        /// <param name="param">标题/邮箱</param>
         /// <returns></returns>
         public DataGrid GetDataGrid(Pagination pag, string search)
         {

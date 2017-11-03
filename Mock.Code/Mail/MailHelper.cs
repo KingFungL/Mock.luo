@@ -9,7 +9,7 @@ namespace Mock.Code
     public class MailHelper:IMailHelper
     {
         /// <summary>
-        /// 邮件服务器地址
+        /// 邮箱服务器地址
         /// </summary>
         public string MailServer { get; set; }
         /// <summary>
@@ -48,7 +48,7 @@ namespace Mock.Code
         }
 
         /// <summary>
-        /// 同步发送邮件
+        /// 同步发送邮箱
         /// </summary>
         /// <param name="to">收件人邮箱地址</param>
         /// <param name="subject">主题</param>
@@ -76,7 +76,7 @@ namespace Mock.Code
 
             if (!Validate.IsEmail(to))
             {
-                throw new AggregateException("邮件格式不正确!");
+                throw new AggregateException("邮箱格式不正确!");
             }
 
 
@@ -106,11 +106,11 @@ namespace Mock.Code
             }
         }
         /// <summary>
-        /// 异步发送邮件 独立线程
+        /// 异步发送邮箱 独立线程
         /// </summary>
-        /// <param name="to">邮件接收人</param>
-        /// <param name="title">邮件标题</param>
-        /// <param name="body">邮件内容</param>
+        /// <param name="to">邮箱接收人</param>
+        /// <param name="title">邮箱标题</param>
+        /// <param name="body">邮箱内容</param>
         /// <param name="port">端口号</param>
         /// <returns></returns>
         public void SendByThread(string to, string title, string body, int port = 25)
@@ -132,7 +132,7 @@ namespace Mock.Code
 
             if(!Validate.IsEmail(to))
             {
-                throw new AggregateException("邮件格式不正确!");
+                throw new AggregateException("邮箱格式不正确!");
             }
 
             new Thread(new ThreadStart(delegate ()

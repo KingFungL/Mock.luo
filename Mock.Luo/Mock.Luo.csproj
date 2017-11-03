@@ -169,6 +169,7 @@
     <Compile Include="Areas\Plat\Controllers\LogInfoController.cs" />
     <Compile Include="Areas\Plat\Controllers\PointArticleController.cs" />
     <Compile Include="Areas\Plat\Models\GuestBookViewModel.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GenericController.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="Controllers\CrudController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Generic\Helper\UiHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -338,7 +340,11 @@
     <Content Include="Content\css\vue-multiselect.min31f.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Images\1.jpg" />
     <Content Include="Content\Images\120122x.jpg" />
+    <Content Include="Content\Images\2.jpg" />
+    <Content Include="Content\Images\3.jpg" />
+    <Content Include="Content\Images\banner_03.png" />
     <Content Include="Content\Images\favico_128.png" />
     <Content Include="Content\Images\16\device\benq-siemens.png" />
     <Content Include="Content\Images\16\device\blackberry.png" />
@@ -737,12 +743,15 @@
     <Content Include="Content\Images\mo.jpg" />
     <Content Include="Content\Images\ph.jpg" />
     <Content Include="Content\Images\php.png" />
+    <Content Include="Content\Images\qq.41919d93.png" />
     <Content Include="Content\Images\qqlogin.png" />
     <Content Include="Content\Images\qrcode_for_gh_676b1b527097_430.jpg" />
     <Content Include="Content\Images\r_title_bg.jpg" />
     <Content Include="Content\Images\time.jpg" />
     <Content Include="Content\Images\UserCard01.png" />
     <Content Include="Content\Images\UserCard02.png" />
+    <Content Include="Content\Images\wechat.226aab51.png" />
+    <Content Include="Content\Images\weibo.5be74d9f.png" />
     <Content Include="Content\js\bootstrap-table-zh-CN.min.js" />
     <Content Include="Content\js\bootstrap-table.min.js" />
     <Content Include="Content\js\bootstrap.min.js" />
@@ -1850,6 +1859,10 @@
     <Content Include="Views\App\_RightSidebar.cshtml" />
     <Content Include="Views\App\GuestBook.cshtml" />
     <Content Include="Views\Generic\EmailTemplate.cshtml" />
+    <Content Include="Views\Account\Set.cshtml" />
+    <Content Include="Views\Generic\ActiveEmailTemplate.cshtml" />
+    <Content Include="Views\App\ActiveEmail.cshtml" />
+    <Content Include="Views\Generic\SendCodeTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

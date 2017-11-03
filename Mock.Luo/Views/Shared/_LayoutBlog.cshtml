@@ -44,7 +44,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <span class="navbar-brand"><a href="/"><img src="~/Content/Images/favico_64.png" style="margin:-8px auto;width:36px;cursor:pointer;" /></a></span>
+                <span class="navbar-brand"><a href="/" title="、天上有木月"><img src="~/Content/Images/favico_64.png" style="margin:-8px auto;width:36px;cursor:pointer;" /></a></span>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
@@ -53,21 +53,28 @@
                     <li><a href="/App/Category?category=technology"><span class="glyphicon glyphicon-header"></span> 技术相关</a></li>
                     <li><a href="/App/Detail/9"><span class="glyphicon glyphicon-stats"></span> 关于我</a></li>
                     <li><a href="/App/GuestBook" target="_blank"><span class="glyphicon glyphicon-compressed"></span> 留言互动</a></li>
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right nav-avatar">
                     @{
                         OperatorProvider op = OperatorProvider.Provider;
                         if (op.CurrentUser == null)
                         {
-                            <li class="text-right"><a href="/Login/Index" target="_blank"><span class="glyphicon glyphicon-log-in"></span> 后台登录</a></li>
+                            <li><a href="/Login/Index" target="_blank"><span class="glyphicon glyphicon-log-in"></span> 后台登录</a></li>
                             <li class="text-right"><a id="qq_login" href="javascript:void(0)"><span class="glyphicon glyphicon-globe"></span> QQ登录</a></li>
                         }
                         else
                         {
-                            <li class="text-right">
-                                <a href="javascript:void(0)">
-                                    <cite class="layui-hide-xs">@op.CurrentUser.NickName</cite>
-                                    <img src="@op.CurrentUser.HeadHref">
-                                </a>
+                            <li class="text-right"><a href="javascript:void(0)"> @op.CurrentUser.NickName</a></li>
+                            <li class="dropdown text-right">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="@op.CurrentUser.HeadHref"> <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/Account/Set"><i class="fa fa-cog"></i>基础设置</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="/Account/Logout"><i class="fa fa-lock"></i>退出</a></li>
+                                </ul>
                             </li>
+
                         }
                     }
                 </ul>
@@ -193,4 +200,5 @@
 
     @RenderSection("scripts", required: false)
 </body>
+@RenderSection("beyond",required:false)
 </html>

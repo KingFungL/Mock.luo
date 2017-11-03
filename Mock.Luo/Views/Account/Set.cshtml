@@ -1,0 +1,270 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutBlog.cshtml";
+    ViewBag.Title = "基础设置、天上有木月、博客";
+}
+
+<div class="layui-container user-main" id="v-app">
+    <ul class="layui-nav layui-nav-tree" lay-filter="test">
+        <li class="layui-nav-item"><a href="/App/Index"><i class="layui-icon">&#xe68e;</i>瞧瞧主页</a></li>
+        <li class="layui-nav-item layui-this"><a href="/Account/Set"><i class="layui-icon">&#xe620;</i>基础设置</a></li>
+        <li class="layui-nav-item"><a href="/Account/Comment"><i class="layui-icon">&#xe611;</i>我的评论</a></li>
+        <li class="layui-nav-item"><a href="/Account/GuestBook"><i class="layui-icon">&#xe63c;</i>我的留言</a></li>
+        <li class="layui-nav-item"><a href="/Account/Index"><i class="layui-icon">&#xe622;</i>收藏</a></li>
+    </ul>
+    <div class="panel-user">
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+            <ul class="layui-tab-title">
+                <li class="layui-this">我的资料</li>
+                <li>头像</li>
+                <li>帐号和密码</li>
+                <li>帐号绑定</li>
+            </ul>
+            <div class="layui-tab-content" style="padding: 20px 0;">
+                <div class="layui-tab-item layui-show">
+                    <form class="layui-form layui-form-pane">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">昵称</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" v-model="user.NickName" required lay-verify="required" placeholder="这里应该写昵称" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">QQ</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" v-model="user.QQ" required lay-verify="required" placeholder="这里应该写QQ号" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">手机号</label>
+                            <div class="layui-input-inline">
+                                <input type="email" v-model="user.Phone" required lay-verify="required" placeholder="手机号在这填" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">性别</label>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="Gender" value="保密" title="保密" :checked="user.Gender=='保密'">
+                                    <input type="radio" name="Gender" value="男" title="男" :checked="user.Gender=='男'">
+                                    <input type="radio" name="Gender" value="女" title="女" :checked="user.Gender=='女'">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">个人网站</label>
+                            <div class="layui-input-block">
+                                <input type="email" v-model="user.PersonalWebsite"  class="layui-input">
+                            </div>>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <div class="layui-form-label">
+                                个性签名
+                            </div>
+                            <div class="layui-input-block">
+                                <textarea placeholder="说点什么吧" class="layui-textarea" v-model="user.PersonSignature "></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <button type="button" class="btn-submit" v-on:click="save_user_info">确认修改</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="user-avatar">
+                        <button class="btn btn-primary"><i class="fa fa-cloud-upload"></i>上传头像</button>
+                        <p>建议尺寸168*168，支持jpg、png、gif，最大不能超过50KB</p>
+                        <img :src="user.HeadHref" />
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <form class="layui-form layui-form-pane">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">用户名</label>
+                            <div class="layui-input-inline">
+                                <input type="text" v-model="user.LoginName" required lay-verify="required" placeholder="只可修改一次" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">
+                                <a href="javascript:void(0)" v-on:click="set_loginName" v-show="LoginNameIsShow" style="font-size: 12px; color: #4f99cf;">设置</a>
+                                用于登录帐号，长度（4-20个字符）及内容（只能是汉字、字母、下划线、数字）
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">邮箱</label>
+                            <div class="layui-input-inline">
+                                <input type="email" v-model="user.Email" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                            </div>
+                            <div>
+                                <div class="layui-form-mid layui-word-aux">
+                                    <span class="layui-icon" title="已绑定成功">&#xe6c6;</span> 已绑定成功（可用于登录）
+                                    <a href="javascript:void(0)" v-on:click="set_email_address" v-show="user.EmailIsValid" style="font-size: 12px; color: #4f99cf;">修改邮箱</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="layui-tab-item">内容4</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-pane" id="validate-email">
+        <form class="layui-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="Email" v-model="user.Email" class="layui-input" disabled="disabled" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">验证码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="Code" class="layui-input" v-model="Code">
+                    <a class="btn btn-primary" v-on:click="get_active_code">{{TimeKeeping}}</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+
+@section scripts{
+    <script>
+
+        var vm = new Vue({
+            el: '#v-app',
+            data: {
+                user: JSON.parse('@Html.Raw(ViewBag.viewModel)'),
+                LoginNameIsShow: true,
+                wait: 60,
+                TimeKeeping: '获取验证码',
+                Code: '',
+                EmailToken: '',
+            },
+            mounted: function () {
+                this.init_layui_form();
+                $('.scroll-c').css('display', 'none');
+            },
+            methods: {
+                init_layui_form: function () {
+                    layui.form.render();
+                },
+                set_timekeeping: function () {
+                    if (this.wait == 0) {
+                        vm.TimeKeeping = "重发验证码";
+                        this.wait = 60;
+                    } else {
+                        vm.TimeKeeping = this.wait + "秒后重发";
+                        this.wait--;
+                        setTimeout(function () {
+                            vm.set_timekeeping()
+                        }, 1000)
+                    }
+                },
+                get_active_code: function (callback) {
+                    if (this.wait < 60) {
+                        return;
+                    }
+                    com.ajax({
+                        url: '/Account/GetActiveCode',
+                        data: {
+                            Email: vm.user.Email
+                        },
+                        success: function (d) {
+                            $.layerMsg(d.message, d.state);
+
+                            $.procAjaxMsg(d, function () {
+                                vm.EmailToken = d.data;
+                                vm.set_timekeeping();
+                                if ($.isFunction(callback)) {
+                                    callback(d);
+                                }
+                            }, function () {
+                            });
+                        }
+                    });
+                },
+                set_loginName: function () {
+                    if (this.user.LoginName == "") {
+                        $.layerMsg('不可为空');
+                        return;
+                    }
+                    $.post('/Account/SetLoginName', { LoginName: this.user.LoginName }, function (d) {
+                        $.layerMsg(d.message, d.state);
+                        $.procAjaxMsg(d, function () {
+                            vm.LoginNameIsShow = false;
+                        }, function () {
+
+                        });
+                    }, 'json');
+                },
+                set_email_address: function () {
+                    if (vm.user.Email == "") {
+                        $.layerMsg('邮箱不能为空！');
+                        return;
+                    }
+                    if (!com.isEmail(vm.user.Email)) {
+                        $.layerMsg('邮箱格式不正确！');
+                        return;
+                    }
+                    $.layerOpen({
+                        title: '修改邮箱',
+                        btn: '确定',
+                        type: 1,
+                        width: 300,
+                        content: $('#validate-email'),
+                        yes: function (index, layero) {
+                            console.log(layero)
+                            com.ajax({
+                                url: '/Account/SetEmail',
+                                data: {
+                                    Email: vm.user.Email,
+                                    Code: vm.Code,
+                                    EmailToken: vm.user.EmailToken
+                                },
+                                showMsg:true,
+                                success: function (d) {
+                                    vm.Code = "";
+                                    layer.close(index);
+                                }
+                            })
+                        }
+                    });
+                },
+                save_user_info: function () {
+                    com.ajax({
+                        datat: this.user,
+                        url: '/Account/SaveUserInfo',
+                        showMsg: true,
+                        success: function (d) {
+                            console.log(d)
+                        }
+                    });
+                }
+            }
+        })
+
+
+    </script>
+
+}
+@section css{
+    <style>
+        #validate-email { margin-top: 15px; margin-left: 10px; }
+            #validate-email input[name=Code] { width: 91px; float: left; }
+            #validate-email .btn { height: 38px; line-height: 26px; }
+
+        .user-avatar { text-align: center; }
+            .user-avatar button, .user-avatar p { margin: 20px; }
+            .user-avatar img { border-radius: 100%; width: 168px; height: 168px; }
+    </style>
+
+
+}
+
+@section beyond{
+
+
+}

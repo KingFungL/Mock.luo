@@ -13,5 +13,11 @@ namespace Mock.Luo.Models
         public string Title { get; set; }
         public string Content { get; set; }
         public string Date { get; set; }
+
+        //点击链接
+        public string Link { get; set; }
+
+        public string Code { get; set; }
+
     }
 }

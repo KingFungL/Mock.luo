@@ -3,7 +3,11 @@
 div { border-radius: 4px; }
 .clear { clear: both; display: block; }
 a { color: #444; }
+    a:hover, a:focus { text-decoration: none; }
 ol, ul { list-style: none; }
+
+.navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > li > a:hover { color: #1abc9c; background-color: transparent; text-shadow: -2px 2px 10px #1ba1e2 !important; -webkit-transition: all 0.3s ease-out; }
+
 
 .author-info-widget { background-color: #FFF; margin-bottom: 20px; padding: 10px 15px 0 15px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); }
 .author-info-widget-words-main { border: 1px dashed #C9C8C8; margin: 16px 2px; padding: 11px; }
@@ -30,7 +34,7 @@ ol, ul { list-style: none; }
 .cat-list a:hover, .entry-title > a:hover, .cat-box .cat-title a:hover, .hot_article a:hover { color: #04a4cc; text-decoration: none; }
 
 .banner-word { background-color: rgba(0,0,0,0.3); padding: 1%; border-radius: 4px; }
-.main-inner { margin-top: 30px; transition-duration: .3s; display: block; min-height:500px;}
+.main-inner { margin-top: 30px; transition-duration: .3s; display: block; min-height: 500px; }
     .main-inner .flbox .post { position: relative; display: block; margin: 0 0 15px; padding: 15px; border: 1px solid #e6e6e6; border-radius: 2px; background-color: #fff; box-shadow: 1px 1px 2px #e2dede; moz-box-shadow: 0 0 4px #cecccc; }
 .thumbnail { position: relative; float: right; clear: both; overflow: hidden; margin: 0 0 0 20px; width: 300px; height: 200px; -webkit-transition: -webkit-transform ease .15s,box-shadow ease .2s,z-index ease .15s; }
 .new-ico { position: absolute; top: -1px; right: -1px; padding: 0 3px; border: 1px solid #1abc9c; border-radius: 0 2px 0 0; background: #1abc9c; color: #fff; font-size: 14px; line-height: 20px; }
@@ -41,9 +45,7 @@ ol, ul { list-style: none; }
 .entry-header h4 { line-height: 28px; font-weight: bold; }
 .archive-tag { position: absolute; bottom: 18px; left: 15px; display: block; padding: 0 0 0 5px; height: 20px; border-left: 5px solid #1abc9c; color: #999; font-weight: bold; line-height: 20px; }
     .archive-tag a, .s_tag a { padding: 0 10px 0 0; word-wrap: break-word; word-break: break-all; }
-.flbox .thumbnail a img, .recommend-items .item a img, .top_post_item .thumbnail a img, .flbox .post .thumbnail a img { -webkit-transition: all 1.2s; transition: all 1.2s; }
-
-.flbox .thumbnail a img, .recommend-items .item a img, .top_post_item .thumbnail a img, .xl3 .cat-site .thumbnail a img { -webkit-transition: all 1.2s; transition: all 1.2s }
+.flbox .thumbnail a img, .recommend-items .item a img, .top_post_item .thumbnail a img, .xl3 .cat-site .thumbnail a img, .flbox .post .thumbnail a img { -webkit-transition: all 1.2s; transition: all 1.2s }
     .flbox:hover a img, .recommend-items .item:hover a img, .top_post_item:hover a img, .xl3 .cat-site .thumbnail a img:hover { border-radius: 0; -webkit-transform: scale(1.2); transform: scale(1.2); -ms-transform: scale(1.2) }
 .flbox:hover h4 a { color: #1abc9c }
 .flbox:hover { box-shadow: 0 3px 6px #bbb }
@@ -74,7 +76,7 @@ a, input, textarea, b, li, i, button, .imgbox, .imgbox svg line, .popup, .overla
     .footer a { color: #ccc; }
         .footer a:hover { color: #1ba1e2 !important; text-shadow: -2px 2px 10px #1ba1e2 !important; -webkit-transition: all 0.3s ease-out; outline: 0; font-weight: bold; text-decoration: none; }
     .footer .container h4 { color: #ccc; font-size: 16px; }
-    .footer .container-fluid, .footer .about-me, .footer p>img, .footer .footer_links { margin-top: 15px; }
+    .footer .container-fluid, .footer .about-me, .footer p > img, .footer .footer_links { margin-top: 15px; }
         .footer .footer_links li a { margin: 0 0 0 5px; }
         .footer .footer_links li { float: left; width: 33%; }
     .footer .container h4 { margin-top: 16px; }
@@ -175,6 +177,7 @@ img { opacity: 1 !important; -webkit-transition: -webkit-transform .3s linear; -
 .nav-single { padding: 10px; }
     .nav-single a div.meta-nav { padding: 10px 20px; background: #fff; white-space: nowrap; word-wrap: normal; text-overflow: ellipsis; overflow: hidden; border: 1px solid #ddd; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); border-radius: 8px; }
         .nav-single a div.meta-nav:hover { color: #fff; background: #2f889a; border: 1px solid #2f889a; }
+
 ul.divCatalog { margin: 4px 5px 20px; height: 100%; overflow: hidden; padding-bottom: 1px; }
 #divCatalog li { line-height: 20px; white-space: nowrap; word-wrap: normal; text-overflow: ellipsis; overflow: hidden; float: left; width: 49.666%; margin: 0 -3px -1px 2px; padding: 0; border-bottom: none; position: inherit; }
     #divCatalog li a { text-align: center; padding: 10px 0; display: block; border: 1px solid #ddd; height: 100%; }
@@ -195,16 +198,17 @@ ol { border: 0; font-family: inherit; font-size: 100%; font-style: inherit; marg
 .floor { color: #999; }
 .display { display: none; }
 .visable { display: inline; }
-
 .btn-submit { background: #daf2ff; cursor: pointer; border: 1px solid #ddd; border-radius: 15px; padding: 8px; width: 200px; }
     .btn-submit:hover { background: #2f889a; color: #fff; border: 1px solid #2f889a; transition: all 0.2s ease-in 0s; }
 .at, .at a { font-size: 12px; color: #fff; padding: 2px 2px; border-radius: 4px; background: #333; }
 .review-content span p { display: inline; }
 /*detail end*/
 
+
 #review-form input.form-control { margin-bottom: 10px; }
-#review-form label strong{color:red;}
-/*编辑器*/
+#review-form label strong { color: red; }
+
+/*编辑器begin*/
 .fly-edit { position: relative; display: block; top: 1px; left: 0; padding: 0 10px; border: 1px solid #e6e6e6; border-radius: 2px 2px 0 0; background-color: #FBFBFB; }
     .fly-edit span { cursor: pointer; padding: 0 10px; line-height: 38px; color: #009E94; }
         .fly-edit span i { position: relative; padding-right: 6px; font-size: 18px; }
@@ -212,16 +216,26 @@ body .layui-edit-face .layui-layer-content { padding: 0; background-color: #fff;
 .layui-edit-face ul { position: relative; width: 372px; padding: 10px; border: 1px solid #D9D9D9; background-color: #fff; box-shadow: 0 0 20px rgba(0,0,0,.2); }
     .layui-edit-face ul li { cursor: pointer; float: left; border: 1px solid #e8e8e8; height: 29px; width: 29px; overflow: hidden; margin: -1px 0 0 -1px; padding: 4px 2px; text-align: center; }
         .layui-edit-face ul li:hover { position: relative; z-index: 2; border: 1px solid #eb7350; background: #fff9ec; }
+/*编辑器end*/
 
 .searchbar { width: 90%; margin: 10px auto 0; }
     .searchbar input { width: 66%; float: left; background: #ebebeb; border: 1px solid #ebebeb; }
     .searchbar button:hover { background: #595959; }
     .searchbar span input:focus { outline: 0; background: #fff; border: 2px solid #2F889A !important; -webkit-box-shadow: 0px 0px 5px #2F889A !important; }
 
-.not-found { background: #fff; margin: 0 0 10px 0; padding: 20px; border: 1px solid #ddd; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); border-radius: 8px;min-height:200px; }
+.not-found { background: #fff; margin: 0 0 10px 0; padding: 20px; border: 1px solid #ddd; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); border-radius: 8px; min-height: 200px; }
 
 
 
+/*用户中心begin*/
+.nav-avatar > li > a { padding-bottom: 7px; }
+    .nav-avatar > li > a > img { border-radius: 100%; width: 36px; height: 36px; margin-top: -8px; }
+
+.user-main { min-height: 600px; margin-top: 80px; }
+    .user-main >  .layui-nav .layui-icon { position: relative; top: 2px; font-size: 20px; margin-right: 10px; }
+.user-main > .layui-nav { position: absolute; left: 0; top: 0; z-index: 1000; height: 100%; padding: 10px 0; }
+    .user-main > .panel-user { min-height: 575px; margin: 0 0 10px 215px; border-radius: 2px; background-color: #fff; box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);padding:5px 20px 20px 20px; }
+/*用户中心ennd*/
 @media screen and (min-width: 900px) { #scroll li a:hover { background: #2f889a; color: #fff !important; border: 1px solid #2f889a; transition: all 0.2s ease-in 0s; }
 }
 
@@ -284,6 +298,8 @@ body .layui-edit-face .layui-layer-content { padding: 0; background-color: #fff;
 @media screen and (max-width:768px) {
     .readers a.item-top { width: 48% }
     .entry-content .archive-content { overflow: hidden; height: 84px }
+    .user-main > .panel-user { width: auto; margin-left: 0; transition: all .3s; -webkit-transition: all .3s; }
+    .site-tree-mobile { display: block !important; position: fixed; z-index: 100000; bottom: 20px; left: 10px; width: 50px; height: 50px; line-height: 50px; border-radius: 2px; text-align: center; background-color: rgba(0,0,0,.7); color: #fff; }
 }
 
 @media screen and (max-width:640px) {

@@ -25,21 +25,25 @@ namespace Mock.Data.Models
         public int? Id { get; set; }
         [StringLength(50)]
         public string LoginName { get; set; }
+        [StringLength(50,ErrorMessage ="最长为11")]
+        public string QQ { get; set; }
         [StringLength(50)]
         public string LoginPassword { get; set; }
-        [StringLength(50)]
+        [StringLength(20,ErrorMessage ="手机长度不能超过20位")]
         public string Phone { get; set; }
-        [StringLength(50)]
+        [StringLength(50, ErrorMessage = "邮件长度不能超过50位")]
         public string Email { get; set; }
+        public bool EmailIsValid { get; set; }
+
         [StringLength(50)]
         public string Birthday { get; set; }
-        [StringLength(50)]
+        [StringLength(300)]
         public string PersonalWebsite { get; set; }
-        [StringLength(50)]
+        [StringLength(10)]
         public string Gender { get; set; }
         [StringLength(50)]
         public string NickName { get; set; }
-        [StringLength(50)]
+        [StringLength(100,ErrorMessage ="个性签名不能超过100字")]
         public string PersonSignature { get; set; }
         [StringLength(50)]
         public string UserSecretkey { get; set; }

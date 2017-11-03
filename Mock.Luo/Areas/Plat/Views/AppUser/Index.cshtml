@@ -19,7 +19,7 @@
                     <div class="col-sm-3">
                         <input type="text" class="form-control" v-model="LoginName">
                     </div>
-                    <label class="control-label col-sm-1" for="txt_search_statu">邮件</label>
+                    <label class="control-label col-sm-1" for="txt_search_statu">邮箱</label>
                     <div class="col-sm-3">
                         <input type="text" class="form-control" v-model="Email">
                     </div>
@@ -141,7 +141,7 @@
                         uniqueId: "Id",
                         columns: [{ checkbox: true },
                             { field: 'LoginName', title: '登录名', sortable: true },
-                            { field: 'Email', title: '邮件', sortable: true },
+                            { field: 'Email', title: '邮箱', sortable: true },
                             { field: 'NickName', title: '昵称', sortable: true },
                             {
                                 field: 'Id', title: '配置角色', formatter: function (value, row) {

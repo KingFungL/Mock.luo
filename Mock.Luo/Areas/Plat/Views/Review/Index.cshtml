@@ -56,7 +56,7 @@
                                 return com.content(value);
                             }
                         },
-                        { field: 'AuEmail', title: '邮件', sortable: true },
+                        { field: 'AuEmail', title: '邮箱', sortable: true },
                         { field: 'AuName', title: '名字', sortable: true },
                         {
                             field: 'IsAduit', title: '状态', sortable: true, formatter: function (value, row) {
@@ -68,7 +68,7 @@
                         { field: 'Agent', title: '浏览器环境', align: 'center' },
                         ],
                         callback: function () {
-                            $('.pull-right.search .form-control').attr('placeholder','输入邮件');
+                            $('.pull-right.search .form-control').attr('placeholder','输入邮箱');
                         }
                     });
                 },

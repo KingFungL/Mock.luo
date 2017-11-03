@@ -36,7 +36,7 @@ namespace Mock.Data.Models
         public string AuName { get; set; }
         [StringLength(400, ErrorMessage = "个人网址不能超过400字符")]
         public string PersonalWebsite { get; set; }
-        [StringLength(50, ErrorMessage = "邮件不能超过50字符")]
+        [StringLength(50, ErrorMessage = "邮箱不能超过50字符")]
         public string AuEmail { get; set; }
         [StringLength(50)]
         public string UserHost { get; set; }

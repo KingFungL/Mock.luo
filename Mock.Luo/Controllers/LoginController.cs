@@ -39,7 +39,7 @@ namespace Mock.Luo.Controllers
         /// <summary>
         ///   登录接口验证
         /// </summary>
-        /// <param name="loginName">登录名/邮件</param>
+        /// <param name="loginName">登录名/邮箱</param>
         /// <param name="pwd">密码</param>
         /// <param name="code">验证码</param>
         /// <param name="token">唯一上下文token</param>

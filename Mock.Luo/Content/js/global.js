@@ -41,7 +41,11 @@ $.layerOpen = function (options) {
         btn: options.btn,
         btnclass: options.btnclass,
         yes: function (index, layero) {
-            if (options.yes && $.isFunction(options.yes)) {
+            if (options.type == 1) {
+                options.yes(index, layero);
+                return;
+            }
+            if (options.yes && $.isFunction(options.yes) ) {
                 var iframebody = layer.getChildFrame('body', index);
                 var iframeWin = layero.find('iframe')[0].contentWindow;
                 options.yes(iframebody, iframeWin, index);

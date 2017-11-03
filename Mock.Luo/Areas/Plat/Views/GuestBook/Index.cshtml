@@ -53,7 +53,7 @@
                                 return com.format_str('<span class="label label-{0}">{1}</span>', value == true ? "success" : "danger", value == true ? "审核通过" : "已拉黑");
                             }
                         }, { field: 'LoginName', title: '留言者' },
-                        { field: 'Email', title: '留言者邮件' },
+                        { field: 'Email', title: '留言者邮箱' },
                         { field: 'CreatorTime', title: '留言时间', sortable: true },
                         {
                             field: 'CreatorTime', title: '操作', formatter: function (value,row) {
@@ -62,7 +62,7 @@
                         }
                         ],
                         callback: function () {
-                            $('.pull-right.search .form-control').attr('placeholder', '输入邮件/留言标题');
+                            $('.pull-right.search .form-control').attr('placeholder', '输入邮箱/留言标题');
                         }
                     });
                 },
