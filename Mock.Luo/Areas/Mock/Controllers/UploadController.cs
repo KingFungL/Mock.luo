@@ -86,12 +86,10 @@ namespace Mock.Luo.Areas.Mock.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Skip]
         public ActionResult LayuiImage()
         {
-
             AjaxResult amm = UploadImg();
-          
+            string title = Request.Files[0].FileName;
             if (amm.state== ResultType.error.ToString())
             {
                 var codeMsg = new
@@ -101,7 +99,7 @@ namespace Mock.Luo.Areas.Mock.Controllers
                     data = new
                     {
                         src = "",
-                        titile = Request.Files[0].FileName
+                        titile = title
                     }
                 };
                 return Result(codeMsg);
@@ -115,7 +113,7 @@ namespace Mock.Luo.Areas.Mock.Controllers
                     data = new
                     {
                         src = amm.data,
-                        titile = ""
+                        title = title
                     }
                 };
                 return Result(codeMsg);

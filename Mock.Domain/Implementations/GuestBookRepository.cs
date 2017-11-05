@@ -35,10 +35,10 @@ namespace Mock.Domain
 
             var dglist = this.IQueryable(predicate).Where(pag).Select(u=>new {
                 u=u,
-                HeadHref = u.AppUser == null ? u.HeadHref : u.AppUser.HeadHref,
+                Avatar = u.AppUser == null ? u.Avatar : u.AppUser.Avatar,
             }).ToList().Select(r=> new
             {
-                r.HeadHref,
+                r.Avatar,
                 r.u.Id,
                 //PName = reviewList.Where(s => s.Id == r.u.PId).Select(s => s.AuName).FirstOrDefault(),
                 r.u.PId,

@@ -21,8 +21,7 @@ namespace Mock.Data
     public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class, new()
     {
         //public DbContext dbcontext = DbContextFactory.GetCurrentDbContext();
-        public System.Data.Entity.DbContext dbcontext = DbContextFactory.DbContext();
-
+        public DbContext dbcontext = DbContextFactory.DbContext();
 
         /// <summary>
         /// 数据源
@@ -94,6 +93,11 @@ namespace Mock.Data
             int iret = source.Update<TEntity>(updateExpression);
             return iret;
         }
+        public Task UpdateAsync(IQueryable<TEntity> source, Expression<Func<TEntity, TEntity>> updateExpression)
+        {
+            return source.UpdateAsync<TEntity>(updateExpression);
+        }
+
         public int Delete(TEntity entity)
         {
             dbcontext.Set<TEntity>().Attach(entity);

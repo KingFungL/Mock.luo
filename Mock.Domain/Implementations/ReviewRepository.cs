@@ -50,12 +50,12 @@ namespace Mock.Domain
 
             var dglist = base.IQueryable(predicate).Where(pag).Select(u=>new {
                 u.Article.Title,
-                HeadHref = u.AppUser == null ? u.HeadHref : u.AppUser.HeadHref,
+                Avatar = u.AppUser == null ? u.Avatar : u.AppUser.Avatar,
                 u=u
             }).ToList().Select(r => new
             {
                 r.Title,
-                r.HeadHref,
+                r.Avatar,
                 r.u.Id,
                 r.u.AId,
                 PName = reviewList.Where(s => s.Id == r.u.PId).Select(s => s.AuName).FirstOrDefault(),
@@ -83,7 +83,7 @@ namespace Mock.Domain
                 return this.IQueryable().OrderByDescending(u => u.Id).Take(count).Select(u => new
                 {
                     u.Article.Title,
-                    HeadHref = u.AppUser != null ? u.AppUser.HeadHref : u.HeadHref,
+                    Avatar = u.AppUser != null ? u.AppUser.Avatar : u.Avatar,
                     u
                 }).ToList().Select(r => new ReplyDto
                 {
@@ -92,7 +92,7 @@ namespace Mock.Domain
                     ArticleTitle = r.Title,
                     Text = r.u.Text,
                     NickName = r.u.AuName,
-                    HeadHref = r.HeadHref
+                    Avatar = r.Avatar
                 }).ToList();
             });
         }

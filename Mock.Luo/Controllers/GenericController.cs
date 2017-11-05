@@ -36,7 +36,7 @@ namespace Mock.Luo.Controllers
         {
             EmailViewModel model = new EmailViewModel();
             model.ToUserName = "710277267@qq.com";
-            model.Link = "http://127.0.0.1/App/ActiveEmail?token=g123029820984208429842042&a=323323323223";
+            model.Link = "http://igeekfan.cn/App/ActiveEmail?token=g123029820984208429842042&a=323323323223";
 
 
             return View(model);

@@ -1,4 +1,5 @@
-﻿using Mock.Code;
+﻿using EntityFramework.Extensions;
+using Mock.Code;
 using Mock.Data;
 using Mock.Data.Models;
 using Mock.Domain;
@@ -44,7 +45,7 @@ namespace Mock.Luo.Controllers
                 r.EmailIsValid,
                 r.Phone,
                 r.NickName,
-                r.HeadHref,
+                r.Avatar,
                 r.Gender,
                 r.PersonSignature,
                 r.PersonalWebsite
@@ -188,9 +189,13 @@ namespace Mock.Luo.Controllers
         public ActionResult SetEmail(string Email, string EmailToken, string Code)
         {
 
-            if (EmailToken.IsNullOrEmpty() || Code.IsNullOrEmpty())
+            if (Code.IsNullOrEmpty())
             {
-                return Error("验证码为空");
+                return Error("验证码不能为空");
+            }
+            if (EmailToken.IsNullOrEmpty())
+            {
+                return Error("邮件标识符异常，请重新获取验证码！");
             }
 
             string email = _redisHelper.StringGet(EmailToken);
@@ -288,8 +293,33 @@ namespace Mock.Luo.Controllers
             {
                 return Error("昵称不合法，给我换、");
             }
+            OperatorModel oUserModel = op.CurrentUser;
+
+            userEntity.Modify(oUserModel.UserId);
+            //_appUserRepository.IQueryable(u => u.Id == oUserModel.UserId).Update(u => userEntity);
 
             _appUserRepository.Update(userEntity, "QQ", "Phone", "NickName", "Gender", "PersonSignature", "PersonalWebsite");
+
+            oUserModel.NickName = userEntity.NickName;
+            op.CurrentUser = oUserModel;
+
+            return Success();
+        }
+
+        /// <summary>
+        /// 保存用户头像| 用于上传头像的回调
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SaveAvatar(string Avatar)
+        {
+            int? id = op.CurrentUser.UserId;
+            _appUserRepository.Update(_appUserRepository.IQueryable(u => u.Id == id), r => new AppUser
+            {
+                Avatar = Avatar
+            });
+            OperatorModel oUserModel = op.CurrentUser;
+            oUserModel.Avatar = Avatar;
+            op.CurrentUser = oUserModel;
 
             return Success();
         }

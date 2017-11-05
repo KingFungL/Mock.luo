@@ -275,7 +275,7 @@ namespace Mock.Luo.Controllers
                         appUserEntity = new AppUser
                         {
                             NickName = currentUser.Nickname,
-                            HeadHref = currentUser.Figureurl,
+                            Avatar = currentUser.Figureurl,
                             Gender = currentUser.Gender,
                             CreatorTime = now,
                             DeleteMark = false,
@@ -326,7 +326,7 @@ namespace Mock.Luo.Controllers
                         LoginToken = accessToken,
                         LoginTime = now,
                         NickName = appUserEntity.NickName,
-                        HeadHref = appUserEntity.HeadHref
+                        Avatar = appUserEntity.Avatar
                     };
 
                     return Redirect(Url.Action("Index", "App"));

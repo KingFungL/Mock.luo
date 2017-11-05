@@ -48,10 +48,10 @@ namespace Mock.Data.Models
         [StringLength(50)]
         public string UserSecretkey { get; set; }
         [StringLength(100)]
-        public string HeadHref { get; set; }
+        public string Avatar { get; set; }
         public int LoginCount { get; set; }
         public DateTime? LastLoginTime { get; set; }
-        [StringLength(50)]
+        [StringLength(20)]
         public string LastLogIp { get; set; }
         [StringLength(50)]
         public string StatusCode { get; set; }

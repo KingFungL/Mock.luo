@@ -39,24 +39,24 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">手机号</label>
                             <div class="layui-input-inline">
-                                <input type="email" v-model="user.Phone" required lay-verify="required" placeholder="手机号在这填" autocomplete="off" class="layui-input">
+                                <input type="text" v-model="user.Phone" required lay-verify="required" placeholder="手机号在这填" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <div class="layui-inline">
                                 <label class="layui-form-label">性别</label>
                                 <div class="layui-input-block">
-                                    <input type="radio" name="Gender" value="保密" title="保密" :checked="user.Gender=='保密'">
-                                    <input type="radio" name="Gender" value="男" title="男" :checked="user.Gender=='男'">
-                                    <input type="radio" name="Gender" value="女" title="女" :checked="user.Gender=='女'">
+                                    <input type="radio" name="Gender" lay-filter="Gender" value="保密" title="保密" :checked="user.Gender=='保密'">
+                                    <input type="radio" name="Gender" lay-filter="Gender" value="男" title="男" :checked="user.Gender=='男'">
+                                    <input type="radio" name="Gender" lay-filter="Gender" value="女" title="女" :checked="user.Gender=='女'">
                                 </div>
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">个人网站</label>
                             <div class="layui-input-block">
-                                <input type="email" v-model="user.PersonalWebsite"  class="layui-input">
-                            </div>>
+                                <input type="text" v-model="user.PersonalWebsite" class="layui-input">
+                            </div>
                         </div>
                         <div class="layui-form-item layui-form-text">
                             <div class="layui-form-label">
@@ -73,9 +73,9 @@
                 </div>
                 <div class="layui-tab-item">
                     <div class="user-avatar">
-                        <button class="btn btn-primary"><i class="fa fa-cloud-upload"></i>上传头像</button>
+                        <button class="btn btn-primary" id="upload-img"><i class="fa fa-cloud-upload"></i>上传头像</button>
                         <p>建议尺寸168*168，支持jpg、png、gif，最大不能超过50KB</p>
-                        <img :src="user.HeadHref" />
+                        <img :src="user.Avatar" />
                     </div>
                 </div>
                 <div class="layui-tab-item">
@@ -98,13 +98,19 @@
                             <div>
                                 <div class="layui-form-mid layui-word-aux">
                                     <span class="layui-icon" title="已绑定成功">&#xe6c6;</span> 已绑定成功（可用于登录）
-                                    <a href="javascript:void(0)" v-on:click="set_email_address" v-show="user.EmailIsValid" style="font-size: 12px; color: #4f99cf;">修改邮箱</a>
+                                    <a href="javascript:void(0)" v-on:click="set_email_address" v-show="user.EmailIsValid" style="font-size: 12px; color: #4f99cf;" title="修改邮箱需要验证邮箱验证码">修改邮箱</a>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
-                <div class="layui-tab-item">内容4</div>
+                <div class="layui-tab-item app-bind">
+                    <blockquote class="layui-elem-quote layui-quote-nm">
+                        <i class="fa fa-qq icon-qq"></i>
+                        <span v-text="user.NickName"></span>
+                        <a class="js-unbind"  href="#">（解绑）</a>
+                    </blockquote>
+                </div>
             </div>
         </div>
     </div>
@@ -132,12 +138,12 @@
 
 @section scripts{
     <script>
-
+        var userJson = JSON.parse('@Html.Raw(ViewBag.viewModel)');
         var vm = new Vue({
             el: '#v-app',
             data: {
-                user: JSON.parse('@Html.Raw(ViewBag.viewModel)'),
-                LoginNameIsShow: true,
+                user: userJson,
+                LoginNameIsShow: userJson.LoginName==""?true:false,
                 wait: 60,
                 TimeKeeping: '获取验证码',
                 Code: '',
@@ -149,6 +155,10 @@
             },
             methods: {
                 init_layui_form: function () {
+                    layui.form.on('radio(Gender)', function (data) {
+                        vm.user.Gender = data.value;
+                    });
+                    this.upload_img();
                     layui.form.render();
                 },
                 set_timekeeping: function () {
@@ -222,7 +232,7 @@
                                 data: {
                                     Email: vm.user.Email,
                                     Code: vm.Code,
-                                    EmailToken: vm.user.EmailToken
+                                    EmailToken: vm.EmailToken
                                 },
                                 showMsg:true,
                                 success: function (d) {
@@ -235,13 +245,31 @@
                 },
                 save_user_info: function () {
                     com.ajax({
-                        datat: this.user,
+                        data: this.user,
                         url: '/Account/SaveUserInfo',
                         showMsg: true,
                         success: function (d) {
                             console.log(d)
                         }
                     });
+                },
+                upload_img: function () {
+                    layui.upload.render({
+                        elem: '#upload-img',
+                        url: '/Mock/Upload/LayuiImage',
+                        done: function (res) {
+                            console.log(res);
+                            if (res.code == 0) {
+                                vm.user.Avatar = res.data.src;
+                                $.post('/Account/SaveAvatar', { Avatar: vm.user.Avatar }, function (d) {
+                                    console.log(d)
+                                });
+                            }
+                        },
+                        error: function () {
+                            $.layerMsg('出错了！！')
+                        }
+                    })
                 }
             }
         })

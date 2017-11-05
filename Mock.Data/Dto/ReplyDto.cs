@@ -19,6 +19,6 @@ namespace Mock.Data.Dto
 
         public string NickName { get; set; }
 
-        public string HeadHref { get; set; }
+        public string Avatar { get; set; }
     }
 }

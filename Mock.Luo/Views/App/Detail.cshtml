@@ -72,7 +72,7 @@
                 <div class="authorarea">
                     <div class="authorinfo">
                         <div class="author-avater">
-                            <img class="avaterimg" alt="@entry.NickName" title="作者：@entry.NickName " src="@entry.HeadHref" height="50" width="50">
+                            <img class="avaterimg" alt="@entry.NickName" title="作者：@entry.NickName " src="@entry.Avatar" height="50" width="50">
                         </div>
                         <div class="author-des">
                             <div class="author-meta">
@@ -227,7 +227,7 @@
                     <li class="fadeInUp">
                         <div v-bind:id="'author-comment-'+ item.Id" class="comment-body">
                             <div class="comment-author vcard">
-                                <img class="avatar" v-bind:src="item.HeadHref" style="display: block;">
+                                <img class="avatar" v-bind:src="item.Avatar" style="display: block;">
                                 <strong>
                                     <a href="#">{{item.AuName}}</a>
                                 </strong>

@@ -89,8 +89,6 @@ com.ajax = function (options) {
 };
 
 
-
-
 //去除表单中所有按钮,并且将所有文本框置为禁用
 com.ignoreEle = function (dom) {
     dom.find('input').addClass("layui-disabled").attr("disabled", "");

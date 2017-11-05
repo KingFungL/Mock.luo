@@ -48,7 +48,7 @@ namespace Mock.Data.Models
         /// 评论人的头像，如果未登录状态下，则随机生成一个头像地址。已登录状态下，取用户表的头像地址
         /// </summary>
         [StringLength(500)]
-        public string HeadHref { get; set; }
+        public string Avatar { get; set; }
         public int? CreatorUserId { get; set; }
         public DateTime? CreatorTime { get; set; }
         public bool? DeleteMark { get; set; }

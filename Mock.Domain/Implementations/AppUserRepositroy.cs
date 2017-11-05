@@ -187,7 +187,6 @@ namespace Mock.Domain
                 ajaxResult = AjaxResult.Error(ex.Message);
                 Log log = LogFactory.GetLogger("登录日志记录");
                 log.Error(ex.Message);
-
             }
 
 
@@ -229,7 +228,7 @@ namespace Mock.Domain
                 UserCode = "1234",
                 LoginTime = DateTime.Now,
                 NickName = userEntity.NickName,
-                HeadHref = userEntity.HeadHref
+                Avatar = userEntity.Avatar
             };
             //缓存存放单点登录信息
             ICache cache = CacheFactory.Cache();

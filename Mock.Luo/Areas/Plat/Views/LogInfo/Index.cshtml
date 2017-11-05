@@ -38,11 +38,11 @@
                             return params;
                         },
                         columns: [{ checkbox: true },
+                            { field: 'Logger', title: '日志产生地', sortable: true },
+                            { field: 'Message', title: '日志内容' },
+                            { field: 'LogLevel', title: '日志层级', sortable: true },
                             { field: 'LogDate', title: '产生日期', sortable: true, align: 'center' },
                             { field: 'Thread', title: '线程名', sortable: true },
-                            { field: 'LogLevel', title: '日志层级', sortable: true },
-                            { field: 'Logger', title: '日志产生地', sortable: true },
-                            { field: 'Message', title: '日志内容'},
                             { field: 'Exception', title: '异常信息', align: 'center' }
                         ],
                         callback: function () {

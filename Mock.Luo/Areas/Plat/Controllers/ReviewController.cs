@@ -129,7 +129,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
             //未登录状态下，将生成一个随机头像
             if (op.CurrentUser == null)
             {
-                reViewModel.HeadHref = "/Content/user/" + new Random(DateTime.Now.Second).Next(1, 361) + ".png";
+                reViewModel.Avatar = "/Content/user/" + new Random(DateTime.Now.Second).Next(1, 361) + ".png";
             }
             else
             {
