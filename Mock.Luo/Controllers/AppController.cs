@@ -200,7 +200,7 @@ namespace Mock.Luo.Controllers
                 limit = 10,
                 offset = 0
             };
-            DataGrid dg = _gusetbookRepository.GetDataGrid(pag, "");
+            DataGrid dg = _gusetbookRepository.GetDataGrid(u=>true,pag, "");
 
             ViewBag.ViewModel = dg.ToJson();
 

@@ -21,11 +21,15 @@ namespace Mock.Luo.Controllers
         private readonly IRedisHelper _redisHelper;
         private readonly IMailHelper _imailHelper;
         private readonly IAppUserRepository _appUserRepository;
-        public AccountController(IRedisHelper _redisHelper, IMailHelper _imailHelper, IAppUserRepository appUserRepository)
+        private readonly IReviewRepository _reviewRepository;
+        private readonly IGuestBookRepository _guestBookRepository;
+        public AccountController(IRedisHelper _redisHelper, IMailHelper _imailHelper, IAppUserRepository _appUserRepository, IReviewRepository _reviewRepository, IGuestBookRepository _guestBookRepository)
         {
             this._redisHelper = _redisHelper;
             this._imailHelper = _imailHelper;
-            this._appUserRepository = appUserRepository;
+            this._appUserRepository = _appUserRepository;
+            this._reviewRepository = _reviewRepository;
+            this._guestBookRepository = _guestBookRepository;
         }
 
 
@@ -48,11 +52,39 @@ namespace Mock.Luo.Controllers
                 r.Avatar,
                 r.Gender,
                 r.PersonSignature,
-                r.PersonalWebsite
+                r.PersonalWebsite,
+                PwdIsSet = r.LoginPassword == null ? false : true
             }).FirstOrDefault();
 
             ViewBag.viewModel = JsonHelper.SerializeObject(viewModel);
 
+            return View();
+        }
+
+        /// <summary>
+        /// 我的评论
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Comment()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 我的留言
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GuestBook()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 收藏
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Collect()
+        {
             return View();
         }
 
@@ -322,6 +354,62 @@ namespace Mock.Luo.Controllers
             op.CurrentUser = oUserModel;
 
             return Success();
+        }
+
+
+        public ActionResult ResetPwd(string LoginPassword, string newPwd)
+        {
+
+            if (LoginPassword.IsNullOrEmpty())
+            {
+                return Error("旧密码不能为空");
+            }
+            if (newPwd.IsNullOrEmpty())
+            {
+                return Error("新密码不能为空");
+            }
+
+            int userId = (int)op.CurrentUser.UserId;
+
+            AppUser userEntity = _appUserRepository.FindEntity(userId);
+            if (userEntity != null)
+            {
+                string dbPwd = Md5.md5(DESEncrypt.Encrypt(LoginPassword.ToLower(), userEntity.UserSecretkey).ToLower(), 32).ToLower();
+                //当后台密码为空时，说明未设置密码，将newPwd这个字段更新到密码字段。当后台密码，与旧密码一致，重置密码
+                if (userEntity.LoginPassword.IsNullOrEmpty() || userEntity.LoginPassword.Equals(dbPwd))
+                {
+                    _appUserRepository.ResetPassword(userEntity, newPwd);
+                    return Success("您的密码已经设置成功，请牢记你的密码噢！");
+                }
+                else
+                {
+                    return Error("你的旧密码填写不对，无法重置密码！");
+                }
+
+            }
+            else
+            {
+                return Error("当前用户不存在、、");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetCommentGrid(Pagination pag)
+        {
+            int? userId = op.CurrentUser.UserId;
+           DataGrid dg= _reviewRepository.GetDataGrid(u => u.CreatorUserId == userId, pag, "", 0);
+
+            return Result(dg);
+        }
+
+        public ActionResult GetGuestGrid(Pagination pag)
+        {
+            int? userId = op.CurrentUser.UserId;
+            DataGrid dg = _guestBookRepository.GetDataGrid(u => u.CreatorUserId == userId, pag,"");
+            return Result(dg);
         }
 
     }

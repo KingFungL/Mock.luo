@@ -46,23 +46,23 @@
                             return params;
                         },
                         columns: [{ checkbox: true },
-                        { field: 'LTitle', title: '留言标题', align: 'center' },
-                        { field: 'LContent', title: '留言内容', sortable: true, align: 'center' },
+                            {
+                                field: 'Text', title: '留言内容', sortable: true, align: 'center', formatter: function (value, row) {
+                                    return com.decodeText(row.Text)
+                                }
+                            },
                         {
                             field: 'IsAduit', title: '状态', sortable: true, formatter: function (value, row) {
                                 return com.format_str('<span class="label label-{0}">{1}</span>', value == true ? "success" : "danger", value == true ? "审核通过" : "已拉黑");
                             }
-                        }, { field: 'LoginName', title: '留言者' },
-                        { field: 'Email', title: '留言者邮箱' },
+                            }, { field: 'AuName', title: '留言者' },
+                            { field: 'AuEmail', title: '留言者邮箱' },
                         { field: 'CreatorTime', title: '留言时间', sortable: true },
-                        {
-                            field: 'CreatorTime', title: '操作', formatter: function (value,row) {
-                                    
-                            }
-                        }
+                        { field: 'Ip', title: 'Ip地址', sortable: true, align: 'center' },
+                        { field: 'Agent', title: '浏览器环境', align: 'center' },
                         ],
                         callback: function () {
-                            $('.pull-right.search .form-control').attr('placeholder', '输入邮箱/留言标题');
+                            $('.pull-right.search .form-control').attr('placeholder', '输入邮箱/留言内容');
                         }
                     });
                 },

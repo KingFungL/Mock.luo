@@ -116,7 +116,7 @@ namespace Mock.Data
         }
         public TEntity FindEntity(Expression<Func<TEntity, bool>> predicate)
         {
-            return dbcontext.Set<TEntity>().FirstOrDefault(predicate);
+            return dbcontext.Set<TEntity>().AsNoTracking().FirstOrDefault(predicate);
         }
         public IQueryable<TEntity> IQueryable()
         {

@@ -1,15 +1,15 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutBlog.cshtml";
-    ViewBag.Title = "基础设置、天上有木月、博客";
+    ViewBag.Title = "基础设置、天上有木月-博客";
 }
 
 <div class="layui-container user-main" id="v-app">
     <ul class="layui-nav layui-nav-tree" lay-filter="test">
-        <li class="layui-nav-item"><a href="/App/Index"><i class="layui-icon">&#xe68e;</i>瞧瞧主页</a></li>
+        <li class="layui-nav-item"><a href="/App/Index" target="_blank"><i class="layui-icon">&#xe68e;</i>瞧瞧主页</a></li>
         <li class="layui-nav-item layui-this"><a href="/Account/Set"><i class="layui-icon">&#xe620;</i>基础设置</a></li>
         <li class="layui-nav-item"><a href="/Account/Comment"><i class="layui-icon">&#xe611;</i>我的评论</a></li>
         <li class="layui-nav-item"><a href="/Account/GuestBook"><i class="layui-icon">&#xe63c;</i>我的留言</a></li>
-        <li class="layui-nav-item"><a href="/Account/Index"><i class="layui-icon">&#xe622;</i>收藏</a></li>
+        <li class="layui-nav-item"><a href="/Account/Collect"><i class="layui-icon">&#xe622;</i>收藏</a></li>
     </ul>
     <div class="panel-user">
         <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
@@ -96,10 +96,23 @@
                                 <input type="email" v-model="user.Email" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
                             </div>
                             <div>
-                                <div class="layui-form-mid layui-word-aux">
+                                <div class="layui-form-mid layui-word-aux" v-if="user.EmailIsValid">
                                     <span class="layui-icon" title="已绑定成功">&#xe6c6;</span> 已绑定成功（可用于登录）
-                                    <a href="javascript:void(0)" v-on:click="set_email_address" v-show="user.EmailIsValid" style="font-size: 12px; color: #4f99cf;" title="修改邮箱需要验证邮箱验证码">修改邮箱</a>
+                                    <a href="javascript:void(0)" v-on:click="set_email_address" style="font-size: 12px; color: #4f99cf;" title="修改邮箱需要验证邮箱验证码">修改邮箱</a>
                                 </div>
+                                <div class="layui-form-mid layui-word-aux" v-else="user.Email">
+                                  （先填写好邮箱，再点击绑定邮箱）
+                                    <a href="javascript:void(0)" v-on:click="set_email_address" style="font-size: 12px; color: #4f99cf;" title="绑定邮箱">绑定邮箱</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">帐号密码</label>
+                            <div class="layui-input-inline" style="height:38px">
+                                <a href="javascript:void(0)" v-on:click="set_use_pwd" class="pwd-text" :title="user.PwdIsSet?'修改密码':'设置密码'" v-text="user.PwdIsSet?'修改密码':'设置密码'"></a>
+                            </div>
+                            <div>
+                               
                             </div>
                         </div>
                     </form>
@@ -108,14 +121,13 @@
                     <blockquote class="layui-elem-quote layui-quote-nm">
                         <i class="fa fa-qq icon-qq"></i>
                         <span v-text="user.NickName"></span>
-                        <a class="js-unbind"  href="#">（解绑）</a>
+                        <a class="js-unbind" href="#" v-on:click="unbind_qq">（解绑）</a>
                     </blockquote>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="layui-form-pane" id="validate-email">
+    <div v-show="validate_email_show" class="layui-form-pane" id="validate-email">
         <form class="layui-form">
             <div class="layui-form-item">
                 <label class="layui-form-label">邮箱</label>
@@ -132,22 +144,49 @@
             </div>
         </form>
     </div>
-
+    <div v-show="validate_pwd_show" class="layui-form-pane" id="validate-pwd">
+        <form class="layui-form">
+            <div class="layui-form-item" v-show="user.PwdIsSet">
+                <label class="layui-form-label">旧密码<strong>*</strong></label>
+                <div class="layui-input-inline">
+                    <input type="password" name="LoginPassword" v-model="LoginPassword" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">新密码<strong>*</strong></label>
+                <div class="layui-input-inline">
+                    <input type="password" name="newPwd" v-model="newPwd" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">重复密码<strong>*</strong></label>
+                <div class="layui-input-inline">
+                    <input type="password" name="newPwd2" v-model="newPwd2" class="layui-input">
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
 
 @section scripts{
+    <script src="~/Content/js/plugins/jquery.md5.js"></script>
     <script>
         var userJson = JSON.parse('@Html.Raw(ViewBag.viewModel)');
         var vm = new Vue({
             el: '#v-app',
             data: {
+                validate_email_show: false,
+                validate_pwd_show:false,
                 user: userJson,
-                LoginNameIsShow: userJson.LoginName==""?true:false,
+                LoginNameIsShow: userJson.LoginName == "" ? true : false,
                 wait: 60,
                 TimeKeeping: '获取验证码',
                 Code: '',
                 EmailToken: '',
+                LoginPassword: '',
+                newPwd:'',
+                newPwd2:''
             },
             mounted: function () {
                 this.init_layui_form();
@@ -219,6 +258,7 @@
                         $.layerMsg('邮箱格式不正确！');
                         return;
                     }
+                    this.validate_email_show = true;
                     $.layerOpen({
                         title: '修改邮箱',
                         btn: '确定',
@@ -226,7 +266,7 @@
                         width: 300,
                         content: $('#validate-email'),
                         yes: function (index, layero) {
-                            console.log(layero)
+                            console.log(layero);
                             com.ajax({
                                 url: '/Account/SetEmail',
                                 data: {
@@ -234,12 +274,19 @@
                                     Code: vm.Code,
                                     EmailToken: vm.EmailToken
                                 },
-                                showMsg:true,
+                                showMsg: true,
                                 success: function (d) {
                                     vm.Code = "";
+                                    vm.user.EmailIsValid = true;
                                     layer.close(index);
+                                    vm.validate_email_show = false;
                                 }
-                            })
+                            });
+                        },
+                        shadeClose: false,
+                        cancel: function (index, layero) {
+                            vm.validate_email_show = false;
+                            layer.close(index);
                         }
                     });
                 },
@@ -270,6 +317,56 @@
                             $.layerMsg('出错了！！')
                         }
                     })
+                },
+                set_use_pwd: function () {
+                    this.validate_pwd_show = true;
+                    $.layerOpen({
+                        title: '修改密码',
+                        btn: ['确定', '取消'],
+                        type: 1,
+                        width: 300,
+                        content: $('#validate-pwd'),
+                        yes: function (index, layero) {
+                            console.log(layero);
+
+                            if (vm.user.PwdIsSet==true&&vm.LoginPassword == "") {
+                                $.layerMsg('旧密码不能为空！'); return;
+                            }
+                            if (vm.newPwd=="") {
+                                $.layerMsg('新密码不能为空！'); return;
+                            } if (vm.newPwd2 == "") {
+                                $.layerMsg('重复密码不能为空！');  return;
+                            }
+
+                            if (vm.newPwd != vm.newPwd2) {
+                                $.layerMsg('新密码与重复密码不一致！');
+                                return;
+                            }
+                            com.ajax({
+                                url: '/Account/ResetPwd',
+                                data: {
+                                    LoginPassword:$.md5(vm.LoginPassword),
+                                    newPwd: vm.newPwd
+                                },
+                                showMsg: true,
+                                success: function (d) {
+                                    vm.validate_pwd_show = false;
+                                    vm.user.PwdIsSet = true;
+                                    layer.close(index);
+                                }
+                            });
+                        },
+                        shadeClose: false,
+                        cancel: function (index, layero) {
+                            vm.validate_pwd_show = false;
+                        }
+                    });
+                },
+                unbind_qq: function () {
+                    $.layerMsg('暂不支持解绑，会在稍后的版本中更新！！！');
+                    return;
+                    $.layerConfirm('提示', '你确定要解绑此QQ吗，解绑后，无法使用此QQ')
+
                 }
             }
         })
@@ -280,11 +377,11 @@
 }
 @section css{
     <style>
-        #validate-email { margin-top: 15px; margin-left: 10px; }
+        #validate-email, #validate-pwd { margin-top: 15px; margin-left: 10px; }
             #validate-email input[name=Code] { width: 91px; float: left; }
             #validate-email .btn { height: 38px; line-height: 26px; }
-
-        .user-avatar { text-align: center; }
+            #validate-pwd strong { color:red;}
+            .user-avatar { text-align: center; }
             .user-avatar button, .user-avatar p { margin: 20px; }
             .user-avatar img { border-radius: 100%; width: 168px; height: 168px; }
     </style>

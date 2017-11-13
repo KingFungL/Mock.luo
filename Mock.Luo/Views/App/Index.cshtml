@@ -133,16 +133,16 @@
                     <h4>、天上有木月</h4>
                     <ul class="clearfix">
                         <li>
-                            <a href="http://weibo.com/1820059022/profile?topnav=1&wvr=6" target="_blank" data-toggle="tooltip" title="微博..." rel="external nofollow"><i class="fa fa-weibo fa-lg"></i></a>
+                            <a href="http://weibo.com/1820059022/profile?topnav=1&wvr=6" target="_blank" data-toggle="tooltip" title="微博:、如莫" rel="external nofollow"><i class="fa fa-weibo fa-lg"></i></a>
                         </li>
                         <li>
-                            <a href="https://github.com/luoyunchong" target="_blank" data-toggle="tooltip" title="github..."><i class="fa fa-github fa-lg"></i></a>
+                            <a href="https://github.com/luoyunchong" target="_blank" data-toggle="tooltip" title="github：Mock.Luo"><i class="fa fa-github fa-lg"></i></a>
                         </li>
                         <li>
-                            <a href="#" target="_blank" data-toggle="tooltip" title="微信..."><i class="fa fa-weixin fa-lg"></i></a>
+                            <a href="javascript:void(0);" target="_blank" data-toggle="tooltip" v-on:click="show_info('weixin.png')" title="微信:点我扫码"><i class="fa fa-weixin fa-lg"></i></a>
                         </li>
                         <li>
-                            <a href="#" target="_blank" data-toggle="tooltip" title="QQ..."><i class="fa fa-qq fa-lg"></i></a>
+                            <a href="javascript:void(0);" target="_blank" data-toggle="tooltip" v-on:click="show_info('tim.jpg')" title="QQ:710277267"><i class="fa fa-qq fa-lg"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -301,18 +301,43 @@
         });
 
 
-
         var vm = new Vue({
             el: '#v-app',
             data: {},
+            mounted: function () {
+                this.init_tooltip()
+            },
             methods: {
                 get_article: function () {
                     com.ajax({
-                        url: '/Plat/Article/GetDataGrid',
+                        url: '/Plat/Article/GetDataGrid'
+                    });
+                },
+                init_tooltip: function () {
+                    $("[data-toggle='tooltip']").tooltip();
+                },
+                show_info: function (img) {
+                    var img_url = '/Content/Images/' + img ;
 
-                    })
+                    var json = {
+                        "title": "", //相册标题
+                        "id": 123, //相册id
+                        "start": 0, //初始显示的图片序号，默认0
+                        "data": [   //相册包含的图片，数组格式
+                            {
+                                "alt": img,
+                                "src": img_url, //原图地址
+                                "thumb": img_url //缩略图地址
+                            }
+                        ]
+                    };
+                    layer.photos({
+                        photos: json
+                        , anim:0 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+                    });
+
                 }
             }
-        })
+        });
     </script>
 }

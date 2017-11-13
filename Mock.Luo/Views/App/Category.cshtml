@@ -3,8 +3,9 @@
     ViewBag.Title = ViewBag.TypeName;
 }
 @section css{
-    <style>
+  <style>
     </style>
+
 }
 
 
@@ -20,16 +21,16 @@
             </div>
             <!--main-inner start-->
             <div class="main-inner">
-                <div class="error-404 not-found page" v-show="items&&items.length==0">
+                <div class="error-404 not-found page" v-if="items&&items.length==0" v-cloak>
                     <h3 class="text-center">亲，该网页可能搬家了！<i class="fa fa-smile-o"></i></h3>
                     <div class="searchbar">
                         <span>
-                            <input type="text" name="s" value="" class="form-control col-md-8" placeholder="输入搜索内容"/>
+                            <input type="text" name="s" value="" class="form-control col-md-8" placeholder="输入搜索内容" />
                             <button type="button" class="btn btn-primary col-md-4">搜索</button>
                         </span>
                     </div>
                 </div>
-                <div class="flbox" v-for="item in items" v-show="items&&items.length>0">
+                <div class="flbox" v-for="item in items" v-show="items&&items.length>0" v-cloak>
                     <article class="post">
                         <figure class="thumbnail box-hide box-show">
                             <a :href="'/App/Detail/'+item.Id">
@@ -102,6 +103,7 @@
             },
             mounted: function () {
                 this.init_datagrid();
+                this.get_relate_list();
             },
             methods: {
                 init_datagrid: function () {
@@ -149,7 +151,8 @@
                 get_relate_list: function () {
                     com.ajax({
                         url: '/App/GetRelateList',
-                        showLoading:false,
+                        showLoading: false,
+                        data: { Id:1 },
                         success: function (data) {
                             vm.RelateArt = data.RelateArt;
                             vm.Category = data.Category;
@@ -165,3 +168,4 @@
         })
     </script>
 }
+

@@ -5,15 +5,18 @@ div { border-radius: 4px; }
 a { color: #444; }
     a:hover, a:focus { text-decoration: none; }
 ol, ul { list-style: none; }
+/*vue初始化时不显示，等加载完后显示*/
+[v-cloak] { display: none }
 
 .navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > li > a:hover { color: #1abc9c; background-color: transparent; text-shadow: -2px 2px 10px #1ba1e2 !important; -webkit-transition: all 0.3s ease-out; }
 
 
 .author-info-widget { background-color: #FFF; margin-bottom: 20px; padding: 10px 15px 0 15px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); }
 .author-info-widget-words-main { border: 1px dashed #C9C8C8; margin: 16px 2px; padding: 11px; }
+.author-info-widget-img { margin-bottom: 13px ;}
 .author-info-widget-img img { -webkit-transition: all 1.2s; transition: all 1.2s; }
     .author-info-widget-img img:hover { box-shadow: 0px 0px 2px 2px #6dae78 !important; -webkit-transform: scale(1.2); transform: scale(1.2); -ms-transform: scale(1.2); }
-.author-info-widget ul li { float: left; width: 20%; text-align: center; color: #867f6f; }
+.author-info-widget ul li { float: left; width: 24%; margin-top: 10px; text-align: center; color: #867f6f; }
 .fadeInUp { -webkit-animation-name: fadeInUp; animation-name: fadeInUp; }
 .widget { background: #fff; margin: 0 0 10px 0; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); }
     .widget .widget-title { background: #fff; height: 40px; line-height: 40px; border-bottom: 1px solid #e2e1e1; margin: 0 20px 0 20px; text-align: center; font-size: 1.8rem; letter-spacing: 4px; color: #606777; }
@@ -238,6 +241,7 @@ body .layui-edit-face .layui-layer-content { padding: 0; background-color: #fff;
 .app-bind blockquote { font-size: 16px; }
 .app-bind i.icon-qq { color: #7CA9C9; margin-right: 16px; font-size: 19px; }
 .app-bind a.js-unbind { color: #698ebf; }
+.pwd-text { font-size: 12px; color: #4f99cf; height: 38px; line-height: 38px; margin-left: 19px; }
 /*用户中心ennd*/
 @media screen and (min-width: 900px) { #scroll li a:hover { background: #2f889a; color: #fff !important; border: 1px solid #2f889a; transition: all 0.2s ease-in 0s; }
 }

@@ -34,20 +34,17 @@
                 </header>
                 <div class="entry">
                     @Html.Raw(entry.Content)
-                    <div id="social">
+                    <div id="social" v-cloak>
                         <div class="social-main">
                             <span class="like">
-                                <a href="javascript:;" data-action="ding" data-id="2402" title="点赞" class="favorite done">
+                                <a href="javascript:void(0);" v-on:click="point_art" title="点赞" class="favorite done">
                                     <i class="fa fa-thumbs-up"></i>赞
-                                    @{
-                                        var pointQuantity = entry.PointQuantity == null ? 0 : entry.PointQuantity;
-                                    }
-                                    @pointQuantity
+                                    {{pointQuantity}}
                                 </a>
                             </span>
                             <div class="shang-p">
                                 <div class="shang-empty"><span></span></div>
-                                <span class="tipso_style" id="tip-p" data-tipso="">
+                                <span class="tipso_style">
                                     <span class="shang-s"><a title="赞助本站">赏</a></span>
                                 </span>
                             </div>
@@ -233,9 +230,9 @@
                                 </strong>
                                 <span class="ua-info">
                                     <span class="WB-OS">
-                                     <img src="" v-bind:title="item.Agent" v-bind:alt="item.Agent">
-                                     <img src="" v-bind:title="item.System" v-bind:alt="item.System">
-                                   </span>
+                                        <img src="" v-bind:title="item.Agent" v-bind:alt="item.Agent">
+                                        <img src="" v-bind:title="item.System" v-bind:alt="item.System">
+                                    </span>
                                     {{item.GeoPosition}} {{item.UserHost}}
                                 </span>
                                 <span class="comment-meta">
@@ -285,7 +282,7 @@
                 }
             });
         });
-       
+
         var vm = new Vue({
             el: "#v-app",
             data: {
@@ -301,8 +298,9 @@
                     AuEmail: '',
                     PersonalWebsite: '',
                     Text: '',
-                    PName:'博主'
+                    PName:'博主',
                 },
+                pointQuantity: '@entry.PointQuantity' == '' ? 0 :'@entry.PointQuantity',
                 RelateArt: [],
                 Category: [],
                 RecommendArt: [],
@@ -317,7 +315,7 @@
             },
             methods: {
                 init_layedit: function () {
-                    
+
                     window.setTimeout(function () {
                         vm.index = com.layEditor({
                             elem: '.layui-editor'
@@ -434,6 +432,21 @@
                             vm.RandomArt = data.RandomArt;
                             vm.ArtTag = data.ArtTag;
 
+                        }
+                    })
+                },
+                point_art: function () {
+                    com.ajax({
+                        url: '/Plat/PointArticle/Edit',
+                        data: {
+                            AId:'@ViewBag.AId'
+                        },
+                        success: function (d) {
+                            $.procAjaxMsg(d, function () {
+                                vm.pointQuantity++;
+                            }, function () {
+                                $.layerMsg(d.message,'info');
+                          });
                         }
                     })
                 }

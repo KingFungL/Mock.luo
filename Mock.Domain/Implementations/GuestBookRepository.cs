@@ -21,10 +21,10 @@ namespace Mock.Domain
         /// <param name="pag">分页</param>
         /// <param name="param">标题/邮箱</param>
         /// <returns></returns>
-        public DataGrid GetDataGrid(Pagination pag, string search)
+        public DataGrid GetDataGrid(Expression<Func<GuestBook, bool>> predicate, Pagination pag, string search)
         {
-            Expression<Func<GuestBook, bool>> predicate = u => u.DeleteMark == false
-            && (search == "" || u.AppUser.Email.Contains(search) || u.Text.Contains(search));
+            predicate = predicate.And(u => u.DeleteMark == false
+             && (search == "" || u.AppUser.Email.Contains(search) || u.Text.Contains(search)));
 
             //var reviewList = base.IQueryable(u => u.PId== 0).Select(u => new
             //{
@@ -33,10 +33,11 @@ namespace Mock.Domain
             //    u.AuName
             //}).ToList();
 
-            var dglist = this.IQueryable(predicate).Where(pag).Select(u=>new {
-                u=u,
+            var dglist = this.IQueryable(predicate).Where(pag).Select(u => new
+            {
+                u = u,
                 Avatar = u.AppUser == null ? u.Avatar : u.AppUser.Avatar,
-            }).ToList().Select(r=> new
+            }).ToList().Select(r => new
             {
                 r.Avatar,
                 r.u.Id,

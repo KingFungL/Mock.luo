@@ -18,7 +18,8 @@ $.layerOpen = function (options) {
         maxmin: true,
         btn: ['确认', '取消'],
         btnclass: ['btn btn-primary', 'btn btn-danger'],
-        yes: null
+        yes: null,
+        shadeClose:true,
     };
     options = $.extend(defaults, options);
     if (!com.ispc()) {
@@ -32,7 +33,7 @@ $.layerOpen = function (options) {
         scrollbar: false,
         skin: options.skin,
         shade: options.shade,
-        shadeClose: true,
+        shadeClose: options.shadeClose,
         maxmin: options.maxmin,
         title: options.title,
         fix: false,
@@ -51,8 +52,12 @@ $.layerOpen = function (options) {
                 options.yes(iframebody, iframeWin, index);
             }
         },
-        cancel: function () {
-            return true;
+        cancel: function (index, layero) {
+            if ($.isFunction(options.cancel)) {
+                options.cancel(index, layero);
+            } else {
+                return true;
+            }
         }
     });
 

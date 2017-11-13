@@ -4,6 +4,7 @@ using Mock.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace Mock.Domain
         /// <param name="pag">分页</param>
         /// <param name="param">标题/邮箱</param>
         /// <returns></returns>
-        DataGrid GetDataGrid(Pagination pag,string param);
+        DataGrid GetDataGrid(Expression<Func<GuestBook, bool>> predicate,Pagination pag,string param);
         
     }
 }

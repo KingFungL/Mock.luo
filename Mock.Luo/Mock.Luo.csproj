@@ -748,11 +748,13 @@
     <Content Include="Content\Images\qqlogin.png" />
     <Content Include="Content\Images\qrcode_for_gh_676b1b527097_430.jpg" />
     <Content Include="Content\Images\r_title_bg.jpg" />
+    <Content Include="Content\Images\tim.jpg" />
     <Content Include="Content\Images\time.jpg" />
     <Content Include="Content\Images\UserCard01.png" />
     <Content Include="Content\Images\UserCard02.png" />
     <Content Include="Content\Images\wechat.226aab51.png" />
     <Content Include="Content\Images\weibo.5be74d9f.png" />
+    <Content Include="Content\Images\weixin.png" />
     <Content Include="Content\js\bootstrap-table-zh-CN.min.js" />
     <Content Include="Content\js\bootstrap-table.min.js" />
     <Content Include="Content\js\bootstrap.min.js" />
@@ -1864,6 +1866,9 @@
     <Content Include="Views\Generic\ActiveEmailTemplate.cshtml" />
     <Content Include="Views\App\ActiveEmail.cshtml" />
     <Content Include="Views\Generic\SendCodeTemplate.cshtml" />
+    <Content Include="Views\Account\Comment.cshtml" />
+    <Content Include="Views\Account\GuestBook.cshtml" />
+    <Content Include="Views\Account\Collect.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

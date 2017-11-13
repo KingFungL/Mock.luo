@@ -197,10 +197,8 @@ namespace Mock.Domain
 
         #region 重置密码
 
-        public void ResetPassword(int keyValue, string userPassword)
+        public void ResetPassword(AppUser userEntity, string userPassword)
         {
-            AppUser userEntity = new AppUser();
-            userEntity.Id = keyValue;
             userEntity.UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
             userEntity.LoginPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userPassword, 32).ToLower(), userEntity.UserSecretkey).ToLower(), 32).ToLower();
 

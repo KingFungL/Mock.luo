@@ -42,7 +42,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
             {
                 pag.limit = 10;
             }
-            return Result(_guestBookRepository.GetDataGrid(pag, search));
+            return Result(_guestBookRepository.GetDataGrid(u=>true,pag, search));
         }
 
         /// <summary>

@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutBlog.cshtml";
+    ViewBag.Title = "我的收藏、天上有木月-博客";
+}
+
+<div class="layui-container user-main" id="v-app">
+    <ul class="layui-nav layui-nav-tree" lay-filter="test">
+        <li class="layui-nav-item"><a href="/App/Index" target="_blank"><i class="layui-icon">&#xe68e;</i>瞧瞧主页</a></li>
+        <li class="layui-nav-item"><a href="/Account/Set"><i class="layui-icon">&#xe620;</i>基础设置</a></li>
+        <li class="layui-nav-item"><a href="/Account/Comment"><i class="layui-icon">&#xe611;</i>我的评论</a></li>
+        <li class="layui-nav-item"><a href="/Account/GuestBook"><i class="layui-icon">&#xe63c;</i>我的留言</a></li>
+        <li class="layui-nav-item  layui-this"><a href="/Account/Collect"><i class="layui-icon">&#xe622;</i>收藏</a></li>
+    </ul>
+    <div class="panel-user">
+
+    </div>
+</div>
+
+@section scripts{
+    <script>
+
+
+    </script>
+}
+
+
+@section css{
+    <style>
+    </style>
+}
+
+
+@section beyond{
+
+
+}

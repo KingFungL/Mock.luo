@@ -74,6 +74,7 @@ namespace Mock.Domain
                 CreatorTime = r.CreatorTime,
                 ViewHits = r.ViewHits,
                 thumbnail = r.thumbnail,
+                PointQuantity = r.PointQuantity
             }).FirstOrDefault();
 
             artEntry.TimeSpan = TimeHelper.GetDateFromNow(artEntry.CreatorTime.ToDateTime());

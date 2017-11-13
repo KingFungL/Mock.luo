@@ -1,0 +1,78 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutBlog.cshtml";
+    ViewBag.Title = "我的留言、天上有木月-博客";
+}
+
+<div class="layui-container user-main" id="v-app">
+    <ul class="layui-nav layui-nav-tree" lay-filter="test">
+        <li class="layui-nav-item"><a href="/App/Index" target="_blank"><i class="layui-icon">&#xe68e;</i>瞧瞧主页</a></li>
+        <li class="layui-nav-item"><a href="/Account/Set"><i class="layui-icon">&#xe620;</i>基础设置</a></li>
+        <li class="layui-nav-item"><a href="/Account/Comment"><i class="layui-icon">&#xe611;</i>我的评论</a></li>
+        <li class="layui-nav-item layui-this"><a href="/Account/GuestBook"><i class="layui-icon">&#xe63c;</i>我的留言</a></li>
+        <li class="layui-nav-item"><a href="/Account/Collect"><i class="layui-icon">&#xe622;</i>收藏</a></li>
+    </ul>
+    <div class="panel-user">
+        <table id="dginfo"></table>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Content/js/bootstrap-table.min.js"></script>
+    <script src="~/Content/js/bootstrap-table-zh-CN.min.js"></script>
+    <script>
+          var vm = new Vue({
+            el: '#v-app',
+            mounted: function () {
+                this.init_datagrid();
+            },
+            methods: {
+                init_datagrid: function () {
+                    $('#dginfo').dataGrid({
+                        url: '/Account/GetGuestGrid',
+                        sortOrder: "desc",
+                        sortName: 'Id',
+                        showRefresh: false,
+                        showToggle: false,
+                        showColumns:false,
+                        queryParams: function (params) {
+                            return params;
+                        },
+                        columns: [{ checkbox: true },
+                        {
+                            field: 'Text', title: '留言的内容', sortable: true, align: 'center', formatter: function (value, row) {
+                                return com.content(value);
+                            }
+                        },
+                        {
+                            field: 'IsAduit', title: '状态', sortable: true, formatter: function (value, row) {
+                                return com.format_str('<span class="label label-{0}">{1}</span>', value == true ? "success" : "danger", value == true ? "审核通过" : "已拉黑");
+                            }
+                        },
+                        { field: 'CreatorTime', title: '留言时间', sortable: true }
+                        ],
+                        callback: function () {
+                            $('.pull-right.search .form-control').attr('placeholder', '输入邮箱');
+                        }
+                    });
+                },
+                btn_refresh: function () {
+                    $('#dginfo').bootstrapTable("refresh");
+                }
+            }
+        });
+
+    </script>
+}
+
+
+@section css{
+    <link href="~/Content/css/bootstrap-table.min12.css" rel="stylesheet" />
+    <style>
+    </style>
+}
+
+
+@section beyond{
+
+
+}

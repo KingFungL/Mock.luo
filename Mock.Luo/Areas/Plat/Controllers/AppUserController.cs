@@ -75,7 +75,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
        /// <returns></returns>
         public ActionResult ResetPassword(int Id)
         {
-            _service.ResetPassword(Id, "1234");
+            _service.ResetPassword(new AppUser { Id = Id }, "1234");
             return Success();
         }
     }
