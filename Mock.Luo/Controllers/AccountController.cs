@@ -356,20 +356,18 @@ namespace Mock.Luo.Controllers
             return Success();
         }
 
-
-        public ActionResult ResetPwd(string LoginPassword, string newPwd)
+        [HttpPost]
+        public ActionResult ResetPwd(string newPwd, string LoginPassword = "")
         {
 
-            if (LoginPassword.IsNullOrEmpty())
-            {
-                return Error("旧密码不能为空");
-            }
+            int userId = (int)op.CurrentUser.UserId;
+
+    
             if (newPwd.IsNullOrEmpty())
             {
                 return Error("新密码不能为空");
             }
 
-            int userId = (int)op.CurrentUser.UserId;
 
             AppUser userEntity = _appUserRepository.FindEntity(userId);
             if (userEntity != null)
@@ -383,6 +381,10 @@ namespace Mock.Luo.Controllers
                 }
                 else
                 {
+                    if (LoginPassword.IsNullOrEmpty())
+                    {
+                        return Error("旧密码不能为空");
+                    }
                     return Error("你的旧密码填写不对，无法重置密码！");
                 }
 

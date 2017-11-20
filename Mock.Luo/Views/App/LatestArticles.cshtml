@@ -9,7 +9,7 @@
                 List<ArtDetailDto> lastestArticles = ViewData["LatestArticles"] as List<ArtDetailDto>;
                 foreach (var item in lastestArticles)
                 {
-                    <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="Detail/@item.Id" style="margin-left:4px;">@item.Title</a></li>
+                    <li><i class="fa fa-chevron-right" aria-hidden="true"></i><a href="/App/Detail/@item.Id" style="margin-left:4px;">@item.Title</a></li>
                 }
             }
         </ul>

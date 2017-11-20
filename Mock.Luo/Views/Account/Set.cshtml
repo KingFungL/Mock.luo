@@ -179,7 +179,7 @@
                 validate_email_show: false,
                 validate_pwd_show:false,
                 user: userJson,
-                LoginNameIsShow: userJson.LoginName == "" ? true : false,
+                LoginNameIsShow: (userJson.LoginName == "" || userJson.LoginName == null) ? true : false,
                 wait: 60,
                 TimeKeeping: '获取验证码',
                 Code: '',
