@@ -75,7 +75,7 @@
                     <div class="user-avatar">
                         <button class="btn btn-primary" id="upload-img"><i class="fa fa-cloud-upload"></i>上传头像</button>
                         <p>建议尺寸168*168，支持jpg、png、gif，最大不能超过50KB</p>
-                        <img :src="user.Avatar" />
+                        <img :src="user.Avatar"/>
                     </div>
                 </div>
                 <div class="layui-tab-item">
@@ -83,7 +83,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">用户名</label>
                             <div class="layui-input-inline">
-                                <input type="text" v-model="user.LoginName" required lay-verify="required" placeholder="只可修改一次" autocomplete="off" class="layui-input">
+                                <input type="text" v-model="user.LoginName" required lay-verify="required" placeholder="只可设置一次" autocomplete="off" class="layui-input">
                             </div>
                             <div class="layui-form-mid layui-word-aux">
                                 <a href="javascript:void(0)" v-on:click="set_loginName" v-show="LoginNameIsShow" style="font-size: 12px; color: #4f99cf;">设置</a>
@@ -97,12 +97,12 @@
                             </div>
                             <div>
                                 <div class="layui-form-mid layui-word-aux" v-if="user.EmailIsValid">
-                                    <span class="layui-icon" title="已绑定成功">&#xe6c6;</span> 已绑定成功（可用于登录）
                                     <a href="javascript:void(0)" v-on:click="set_email_address" style="font-size: 12px; color: #4f99cf;" title="修改邮箱需要验证邮箱验证码">修改邮箱</a>
+                                    <span class="layui-icon" title="已绑定成功">&#xe6c6;</span> 已绑定成功（可用于登录）
                                 </div>
                                 <div class="layui-form-mid layui-word-aux" v-else="user.Email">
-                                  （先填写好邮箱，再点击绑定邮箱）
                                     <a href="javascript:void(0)" v-on:click="set_email_address" style="font-size: 12px; color: #4f99cf;" title="绑定邮箱">绑定邮箱</a>
+                                  （先填写好邮箱，再点击绑定邮箱）
                                 </div>
                             </div>
                         </div>
@@ -120,8 +120,15 @@
                 <div class="layui-tab-item app-bind">
                     <blockquote class="layui-elem-quote layui-quote-nm">
                         <i class="fa fa-qq icon-qq"></i>
-                        <span v-text="user.NickName"></span>
-                        <a class="js-unbind" href="#" v-on:click="unbind_qq">（解绑）</a>
+                        <template v-if="user.isBindQQ">
+                            <span v-text="user.NickName"></span>
+                            <a href="#" v-on:click="unbind_qq">（解绑）</a>
+                        </template>
+                        <template v-else>
+                            @*/Account/bindQQ*@
+                            <a href="#" onclick="layer.msg('待完成', {icon:16, shade: 0.1, time:2000})">立即绑定</a>
+                            <span>，即可使用QQ帐号登录本博客</span>
+                        </template>
                     </blockquote>
                 </div>
             </div>
@@ -296,7 +303,7 @@
                         url: '/Account/SaveUserInfo',
                         showMsg: true,
                         success: function (d) {
-                            console.log(d)
+                            //console.log(d)
                         }
                     });
                 },
@@ -305,11 +312,11 @@
                         elem: '#upload-img',
                         url: '/Mock/Upload/LayuiImage',
                         done: function (res) {
-                            console.log(res);
+                            //console.log(res);
                             if (res.code == 0) {
                                 vm.user.Avatar = res.data.src;
                                 $.post('/Account/SaveAvatar', { Avatar: vm.user.Avatar }, function (d) {
-                                    console.log(d)
+                                    //console.log(d)
                                 });
                             }
                         },
@@ -370,8 +377,6 @@
                 }
             }
         })
-
-
     </script>
 
 }
@@ -385,8 +390,6 @@
             .user-avatar button, .user-avatar p { margin: 20px; }
             .user-avatar img { border-radius: 100%; width: 168px; height: 168px; }
     </style>
-
-
 }
 
 @section beyond{

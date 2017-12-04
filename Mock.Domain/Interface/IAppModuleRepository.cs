@@ -63,10 +63,19 @@ namespace Mock.Domain
         dynamic GetRoleModuleAuth(int roleId);
 
         /// <summary>
-        /// 根据用户ID得到权限模块 GetUserMenus
+        /// 根据用户ID得到权限模块 GetUserMenus 缓存
         /// </summary>
         /// <param name="userid">用户ID</param>
         /// <returns>用户菜单List</returns>
          List<AppModule> GetUserModules(int? userId);
+
+        /// <summary>
+        /// Action执行权限认证
+        /// </summary>
+        /// <param name="userId">用户Id</param>
+        /// <param name="moduleId">模块Id</param>
+        /// <param name="action">请求地址</param>
+        /// <returns></returns>
+        bool ActionAuthorize(int userId, string moduleId, string action);
     }
 }

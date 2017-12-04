@@ -17,10 +17,7 @@ namespace Mock.Code
         }
         public static string ToJson(this object obj)
         {
-            JsonSerializerSettings jsSettings = new JsonSerializerSettings();
-            jsSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            jsSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-            return JsonConvert.SerializeObject(obj, jsSettings);
+            return JsonHelper.SerializeObject(obj);
         }
         public static string ToJson(this object obj, string datetimeformats)
         {

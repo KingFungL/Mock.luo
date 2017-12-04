@@ -17,7 +17,7 @@ namespace Mock.Domain
         #region 角色下拉框
         public dynamic GetRoleJson()
         {
-            var entities = this.IQueryable().Where(u => u.DeleteMark == false && u.IsEnableMark == true).OrderBy(u => u.SortCode).Select(u => new
+            var entities = this.IQueryable(u => u.DeleteMark == false && u.IsEnableMark == true).OrderBy(u => u.SortCode).Select(u => new
             {
                 id = u.Id,
                 text = u.RoleName

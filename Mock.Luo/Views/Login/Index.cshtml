@@ -45,10 +45,6 @@
                         <a href="#" v-on:click="forget_pwd" class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="忘记密码"></a>
                     </div>
                     <div class="form-group">
-                        @*<div class="main-checkbox">
-                                <input type="checkbox" id="input-4" name="rememberMe" checked />
-                                <label for="input-4">记住密码 </label>
-                            </div>*@
                         <button type="button" v-on:click="btn_login" class="btn btn-primary" style="width:100%;"> 登录</button>
                     </div>
                 </form>
@@ -59,21 +55,14 @@
     <div class="footer">
         <p>
             <a href="http://igeekfan.cn/" target="_blank">
-                Mock博客<span>·</span>
-            </a>2014~@DateTime.Now.Year ©<span>·</span>
-            <a href="http://igeekfan.cn/" target="_blank">
-                igeekfan.cn
-            </a>
+                天上有木月博客<span>·</span>
+            </a><a> 2016~@DateTime.Now.Year ©</a><span>·</span>
+            <a href="https://github.com/luoyunchong/Mock.luo" target="_blank">获取igeekfan博客代码</a>
         </p>
         <p>
-            <a href="http://igeekfan.cn./Home/3147.html" target="_blank">产品授权</a><span>·</span>
-            <a href="https://github.com/luoyunchong/Mock.luo" target="_blank">获取igeekfan博客代码</a><span>·</span>
-            <a href="http://igeekfan.cn/Home/2461.html" target="_blank">微信公众号</a>
         </p>
     </div>
 </div>
-
-
 
 @section scripts{
     <script src="~/Content/js/plugins/jquery.md5.js"></script>
@@ -116,7 +105,7 @@
                         success: function (jsondata) {
                             $.procAjaxMsg(jsondata, function () {
                                 $.layerMsg(jsondata.message, jsondata.state, function () {
-                                    window.location.href = "/Home/Index";
+                                    window.location.href = jsondata.data;
                                 });
                             }, function () {
                                 $.layerMsg(jsondata.message, jsondata.state)
@@ -126,11 +115,19 @@
 
                 },
                 btn_register: function () {
-                    console.log('btn_register');
-                    $.layerMsg('待完成！')
+                    $.layerMsg('待完成！');
                 },
                 forget_pwd: function () {
-                    $.layerMsg('忘记密码', '', 'info')
+                    $.layerOpen({
+                        title: "忘记密码",
+                        width: '50%',
+                        height: '63%',
+                        content: '/Login/PwdReset',
+                        shadeClose: false,
+                        skin: 'layui-layer-lan',
+                        title: '重置密码',
+                        btn: []
+                    });
                 }
             }
         })

@@ -166,5 +166,6 @@ namespace Mock.Luo.Areas.Plat.Controllers
         {
             return Result(_service.GetRoleModuleAuth(roleId));
         }
+
     }
 }

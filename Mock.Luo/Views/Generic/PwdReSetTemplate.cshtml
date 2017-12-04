@@ -1,0 +1,88 @@
+﻿@{
+    Layout = null;
+}
+@model Mock.Data.ExtensionModel.ResetPwd
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>找回密码</title>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .container-fluid { padding-right: 15px; padding-left: 15px; margin-right: auto; margin-left: auto; }
+
+        .container { width: 1170px; }
+
+        .container { padding-right: 15px; padding-left: 15px; margin-right: auto; margin-left: auto; }
+
+        .row { margin-right: -15px; margin-left: -15px; }
+
+        .panel-primary { border-color: #428bca; }
+
+        .panel { margin-bottom: 20px; background-color: #fff; border: 1px solid transparent; border-radius: 4px; -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05); box-shadow: 0 1px 1px rgba(0, 0, 0, .05); }
+
+        .panel-primary > .panel-heading { color: #fff; background-color: #428bca; border-color: #428bca; }
+
+        .panel-heading { padding: 10px 15px; border-bottom: 1px solid transparent; border-top-left-radius: 3px; border-top-right-radius: 3px; }
+
+        .text-center { text-align: center; }
+
+        .panel-primary > .panel-heading { color: #fff; background-color: #428bca; border-color: #428bca; }
+
+        .panel-heading { padding: 10px 15px; border-bottom: 1px solid transparent; border-top-left-radius: 3px; border-top-right-radius: 3px; }
+
+        .panel-body { padding: 15px; }
+
+            .container:after, .container-fluid:after, .panel-body:after, .modal-footer:after { clear: both; }
+
+        *:before, *:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+
+        h4, .h4 { font-size: 18px; }
+
+        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 { font-family: inherit; font-weight: 500; line-height: 1.1; color: inherit; }
+
+        h4, .h4, h5, .h5, h6, .h6 { margin-top: 10px; margin-bottom: 10px; }
+
+        .alert-success { color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6; }
+
+        .alert { padding: 15px; margin-bottom: 20px; border: 1px solid transparent; border-radius: 4px; }
+
+        .text-center { text-align: center; }
+
+        .col-sm-12 { width: 100%; }
+
+        .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 { float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; }
+
+        h6, .h6 { font-size: 12px; }
+
+        h4, .h4, h5, .h5, h6, .h6 { margin-top: 10px; margin-bottom: 10px; }
+
+        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 { font-family: inherit; font-weight: 500; line-height: 1.1; color: inherit; }
+
+        .container:before, .container:after, .container-fluid:before, .container-fluid:after, .row:before, .row:after { display: table; content: " "; }
+
+        .container:after, .container-fluid:after, .panel-body:after, .modal-footer:after { clear: both; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid" style="background-color:#f7f9fa;margin-top:20px; ">
+        <div class="container" style="margin-top:20px;width:50%;">
+            <div class="row">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"><span style="font-size:25px;font-weight:bold;">找回您的密码</span></div>
+                    <div class="panel-body">
+                        <h4 style="font-weight: bold;color:#7b7b7b;"> @Model.NickName，你好， </h4>
+                        <p>你此次重置密码的验证码如下，请在 30 分钟内输入验证码进行下一步操作。 如非你本人操作，请忽略此邮件。</p>
+                        <div class="alert alert-success text-center" role="alert"><span style="font-size:20px; font-weight:700;color:#7b7b7b;">@Model.ModfiyPwdCode</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h6 style="">Copyright &copy;、天上有木月-个人博客系统</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -5,6 +5,7 @@ using Mock.Data.Models;
 using Mock.Domain;
 using Mock.Luo.Areas.Plat.Models;
 using Mock.Luo.Controllers;
+using Mock.Luo.Generic.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         }
 
         [HttpGet]
+        [HandlerAuthorize]
         public override ActionResult Form(int id = 0)
         {
             if (id == 0)
@@ -48,13 +50,19 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
         }
         [HttpPost]
+        [HandlerAuthorize]
         public ActionResult GetDataGrid(Pagination pag, string LoginName = "", string Email = "")
         {
             return Content(_service.GetDataGrid(pag, LoginName, Email).ToJson());
         }
-       
+
+        [HandlerAuthorize]
         public ActionResult SubmitForm(AppUser userEntity,string roleIds)
         {
+            if (!ModelState.IsValid)
+            {
+                return Error(ModelState);
+            }
             AjaxResult result = _service.IsRepeat(userEntity);
 
             //用户名或邮箱重复
@@ -68,11 +76,12 @@ namespace Mock.Luo.Areas.Plat.Controllers
             return Success();
 
         }
-       /// <summary>
-       /// 重置用户密码
-       /// </summary>
-       /// <param name="Id">主键</param>
-       /// <returns></returns>
+        /// <summary>
+        /// 重置用户密码
+        /// </summary>
+        /// <param name="Id">主键</param>
+        /// <returns></returns>
+        [HandlerAuthorize]
         public ActionResult ResetPassword(int Id)
         {
             _service.ResetPassword(new AppUser { Id = Id }, "1234");

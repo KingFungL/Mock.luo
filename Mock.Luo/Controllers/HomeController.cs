@@ -1,5 +1,6 @@
 ﻿
 using Mock.Code;
+using Mock.Code.Util;
 using Mock.Data;
 using Mock.Data.Models;
 using Mock.Domain;
@@ -65,9 +66,9 @@ namespace Mock.Luo.Controllers
             var data = new
             {
                 dataItems = this.GetDataItemList(),
-                user = "",
+                user = op.CurrentUser,
                 authorizeMenu = this.GetMenuList(),
-                //authorizeButton = this.GetMenuButtonList(),
+                authorizeButton = this.GetModuleButtonData()
             };
             return Content(data.ToJson());
         }
@@ -92,6 +93,8 @@ namespace Mock.Luo.Controllers
             }
             return dictionaryItem;
         }
+
+
         /// <summary>
         /// 当前登录用户的菜单权限
         /// </summary>
@@ -101,20 +104,34 @@ namespace Mock.Luo.Controllers
             OperatorProvider op = OperatorProvider.Provider;
             List<AppModule> userModuleEntities;
             //权限为空时，根据当前登录的用户Id,获取权限模块数据
-            if (op.ModulePermission == null)
-            {
-                op.ModulePermission = userModuleEntities = _appModuleService.GetUserModules(op.CurrentUser.UserId);
-            }
-            else
-            {
-                userModuleEntities = op.ModulePermission;
-            }
-
-            List<AppModule> userMenuEntities = userModuleEntities.Where(u => u.TypeCode != "Button" && u.TypeCode != "Permission").ToList();
+           
+            userModuleEntities = _appModuleService.GetUserModules(op.CurrentUser.UserId);
+            
+            List<AppModule> userMenuEntities = userModuleEntities.Where(u => u.TypeCode != ModuleCode.Button.ToString() && u.TypeCode != ModuleCode.Permission.ToString()).ToList();
 
             List<TreeNode> treeNodes = AppModule.ConvertTreeNodes(userMenuEntities);
 
             return treeNodes;
         }
+
+        /// <summary>
+        /// 获取功能按钮数据
+        /// </summary>
+        /// <returns></returns>
+        private dynamic GetModuleButtonData()
+        {
+
+            var data = _appModuleService.GetUserModules(SystemInfo.CurrentUserId).Where(r=>r.TypeCode== ModuleCode.Button.ToString()||r.TypeCode==ModuleCode.Menu.ToString()).ToList();
+            //页面子菜单
+            var dataModule = data.Distinct(new Comparint<AppModule>("PId"));
+            Dictionary<int?, object> dictionary = new Dictionary<int?, object>();
+            foreach (var item in dataModule)
+            {
+                var buttonList = data.Where(t => t.PId.Equals(item.Id));
+                dictionary.Add(item.Id, buttonList);
+            }
+            return dictionary;
+        }
+
     }
 }

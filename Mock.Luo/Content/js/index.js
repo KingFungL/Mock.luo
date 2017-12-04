@@ -9,6 +9,8 @@ $(function () {
     //        $ui.initMenu(data);
     //    }
     //});
+    $ui.bindUser();
+
 });
 (function ($, $ui) {
     $.extend($ui, {
@@ -29,23 +31,23 @@ $(function () {
                 html += '<ul class="nav nav-second-level collapse">';
 
                 var temple = '<li>\
-                          <a class="J_menuItem" href="{0}" target="{1}"><i class="{2}"></i>{3}\
+                          <a class="J_menuItem" href="{0}" target="{1}"  data-index={4}><i class="{2}"></i>{3}\
                       ';
                 if (jsonobj.children.length > 0) {
 
                     for (var j = 0; j < jsonobj.children.length; j++) {
                         var m = jsonobj.children[j];
-                        html += com.format_str(temple, m.href, m.target, m.iconcls, m.text);
+                        html += com.format_str(temple, m.href, m.target, m.iconcls, m.text,m.id);
                         var json3 = m;
                         if (m && m.children && m.children.length > 0) {
                             html += '<span class="fa arrow"></span></a>';
                             html += '<ul class="nav nav-third-level">';
                             var template3 = '<li>\
-                                           <a class="J_menuItem" href="{0}"  target="{1}"><i class="{2}"></i>{3}</a>\
+                                           <a class="J_menuItem" href="{0}"  target="{1}"  data-index={4}><i class="{2}"></i>{3}</a>\
                                      </li>';
                             for (var k = 0; k < m.children.length; k++) {
                                 var t = m.children[k];
-                                html += com.format_str(template3, t.href, t.target, t.iconcls, t.text);
+                                html += com.format_str(template3, t.href, t.target, t.iconcls, t.text,t.id);
                             }
                             html += '</ul>';
                         } else {
@@ -68,6 +70,16 @@ $(function () {
                     $ui.initMenu(data.authorizeMenu);
                 }
             });
+        },
+        bindUser: function () {
+            console.log($ui.data);
+            var loginName = $ui.data.user.LoginName;
+            var nickName = $ui.data.user.NickName;
+            var avatar = $ui.data.user.Avatar;
+            $('#nav-LoginName').html(loginName);
+            $('#nav-NickName').html(nickName + '<b class="caret"></b>');
+            $('#nav-userImg').attr('src', avatar );
+
         }
     });
 })(jQuery, window.$ui);

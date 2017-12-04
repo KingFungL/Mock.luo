@@ -1,0 +1,203 @@
+﻿@{ Layout = null;}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>密码重置</title>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <link href="~/Content/css/bootstrap.min14ed.css" rel="stylesheet" />
+    <link href="~/Content/css/font-awesome4.7.min12.css" rel="stylesheet" />
+    <link href="~/Content/css/animate.min2932.css" rel="stylesheet" />
+    <link href="~/Content/js/layui/css/layui.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        [v-cloak] { display: none }
+        #v-app > .container { margin-top: 20px; }
+            #v-app > .container > .row > h4 { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div id="v-app">
+        <div class="container" v-if="sendcodeseen">
+            <div class="row text-center">
+                <h3>找回密码 </h3>
+                <h4>
+                    验证码将会发送至您注册的邮箱
+                </h4>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label>邮箱</label>
+                    <input type="email" class="form-control" id="email" name="email" v-model="email" placeholder="请输入邮箱">
+                </div>
+                <div class="form-group" style="position: relative;overflow:hidden;">
+                    <label>验证码</label>
+                    <input type="text" class="form-control" id="code" name="code" v-model="code" placeholder="请输入验证码">
+                    <div style="position: absolute;right:2px;top: 27px;">
+                        <img title="看不清楚？换一张" width="120" height="30" id="imgcode" :src="src"
+                             alt="验证码" style="display: block;" v-on:click="changecode">
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <button class="btn btn-primary" v-on:click="sendcode" type="button">获取验证码</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="container" v-if="resetpwdseen" v-cloak>
+            <div class="row text-center">
+                <h3>重设密码</h3>
+                <h4>
+                    验证码已经发送至您注册的邮箱
+                </h4>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label>邮箱</label>
+                    <input type="hidden" name="pwdtoken" v-model="pwdtoken" />
+                    <input type="email" class="form-control" name="account" v-model="account" disabled="disabled">
+                </div>
+                <div class="form-group">
+                    <label>新密码</label>
+                    <input type="password" class="form-control" name="newpwd" v-model="newpwd" placeholder="请输入新密码">
+                </div>
+                <div class="form-group" style="position: relative;overflow:hidden;">
+                    <label>验证码</label>
+                    <input type="text" class="form-control" name="emailcode" v-model="emailcode" placeholder="邮箱收到的6位数字验证码" maxlength="6">
+                    <div style="position: absolute;right:0px;top: 25px;">
+                        <button type="button" :class="btntimeclass" v-on:click="sendagin" v-bind:disabled="btntimedis">{{ btntime }}</button>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <button class="btn btn-primary" v-on:click="resetpwd" type="button">重设密码</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <script src="~/Content/js/jquery-2.1.4-min.js"></script>
+    <script src="~/Content/js/global.js?v=1"></script>
+    <script src="~/Content/js/common.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/bootstrap-table.min.js"></script>
+    <script src="~/Content/js/bootstrap-table-zh-CN.min.js"></script>
+    <script src="~/Content/js/vue/vue.min.js"></script>
+    <script src="~/Content/js/layui/layui.all.js"></script>
+    <script src="~/Content/js/plugins/validator.js"></script>
+    <script>
+
+        var vm = new Vue({
+            el: '#v-app',
+            data: {
+                code: '',
+                email: '',
+                src: '/Login/GetAuthCode',
+                sendcodeseen: true,
+                resetpwdseen: false,
+                pwdtoken: '',
+                account: '',
+                newpwd: '',
+                emailcode: '',
+                btntime: '60秒后重发',
+                wait: 60,
+                btntimeclass: 'btn btn-default',
+                btntimedis: true
+            },
+            methods: {
+                changecode: function () {
+                    this.src = '/Login/GetAuthCode?d=' + Math.random();
+                },
+                sendcode: function () {
+                    if (this.code == '') {
+                        $.layerMsg('验证码不能为空！');
+                        return false;
+                    }
+                    if (this.email == '') {
+                        $.layerMsg('邮箱不能为空！');
+                        return false;
+                    }
+                    var data = vm.$data;
+                    var data = {
+                        code: this.code,
+                        email: this.email
+                    }
+                    com.ajax({
+                        data: data,
+                        url: '/Login/SmsCode',
+                        success: function (json) {
+                            $.procAjaxMsg(json, function () {
+                                $.layerMsg(json.message, 'ok');
+                                vm.sendcodeseen = false;
+                                vm.resetpwdseen = true;
+                                vm.pwdtoken = json.data;
+                                vm.account = vm.email
+                                vm.btn_timing();
+                            }, function () {
+                                $.layerMsg(json.message);
+                            })
+                        }
+                    })
+                },
+                resetpwd: function () {
+                    var data = {
+                        pwdtoken: this.pwdtoken,
+                        account: this.account,
+                        newpwd: this.newpwd,
+                        emailcode: this.emailcode
+                    };
+
+                    com.ajax({
+                        data: data,
+                        url: '/Login/ResetPwd',
+                        success: function (json) {
+                            $.procAjaxMsg(json, function () {
+                                $.alertMsg(json.message, '提示', function () {
+                                    $.layerClose();
+                                }, 'ok');
+                            }, function () {
+                                $.layerMsg(json.message);
+                            });
+                        }
+                    })
+                },
+                sendagin: function () {
+                    var account = this.account;
+                    com.ajax({
+                        url: '/Login/SmsCodeAgain',
+                        data: { 'account': account },
+                        success: function (json) {
+                            $.procAjaxMsg(json, function () {
+                                vm.pwdtoken = json.data;
+                                vm.btn_timing();
+                            }, function () {
+                                $.layerMsg(json.message);
+                            });
+                        }
+                    })
+                },
+                btn_timing: function () {
+                    if (vm.wait == 0) {
+                        //当计时器为0时，就将按钮设置为可点击
+                        vm.wait = 60;
+                        vm.btntimeclass = 'btn btn-primary';
+                        vm.btntimedis = false;
+                        vm.btntime = "点我重发";
+
+                    } else {
+                        //每过一秒按钮的字变一次
+                        vm.btntimeclass = 'btn btn-default';
+                        vm.btntime = vm.wait + "秒后重发";
+                        vm.btntimedis = true;
+                        vm.wait--;
+                        window.setTimeout(function () {
+                            vm.btn_timing();
+                        }, 1000);
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

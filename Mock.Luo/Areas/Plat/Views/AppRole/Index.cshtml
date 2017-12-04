@@ -25,10 +25,10 @@
                 <button id="btn_delete" type="button" class="btn btn-default" v-on:click="btn_delete">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
                 </button>
-                <button id="" type="button" class="btn btn-default" v-on:click="btn_allot">
+                <button id="btn_allot" type="button" class="btn btn-default" v-on:click="btn_allot">
                     <span class="fa fa-group" aria-hidden="true"></span>角色成员
                 </button>
-                <button id="" type="button" class="btn btn-default" v-on:click="btn_authorize">
+                <button id="btn_authorize" type="button" class="btn btn-default" v-on:click="btn_authorize">
                     <span class="fa fa-gavel" aria-hidden="true"></span>角色授权
                 </button>
             </div>
@@ -42,6 +42,7 @@
         var vm = new Vue({
             el: '#v-app',
             mounted: function () {
+                $('#toolbar').authorizeButton();
                 this.init_table();
             },
             methods: {
@@ -89,7 +90,6 @@
                     })
                 },
                 btn_authorize: function (){
-                    console.info('授权！！');
                     var id = com.get_selectid();
                     if (id == 0) {
                         $.layerMsg('请先选择你要授权的角色!');

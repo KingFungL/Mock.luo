@@ -68,22 +68,6 @@ namespace Mock.Data
         Deleted = 6,
 
         /// <summary>
-        /// 菜单
-        /// </summary>
-        Menu,
-        /// <summary>
-        /// 父菜单
-        /// </summary>
-        PMenu,
-        /// <summary>
-        /// 按钮
-        /// </summary>
-        Button,
-        /// <summary>
-        /// 权限认证
-        /// </summary>
-        Permission,
-        /// <summary>
         /// 启用
         /// </summary>
         Enable,
@@ -155,6 +139,26 @@ namespace Mock.Data
         WeChat,
         Sina
 
+    }
+
+    public enum ModuleCode
+    {
+        /// <summary>
+        /// 菜单
+        /// </summary>
+        Menu,
+        /// <summary>
+        /// 父菜单
+        /// </summary>
+        PMenu,
+        /// <summary>
+        /// 按钮
+        /// </summary>
+        Button,
+        /// <summary>
+        /// 权限认证
+        /// </summary>
+        Permission,
     }
 
 

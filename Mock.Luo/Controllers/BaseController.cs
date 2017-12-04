@@ -1,6 +1,7 @@
 ﻿using Mock.Code;
 using Mock.Data;
 using Mock.Luo.Generic;
+using Mock.Luo.Generic.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace Mock.Luo.Controllers
     public abstract class BaseController : Controller
     {
         public OperatorProvider op = OperatorProvider.Provider;
+        //[HandlerAuthorize]
+
         public virtual ActionResult Index()
         {
             return View();
@@ -44,6 +47,11 @@ namespace Mock.Luo.Controllers
         {
             return Content(new AjaxResult { state = state.ToString(), message = message, data = data }.ToJson());
         }
+        protected virtual ActionResult Error(ModelStateDictionary ModelState)
+        {
+            return Error(ModelState.Values.Where(u => u.Errors.Count > 0).FirstOrDefault().Errors[0].ErrorMessage);
+        }
+
         /// <summary>
         /// 简化返回json对象的包裹
         /// </summary>

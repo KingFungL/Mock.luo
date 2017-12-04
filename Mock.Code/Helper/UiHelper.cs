@@ -1,5 +1,4 @@
-﻿using Mock.Luo.Models;
-using RazorEngine;
+﻿using RazorEngine;
 using RazorEngine.Templating;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ namespace Mock.Luo.Generic.Helper
 {
     public class UiHelper
     {
-        public static string FormatEmail(EmailViewModel viewModel, string FormTemplate)
+        public static string FormatEmail<T>(T viewModel, string FormTemplate)
         {
             string path = HttpContext.Current.Server.MapPath("~/Views/Generic/" + FormTemplate + ".cshtml");
 

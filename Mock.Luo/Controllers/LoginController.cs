@@ -21,6 +21,20 @@ namespace Mock.Luo.Controllers
             this._service = _service;
         }
 
+        /// <summary>
+        /// 默认页面
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Default()
+        {
+            return View();
+        }
+
+        public ActionResult GetAuthCode()
+        {
+            return File(new VerifyCode().GetVerifyCode(), @"image/Gif");
+        }
 
         public ActionResult Mock()
         {
@@ -76,5 +90,72 @@ namespace Mock.Luo.Controllers
             return Result(_service.CheckLogin(loginName, pwd, rememberMe));
 
         }
+
+
+        public ActionResult PwdReset()
+        {
+            return View();
+        }
+
+        #region 重置密码，发送验证码 SmsCode
+        public ActionResult SmsCode(string email, string code)
+        {
+            if (string.IsNullOrEmpty(code))
+            {
+                return Error("验证码不能为空！");
+            }
+            else if (string.IsNullOrEmpty(email))
+            {
+                return Error("邮箱不能为空！");
+            }
+            else if (op.CurrentCode != code)
+            {
+                return Error("验证码错误，请重新输入");
+            }
+            else
+            {
+             return Result(_service.SmsCode(email));
+            }
+        }
+        #endregion
+
+        #region 计时器60s过后，再次发送验证码
+        public ActionResult SmsCodeAgain(string account)
+        {
+            if (string.IsNullOrEmpty(account))
+            {
+              return Error("参数出错!");
+            }
+            else
+            {
+              return Result(_service.SmsCode(account));
+            }
+        }
+        #endregion
+
+        #region 重置密码
+        public ActionResult ResetPwd(string pwdtoken, string account, string newpwd, string emailcode)
+        {
+            if (string.IsNullOrEmpty(pwdtoken))
+            {
+                return Error("token不能为空!");
+            }
+            if (string.IsNullOrEmpty(account))
+            {
+                return Error("帐号不能为空!");
+            }
+            if (string.IsNullOrEmpty(newpwd))
+            {
+                return Error("新密码不能为空!");
+            }
+            if (string.IsNullOrEmpty(emailcode))
+            {
+                return Error("邮箱验证码不能为空!");
+            }
+
+            AjaxResult amm = _service.ResetPwd(pwdtoken, account, newpwd, emailcode);
+            return Content(amm.ToJson());
+        }
+        #endregion
     }
 }

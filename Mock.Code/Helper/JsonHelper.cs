@@ -21,6 +21,7 @@ namespace Mock.Code
             JsonSerializerSettings settings = new JsonSerializerSettings();
             settings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
             settings.MissingMemberHandling = MissingMemberHandling.Ignore;
+            settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             string json = JsonConvert.SerializeObject(o, settings);
             return json;
         }

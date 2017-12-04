@@ -9,6 +9,10 @@ window.com = {};
 * 用法:
 .format_str("{0}-{1}","a","b");
 */
+
+com.isdebug = true;
+
+
 com.format_str = function () {
     for (var i = 1; i < arguments.length; i++) {
         var exp = new RegExp('\\{' + (i - 1) + '\\}', 'gm');
@@ -74,16 +78,26 @@ com.ajax = function (options) {
             }
         },
         error: function (xhr, status, error) {
-            layer.close(index);
-            console.log(status);
-            console.log(error);
-            var msg = xhr.responseText;
-            console.log(xhr)
-            var errMsg = top.layer.open({
-                title: '错误提示',
-                area: ['500px', '400px'],
-                content: msg
-            });
+            if (options.error&&$.isFunction(options.error)) {
+                options.error(xhr, status, error);
+            }
+            if (com.isdebug === true) {
+                layer.close(index);
+                console.log(status);
+                console.log(error);
+                var msg = xhr.responseText;
+                console.log(xhr)
+                var errMsg = top.layer.open({
+                    title: '错误提示',
+                    area: ['500px', '400px'],
+                    content: msg
+                });
+            }
+        },
+        statusCode: {
+            403: function (data) {
+                $.alertMsg(data.responseJSON.message, '系统提示', '', data.responseJSON.state)
+            }
         }
     });
 };
@@ -419,6 +433,12 @@ com.checkedRow = function (n) {
                     return false;
                 } 
                 return true;
+            }, nofind: function () {//图片未找到
+                var img = event.srcElement;
+
+                img.src = "/Content/Images/mo.jpg";
+
+                img.onerror = null;
             }
         });
 
@@ -629,4 +649,5 @@ com.decodeText=function (d) {
         : com.content(d);
     return content;
 }
+
 

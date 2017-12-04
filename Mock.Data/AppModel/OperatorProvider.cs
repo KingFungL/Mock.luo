@@ -44,13 +44,9 @@ namespace Mock.Data
         /// </summary>
         private bool loginOnce = Configs.GetValue("loginOnce").ToBool();
         /// <summary>
-        /// 保存当前用户权限信息
-        /// </summary>
-        private string Admin_Module_Permission = "Admin_Module_Permission";
-        /// <summary>
         /// 验证码
         /// </summary>
-        private string Admin_Code = "Admin_Code";
+        private string Admin_Code = "Mock_session_verifycode";
         /// <summary>
         /// 登录token
         /// </summary>
@@ -138,17 +134,7 @@ namespace Mock.Data
             }
         }
         #endregion
-
-        #region 当前用户权限 ModulePermission
-        /// <summary>
-        /// 当前用户权限
-        /// </summary>
-        public List<AppModule> ModulePermission
-        {
-            get => DESEncrypt.Decrypt(WebHelper.GetSession(Admin_Module_Permission+ CurrentUser.UserId)?.ToString()).ToObject<List<AppModule>>();
-            set => WebHelper.WriteSession(Admin_Module_Permission+ CurrentUser.UserId, DESEncrypt.Encrypt(value.ToJson()));
-        } 
-        #endregion
+        
         /// <summary>
         /// 当前登录的验证码
         /// </summary>
@@ -157,6 +143,7 @@ namespace Mock.Data
             get => DESEncrypt.Decrypt(WebHelper.GetSession(Admin_Code)?.ToString());
             set => WebHelper.WriteSession(Admin_Code,DESEncrypt.Encrypt(value));
         }
+
         /// <summary>
         /// 当前唯一值token
         /// </summary>

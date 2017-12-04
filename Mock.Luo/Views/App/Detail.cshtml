@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_LayoutBlog.cshtml";
     ViewBag.Title = @entry.Title;
 }
-
+@using Mock.Data;
 <div class="container" style="margin-top:80px;" id="v-app">
     <div class="row">
         <div class="col-md-8 col-xs-12">
@@ -282,7 +282,39 @@
                 }
             });
         });
+        var reply  ={
+                    AId: @ViewBag.AId,
+                    PId: 0,
+                    QQ: '',
+                    AuName: '',
+                    AuEmail: '',
+                    PersonalWebsite: '',
+                    Text: '',
+                    PName: '博主',
+                    isLogin:false
+              };
+        @{
+            OperatorProvider op = OperatorProvider.Provider;
+            string email="", website = "",auname="";
+            bool isLogin = false;
+        }
 
+        @if (op.CurrentUser == null)
+        {
+
+        }
+        else
+        {
+            email =  op.CurrentUser.Email;
+            website = op.CurrentUser.PersonalWebsite;
+            auname = op.CurrentUser.NickName;
+            isLogin = true;
+        }
+
+        reply.AuEmail ='@email';
+        reply.PersonalWebsite = '@website';
+        reply.AuName = '@auname';
+        reply.isLogin = '@isLogin';
         var vm = new Vue({
             el: "#v-app",
             data: {
@@ -290,23 +322,14 @@
                 review: [],
                 limit: 5,
                 index: "",
-                reply: {
-                    AId:@ViewBag.AId,
-                    PId: 0,
-                    QQ: '',
-                    AuName: '',
-                    AuEmail: '',
-                    PersonalWebsite: '',
-                    Text: '',
-                    PName:'博主',
-                },
-                pointQuantity: '@entry.PointQuantity' == '' ? 0 :'@entry.PointQuantity',
+                reply: reply,
+                pointQuantity: '@entry.PointQuantity' == '' ? 0 : '@entry.PointQuantity',
                 RelateArt: [],
                 Category: [],
                 RecommendArt: [],
                 ArchiveFile: [],
                 RandomArt: [],
-                ArtTag:[]
+                ArtTag: []
             },
             mounted: function () {
                 this.get_relate_list();
@@ -315,7 +338,6 @@
             },
             methods: {
                 init_layedit: function () {
-
                     window.setTimeout(function () {
                         vm.index = com.layEditor({
                             elem: '.layui-editor'
@@ -350,7 +372,7 @@
                         }
                     });
                 },
-                get_itemgrid: function (data,callback) {
+                get_itemgrid: function (data, callback) {
                     com.ajax({
                         url: '/Plat/Review/GetReviewGrid',
                         data: data,
@@ -384,7 +406,7 @@
                         $.layerMsg('请填写评论内容！', 'info');
                         return;
                     }
-                    if ($.trim(text) != "" && $.trim(text).length>500) {
+                    if ($.trim(text) != "" && $.trim(text).length > 500) {
                         $.layerMsg('评论内容太多了！', 'info');
                         return;
                     }
@@ -397,7 +419,9 @@
                         showMsg: true,
                         success: function (d) {
                             $('#layui_edit').val("");
-                            vm.reply.QQ = ""; vm.reply.AuName = ""; vm.reply.AuEmail = ""; vm.reply.PersonalWebsite = "";
+                            if (reply.isLogin == false) {
+                                vm.reply.QQ = ""; vm.reply.AuName = ""; vm.reply.AuEmail = ""; vm.reply.PersonalWebsite = "";
+                            }
                             vm.init_datagrid();
                         }
                     });
@@ -423,7 +447,7 @@
                     com.ajax({
                         url: '/App/GetRelateList',
                         data: { Id: '@ViewBag.AId' },
-                        showLoading:false,
+                        showLoading: false,
                         success: function (data) {
                             vm.RelateArt = data.RelateArt;
                             vm.Category = data.Category;
@@ -431,27 +455,26 @@
                             vm.ArchiveFile = data.ArchiveFile;
                             vm.RandomArt = data.RandomArt;
                             vm.ArtTag = data.ArtTag;
-
                         }
-                    })
+                    });
                 },
                 point_art: function () {
                     com.ajax({
                         url: '/Plat/PointArticle/Edit',
                         data: {
-                            AId:'@ViewBag.AId'
+                            AId: '@ViewBag.AId'
                         },
                         success: function (d) {
                             $.procAjaxMsg(d, function () {
                                 vm.pointQuantity++;
                             }, function () {
-                                $.layerMsg(d.message,'info');
-                          });
+                                $.layerMsg(d.message, 'info');
+                            });
                         }
-                    })
+                    });
                 }
             }
-        })
+        });
 
     </script>
 }

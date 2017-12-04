@@ -1,13 +1,12 @@
 ﻿using Mock.Data;
 using Mock.Data.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Mock.Code;
 using System.Linq.Expressions;
-using System.Web;
+using Mock.Data.ExtensionModel;
+using Mock.Luo.Generic.Helper;
+using Mock.Code.Helper;
 
 namespace Mock.Domain
 {
@@ -17,10 +16,14 @@ namespace Mock.Domain
     public class AppUserRepositroy : RepositoryBase<AppUser>, IAppUserRepository
     {
         #region 构造方法
-        private IAppModuleRepository _ModuleService;
-        public AppUserRepositroy(IAppModuleRepository _ModuleService)
+        private readonly IAppModuleRepository _ModuleService;
+        private readonly IRedisHelper _iRedisHelper;
+        private readonly IMailHelper _imailHelper;
+        public AppUserRepositroy(IAppModuleRepository _ModuleService, IRedisHelper _iRedisHepler, IMailHelper _imailHelper)
         {
             this._ModuleService = _ModuleService;
+            this._iRedisHelper = _iRedisHepler;
+            this._imailHelper = _imailHelper;
         }
         #endregion
 
@@ -40,6 +43,7 @@ namespace Mock.Domain
                 u.LoginCount,
                 u.LastLoginTime,
                 u.StatusCode,
+                isBindQQ = u.AppUserAuths.Select(r => r.IdentityType == "QQ").Count() > 0,
                 UserRoleList = u.UserRoles.Select(r => r.AppRole.RoleName)
             }).ToList();
             return new DataGrid { rows = dglist, total = pag.total };
@@ -100,16 +104,17 @@ namespace Mock.Domain
         }
         #endregion
 
-
-
         #region  判断用户是否重复，用户的LoginName是否重复，Email是否重复
         public AjaxResult IsRepeat(AppUser userEntity)
         {
-
             Expression<Func<AppUser, bool>> predicate = u => u.DeleteMark == false;
 
             if (userEntity.Id == 0)
             {
+                if (userEntity.LoginName.IsNullOrEmpty())
+                {
+                    return AjaxResult.Success("用户名为空");
+                }
                 var loginNameExpression = predicate.And(r => r.LoginName == userEntity.LoginName);
                 if (this.IQueryable(loginNameExpression).Count() > 0)
                 {
@@ -126,6 +131,10 @@ namespace Mock.Domain
             }
             else
             {
+                if (userEntity.LoginName.IsNullOrEmpty())
+                {
+                    return AjaxResult.Success("用户名为空");
+                }
                 var loginNameExpression = predicate.And(r => r.LoginName == userEntity.LoginName && r.Id != userEntity.Id);
                 if (this.IQueryable(loginNameExpression).Count() > 0)
                 {
@@ -157,20 +166,44 @@ namespace Mock.Domain
 
                 if (userEntity != null)
                 {
+                    if (userEntity.UserSecretkey.IsNullOrEmpty())
+                    {
+                        throw new Exception("用户密钥丢失，请联系管理员！");
+                    }
                     //登录成功
                     string dbPassword = Md5.md5(DESEncrypt.Encrypt(pwd.ToLower(), userEntity.UserSecretkey).ToLower(), 32).ToLower();
                     //登录成功
                     if (dbPassword == userEntity.LoginPassword)
                     {
+                        string backUrl = "";
                         //根据登录实体，去缓存用户数据
                         this.SaveUserSession(userEntity);
+
+                        if (OperatorProvider.Provider.CurrentUser.IsSystem==true)
+                        {
+                            backUrl = "/Home/Index";
+                        }
+                        else
+                        {
+                            backUrl = "/App/Index";
+                        }
 
                         //记住密码
                         if (rememberMe == true)
                         {
 
                         }
-                        ajaxResult = AjaxResult.Success("登录成功!");
+
+                        ajaxResult = AjaxResult.Success("登录成功!", backUrl);
+
+                        DateTime now = DateTime.Now;
+                        userEntity.LoginCount += 1;
+                        userEntity.LastLoginTime = now;
+                        userEntity.LastLogIp = Net.Ip;
+                        userEntity.LastModifyTime = now;
+
+                        this.Update(userEntity, "LoginCount", "LastLoginTime", "LastLogIp", "LastModifyTime");
+
                     }
                     else
                     {
@@ -208,6 +241,7 @@ namespace Mock.Domain
         }
         #endregion
 
+        #region 使用session暂存登录用户信息
         /// <summary>
         /// 使用session暂存登录用户信息
         /// </summary>
@@ -216,17 +250,22 @@ namespace Mock.Domain
         {
             OperatorProvider op = OperatorProvider.Provider;
 
+            bool isSystem = this.isSystem(userEntity.Id);
+
             //保存用户信息
             op.CurrentUser = new OperatorModel
             {
                 UserId = userEntity.Id,
-                IsSystem = userEntity.LoginName == "admin" ? true : false,
+                IsSystem = isSystem,
+                IsAdmin=userEntity.LoginName=="admin"?true:false,
                 LoginName = userEntity.LoginName,
                 LoginToken = Guid.NewGuid().ToString(),
                 UserCode = "1234",
                 LoginTime = DateTime.Now,
                 NickName = userEntity.NickName,
-                Avatar = userEntity.Avatar
+                Avatar = userEntity.Avatar,
+                Email = userEntity.Email,
+                PersonalWebsite = userEntity.PersonalWebsite
             };
             //缓存存放单点登录信息
             ICache cache = CacheFactory.Cache();
@@ -234,9 +273,129 @@ namespace Mock.Domain
             cache.WriteCache<string>(userEntity.Id.ToString(), op.Session.SessionID, DateTime.UtcNow.AddMinutes(60));
 
             //登录权限分配,根据用户Id获取用户所拥有的权限，可以在登录之后的Home界面中统一获取。
-            //op.ModulePermission = _ModuleService.GetUserModules(userEntity.Id);
-            op.ModulePermission = null;
-        }
 
+            _iRedisHelper.KeyDeleteAsync(string.Format(ConstHelper.AppModule, "AuthorizeUrl_" + userEntity.Id));
+
+        }
+        #endregion
+
+        #region  重置密码，发送验证码 SmsCode
+        public AjaxResult SmsCode(string email)
+        {
+            AjaxResult amm;
+            int limitcount = 10;
+            int limitMinutes = 10;
+
+            if (!Validate.IsEmail(email))
+            {
+                return AjaxResult.Error("邮箱格式不正确");
+            }
+
+            AppUser userEntity = this.IQueryable(u => u.Email == email && u.DeleteMark == false).FirstOrDefault();
+
+            if (userEntity == null)
+            {
+                amm = AjaxResult.Error("此邮箱尚未注册！");
+            }
+            else
+            {
+                string count = _iRedisHelper.StringGet<string>(email);
+                //缓存十分钟，如果缓存中存在,且请求次数超过10次，则返回
+                if (!string.IsNullOrEmpty(count) && Convert.ToInt32(count) >= limitcount)
+                {
+                    amm = AjaxResult.Error("没收到邮箱：请联系igeekfan@163.com");
+                }
+                else
+                {
+                    #region 发送邮箱，并写入缓存，更新登录信息表的token,date,code
+                    int num = 0;
+                    if (!string.IsNullOrEmpty(count))
+                    {
+                        num = Convert.ToInt32(count);
+                    }
+                    string countplus1 = num + 1 + "";
+                    _iRedisHelper.StringSet<string>(email, countplus1, new TimeSpan(0, limitMinutes, 0));
+
+                    ResetPwd resetpwdEntry = new ResetPwd
+                    {
+                        UserID = (int)userEntity.Id,
+                        ModifyPwdToken = Utils.GuId(),
+                        PwdCodeTme = DateTime.Now,
+                        ModfiyPwdCode = Utils.RndNum(6),
+                        LoginName = userEntity.LoginName,
+                        NickName = userEntity.NickName
+                    };
+
+                    //将发送验证码的数据存入redis缓存中
+
+                    _iRedisHelper.StringSet(email + "sendcodekey", resetpwdEntry, new TimeSpan(0, limitMinutes, 0));
+                    //发送找回密码的邮件
+
+                    string body = UiHelper.FormatEmail(resetpwdEntry, "PwdReSetTemplate");
+                    _imailHelper.SendByThread(email, "[、天上有木月博客] 密码找回", body);
+
+                    #endregion
+                    //将修改密码的token返回给前端
+                    amm = AjaxResult.Info("验证码已发送至你的邮箱！", resetpwdEntry.ModifyPwdToken, ResultType.success.ToString());
+                }
+            }
+            return amm;
+        }
+        #endregion
+
+        #region 重置密码 ResetPwd
+        public AjaxResult ResetPwd(string pwdtoken, string account, string newpwd, string emailcode)
+        {
+            AjaxResult amm;
+
+            var userEntity = this.IQueryable(u => u.Email == account).FirstOrDefault();
+
+            if (userEntity != null)
+            {
+                //从缓存中取出存放的验证码的键（邮箱+"sendcodekey"）得到重置密码的对象
+                ResetPwd rpwdEntry = _iRedisHelper.StringGet<ResetPwd>(account + "sendcodekey");
+
+                if (rpwdEntry != null && rpwdEntry.ModifyPwdToken == pwdtoken)
+                {
+                    if (rpwdEntry.ModfiyPwdCode != emailcode)
+                    {
+                        amm = AjaxResult.Error("验证码不正确！");
+                    }
+                    else
+                    {
+                        string cacheaccount = _iRedisHelper.StringGet<string>(account + "modfiyPwdKey");
+                        if (!string.IsNullOrEmpty(cacheaccount))
+                        {
+                            amm = AjaxResult.Error("10分钟内只可修改一次密码，请稍后再试!");
+                        }
+                        else
+                        {  //重置密码成功之后将帐号写入cache中，10分钟内只可修改一次密码
+
+                            ResetPassword(userEntity, newpwd);
+                            amm = AjaxResult.Success("重置密码成功！");
+
+                            _iRedisHelper.StringSet<string>(account + "modfiyPwdKey", account, new TimeSpan(0, 10, 0));
+                        }
+                    }
+                }
+                else
+                {
+                    amm = AjaxResult.Error("验证码过期了！");
+                }
+            }
+            else
+            {
+                amm = AjaxResult.Error("此帐号尚未注册");
+            }
+            return amm;
+        }
+        #endregion
+
+        #region 根据用户id判断用户是否是管理员
+        public bool isSystem(int? Id)
+        {
+            return base.Db.Set<UserRole>().Where(r => r.UserId == Id).Select(r => r.AppRole.RoleName).Where(r => r.Contains("管理员")).Count() > 0;
+        } 
+        #endregion
     }
 }

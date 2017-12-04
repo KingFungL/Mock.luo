@@ -49,5 +49,28 @@ namespace Mock.Domain
         /// </summary>
         /// <param name="userEntity"></param>
         void SaveUserSession(AppUser userEntity);
+        /// <summary>
+        /// 发送验证码
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        AjaxResult SmsCode(string email);
+        /// <summary>
+        /// 重置密码
+        /// </summary>
+        /// <param name="pwdtoken">密码token，判断唯一性</param>
+        /// <param name="account">邮件</param>
+        /// <param name="newpwd">新密码</param>
+        /// <param name="emailcode">邮件验证码</param>
+        /// <returns></returns>
+        AjaxResult ResetPwd(string pwdtoken, string account, string newpwd, string emailcode);
+
+
+        /// <summary>
+        /// 根据用户id判断用户是否昌管理员
+        /// </summary>
+        /// <param name="Id">用户id</param>
+        /// <returns></returns>
+        bool isSystem(int? Id);
     }
 }

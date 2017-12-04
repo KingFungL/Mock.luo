@@ -15,6 +15,7 @@
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/js/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/Content/css/animate.min2932.css" rel="stylesheet" />
     <link href="~/Content/css/global.blog.css" rel="stylesheet" />
     @RenderSection("css", required: false)
     <!--[if lt IE 9]>
@@ -60,21 +61,24 @@
                         OperatorProvider op = OperatorProvider.Provider;
                         if (op.CurrentUser == null)
                         {
-                            <li><a href="/Login/Index" target="_blank"><span class="glyphicon glyphicon-log-in"></span> 后台登录</a></li>
+                            <li><a href="/Login/Index" target="_blank"><span class="glyphicon glyphicon-log-in"></span> 帐号登录</a></li>
                             <li class="text-right"><a id="qq_login" href="javascript:void(0)"><span class="glyphicon glyphicon-globe"></span> QQ登录</a></li>
                         }
                         else
                         {
                             <li class="text-right"><a href="javascript:void(0)"> @op.CurrentUser.NickName</a></li>
                             <li class="dropdown text-right">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="@op.CurrentUser.Avatar"> <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="/Account/Set"><i class="fa fa-cog"></i>基础设置</a></li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="@op.CurrentUser.Avatar" onerror="com.nofind();"> <span class="caret"></span></a>
+                                <ul class="dropdown-menu animated fadeInRight">
+                                    <li><a href="/Account/Set"><i class="fa fa-cog"></i><span>基础设置</span></a></li>
+                                    @if (op.CurrentUser.IsSystem == true)
+                                    {
+                                        <li><a href="/Home/Index" target="_blank"><i class="fa fa-magic"></i><span>后台管理</span></a></li>
+                                    }
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="/Account/Logout"><i class="fa fa-lock"></i>退出</a></li>
+                                    <li><a href="/Account/Logout"><i class="fa fa-lock"></i><span>退出</span></a></li>
                                 </ul>
                             </li>
-
                         }
                     }
                 </ul>
@@ -133,8 +137,6 @@
             </div>
         </div>
     </footer>
-
-
     <script>
         var _hmt = _hmt || [];
         (function () {
@@ -144,12 +146,10 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
-
     <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.js"></script>
     <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
-    @*<script src="https://cdn.bootcss.com/layer/3.0.3/layer.min.js"></script>*@
-    <script src="~/Content/js/layui/layui.all.js"></script>
     <script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+    <script src="~/Content/js/layui/layui.all.js"></script>
     <script src="~/Content/js/common.js"></script>
     <script src="~/Content/js/global.js"></script>
     <script>

@@ -77,6 +77,7 @@
                     <a class="btn btn-default" v-on:click="btn_add"><i class="fa fa-plus"></i>&nbsp;新增</a>
                     <a class="btn btn-default" v-on:click="btn_edit"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
                     <a class="btn btn-default" v-on:click="btn_delete"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+                    <a class="btn btn-default" v-on:click="btn_init"><i class="fa fa-indent"></i>&nbsp;初始化</a>
                 </div>
                 <div class="btn-group">
                     <a v-on:click="btn_copy" class="btn btn-default"><i class="fa fa-copy"></i>&nbsp;复制</a>
@@ -285,6 +286,21 @@
                 },
                 btn_copy: function () {
                     $.layerMsg('别点我，要脸，没做！');
+                },
+                btn_init: function () {
+                    var data = [
+                        { "Id": -1, "PId": 0, "EnCode": "btn_refresh", "Name": "刷新", "SortCode": 1, "Icon": "fa fa-bar-chart-o", "LinkUrl": "/Plat/AppRole/GetDataGrid", "Target": null, "TypeCode": "Button" },
+                        { "Id": -2, "PId": 0, "EnCode": "btn_add", "Name": "新增", "SortCode": 1, "Icon": "fa fa-stop-circle", "LinkUrl": "/Plat/AppRole/Form", "Target": null, "TypeCode": "Button" },
+                        { "Id": -3, "PId": 0, "EnCode": "btn_edit", "Name": "编辑", "SortCode": 1, "Icon": "fa fa-stop-circle", "LinkUrl": "/Plat/AppRole/Form", "Target": null, "TypeCode": "Button" },
+                        { "Id": -4, "PId": 0, "EnCode": "btn_delete", "Name": "删除", "SortCode": 4, "Expanded": null, "Icon": "glyphicon glyphicon-remove", "LinkUrl": "/Plat/AppRole/Delete", "TypeCode": "Button" },
+                        { "Id": -5, "PId": 0, "EnCode": "insert_edit_pemission", "Name": "提交表单权限", "SortCode": 9, "Expanded": null, "Icon": "fa fa-life-bouy", "LinkUrl": "/Plat/AppRole/Edit", "TypeCode": "Permission" }];
+                    vm.autoId = -6;
+                    $.each(data, function (i, v) {
+                        v.PId = json.Id;
+                        vm.buttonJson.push(v);
+                    });
+
+                    vm.array_to_TreeJson(vm.buttonJson);
                 },
                 editinfo: function (title, Id) {
                     $.layerOpen({

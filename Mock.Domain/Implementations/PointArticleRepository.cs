@@ -18,7 +18,7 @@ namespace Mock.Domain
         /// <returns>DataGrid实体</returns>
         public DataGrid GetDataGrid(int ArticleId)
         {
-            var rows = base.IQueryable().Where(u => u.AId == ArticleId).Select(u => new
+            var rows = base.IQueryable(u => u.AId == ArticleId).Select(u => new
             {
                 u.Id,
                 u.Article.Title,

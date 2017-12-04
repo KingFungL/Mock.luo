@@ -200,7 +200,7 @@ namespace Mock.Luo.Controllers
                 limit = 10,
                 offset = 0
             };
-            DataGrid dg = _gusetbookRepository.GetDataGrid(u=>true,pag, "");
+            DataGrid dg = _gusetbookRepository.GetDataGrid(u => true, pag, "");
 
             ViewBag.ViewModel = dg.ToJson();
 
@@ -251,8 +251,7 @@ namespace Mock.Luo.Controllers
 
                 var verifier = Request.Params["code"];
                 var state = Request.Params["state"];
-                string requestState = Session["requeststate"].ToString();
-
+                string requestState = Session["requeststate"]?.ToString();
                 if (state == requestState)
                 {
                     qzone = new QOpenClient(verifier, state);
@@ -261,14 +260,13 @@ namespace Mock.Luo.Controllers
                     {
                         this.Session["QzoneOauth"] = qzone;
                     }
-
+                    AppUser appUserEntity;
 
                     var openId = qzone.OAuthToken.OpenId;
                     var accessToken = qzone.OAuthToken.AccessToken;
                     var expiresAt = qzone.OAuthToken.ExpiresAt;
                     DateTime now = DateTime.Now;
                     AppUserAuth userAuth = _appAuthRepository.IQueryable(r => r.OpenId == openId && r.DeleteMark == false).FirstOrDefault();
-                    AppUser appUserEntity;
                     //如果未找到一个openid存在，说明当前用户未使用qq第三方登录
                     if (userAuth == null)
                     {
@@ -278,8 +276,16 @@ namespace Mock.Luo.Controllers
                             Avatar = currentUser.Figureurl,
                             Gender = currentUser.Gender,
                             CreatorTime = now,
+                            LoginCount = 1,
+                            LastLoginTime = DateTime.Now,
+                            LastLogIp = Net.Ip,
                             DeleteMark = false,
                             StatusCode = StatusCode.Enable.ToString(),
+                            UserRoles = new List<UserRole> {
+                                new UserRole{
+                                    RoleId=3
+                                }
+                            },
                             AppUserAuths = new List<AppUserAuth>
                             {
                                 new AppUserAuth{
@@ -321,19 +327,29 @@ namespace Mock.Luo.Controllers
                     op.CurrentUser = new OperatorModel
                     {
                         UserId = appUserEntity.Id,
-                        IsSystem = false,
+                        IsSystem = _appUserRepository.isSystem(appUserEntity.Id),
+                        IsAdmin = appUserEntity.LoginName == "admin" ? true : false,
                         LoginName = appUserEntity.LoginName,
                         LoginToken = accessToken,
                         LoginTime = now,
                         NickName = appUserEntity.NickName,
-                        Avatar = appUserEntity.Avatar
+                        Avatar = appUserEntity.Avatar,
+                        Email = appUserEntity.Email,
+                        PersonalWebsite = appUserEntity.PersonalWebsite
                     };
+                    bool isSystem = _appUserRepository.isSystem(appUserEntity.Id);
 
-                    return Redirect(Url.Action("Index", "App"));
+                    if (isSystem)
+                    {
+                        return Redirect(Url.Action("Index", "Home"));
+                    }
                 }
-
+                else
+                {
+                    LogFactory.GetLogger("QQ互联").Error("登录得到的state:" + state + ",session:" + requestState);
+                }
             }
-            return View();
+            return Redirect(Url.Action("Index", "App"));
         }
         #endregion
 

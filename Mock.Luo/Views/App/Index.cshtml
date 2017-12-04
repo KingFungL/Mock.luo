@@ -22,7 +22,7 @@
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
                     <div class="item active">
-                        <img src="https://res.xujun.org/img/banner/1.jpg">
+                        <img src="~/Content/Images/1.jpg">
                         <div class="carousel-caption">
                             <div class="banner-word">
                                 <h4>个人博客</h4>
@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div class="item">
-                        <img src="https://res.xujun.org/img/banner/2.jpg">
+                        <img src="~/Content/Images/2.jpg">
                         <div class="carousel-caption">
                             <div class="banner-word">
                                 <h4> 、天上有木月</h4>
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     <div class="item">
-                        <img src="https://res.xujun.org/img/banner/3.jpg">
+                        <img src="~/Content/Images/3.jpg">
                         <div class="carousel-caption">
                             <div class="banner-word">
                                 <h4>、天上有木月 </h4>
@@ -248,7 +248,7 @@
                                 for (int j = 1; j < FellLifeList.Count; j++)
                                 {
                                     <li class="list-date">@FellLifeList[j].CreatorTime.ToDateTime().ToString("yyyy/MM/dd")</li>
-                                    <li class="list-title" style="width: 80%;"><i class="fa fa-angle-right"></i><a href="/App/Detail/@FellLifeList[j].Id">@FellLifeList[j].Title</a></li>
+                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="/App/Detail/@FellLifeList[j].Id">@FellLifeList[j].Title</a></li>
                                 }
                             }
                         </ul>
@@ -280,7 +280,7 @@
                                 for (int j = 1; j < funcList.Count; j++)
                                 {
                                     <li class="list-date">@funcList[j].CreatorTime.ToDateTime().ToString("yyyy/MM/dd")</li>
-                                    <li class="list-title" style="width: 80%;"><i class="fa fa-angle-right"></i><a href="/App/Detail/@funcList[j].Id">@funcList[j].Title</a></li>
+                                    <li class="list-title" ><i class="fa fa-angle-right"></i><a href="/App/Detail/@funcList[j].Id">@funcList[j].Title</a></li>
                                 }
                             }
                         </ul>

@@ -4,10 +4,10 @@
     $.extend($ui, {
 
         //初始化左边树形结点单击事件效果
-        init_menuitem: function () {
+        addTab: function () {
             var o = $(this).attr("href"),
                 m = $(this).data("index"),
-                iconhtml = $(this).children('i')[0].outerHTML,
+                iconhtml = $(this).children('i')[0] == undefined ? "" : $(this).children('i')[0].outerHTML,
                 text = $(this)[0].innerText;
             target = $(this).attr('target'),
             k = true;
@@ -23,6 +23,9 @@
             $(".J_menuTab").each(function () {
                 if ($(this).data("id") === o) {
                     if (!$(this).hasClass("active")) {
+                        if (m != "") {
+                            top.$.cookie('currentmoduleId', m, { path: "/" });
+                        }
                         $(this).addClass("active").siblings(".J_menuTab").removeClass("active");
                         $ui.animate(this);
                         $(".J_mainContent .J_iframe").each(function () {
@@ -37,6 +40,10 @@
                 }
             });
             if (k) {
+                if (m != "") {
+                    top.$.cookie('currentmoduleId', m, { path: "/" });
+                }
+
                 var p = '<a href="javascript:;" class="active J_menuTab" data-index="' + m + '" data-id="' + o + '">' + iconhtml + text + ' <i class="fa fa-times-circle"></i></a>';
                 $(".J_menuTab").removeClass("active");
                 var n = '<iframe class="J_iframe" name="iframe' + m + '" width="100%" height="100%" src="' + o + '" frameborder="0" data-id="' + o + '" seamless></iframe>';
@@ -44,6 +51,7 @@
                 $(".J_menuTabs .page-tabs-content").append(p);
                 $ui.animate($(".J_menuTab.active"));
                 layer.load(com.get_randNum(0, 2), { shade: [0.1, '#fff'], time: 1000 });
+
             }
             return false;
         },
@@ -120,6 +128,10 @@
                         return false;
                     }
                 });
+                var m = $(this).data("index");
+                if (m != "") {
+                    top.$.cookie('currentmoduleId', m, { path: "/" });
+                }
                 $(this).addClass("active").siblings(".J_menuTab").removeClass("active");
                 $ui.animate(this);
             }
@@ -251,13 +263,13 @@
 
 $(function () {
 
-    $(".J_menuItem").each(function (k) {
-        if (!$(this).attr("data-index")) {
-            $(this).attr("data-index", k + 1);
-        }
-    });
+    //$(".J_menuItem").each(function (k) {
+    //    if (!$(this).attr("data-index")) {
+    //        $(this).attr("data-index", k + 1);
+    //    }
+    //});
     //初始化左边树菜单
-    $(".J_menuItem").on("click", $ui.init_menuitem);
+    $(".J_menuItem").on("click", $ui.addTab);
     //点击关闭的图标时，关闭当前选中面签
     $(".J_menuTabs").on("click", ".J_menuTab i.fa-times-circle", $ui.close_tabs);
     //关闭非首页与当前active的其他页签

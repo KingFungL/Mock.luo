@@ -19,6 +19,29 @@
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element text-center">
+                            <span><img alt="image" class="img-circle" id="nav-userImg"  style="width:64px;height:64px;" onerror="com.nofind();"></span>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="false">
+                                <span class="clear">
+                                    <span class="block m-t-xs "><strong class="font-bold" id="nav-LoginName">admin</strong></span>
+                                    <span class="text-muted text-xs block" id="nav-NickName">、天上有木月<b class="caret"></b></span>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li>
+                                    <a  href="/Account/Set"  target="_blank">@*<i class="fa fa-folder"></i>*@基础设置</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="/Account/Logout">安全退出</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="logo-element">
+                            月
+                        </div>
+                    </li>
                     @*   <li>
                             <a href="#">
                                 <i class="fa fa-home"></i>
@@ -43,15 +66,13 @@
         <!--左侧导航结束-->
         <!--右侧部分开始-->
         <div id="page-wrapper" class="gray-bg dashbard-1">
-
-
             <div class="row content-tabs">
                 <nav class="page-tabs J_menuTabs">
                     <button class="roll-nav roll-left J_tabLeft navbar-minimalize">
                         <i class="fa fa-bars"></i>
                     </button>
                     <div class="page-tabs-content">
-                        <a href="javascript:;" class="active J_menuTab" data-index="0" data-id="/Home/MainView">首页</a>
+                        <a href="javascript:;" class="active J_menuTab" data-index="0" target="_blank" data-id="/Home/MainView">首页</a>
                     </div>
                 </nav>
                 <div class="btn-group roll-nav roll-right">
@@ -90,6 +111,7 @@
     <script src="~/Content/js/jquery.js"></script>
     <script src="~/Content/js/bootstrap.min.js"></script>
     <script src="~/Content/js/layui/layui.all.js"></script>
+    <script src="~/Content/js/plugins/jquery.cookie.js"></script>
     <script src="~/Content/js/global.js"></script>
     <script src="~/Content/js/common.js"></script>
     <script src="~/Content/js/index.js"></script>

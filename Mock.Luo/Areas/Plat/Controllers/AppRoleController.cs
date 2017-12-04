@@ -4,6 +4,7 @@ using Mock.Data.Models;
 using Mock.Domain;
 using Mock.Luo.Areas.Plat.Models;
 using Mock.Luo.Controllers;
+using Mock.Luo.Generic.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// 为角色分配用户视图
         /// </summary>
         /// <returns></returns>
+        [HandlerAuthorize]
         public ActionResult AllotUser()
         {
             return View();
@@ -60,6 +62,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// <param name="userIds">以逗号分隔的用户Id字符串</param>
         /// <param name="roleId">单个角色Id</param>
         /// <returns></returns>
+        [HandlerAuthorize]
         public ActionResult SaveMembers(string userIds, int roleId)
         {
             List<UserRole> urList = new List<UserRole>();
@@ -82,6 +85,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [HandlerAuthorize]
         public ActionResult AllotAuthorize()
         {
             return View();
@@ -93,6 +97,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// <param name="data">权限树数据</param>
         /// <returns></returns>
         [HttpPost]
+        [HandlerAuthorize]
         public ActionResult SaveAuthorize(int roleId,string data)
         {
             List<int> moduleIds = new List<int>();

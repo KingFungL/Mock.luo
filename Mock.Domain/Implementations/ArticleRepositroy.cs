@@ -222,8 +222,9 @@ namespace Mock.Domain
                 {
                     u.Key,
                     u.FirstOrDefault().Archive,
+                    u.FirstOrDefault().CreatorTime,
                     count = u.Count(),
-                }).ToList().Select(u => new BaseDto
+                }).OrderBy(u=>u.CreatorTime).ToList().Select(u => new BaseDto
                 {
                     text = u.Archive,
                     code = u.count.ToString()

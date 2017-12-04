@@ -23,19 +23,21 @@ namespace Mock.Luo.Generic.Filters
 
             OperatorProvider op = OperatorProvider.Provider;
            
-            #region 判断用户是否登录|当前只可单个浏览器登录，即使是浏览器重开，也会导入sessionId变更，也就需要重新登录
+            #region 判断用户是否登录|当前只可单个浏览器登录，即使是浏览器重开，也会导致sessionId变更，也就需要重新登录
             if (op.CurrentUser == null)
             {
-                StringBuilder sbScript = new StringBuilder();
-                sbScript.Append("<script type='text/javascript'>alert('请先登录!');top.location.href='/Login/Index?msg=noLogin'</script>");
-                filterContext.Result = new ContentResult() { Content = sbScript.ToString() };
+                //StringBuilder sbScript = new StringBuilder();
+                //sbScript.Append("<script type='text/javascript'>alert('请先登录!');top.location.href='/Login/Index?msg=noLogin'</script>");
+                // filterContext.Result = new ContentResult() { Content = sbScript.ToString() };
+              
+                WebHelper.WriteCookie("mock_login_error", "Overdue");//登录已超时,请重新登录
+                filterContext.Result = new RedirectResult("~/Login/Default");
+
             }
             else
             {
 
                 //
-
-
 
                 bool loginOnce = Configs.GetValue("loginOnce").ToBoolean();
 

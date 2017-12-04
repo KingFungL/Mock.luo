@@ -6,9 +6,8 @@ using Mock.Data.Models;
 using Mock.Domain;
 using Mock.Luo.Areas.Plat.Models;
 using Mock.Luo.Controllers;
+using Mock.Luo.Generic.Helper;
 using Mock.Luo.Models;
-using RazorEngine;
-using RazorEngine.Templating;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +41,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
             {
                 pag.limit = 10;
             }
-            return Result(_guestBookRepository.GetDataGrid(u=>true,pag, search));
+            return Result(_guestBookRepository.GetDataGrid(u => true, pag, search));
         }
 
         /// <summary>
@@ -118,32 +117,16 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
             //留言成功后，给博主的email邮箱发送信息
 
-            _imailHelper.SendByThread(Configs.GetValue("DeveloperEmail"), "有人在你的（、天上有木月）博客发表的留言", this.FormatSendToDeveloper(new EmailViewModel
+            _imailHelper.SendByThread(Configs.GetValue("DeveloperEmail"), "有人在你的（、天上有木月）博客发表的留言", UiHelper.FormatEmail(new EmailViewModel
             {
                 Title = "有留言了！！！",
                 ToUserName = "、天上有木月",
                 FromUserName = viewModel.AuName,
                 Date = viewModel.CreatorTime.ToDateTimeString(),
                 Content = viewModel.Text
-            }));
+            }, "EmailTemplate"));
 
             return Success("留言成功");
-        }
-
-
-        /// <summary>
-        /// 将留言实体格式化为邮箱body内容
-        /// </summary>
-        /// <param name="viewModel"></param>
-        /// <returns></returns>
-        public string FormatSendToDeveloper(EmailViewModel viewModel)
-        {
-
-            string template = System.IO.File.ReadAllText(HttpContext.Server.MapPath("~/Views/Generic/EmailTemplate.cshtml"));
-
-            var body = Engine.Razor.RunCompile(template, "EmailTemplate", null, viewModel);
-
-            return body;
         }
     }
 

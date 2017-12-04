@@ -1,7 +1,6 @@
 ﻿using Mock.Code;
+using Mock.Data.ExtensionModel;
 using Mock.Luo.Models;
-using RazorEngine;
-using RazorEngine.Templating;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -32,6 +31,11 @@ namespace Mock.Luo.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 激活邮件模板
+        /// </summary>
+        /// <returns></returns>
+
         public ActionResult ActiveEmailTemplate()
         {
             EmailViewModel model = new EmailViewModel();
@@ -42,6 +46,10 @@ namespace Mock.Luo.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// 发送验证码模板
+        /// </summary>
+        /// <returns></returns>
         public ActionResult SendCodeTemplate()
         {
 
@@ -51,6 +59,23 @@ namespace Mock.Luo.Controllers
 
             return View(model);
         }
+        /// <summary>
+        /// 找回密码模板
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult PwdReSetTemplate()
+        {
+            ResetPwd resetpwdEntry = new ResetPwd
+            {
+                UserID = (int)1,
+                ModifyPwdToken = Utils.GuId(),
+                PwdCodeTme = DateTime.Now,
+                ModfiyPwdCode = Utils.RndNum(6),
+                LoginName = "admin",
+                NickName="、天上有木月"
+            };
 
+            return View(resetpwdEntry);
+        }
     }
 }

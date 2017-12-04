@@ -9,7 +9,7 @@ namespace Mock.Data
 {
     public class IEntity<TEntity>
     {
-        public void Create()
+        public virtual void Create()
         {
             var entity = this as ICreationAudited;
             var LoginInfo = OperatorProvider.Provider.CurrentUser;
@@ -20,7 +20,7 @@ namespace Mock.Data
             entity.DeleteMark = false;
             entity.CreatorTime = DateTime.Now;
         }
-        public void Modify(int? keyValue)
+        public virtual void Modify(int? keyValue)
         {
             var entity = this as IModificationAudited;
             entity.Id = keyValue;
@@ -32,7 +32,7 @@ namespace Mock.Data
             entity.LastModifyTime = DateTime.Now;
 
         }
-        public void Remove()
+        public virtual void Remove()
         {
             var entity = this as IDeleteAudited;
             var LoginInfo = OperatorProvider.Provider.CurrentUser;

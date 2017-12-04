@@ -176,7 +176,7 @@ $.procAjaxMsg = function (json, funcSuc, funcErr) {
         case "nologin":
             //是否登录
             $.alertMsg(json.message, '系统提示', function () {
-                if (window != top) {
+                if (window !== top) {
                     top.location.href = json.data;
                 }
                 else {
@@ -260,7 +260,7 @@ $.fn.bindSelect = function (options) {
     options.minimumResultsForSearch = options.search == true ? 0 : -1;
 
     var $element = $(this);
-    if (options.url != "") {
+    if (options.url !== "") {
         $.ajax({
             url: options.url,
             data: options.param,
@@ -328,27 +328,50 @@ $.fn.bindChangeEvent = function ($event) {
  * @param {callback} 回调函数
  */
 $.fn.authorizeButton = function (callback) {
-    var url = location.pathname + location.search;
-    var that = this;
-    com.ajax({
-        url: '/Admin/SysRoleMenu/GetAuthorizeButton',
-        data: { url: url },
-        success: function (childModules) {
-            if (childModules.length > 0) {
-                var $toolbar = $(that);
-                var _buttons = '';
-                $.each(childModules, function (index, item) {
-                    _buttons += "<button id='" + item.EnCode + "' type=\"button\" class=\"btn btn-default\">";
-                    _buttons += "   <span class='" + item.IconCls + "' aria-hidden='true'></span> " + item.Name + "";
-                    _buttons += "</button>";
-                });
-                $toolbar.html(_buttons);
-            }
-            if (typeof callback === 'function') {
-                callback();
-            }
-        }
-    });
+    
+    var $element = $(this);
+    $element.find('button.btn').attr('authorize', 'no')
+    $element.find('ul.dropdown-menu').find('li').attr('authorize', 'no')
+    var moduleId =com.tabiframe_Name().substr(6);
+    var data = top.$ui.data.authorizeButton[moduleId];
+    if (data !== undefined) {
+        $.each(data, function (i) {
+            $element.find("#" + data[i].EnCode).attr('authorize', 'yes');
+        });
+    }
+    $element.find('[authorize=no]').remove();
+
+
+
+
+
+
+
+
+
+
+
+    //var url = location.pathname + location.search;
+    //var that = this;
+    //com.ajax({
+    //    url: '/Admin/SysRoleMenu/GetAuthorizeButton',
+    //    data: { url: url },
+    //    success: function (childModules) {
+    //        if (childModules.length > 0) {
+    //            var $toolbar = $(that);
+    //            var _buttons = '';
+    //            $.each(childModules, function (index, item) {
+    //                _buttons += "<button id='" + item.EnCode + "' type=\"button\" class=\"btn btn-default\">";
+    //                _buttons += "   <span class='" + item.IconCls + "' aria-hidden='true'></span> " + item.Name + "";
+    //                _buttons += "</button>";
+    //            });
+    //            $toolbar.html(_buttons);
+    //        }
+    //        if (typeof callback === 'function') {
+    //            callback();
+    //        }
+    //    }
+    //});
 
 };
 
@@ -502,6 +525,13 @@ $.fn.dataGrid = function (options) {
             if (typeof options.callback === 'function') {
                 options.callback(data);
             }
+        },
+        onLoadError: function (status, response) {
+            if (status == 403) {
+                var json = response.responseJSON;
+                $element.find('tr.no-records-found td').html(json.Msg);
+                $.alertMsg(json.message, '系统提示', '', json.state);
+            }
         }
     };
     options = $.extend(defaults, options);
@@ -588,7 +618,7 @@ $.fn.comboBoxTree = function (options) {
                 });
                 i.dataItemName ? (i.data = [], $.each(r, function (n, t) {
                     var r = top.learun.data.get(["dataItem", i.dataItemName, t[i.text]]);
-                    r != "" && (t[i.text] = r);
+                    r !== "" && (t[i.text] = r);
                     i.data.push(t);
                 })) : i.data = r;
             }, searchData: function (t, i) {
@@ -597,9 +627,9 @@ $.fn.comboBoxTree = function (options) {
                 return $.each(t, function (n, t) {
                     var e = {},
                         o, s;
-                    for (o in t) o != "ChildNodes" && (e[o] = t[o]);
+                    for (o in t) o !== "ChildNodes" && (e[o] = t[o]);
                     s = !1;
-                    e.text.indexOf(i) != -1 && (s = !0);
+                    e.text.indexOf(i) !== -1 && (s = !0);
                     e.hasChildren && (e.ChildNodes = f.searchData(t.ChildNodes, i), e.ChildNodes.length > 0 ? s = !0 : e.hasChildren = !1);
                     s && (u = !0, r.push(e));
                 }), r;
@@ -675,10 +705,11 @@ $.fn.extend({
         var g = f.position().top;
         var h = d.container.height();
         var i = f.css("position");
+        var j;
         if (d.bottomObj == '' || $(d.bottomObj).length <= 0) {
-            var j = false
+             j = false
         } else {
-            var j = true
+             j = true
         }
         e.scroll(function (a) {
             var b = f.height();

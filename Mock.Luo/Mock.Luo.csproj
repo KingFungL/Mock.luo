@@ -69,9 +69,6 @@
     <Reference Include="QConnectSDK, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\QConnectSDK.1.1.1\lib\net40\QConnectSDK.dll</HintPath>
     </Reference>
-    <Reference Include="RazorEngine, Version=3.10.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
-      <HintPath>..\packages\RazorEngine.3.10.0\lib\net45\RazorEngine.dll</HintPath>
-    </Reference>
     <Reference Include="RestSharp, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
     </Reference>
@@ -207,7 +204,6 @@
     <Compile Include="Controllers\CrudController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Generic\Helper\UiHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1869,6 +1865,9 @@
     <Content Include="Views\Account\Comment.cshtml" />
     <Content Include="Views\Account\GuestBook.cshtml" />
     <Content Include="Views\Account\Collect.cshtml" />
+    <Content Include="Views\Login\PwdReset.cshtml" />
+    <Content Include="Views\Generic\PwdReSetTemplate.cshtml" />
+    <Content Include="Views\Login\Default.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

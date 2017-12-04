@@ -5,19 +5,20 @@ using Mock.Data.Models;
 using Mock.Domain;
 using Mock.Luo.Generic.Helper;
 using Mock.Luo.Models;
-using RazorEngine;
-using RazorEngine.Templating;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace Mock.Luo.Controllers
 {
     public class AccountController : BaseController
     {
         // GET: Account
+
+        #region Construct
         private readonly IRedisHelper _redisHelper;
         private readonly IMailHelper _imailHelper;
         private readonly IAppUserRepository _appUserRepository;
@@ -32,7 +33,7 @@ namespace Mock.Luo.Controllers
             this._guestBookRepository = _guestBookRepository;
         }
 
-
+        #endregion
 
         /// <summary>
         /// 帐号信息设置
@@ -53,7 +54,8 @@ namespace Mock.Luo.Controllers
                 r.Gender,
                 r.PersonSignature,
                 r.PersonalWebsite,
-                PwdIsSet = r.LoginPassword == null ? false : true
+                PwdIsSet = r.LoginPassword == null ? false : true,
+                isBindQQ = r.AppUserAuths.Select(u => u.IdentityType == "QQ").Count() > 0
             }).FirstOrDefault();
 
             ViewBag.viewModel = JsonHelper.SerializeObject(viewModel);
@@ -96,7 +98,7 @@ namespace Mock.Luo.Controllers
         {
             OperatorProvider op = OperatorProvider.Provider;
             op.RemoveCurrent();
-
+            FormsAuthentication.SignOut();
             return RedirectToAction("Index", "App");
         }
 
@@ -142,6 +144,7 @@ namespace Mock.Luo.Controllers
             var amm = _appUserRepository.IsRepeat(new AppUser
             {
                 Id = Id,
+                LoginName=Utils.GuId(),
                 Email = Email
             });
             if (amm.state.Equals(ResultType.error.ToString()))
@@ -308,8 +311,6 @@ namespace Mock.Luo.Controllers
             return Success();
         }
 
-
-
         public ActionResult SaveUserInfo(AppUser userEntity)
         {
             if (!ModelState.IsValid)
@@ -362,55 +363,70 @@ namespace Mock.Luo.Controllers
 
             int userId = (int)op.CurrentUser.UserId;
 
-    
             if (newPwd.IsNullOrEmpty())
             {
                 return Error("新密码不能为空");
             }
 
-
             AppUser userEntity = _appUserRepository.FindEntity(userId);
             if (userEntity != null)
             {
-                string dbPwd = Md5.md5(DESEncrypt.Encrypt(LoginPassword.ToLower(), userEntity.UserSecretkey).ToLower(), 32).ToLower();
-                //当后台密码为空时，说明未设置密码，将newPwd这个字段更新到密码字段。当后台密码，与旧密码一致，重置密码
-                if (userEntity.LoginPassword.IsNullOrEmpty() || userEntity.LoginPassword.Equals(dbPwd))
+                //当旧密码为空时，直接重置
+                if (userEntity.LoginPassword.IsNullOrEmpty())
                 {
                     _appUserRepository.ResetPassword(userEntity, newPwd);
                     return Success("您的密码已经设置成功，请牢记你的密码噢！");
                 }
                 else
                 {
+
                     if (LoginPassword.IsNullOrEmpty())
                     {
                         return Error("旧密码不能为空");
                     }
-                    return Error("你的旧密码填写不对，无法重置密码！");
-                }
+                    if (userEntity.UserSecretkey.IsNullOrEmpty())
+                    {
+                        return Error("用户密钥丢失，请联系管理员重置密码");
+                    }
+                    string dbPwd = Md5.md5(DESEncrypt.Encrypt(LoginPassword.ToLower(), userEntity.UserSecretkey).ToLower(), 32).ToLower();
 
+                    if (userEntity.LoginPassword.Equals(dbPwd))
+                    {
+                        _appUserRepository.ResetPassword(userEntity, newPwd);
+                        return Success("您的密码已经设置成功，请牢记你的密码噢！");
+                    }
+                    else
+                    {
+                        return Error("你的旧密码填写不对，无法重置密码！");
+                    }
+                }
             }
             else
             {
-                return Error("当前用户不存在、、");
+                return Error("当前用户不存在");
             }
         }
 
         /// <summary>
-        /// 
+        /// 得到自己的评论列表
         /// </summary>
         /// <returns></returns>
         public ActionResult GetCommentGrid(Pagination pag)
         {
             int? userId = op.CurrentUser.UserId;
-           DataGrid dg= _reviewRepository.GetDataGrid(u => u.CreatorUserId == userId, pag, "", 0);
+            DataGrid dg = _reviewRepository.GetDataGrid(u => u.CreatorUserId == userId, pag, "", 0);
 
             return Result(dg);
         }
 
+        /// <summary>
+        /// 得到自己的留言列表
+        /// </summary>
+        /// <returns></returns>
         public ActionResult GetGuestGrid(Pagination pag)
         {
             int? userId = op.CurrentUser.UserId;
-            DataGrid dg = _guestBookRepository.GetDataGrid(u => u.CreatorUserId == userId, pag,"");
+            DataGrid dg = _guestBookRepository.GetDataGrid(u => u.CreatorUserId == userId, pag, "");
             return Result(dg);
         }
 

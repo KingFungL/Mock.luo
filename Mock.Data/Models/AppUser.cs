@@ -25,7 +25,7 @@ namespace Mock.Data.Models
         public int? Id { get; set; }
         [StringLength(50)]
         public string LoginName { get; set; }
-        [StringLength(50,ErrorMessage ="最长为11")]
+        [StringLength(50,ErrorMessage = "QQ最长为11")]
         public string QQ { get; set; }
         [StringLength(50)]
         public string LoginPassword { get; set; }

@@ -2,6 +2,7 @@
 using AutoMapper;
 using Mock.Code;
 using Mock.Data;
+using Mock.Luo.Generic.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Mock.Luo.Controllers
             _ibase = container.Resolve<IRepositoryBase<TEntityModel>>();
             this._redisHelper = container.Resolve<IRedisHelper>();
         }
-
+        [HandlerAuthorize]
         public virtual ActionResult Form(int Id)
         {
             ViewBag.ViewModel = this.GetFormJson(Id);
@@ -60,6 +61,7 @@ namespace Mock.Luo.Controllers
         /// <param name="viewModel">实体对象</param>
         /// <returns></returns>
         [HttpPost]
+        [HandlerAuthorize]
         public virtual ActionResult Edit(TViewModel viewModel, int id = 0)
         {
             if (!ModelState.IsValid)
@@ -122,6 +124,7 @@ namespace Mock.Luo.Controllers
         /// <param name="Id">主键Id</param>
         /// <returns></returns>
         [HttpPost]
+        [HandlerAuthorize]
         public ActionResult Delete(int Id)
         {
             var codetableEntity = _ibase.FindEntity(Id);

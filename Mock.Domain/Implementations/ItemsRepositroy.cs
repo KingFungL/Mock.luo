@@ -66,7 +66,7 @@ namespace Mock.Domain
         #region 得到字典类别下拉树
         public List<TreeSelectModel> GetTreeJson()
         {
-            List<TreeSelectModel> treeList = this.IQueryable().Where(u => u.DeleteMark == false && u.IsEnableMark == true).OrderBy(r => r.SortCode)
+            List<TreeSelectModel> treeList = this.IQueryable(u => u.DeleteMark == false && u.IsEnableMark == true).OrderBy(r => r.SortCode)
                                     .ToList().Select(u => new TreeSelectModel
                                     {
                                         id = u.Id.ToString(),

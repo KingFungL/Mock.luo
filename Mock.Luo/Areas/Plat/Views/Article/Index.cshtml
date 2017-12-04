@@ -133,13 +133,21 @@
                     $.layerOpen({
                         content: '/Plat/Review/Index?Id=' + Id,
                         width: '70%',
-                        height: '69%'
+                        height: '69%',
+                        btn:['关闭'],
+                        yes: function (iframebody, iframeWin, index) {
+                            top.layer.close(index);
+                        }
                     });
                 }, show_point: function (Id) {
                     $.layerOpen({
                         content: '/Plat/PointArticle/Index?Id=' + Id,
                         width: '70%',
-                        height: '69%'
+                        height: '69%',
+                        btn: ['关闭'],
+                        yes: function (iframebody, iframeWin, index) {
+                            top.layer.close(index);
+                        }
                     });
                 }
             }

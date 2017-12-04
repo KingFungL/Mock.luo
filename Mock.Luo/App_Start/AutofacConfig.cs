@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
 using Mock.Code;
+using Mock.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,9 @@ namespace Mock.Luo.App_Start
 
             builder.RegisterType<RedisHelper>().As<IRedisHelper>().SingleInstance();
             builder.RegisterType<MailHelper>().As<IMailHelper>().SingleInstance();
+
+            //注入特性
+            builder.RegisterFilterProvider();
 
             //创建一个Autofac的容器
             var container = builder.Build();

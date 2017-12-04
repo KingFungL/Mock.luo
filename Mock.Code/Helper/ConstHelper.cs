@@ -29,5 +29,7 @@ namespace Mock.Code.Helper
         public const string App = "App-{0}";
 
         public const string GuestBook= "GuestBook-{0}";
+
+        public const string AppModule = "AppModule-{0}";
     }
 }

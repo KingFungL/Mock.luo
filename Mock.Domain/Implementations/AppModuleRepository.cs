@@ -9,6 +9,7 @@ using Mock.Code;
 using System.Linq.Expressions;
 using System.Data.Common;
 using System.Data.SqlClient;
+using Mock.Code.Helper;
 
 namespace Mock.Domain
 {
@@ -17,6 +18,15 @@ namespace Mock.Domain
     /// </summary>]
     public class AppModuleRepository : RepositoryBase<AppModule>, IAppModuleRepository
     {
+        #region  Constructor
+        private readonly IRedisHelper _iRedisHelper;
+
+        public AppModuleRepository(IRedisHelper _iRedisHelper)
+        {
+            this._iRedisHelper = _iRedisHelper;
+        } 
+        #endregion
+
 
         #region FancyTree插件TreeGrid列表数据
         public List<TreeNode> GetFancyTreeGrid()
@@ -64,7 +74,7 @@ namespace Mock.Domain
         public List<TreeSelectModel> GetTreeJson(int PId)
         {
             //Type=1时为按钮，下拉菜单框中为选上级菜单，去除按钮
-            List<TreeSelectModel> treeList = this.IQueryable().Where(u => u.DeleteMark == false && (PId == 0 || u.PId == PId)).OrderBy(r => r.SortCode).ToList()
+            List<TreeSelectModel> treeList = this.IQueryable(u => u.DeleteMark == false && (PId == 0 || u.PId == PId)).OrderBy(r => r.SortCode).ToList()
                                     .Select(u => new TreeSelectModel
                                     {
                                         id = u.Id.ToString(),
@@ -128,7 +138,7 @@ SELECT * FROM TEMP ORDER BY SortCode";
         /// <returns></returns>
         public List<TreeGridModel> GetButtonTreeJson(int Id)
         {
-            List<AppModule> dglist = this.GetModuleChildrenList(Id).Where(u => u.TypeCode == StatusCode.Button.ToString() || u.TypeCode == StatusCode.Permission.ToString()).ToList();
+            List<AppModule> dglist = this.GetModuleChildrenList(Id).Where(u => u.TypeCode == ModuleCode.Button.ToString() || u.TypeCode == ModuleCode.Permission.ToString()).ToList();
             var treeList = new List<TreeGridModel>();
             foreach (var item in dglist)
             {
@@ -138,7 +148,7 @@ SELECT * FROM TEMP ORDER BY SortCode";
                 treeModel.isLeaf = hasChildren;
                 treeModel.parentId = item.PId.ToString();
                 treeModel.expanded = hasChildren;
-                treeModel.entityJson = JsonHelper.SerializeObject(new { item.Id, item.PId,item.Icon, item.Name, item.SortCode, item.EnCode, item.LinkUrl, item.TypeCode });
+                treeModel.entityJson = JsonHelper.SerializeObject(new { item.Id, item.PId, item.Icon, item.Name, item.SortCode, item.EnCode, item.LinkUrl, item.TypeCode });
                 treeList.Add(treeModel);
             }
             return treeList;
@@ -194,7 +204,7 @@ SELECT * FROM TEMP ORDER BY SortCode";
                     else
                     {
                         item.Modify(item.Id);
-                        string[] modifyList = { "PId", "EnCode","Icon", "Name", "SortCode", "LinkUrl", "TypeCode", "LastModifyUserId", "LastModifyTime" };
+                        string[] modifyList = { "PId", "EnCode", "Icon", "Name", "SortCode", "LinkUrl", "TypeCode", "LastModifyUserId", "LastModifyTime" };
                         db.Update(item, modifyList);
                     }
                 }
@@ -267,7 +277,7 @@ SELECT * FROM TEMP ORDER BY SortCode";
         /// <returns></returns>
         public dynamic GetRoleModuleAuth(int roleId)
         {
-            var moduleList = this.IQueryable().Where(u => u.DeleteMark == false).OrderBy(u => u.SortCode)
+            var moduleList = this.IQueryable(u => u.DeleteMark == false).OrderBy(u => u.SortCode)
                .Select(u => new
                {
                    id = u.Id,
@@ -285,16 +295,56 @@ SELECT * FROM TEMP ORDER BY SortCode";
         #region 根据用户ID得到权限模块信息 
         public List<AppModule> GetUserModules(int? userId)
         {
-            //1.根据用户编号得到角色编号(集合)
-            List<int> roleIdList = this.Db.Set<UserRole>().Where(u => u.UserId == userId).Select(u => u.RoleId).ToList();
-            //2.根据角色ID取出菜单编号
-            List<int> menuIdList = this.Db.Set<RoleModule>().Where(u => roleIdList.Contains(u.RoleId)).Select(u => u.ModuleId).ToList();
+            return _iRedisHelper.UnitOfWork(string.Format(ConstHelper.AppModule,
+             "AuthorizeUrl_" + userId), () =>
+             {
+                 if (OperatorProvider.Provider.CurrentUser.IsAdmin)
+                 {
+                     return this.IQueryable(r => r.DeleteMark == false).ToList();
+                 }
+                 //1.根据用户编号得到角色编号(集合)
+                 List<int> roleIdList = this.Db.Set<UserRole>().Where(u => u.UserId == userId).Select(u => u.RoleId).ToList();
+                 //2.根据角色ID取出菜单编号
+                 List<int> menuIdList = this.Db.Set<RoleModule>().Where(u => roleIdList.Contains(u.RoleId)).Select(u => u.ModuleId).ToList();
 
-            //根据菜单编号得到菜单的具体信息
-            List<AppModule> listModules = this.IQueryable(p => (menuIdList.Contains((int)p.Id))).ToList();
+                 //根据菜单编号得到菜单的具体信息
+                 List<AppModule> listModules = this.IQueryable(p => (menuIdList.Contains((int)p.Id))).ToList();
 
-            return listModules;
+                 return listModules;
+             });
         }
         #endregion
+
+        /// <summary>
+        /// Action执行权限认证
+        /// </summary>
+        /// <param name="userId">用户Id</param>
+        /// <param name="moduleId">模块Id</param>
+        /// <param name="action">请求地址</param>
+        /// <returns></returns>
+        public bool ActionAuthorize(int userId, string moduleId, string action)
+        {
+            //这个模块id，需要前台存储cookies，每次切换tab都需要更新cookie
+            List<AppModule> authorizeUrlList= this.GetUserModules(userId);
+            int imoduleId = 0;
+            int.TryParse(moduleId, out imoduleId);
+            if (imoduleId == 0)
+            {
+                LogFactory.GetLogger("权限认证").Info("日志记录：用户为:"+userId+ " action:" + action);
+            }
+            authorizeUrlList = authorizeUrlList.FindAll(t => t.PId.Equals(imoduleId) || imoduleId == 0);
+            foreach (var item in authorizeUrlList)
+            {
+                if (!string.IsNullOrEmpty(item.LinkUrl))
+                {
+                    string[] url = item.LinkUrl.Split('?');
+                    if (url[0] == action)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 }

@@ -36,7 +36,7 @@ body.body-small .navbar-top-links li:last-child { margin-right: 10px }
 .dropdown-alerts li a, .dropdown-messages li a { font-size: 12px }
 .dropdown-alerts li em, .dropdown-messages li em { font-size: 10px }
 .nav.navbar-top-links .dropdown-alerts a { font-size: 12px }
-.nav-header { padding: 33px 25px; background: url(patterns/header-profile.png) no-repeat }
+.nav-header { padding: 12px 14px; }
 .nav > li.active { border-left: 4px solid #19aa8d; background: #293846 }
 .nav.nav-second-level > li.active { border: none }
 .nav.nav-second-level.collapse[style] { height: auto !important }

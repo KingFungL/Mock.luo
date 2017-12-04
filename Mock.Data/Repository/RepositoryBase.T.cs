@@ -120,7 +120,7 @@ namespace Mock.Data
         }
         public IQueryable<TEntity> IQueryable()
         {
-            return dbcontext.Set<TEntity>().AsNoTracking();
+            return dbcontext.Set<TEntity>();
         }
         public IQueryable<TEntity> IQueryable(Expression<Func<TEntity, bool>> predicate)
         {
