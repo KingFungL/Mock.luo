@@ -26,8 +26,7 @@ namespace Mock.Data.Models
         public DbSet<ItemsDetail> ItemsDetail { get; set; }
         public DbSet<PointArticle> PointArticle { get; set; }
         public DbSet<AppUserAuth> AppUserAuth { get; set; }
-
-        public DbSet<LogInfo> LogInfo { get; set; }
+        //public DbSet<LogInfo> LogInfo { get; set; }
         public DbSet<LoginLog> LoginLog { get; set; }
         public DbSet<Reply> Replay { get; set; }
         public DbSet<Review> Review { get; set; }

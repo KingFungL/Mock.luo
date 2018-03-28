@@ -21,7 +21,7 @@ namespace Mock.Luo.Controllers
             _ibase = container.Resolve<IRepositoryBase<TEntityModel>>();
             this._redisHelper = container.Resolve<IRedisHelper>();
         }
-        [HandlerAuthorize]
+        //[HandlerAuthorize]
         public virtual ActionResult Form(int Id)
         {
             ViewBag.ViewModel = this.GetFormJson(Id);
@@ -61,7 +61,7 @@ namespace Mock.Luo.Controllers
         /// <param name="viewModel">实体对象</param>
         /// <returns></returns>
         [HttpPost]
-        [HandlerAuthorize]
+        //[HandlerAuthorize]
         public virtual ActionResult Edit(TViewModel viewModel, int id = 0)
         {
             if (!ModelState.IsValid)

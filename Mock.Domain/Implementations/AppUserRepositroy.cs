@@ -19,10 +19,12 @@ namespace Mock.Domain
         private readonly IAppModuleRepository _ModuleService;
         private readonly IRedisHelper _iRedisHelper;
         private readonly IMailHelper _imailHelper;
-        public AppUserRepositroy(IAppModuleRepository _ModuleService, IRedisHelper _iRedisHepler, IMailHelper _imailHelper)
+        private readonly ILogInfoRepository _logService;
+        public AppUserRepositroy(IAppModuleRepository _ModuleService, IRedisHelper _iRedisHepler, IMailHelper _imailHelper,ILogInfoRepository _logService)
         {
             this._ModuleService = _ModuleService;
             this._iRedisHelper = _iRedisHepler;
+            this._logService = _logService;
             this._imailHelper = _imailHelper;
         }
         #endregion
@@ -156,7 +158,11 @@ namespace Mock.Domain
         #region 验证登录
         public AjaxResult CheckLogin(string loginName, string pwd, bool rememberMe)
         {
-
+            LogMessage logEntity = new LogMessage();
+            logEntity.CategoryId = 1;
+            logEntity.OperateType = EnumAttribute.GetDescription(DbLogType.Login);
+            logEntity.OperateAccount = loginName;
+            logEntity.Module = Configs.GetValue("SoftName");
             AjaxResult ajaxResult;
             try
             {
@@ -202,6 +208,9 @@ namespace Mock.Domain
                         userEntity.LastLogIp = Net.Ip;
                         userEntity.LastModifyTime = now;
 
+                        logEntity.ExecuteResult = 1;
+                        logEntity.ExecuteResultJson = "登录成功";
+
                         this.Update(userEntity, "LoginCount", "LastLoginTime", "LastLogIp", "LastModifyTime");
 
                     }
@@ -218,10 +227,14 @@ namespace Mock.Domain
             catch (Exception ex)
             {
                 ajaxResult = AjaxResult.Error(ex.Message);
-                Log log = LogFactory.GetLogger("登录日志记录");
-                log.Error(ex.Message);
-            }
 
+                logEntity.ExecuteResult = -1;
+                logEntity.ExecuteResultJson = ex.Message;// new logformat().exceptionformat(logentity);
+                //logEntity.ExceptionInfo = ex.Message ;
+
+                _logService.LogError(logEntity, "登录日志");
+
+            }
 
             return ajaxResult;
 

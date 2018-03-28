@@ -163,6 +163,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Plat\Controllers\CloudController.cs" />
     <Compile Include="Areas\Plat\Controllers\GuestBookController.cs" />
     <Compile Include="Areas\Plat\Controllers\LogInfoController.cs" />
     <Compile Include="Areas\Plat\Controllers\PointArticleController.cs" />
@@ -218,7 +219,6 @@
     <Content Include="Content\css\font-awesome4.7.min12.css" />
     <Content Include="Content\css\global.blog.css" />
     <Content Include="Content\css\jquery.treegrid.css" />
-    <Content Include="Content\css\mock.css" />
     <Content Include="Content\css\plugins\jump.css" />
     <Content Include="Content\css\plugins\skins\all.css" />
     <Content Include="Content\css\plugins\skins\flat\aero%402x.png" />
@@ -333,6 +333,7 @@
     <Content Include="Content\css\plugins\skins\square\yellow.css" />
     <Content Include="Content\css\plugins\skins\square\yellow.png" />
     <Content Include="Content\css\plugins\skins\square\_all.css" />
+    <Content Include="Content\css\ui.css" />
     <Content Include="Content\css\style.min862f.css" />
     <Content Include="Content\css\vue-multiselect.min31f.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
@@ -863,6 +864,7 @@
     <Content Include="Areas\Plat\Views\PointArticle\Index.cshtml" />
     <Content Include="Areas\Plat\Views\GuestBook\Index.cshtml" />
     <Content Include="Areas\Plat\Views\LogInfo\Index.cshtml" />
+    <Content Include="Areas\Plat\Views\Cloud\Index.cshtml" />
     <None Include="Content\js\jquery.validate-vsdoc.js" />
     <Content Include="Content\js\jquery.validate.js" />
     <Content Include="Content\js\jquery.validate.min.js" />
@@ -1831,7 +1833,6 @@
     <Content Include="Views\Shared\_Form.cshtml" />
     <Content Include="Views\Home\DatalistView.cshtml" />
     <Content Include="Views\Home\MainView.cshtml" />
-    <Content Include="Views\Home\BlogView.cshtml" />
     <Content Include="Files\数据字典.docx" />
     <Content Include="Views\Shared\_Index.cshtml" />
     <Content Include="Content\js\layui\font\iconfont.eot" />

@@ -34,6 +34,9 @@
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.2.2\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -78,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attribute\AjaxRequestAttribute.cs" />
+    <Compile Include="Attribute\EnumAttribute.cs" />
     <Compile Include="Attribute\SkipAttribute.cs" />
     <Compile Include="Cache\Cache.cs" />
     <Compile Include="Cache\CacheFactory.cs" />
@@ -89,7 +93,13 @@
     <Compile Include="Helper\RedisHelper.cs" />
     <Compile Include="Helper\TimeHelper.cs" />
     <Compile Include="Helper\UiHelper.cs" />
+    <Compile Include="Log\ActionLayoutPattern.cs" />
+    <Compile Include="Log\LogFormat.cs" />
+    <Compile Include="Log\LogLevel.cs" />
+    <Compile Include="Log\LogMessage.cs" />
+    <Compile Include="Log\ActionConverter.cs" />
     <Compile Include="Mail\IMailHelper.cs" />
+    <Compile Include="SignalR\SendHubs.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Configs\Configs.cs" />
     <Compile Include="Configs\DBConnection.cs" />
@@ -134,6 +144,7 @@
     <Compile Include="Web\WebHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

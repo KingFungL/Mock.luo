@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Mock.Domain
 {
-    public interface ILogInfoRepository : IRepositoryBase<LogInfo>
+    public interface ILogInfoRepository 
     {
         
         /// <summary>
@@ -20,5 +20,6 @@ namespace Mock.Domain
         /// <returns>DataGrid实体</returns>
         DataGrid GetDataGrid(Pagination pag, string search);
 
+        void LogError(LogMessage logEntity, string LogName);
     }
 }

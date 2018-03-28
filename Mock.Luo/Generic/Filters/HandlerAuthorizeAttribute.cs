@@ -35,6 +35,7 @@ namespace Mock.Luo.Generic.Filters
                 //如果不是ajax请求，就重定向到一个权限不足的页面。
                 if (!isAjaxRequest)
                 {
+                    WebHelper.WriteCookie("mock_authorize_error", "nopermission");//无权限
                     filterContext.Result = new RedirectResult("~/Login/Default");
                 }
                 else
