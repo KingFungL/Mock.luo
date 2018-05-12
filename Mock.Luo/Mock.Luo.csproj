@@ -1774,9 +1774,6 @@
     <Content Include="Content\fonts\fontawesome-webfont93e3.woff2" />
     <Content Include="Areas\Mock\Views\Editor\MarkDownView.cshtml" />
     <Content Include="Areas\Mock\Views\Editor\SimditorView.cshtml" />
-    <Content Include="Generic\Configs\database.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Generic\Configs\system.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1869,6 +1866,7 @@
     <Content Include="Views\Login\PwdReset.cshtml" />
     <Content Include="Views\Generic\PwdReSetTemplate.cshtml" />
     <Content Include="Views\Login\Default.cshtml" />
+    <Content Include="Views\App\Loves.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

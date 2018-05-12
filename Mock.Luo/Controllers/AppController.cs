@@ -353,6 +353,7 @@ namespace Mock.Luo.Controllers
         }
         #endregion
 
+        #region 激活邮件
         public ActionResult ActiveEmail(string t, string u)
         {
             string msg = "";
@@ -384,6 +385,13 @@ namespace Mock.Luo.Controllers
 
             ViewBag.Msg = msg;
 
+            return View();
+        } 
+        #endregion
+
+
+        public ActionResult Loves()
+        {
             return View();
         }
     }
