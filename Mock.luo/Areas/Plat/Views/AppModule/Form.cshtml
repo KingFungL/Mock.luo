@@ -1,0 +1,350 @@
+﻿
+@{
+    ViewBag.Title = "菜单新增编辑管理";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<form class="uiPretty layui-form layui-form-pane" id="v-app">
+    <div id="wizard" class="wizard" data-target="#wizard-steps" style="border-left: none; border-top: none; border-right: none;">
+        <ul class="steps">
+            <li data-target="#step-1" class="active"><span class="step">1</span>系统功能<span class="chevron"></span></li>
+            <li data-target="#step-2" class=""><span class="step">2</span>系统按钮<span class="chevron"></span></li>
+        </ul>
+    </div>
+    <div class="step-content" id="wizard-steps" style="border-left: none; border-bottom: none; border-right: none;">
+        <div class="step-pane active" id="step-1" style="margin-left: 0px; margin-top: 15px; margin-right: 30px;">
+            <div class="layui-container" style="margin-top:15px;">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span style="color:red">*</span>名称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" v-model="Name" required lay-verify="required" placeholder="请输入菜单名称" autocomplete="off" class="layui-input" isvalid="yes" checkexpession="NotNull">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">上级</label>
+                        <div class="layui-input-inline">
+                            <div id="PId" type="selectTree" class="ui-select"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">地址</label>
+                        <div class="layui-input-inline">
+                            <input type="text" v-model="LinkUrl" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">排序码</label>
+                        <div class="layui-input-inline">
+                            <input type="number" v-model="SortCode" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" pane>
+                    <label class="layui-form-label">选项</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="Expanded" v-model="Expanded" title="展开" lay-skin="primary" lay-filter="check">
+                        <input type="checkbox" name="IsMenu" v-model="IsMenu" title="菜单" lay-skin="primary" lay-filter="check">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">图标</label>
+                        <div class="layui-input-inline">
+                            <input type="text" v-model="Icon" class="layui-input" placeholder="双击我选择图标" v-on:dblclick="com.select_icon('Icon')" style="cursor:pointer;">
+                            <span class="input-button" v-on:click="com.select_icon('Icon')" title="选取图标">...</span>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span style="color:red">*</span>目标</label>
+                        <div class="layui-input-inline">
+                            <select id="Target" name="Target" v-model="Target" lay-filter="Target" isvalid="yes" checkexpession="NotNull">
+                                <option value="-1" disabled>==请选择==</option>
+                                <option value="expand">无页面</option>
+                                <option value="iframe">框架页</option>
+                                <option value="open">新窗口</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="step-pane" id="step-2" style="margin: 5px;">
+            <div style="height: 40px; line-height: 33px; text-align: left;">
+                <div class="btn-group">
+                    <a class="btn btn-default" v-on:click="btn_add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+                    <a class="btn btn-default" v-on:click="btn_edit"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+                    <a class="btn btn-default" v-on:click="btn_delete"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+                    <a class="btn btn-default" v-on:click="btn_init"><i class="fa fa-indent"></i>&nbsp;初始化</a>
+                </div>
+                <div class="btn-group">
+                    <a v-on:click="btn_copy" class="btn btn-default"><i class="fa fa-copy"></i>&nbsp;复制</a>
+                </div>
+            </div>
+            <table id="gridTable-button"></table>
+        </div>
+    </div>
+    <div class="form-button" id="wizard-actions">
+        <a v-bind:class="{ disabled: btn_prev}" class="btn btn-default btn-prev">上一步</a>
+        <a v-bind:class="{ disabled: btn_next}" class="btn btn-default btn-next">下一步</a>
+        <a v-bind:class="{ disabled: btn_finish}" class="btn btn-success" v-on:click="btn_finsh_click">完成</a>
+    </div>
+</form>
+
+
+@section css{
+    <link href="~/Content/js/wdTree/tree.css" rel="stylesheet" />
+    <link href="~/Content/css/wizcard.css" rel="stylesheet" />
+    <link href="~/Content/js/jqgrid/jqgrid.css" rel="stylesheet" />
+    <style>
+        .layui-form .input-button { font-weight: bold; border: none; right: 8px; top: 50%; width: 12px; height: 16px; margin-top: -12px; cursor: pointer; overflow: hidden; position: absolute; z-index: 100; }
+        .form-button { padding: 0; height: 40px; line-height: 36px; text-align: right; border-top: 1px solid #ccc; background-color: #f5f5f5; position: absolute; top: 100%; margin-top: -40px; width: 100%; padding-right: 0px; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
+        .uiPretty .form-button { border-top: 1px solid #f1f1f1; background-color: #fff; }
+    </style>
+}
+@section scripts{
+    <script src="~/Content/js/jqgrid/jqgrid.min.js"></script>
+    <script src="~/Content/js/jqgrid/grid.locale-cn.js"></script>
+    <script src="~/Content/js/wdTree/jquery.tree.js"></script>
+    <script src="~/Content/js/plugins/wizcard.js"></script>
+    <script>
+
+        var json = JSON.parse(`@Html.Raw(ViewBag.ViewModel)`);
+        !json.PId && (json.PId = -1);
+        json.TypeCode == 'Menu' ? json.IsMenu = true : json.IsMenu = false;
+        //初始上一步禁用，下一步不禁用
+        json.btn_prev = true;
+        json.btn_next = true;
+        json.btn_finish = true;
+        json.autoId = -2;
+        var vm = new Vue({
+            el: '#v-app',
+            data: json,
+            beforeCreate: function () {
+                json.buttonJson = [];
+            },
+            mounted: function () {
+                this.init_page();
+                //如果是菜单被勾选，下一步不禁用，其他还是禁用
+                if (json.IsMenu == true) {
+                    json.btn_next = false;
+                } else {
+                    json.btn_finish = false;
+                }
+                layui.form.on('checkbox(check)', function (data) {
+                    var name = $(data.elem).attr('name');
+                    vm[name] = data.elem.checked;
+                    if (name === 'IsMenu') {
+                        if (data.elem.checked == true) {
+                            json.btn_next = false;
+                            json.btn_finish = true;
+                        } else {
+                            json.btn_next = true;
+                            json.btn_finish = false;
+                        }
+                    }
+                });
+                layui.form.on('select(Target)', function (data) {
+                    vm.Target = data.value;
+                });
+                $("#PId").comboBoxTree({
+                    url: "/Plat/AppModule/GetComboBoxTreeJson",
+                    description: "==请选择==",
+                    height: "180px",
+                    allowSearch: true,
+                    click: function (node) {
+                        vm.PId = node.id;
+                    }
+                });
+
+                layui.form.render();
+                window.setTimeout(function () {
+                    $("#PId").comboBoxTreeSetValue(json.PId);
+                }, 500);
+                this.init_table_button();
+            },
+            methods: {
+                init_page: function () {
+                    //加载导向
+                    $('#wizard').wizard().on('change', function (e, data) {
+                        var $finish = $("#btn_finish");
+                        var $next = $("#btn_next");
+                        if (data.direction == "next") {
+                            if (data.currentStep == 2) {
+                                json.btn_prev = false;
+                                json.btn_next = true;
+                                json.btn_finish = false;
+                            }
+                        } else {
+                            json.btn_prev = true;
+                            json.btn_next = false;
+                            json.btn_finish = true;
+                        }
+                    });
+                },
+                init_table_button: function () {
+                    var id = json.Id == null ? "-1" : json.Id
+                    com.ajax({
+                        url: "/Plat/AppModule/GetListJson?Id=" + id,
+                        type: "get",
+                        success: function (data) {
+                            vm.buttonJson = data;
+                        }
+                    });
+                    var $grid = $("#gridTable-button");
+                    $grid.jqGrid({
+                        url: "/Plat/AppModule/GetButtonTreeJson?Id=" + id,
+                        datatype: "json",
+                        treeGrid: true,
+                        treeGridModel: "adjacency",
+                        ExpandColumn: "Name",
+                        height: $(window).height() - 190,
+                        width: $(window).width() - 40,
+                        colModel: [{ label: "主键", name: "Id", hidden: true, key: true },//这个Id一定要有，一定要有，一定要有。没有则会出现树无法伸缩的情况
+                        { label: "名称", name: "Name", width: 100, align: "left", sortable: false },
+                        { label: "编码", name: "EnCode", width: 100, align: "left", sortable: false },
+                        { label: "地址", name: "LinkUrl", width: 250, align: "left", sortable: false },
+                        { label: "图标", name: "Icon", width: 40, align: "left", sortable: false, formatter: function (cellvalue, options, rowObject) { return '<i class="' + cellvalue + '"></i>' } },
+                        {
+                            label: "类型", name: "TypeCode", width: 100, align: "left", sortable: false, formatter: function (cellvalue, options, rowObject) {
+                                if (cellvalue == 'Permission') {
+                                    return '权限+隐藏';
+                                } else if (cellvalue == 'Button') {
+                                    return '按钮';
+                                } else {
+                                    return '';
+                                }
+                            }
+                        }
+                        ],
+                        rowNum: "all",
+                    });
+
+                },
+                btn_finsh_click: function () {
+                    if (!$('#v-app').Validform()) {
+                        return false;
+                    }
+                    //如果是未选中菜单项，就直接点击完成，则直接调用通用的菜单项编辑方法
+                    if (vm.IsMenu == false) {
+                        console.info('直接提交，不想改后台.')
+                        vm.submit();
+                    } else {
+                        console.info('要把按钮及权限功能完成!');
+                        vm.buttonJson = JSON.stringify(vm.buttonJson);
+                        com.ajax({
+                            url: '/Plat/AppModule/SubmitForm',
+                            data: vm.$data,
+                            showMsg: true,
+                            close: false,
+                            success: function () {
+                                com.currentIframe().vm.btn_refresh();
+                                $.layerClose();
+                            }
+                        })
+
+                    }
+                },
+                submit: function () {
+                    if (vm.PId == -1) {
+                        vm.PId = 0;
+                    }
+                    vm.IsMenu == true ? vm.TypeCode = 'Menu' : vm.TypeCode = 'PMenu';
+                    com.ajax({
+                        url: '/Plat/AppModule/Edit/' + vm.Id,
+                        data: vm.$data,
+                        showMsg: true,
+                        close: false,
+                        success: function () {
+                            //刷新菜单管理列表项
+                            com.currentIframe().vm.btn_refresh();
+                            $.layerClose();
+                        }
+                    })
+                },
+                btn_add: function () {
+                    this.editinfo('新增', vm.autoId--);
+                },
+                btn_edit: function () {
+                    com.edit('#gridTable-button', 'jq', function (id) {
+                        vm.editinfo('编辑', id);
+                    });
+                },
+                btn_delete: function () {
+                    var node = $("#gridTable-button").jqGridRowValue("Id");
+                    if (com.checkedRow(node)) {
+                        $.each(vm.buttonJson, function (i) {
+                            if (vm.buttonJson[i].Id == node.Id) {
+                                vm.buttonJson.splice(i, 1);
+                                vm.array_to_TreeJson(vm.buttonJson);
+                                return false;
+                            }
+                        });
+                    }
+                },
+                btn_copy: function () {
+                    $.layerMsg('别点我，要脸，没做！');
+                },
+                btn_init: function () {
+                    var data = [
+                        { "Id": -1, "PId": 0, "EnCode": "btn_refresh", "Name": "刷新", "SortCode": 1, "Icon": "fa fa-bar-chart-o", "LinkUrl": "/Plat/AppRole/GetDataGrid", "Target": null, "TypeCode": "Button" },
+                        { "Id": -2, "PId": 0, "EnCode": "btn_add", "Name": "新增", "SortCode": 1, "Icon": "fa fa-stop-circle", "LinkUrl": "/Plat/AppRole/Form", "Target": null, "TypeCode": "Button" },
+                        { "Id": -3, "PId": 0, "EnCode": "btn_edit", "Name": "编辑", "SortCode": 1, "Icon": "fa fa-stop-circle", "LinkUrl": "/Plat/AppRole/Form", "Target": null, "TypeCode": "Button" },
+                        { "Id": -4, "PId": 0, "EnCode": "btn_delete", "Name": "删除", "SortCode": 4, "Expanded": null, "Icon": "glyphicon glyphicon-remove", "LinkUrl": "/Plat/AppRole/Delete", "TypeCode": "Button" },
+                        { "Id": -5, "PId": 0, "EnCode": "insert_edit_pemission", "Name": "提交表单权限", "SortCode": 9, "Expanded": null, "Icon": "fa fa-life-bouy", "LinkUrl": "/Plat/AppRole/Edit", "TypeCode": "Permission" }];
+                    vm.autoId = -6;
+                    $.each(data, function (i, v) {
+                        v.PId = json.Id;
+                        vm.buttonJson.push(v);
+                    });
+
+                    vm.array_to_TreeJson(vm.buttonJson);
+                },
+                editinfo: function (title, id) {
+                    $.layerOpen({
+                        id: "ButtonForm",
+                        title: title,
+                        width: '60%',
+                        height: '55%',
+                        content: '/Plat/AppModule/Button?PId=' + json.Id + '&Id=' + id,
+                        yes: function (iframebody, iframeWin, index) {
+                            iframeWin.vm.submit(function (data) {
+                                //新增
+                                if (id <= 0 && data.IsNew == true) {
+                                    data.IsNew = false;
+                                    vm.buttonJson.push(data);
+                                }
+                                else {
+                                    $.each(vm.buttonJson, function (i) {
+                                        if (vm.buttonJson[i].Id == id) {
+                                            vm.buttonJson[i] = data;
+                                        }
+                                    });
+                                }
+                                vm.array_to_TreeJson(vm.buttonJson);
+                                top.layer.close(index);
+                            });
+                        }
+                    });
+                },
+                array_to_TreeJson: function (buttonJson) {
+                    var $grid = $("#gridTable-button");
+                    com.ajax({
+                        url: "/Plat/AppModule/ToButtonTreeJson",
+                        data: { moduleButtonJson: JSON.stringify(buttonJson), Id: json.Id },
+                        success: function (data) {
+                            $grid.clearGridData();
+                            if ($grid.parent().next('.unwritten') != undefined) {
+                                $grid.parent().next('.unwritten').html('');
+                            }
+                            $grid[0].addJSONData(data);
+                        },
+                    });
+                }
+            }
+        });
+    </script>
+
+}

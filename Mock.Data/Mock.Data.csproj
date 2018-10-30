@@ -108,16 +108,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Mock.Code\Mock.Code.csproj">
       <Project>{319865f9-866e-402b-a4aa-f1f50aa1f817}</Project>
       <Name>Mock.Code</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
