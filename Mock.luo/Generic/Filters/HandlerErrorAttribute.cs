@@ -42,7 +42,7 @@ namespace Mock.luo.Generic.Filters
                 OperateType = EnumAttribute.GetDescription(DbLogType.Exception),
                 ExecuteResult = -1,
                 Class = context.Controller.ToString(),
-                OperateAccount = OperatorProvider.Provider.CurrentUser.LoginName + "（" + OperatorProvider.Provider.CurrentUser.UserId + "）"
+                OperateAccount = OperatorProvider.Provider.CurrentUser?.LoginName + "（" + OperatorProvider.Provider.CurrentUser?.UserId + "）"
             };
             Exception error = context.Exception;
             if (error.InnerException == null)
