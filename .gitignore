@@ -240,9 +240,6 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
-/Moco.Luo/UploadFile/
 upload/
-/Moco.Luo/Upload/
-/Mock.Luo/UploadFile/2017_11_4
-*.config
+/Mock.Luo/UploadFile/
 Web.Release.config
