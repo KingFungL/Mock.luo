@@ -1,19 +1,17 @@
-﻿
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Mock.Code
+namespace Mock.Code.Web.Tree
 {
     public class TreeSelectModel
     {
-        public string id { get; set; }
-        public string text { get; set; }
-        public string parentId { get; set; }
-        public object data { get; set; }
+        public string Id { get; set; }
+        public string Text { get; set; }
+        public string ParentId { get; set; }
+        public object Data { get; set; }
         /// <summary>
         /// 下拉comboboxTree控件所需
         /// </summary>
-        public bool hasChildren { get; set; }
+        public bool HasChildren { get; set; }
         public List<TreeSelectModel> ChildNodes { get; set; }
     }
 }

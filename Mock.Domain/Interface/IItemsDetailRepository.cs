@@ -1,13 +1,11 @@
-﻿using Mock.Code;
-using Mock.Data;
+﻿using System.Collections.Generic;
+using Mock.Code.Web;
+using Mock.Code.Web.Tree;
+using Mock.Data.AppModel;
 using Mock.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Mock.Data.Repository;
 
-namespace Mock.Domain
+namespace Mock.Domain.Interface
 {
     public interface IItemsDetailRepository : IRepositoryBase<ItemsDetail>
     {
@@ -16,14 +14,14 @@ namespace Mock.Domain
         /// </summary>
         /// <param name="pag"></param>
         /// <returns></returns>
-        DataGrid GetDataGrid(Pagination pag,string search,string EnCode);
+        DataGrid GetDataGrid(PageDto pag,string search,string enCode);
 
         /// <summary>
         /// 分类，根据items下的Encode获取ItemDetail的分类数据
         /// </summary>
-        /// <param name="Encode"></param>
+        /// <param name="encode"></param>
         /// <returns></returns>
-        List<TreeSelectModel> GetCombobox(string Encode);
+        List<TreeSelectModel> GetCombobox(string encode);
         /// <summary>
         /// 根据条件和主表Id获取分表列表数据
         /// </summary>

@@ -1,8 +1,7 @@
-﻿
-using System;
+﻿using System;
 using System.Text;
 
-namespace Mock.Code
+namespace Mock.Code.Extend
 {
     public static partial class Ext
     {

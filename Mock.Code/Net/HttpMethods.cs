@@ -8,7 +8,7 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
-namespace Mock.Code
+namespace Mock.Code.Net
 {
     public class HttpMethods
     {
@@ -84,10 +84,10 @@ namespace Mock.Code
         {
             string contentType = "image/jpeg";
             //待请求参数数组
-            FileStream Pic = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            byte[] PicByte = new byte[Pic.Length];
-            Pic.Read(PicByte, 0, PicByte.Length);
-            int lengthFile = PicByte.Length;
+            FileStream pic = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            byte[] picByte = new byte[pic.Length];
+            pic.Read(picByte, 0, picByte.Length);
+            int lengthFile = picByte.Length;
 
             //构造请求地址
 
@@ -126,10 +126,10 @@ namespace Mock.Code
             {
                 //发送数据请求服务器
                 requestStream.Write(postHeaderBytes, 0, postHeaderBytes.Length);
-                requestStream.Write(PicByte, 0, lengthFile);
+                requestStream.Write(picByte, 0, lengthFile);
                 requestStream.Write(boundayBytes, 0, boundayBytes.Length);
-                HttpWebResponse HttpWResp = (HttpWebResponse)request.GetResponse();
-                myStream = HttpWResp.GetResponseStream();
+                HttpWebResponse httpWResp = (HttpWebResponse)request.GetResponse();
+                myStream = httpWResp.GetResponseStream();
             }
             catch 
             {
@@ -154,7 +154,7 @@ namespace Mock.Code
                 responseData.Append(line);
             }
             myStream.Close();
-            Pic.Close();
+            pic.Close();
 
             return responseData.ToString();
         }

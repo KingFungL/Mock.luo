@@ -1,11 +1,10 @@
-﻿
-using System;
+﻿using System;
 using System.Data;
 using System.IO;
 using System.Text;
 using System.Web;
 
-namespace Mock.Code
+namespace Mock.Code.File
 {
     public class FileHelper
     {
@@ -28,7 +27,7 @@ namespace Mock.Code
         /// <param name="filePath">文件的绝对路径</param>        
         public static bool IsExistFile(string filePath)
         {
-            return File.Exists(filePath);
+            return System.IO.File.Exists(filePath);
         }
         #endregion
 
@@ -232,9 +231,9 @@ namespace Mock.Code
         /// <param name="file">要删除的文件路径和名称</param>
         public static void DeleteFile(string file)
         {
-            if (File.Exists(System.Web.HttpContext.Current.Request.PhysicalApplicationPath + file))
+            if (System.IO.File.Exists(System.Web.HttpContext.Current.Request.PhysicalApplicationPath + file))
             {
-                File.Delete(System.Web.HttpContext.Current.Request.PhysicalApplicationPath + file);
+                System.IO.File.Delete(System.Web.HttpContext.Current.Request.PhysicalApplicationPath + file);
             }
         }
         #endregion
@@ -283,8 +282,8 @@ namespace Mock.Code
         {
             dir1 = dir1.Replace("/", "\\");
             dir2 = dir2.Replace("/", "\\");
-            if (File.Exists(System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\" + dir1))
-                File.Move(System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\" + dir1, System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\" + dir2);
+            if (System.IO.File.Exists(System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\" + dir1))
+                System.IO.File.Move(System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\" + dir1, System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\" + dir2);
         }
         #endregion
 
@@ -298,9 +297,9 @@ namespace Mock.Code
         {
             dir1 = dir1.Replace("/", "\\");
             dir2 = dir2.Replace("/", "\\");
-            if (File.Exists(System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\" + dir1))
+            if (System.IO.File.Exists(System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\" + dir1))
             {
-                File.Copy(System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\" + dir1, System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\" + dir2, true);
+                System.IO.File.Copy(System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\" + dir1, System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "\\" + dir2, true);
             }
         }
         #endregion
@@ -329,13 +328,13 @@ namespace Mock.Code
         /// 根据时间获取指定路径的 后缀名的 的所有文件
         /// </summary>
         /// <param name="path">文件路径</param>
-        /// <param name="Extension">后缀名 比如.txt</param>
+        /// <param name="extension">后缀名 比如.txt</param>
         /// <returns></returns>
-        public static DataRow[] GetFilesByTime(string path, string Extension)
+        public static DataRow[] GetFilesByTime(string path, string extension)
         {
             if (Directory.Exists(path))
             {
-                string fielExts = string.Format("*{0}", Extension);
+                string fielExts = string.Format("*{0}", extension);
                 string[] files = Directory.GetFiles(path, fielExts);
                 if (files.Length > 0)
                 {
@@ -345,7 +344,7 @@ namespace Mock.Code
                     for (int i = 0; i < files.Length; i++)
                     {
                         DataRow row = table.NewRow();
-                        DateTime creationTime = File.GetCreationTime(files[i]);
+                        DateTime creationTime = System.IO.File.GetCreationTime(files[i]);
                         string fileName = Path.GetFileName(files[i]);
                         row["filename"] = fileName;
                         row["createtime"] = creationTime;
@@ -384,7 +383,7 @@ namespace Mock.Code
             {
                 foreach (string s in files)
                 {
-                    File.Copy(s, varToDirectory + s.Substring(s.LastIndexOf("\\")), true);
+                    System.IO.File.Copy(s, varToDirectory + s.Substring(s.LastIndexOf("\\")), true);
                 }
             }
         }
@@ -394,15 +393,15 @@ namespace Mock.Code
         /// <summary>
         /// 检查文件,如果文件不存在则创建  
         /// </summary>
-        /// <param name="FilePath">路径,包括文件名</param>
-        public static void ExistsFile(string FilePath)
+        /// <param name="filePath">路径,包括文件名</param>
+        public static void ExistsFile(string filePath)
         {
             //if(!File.Exists(FilePath))    
             //File.Create(FilePath);    
             //以上写法会报错,详细解释请看下文.........   
-            if (!File.Exists(FilePath))
+            if (!System.IO.File.Exists(filePath))
             {
-                FileStream fs = File.Create(FilePath);
+                FileStream fs = System.IO.File.Create(filePath);
                 fs.Close();
             }
         }
@@ -437,7 +436,7 @@ namespace Mock.Code
             {
                 foreach (string s in files)
                 {
-                    File.Delete(varToDirectory + s.Substring(s.LastIndexOf("\\")));
+                    System.IO.File.Delete(varToDirectory + s.Substring(s.LastIndexOf("\\")));
                 }
             }
         }
@@ -461,8 +460,8 @@ namespace Mock.Code
         /// 复制文件参考方法,页面中引用
         /// </summary>
         /// <param name="cDir">新路径</param>
-        /// <param name="TempId">模板引擎替换编号</param>
-        public static void CopyFiles(string cDir, string TempId)
+        /// <param name="tempId">模板引擎替换编号</param>
+        public static void CopyFiles(string cDir, string tempId)
         {
             //if (Directory.Exists(Request.PhysicalApplicationPath + "\\Controls"))
             //{
@@ -620,7 +619,7 @@ namespace Mock.Code
         public static int GetLineCount(string filePath)
         {
             //将文本文件的各行读到一个字符串数组中
-            string[] rows = File.ReadAllLines(filePath);
+            string[] rows = System.IO.File.ReadAllLines(filePath);
 
             //返回行数
             return rows.Length;
@@ -650,18 +649,18 @@ namespace Mock.Code
         /// <returns></returns>
         public static string ToFileSize(long size)
         {
-            string m_strSize = "";
-            long FactSize = 0;
-            FactSize = size;
-            if (FactSize < 1024.00)
-                m_strSize = FactSize.ToString("F2") + " 字节";
-            else if (FactSize >= 1024.00 && FactSize < 1048576)
-                m_strSize = (FactSize / 1024.00).ToString("F2") + " KB";
-            else if (FactSize >= 1048576 && FactSize < 1073741824)
-                m_strSize = (FactSize / 1024.00 / 1024.00).ToString("F2") + " MB";
-            else if (FactSize >= 1073741824)
-                m_strSize = (FactSize / 1024.00 / 1024.00 / 1024.00).ToString("F2") + " GB";
-            return m_strSize;
+            string mStrSize = "";
+            long factSize = 0;
+            factSize = size;
+            if (factSize < 1024.00)
+                mStrSize = factSize.ToString("F2") + " 字节";
+            else if (factSize >= 1024.00 && factSize < 1048576)
+                mStrSize = (factSize / 1024.00).ToString("F2") + " KB";
+            else if (factSize >= 1048576 && factSize < 1073741824)
+                mStrSize = (factSize / 1024.00 / 1024.00).ToString("F2") + " MB";
+            else if (factSize >= 1073741824)
+                mStrSize = (factSize / 1024.00 / 1024.00 / 1024.00).ToString("F2") + " GB";
+            return mStrSize;
         }
         #endregion
 
@@ -704,7 +703,7 @@ namespace Mock.Code
         public static void WriteText(string filePath, string text, Encoding encoding)
         {
             //向文件写入内容
-            File.WriteAllText(filePath, text, encoding);
+            System.IO.File.WriteAllText(filePath, text, encoding);
         }
         #endregion
 
@@ -716,7 +715,7 @@ namespace Mock.Code
         /// <param name="content">写入的内容</param>
         public static void AppendText(string filePath, string content)
         {
-            File.AppendAllText(filePath, content);
+            System.IO.File.AppendAllText(filePath, content);
         }
         #endregion
 
@@ -728,7 +727,7 @@ namespace Mock.Code
         /// <param name="destFilePath">目标文件的绝对路径</param>
         public static void Copy(string sourceFilePath, string destFilePath)
         {
-            File.Copy(sourceFilePath, destFilePath, true);
+            System.IO.File.Copy(sourceFilePath, destFilePath, true);
         }
         #endregion
 
@@ -751,7 +750,7 @@ namespace Mock.Code
                     DeleteFile(descDirectoryPath + "\\" + sourceFileName);
                 }
                 //将文件移动到指定目录
-                File.Move(sourceFilePath, descDirectoryPath + "\\" + sourceFileName);
+                System.IO.File.Move(sourceFilePath, descDirectoryPath + "\\" + sourceFileName);
             }
         }
         #endregion
@@ -816,7 +815,7 @@ namespace Mock.Code
         public static void ClearFile(string filePath)
         {
             //删除文件
-            File.Delete(filePath);
+            System.IO.File.Delete(filePath);
 
             //重新创建该文件
             CreateFile(filePath);

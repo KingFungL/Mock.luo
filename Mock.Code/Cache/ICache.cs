@@ -1,11 +1,6 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
-namespace Mock.Code
+namespace Mock.Code.Cache
 {    /// <summary>
      /// 缓存接口类
      /// author:luozQ

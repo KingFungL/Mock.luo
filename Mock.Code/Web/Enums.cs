@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
-namespace Mock.Data
+namespace Mock.Code.Web
 {
     public enum DbLogType
     {
@@ -50,7 +45,7 @@ namespace Mock.Data
         /// 已审核
         /// </summary>
         [Description("暂存")]
-        audited = 3,
+        Audited = 3,
         /// <summary>
         /// 未审核
         /// </summary>
@@ -117,11 +112,11 @@ namespace Mock.Data
         /// <summary>
         /// 轻松时刻
         /// </summary>
-        justfun,
+        Justfun,
         /// <summary>
         /// 人生感悟
         /// </summary>
-        feelinglife
+        Feelinglife
 
     }
     /// <summary>
@@ -132,7 +127,7 @@ namespace Mock.Data
         /// <summary>
         /// QQ互联，
         /// </summary>
-        QQ,
+        Qq,
         Email,
         LoginName,
         Phone,

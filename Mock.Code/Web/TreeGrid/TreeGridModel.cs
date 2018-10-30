@@ -1,15 +1,15 @@
 ﻿
 
-namespace Mock.Code
+namespace Mock.Code.Web.TreeGrid
 {
     public class TreeGridModel
     {
-        public string id { get; set; }
-        public string parentId { get; set; }
-        public string text { get; set; }
-        public bool isLeaf { get; set; }
-        public bool expanded { get; set; }
-        public bool loaded { get; set; }
-        public string entityJson { get; set; }
+        public string Id { get; set; }
+        public string ParentId { get; set; }
+        public string Text { get; set; }
+        public bool IsLeaf { get; set; }
+        public bool Expanded { get; set; }
+        public bool Loaded { get; set; }
+        public string EntityJson { get; set; }
     }
 }

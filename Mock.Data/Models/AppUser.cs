@@ -5,15 +5,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mock.Data.Infrastructure;
 
 namespace Mock.Data.Models
 {
     [Table("AppUser")]
-    public class AppUser : IEntity<AppUser>, ICreationAudited, IDeleteAudited, IModificationAudited
+    public class AppUser : Entity<AppUser>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         public AppUser()
         {
-            this.UserRoles = new HashSet<UserRole>();
+            this.UserRoles = new HashSet<AppUserRole>();
             this.Articles = new HashSet<Article>();
             this.GuestBooks = new HashSet<GuestBook>();
             this.Uploads = new HashSet<Upload>();
@@ -22,11 +23,11 @@ namespace Mock.Data.Models
             this.GuestBooks = new HashSet<GuestBook>();
         }
         [Key]
-        public int? Id { get; set; }
+        public int Id { get; set; }
         [StringLength(50)]
         public string LoginName { get; set; }
         [StringLength(50,ErrorMessage = "QQ最长为11")]
-        public string QQ { get; set; }
+        public string Qq { get; set; }
         [StringLength(50)]
         public string LoginPassword { get; set; }
         [StringLength(20,ErrorMessage ="手机长度不能超过20位")]
@@ -62,7 +63,7 @@ namespace Mock.Data.Models
         public DateTime? DeleteTime { get; set; }
         public int? LastModifyUserId { get; set; }
         public DateTime? LastModifyTime { get; set; }
-        public virtual ICollection<UserRole> UserRoles { get; set; }
+        public virtual ICollection<AppUserRole> UserRoles { get; set; }
         public virtual ICollection<Article> Articles { get; set; }
         public virtual ICollection<Upload> Uploads { get; set; }
         public virtual ICollection<AppUserAuth> AppUserAuths { get; set; }

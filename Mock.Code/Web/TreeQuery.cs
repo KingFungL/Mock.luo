@@ -1,9 +1,10 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Mock.Code.Extend;
+using Mock.Code.Web.Tree;
 
-namespace Mock.Code
+namespace Mock.Code.Web
 {
     public static class TreeQuery
     {
@@ -60,19 +61,19 @@ namespace Mock.Code
             foreach (TreeSelectModel item in locateList)
             {
                 treeList.Add(item);
-                string pId = item.parentId;
+                string pId = item.ParentId;
                 while (true)
                 {
                     if (pId==null||pId=="0")
                     {
                         break;
                     }
-                    Predicate<TreeSelectModel> upLambda = u => u.id == pId;
+                    Predicate<TreeSelectModel> upLambda = u => u.Id == pId;
                     TreeSelectModel upRecord = entityList.Find(upLambda);
                     if (upRecord != null)
                     {
                         treeList.Add(upRecord);
-                        pId = upRecord.parentId;
+                        pId = upRecord.ParentId;
                     }
                     else
                     {

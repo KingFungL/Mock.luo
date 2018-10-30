@@ -1,14 +1,15 @@
-﻿using Mock.Data;
-using Mock.Data.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mock.Code;
 using System.Linq.Expressions;
+using Mock.Code.Extend;
+using Mock.Code.Web;
+using Mock.Data.AppModel;
+using Mock.Data.Extensions;
+using Mock.Data.Models;
+using Mock.Data.Repository;
+using Mock.Domain.Interface;
 
-namespace Mock.Domain
+namespace Mock.Domain.Implementations
 {
     /// <summary>
     /// 仓储实现层 GuestBookRepository
@@ -18,10 +19,11 @@ namespace Mock.Domain
         /// <summary>
         /// 根据留言标题与创建人邮箱查询
         /// </summary>
+        /// <param name="predicate"></param>
         /// <param name="pag">分页</param>
-        /// <param name="param">标题/邮箱</param>
+        /// <param name="search">标题/邮箱</param>
         /// <returns></returns>
-        public DataGrid GetDataGrid(Expression<Func<GuestBook, bool>> predicate, Pagination pag, string search)
+        public DataGrid GetDataGrid(Expression<Func<GuestBook, bool>> predicate, PageDto pag, string search)
         {
             predicate = predicate.And(u => u.DeleteMark == false
              && (search == "" || u.AppUser.Email.Contains(search) || u.Text.Contains(search)));
@@ -33,7 +35,7 @@ namespace Mock.Domain
             //    u.AuName
             //}).ToList();
 
-            var dglist = this.IQueryable(predicate).Where(pag).Select(u => new
+            var dglist = this.Queryable(predicate).Where(pag).Select(u => new
             {
                 u = u,
                 Avatar = u.AppUser == null ? u.Avatar : u.AppUser.Avatar,
@@ -55,7 +57,7 @@ namespace Mock.Domain
                 r.u.IsAduit,
             }).ToList();
 
-            return new DataGrid { rows = dglist, total = pag.total };
+            return new DataGrid { Rows = dglist, Total = pag.Total };
         }
     }
 }

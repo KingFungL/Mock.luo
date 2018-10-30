@@ -1,10 +1,9 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Mock.Code
+namespace Mock.Code.Extend
 {
     public static partial class ExtLinq
     {
@@ -48,14 +47,14 @@ namespace Mock.Code
         }
         private class ParameterRebinder : ExpressionVisitor
         {
-            readonly Dictionary<ParameterExpression, ParameterExpression> map;
+            readonly Dictionary<ParameterExpression, ParameterExpression> _map;
             /// <summary>
             /// Initializes a new instance of the <see cref="ParameterRebinder"/> class.
             /// </summary>
             /// <param name="map">The map.</param>
             ParameterRebinder(Dictionary<ParameterExpression, ParameterExpression> map)
             {
-                this.map = map ?? new Dictionary<ParameterExpression, ParameterExpression>();
+                this._map = map ?? new Dictionary<ParameterExpression, ParameterExpression>();
             }
             /// <summary>
             /// Replaces the parameters.
@@ -71,7 +70,7 @@ namespace Mock.Code
             {
                 ParameterExpression replacement;
 
-                if (map.TryGetValue(p, out replacement))
+                if (_map.TryGetValue(p, out replacement))
                 {
                     p = replacement;
                 }

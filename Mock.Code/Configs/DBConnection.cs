@@ -1,27 +1,22 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Mock.Code.Security;
 
-namespace Mock.Code
+namespace Mock.Code.Configs
 {
-    public class DBConnection
+    public class DbConnection
     {
         public static bool Encrypt { get; set; }
-        public DBConnection(bool encrypt)
+        public DbConnection(bool encrypt)
         {
             Encrypt = encrypt;
         }
-        public static string connectionString
+        public static string ConnectionString
         {
             get
             {
                 string connection = System.Configuration.ConfigurationManager.ConnectionStrings["MockDbContext"].ConnectionString;
                 if (Encrypt == true)
                 {
-                    return DESEncrypt.Decrypt(connection);
+                    return DesEncrypt.Decrypt(connection);
                 }
                 else
                 {

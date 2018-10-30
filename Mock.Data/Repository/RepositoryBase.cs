@@ -1,15 +1,12 @@
-﻿using Mock.Code;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Text.RegularExpressions;
 
-namespace Mock.Data
+namespace Mock.Data.Repository
 {
     /// <summary>
     /// 仓储实现
@@ -17,35 +14,29 @@ namespace Mock.Data
     public class RepositoryBase : IRepositoryBase, IDisposable
     {
         // private DbContext dbcontext = DbContextFactory.GetCurrentDbContext();
-        private DbContext dbcontext = DbContextFactory.DbContext();
-        private DbTransaction dbTransaction { get; set; }
+        private readonly DbContext _dbcontext = DbContextFactory.DbContext();
+        private DbTransaction DbTransaction { get; set; }
         public IRepositoryBase BeginTrans()
         {
-            DbConnection dbConnection = ((IObjectContextAdapter)dbcontext).ObjectContext.Connection;
+            DbConnection dbConnection = ((IObjectContextAdapter)_dbcontext).ObjectContext.Connection;
             if (dbConnection.State == System.Data.ConnectionState.Closed)
             {
                 dbConnection.Open();
             }
-            dbTransaction = dbConnection.BeginTransaction();
+            DbTransaction = dbConnection.BeginTransaction();
             return this;
         }
         public int Commit()
         {
             try
             {
-                var returnValue = dbcontext.SaveChanges();
-                if (dbTransaction != null)
-                {
-                    dbTransaction.Commit();
-                }
+                var returnValue = _dbcontext.SaveChanges();
+                DbTransaction?.Commit();
                 return returnValue;
             }
             catch (Exception)
             {
-                if (dbTransaction != null)
-                {
-                    this.dbTransaction.Rollback();
-                }
+                DbTransaction?.Rollback();
                 throw;
             }
             finally
@@ -55,24 +46,21 @@ namespace Mock.Data
         }
         public void Dispose()
         {
-            if (dbTransaction != null)
-            {
-                this.dbTransaction.Dispose();
-            }
+            DbTransaction?.Dispose();
             //this.dbcontext.Dispose();
         }
         public int Insert<TEntity>(TEntity entity) where TEntity : class
         {
-            dbcontext.Entry<TEntity>(entity).State = EntityState.Added;
-            return dbTransaction == null ? this.Commit() : 0;
+            _dbcontext.Entry<TEntity>(entity).State = EntityState.Added;
+            return DbTransaction == null ? this.Commit() : 0;
         }
         public int Insert<TEntity>(List<TEntity> entitys) where TEntity : class
         {
             foreach (var entity in entitys)
             {
-                dbcontext.Entry<TEntity>(entity).State =EntityState.Added;
+                _dbcontext.Entry<TEntity>(entity).State =EntityState.Added;
             }
-            return dbTransaction == null ? this.Commit() : 0;
+            return DbTransaction == null ? this.Commit() : 0;
         }
         public int Update<TEntity>(TEntity entity) where TEntity : class
         {
@@ -87,54 +75,54 @@ namespace Mock.Data
             //        dbcontext.Entry(entity).Property(prop.Name).IsModified = true;
             //    }
             //}
-            dbcontext.Entry(entity).State = EntityState.Modified;
-            return dbTransaction == null ? this.Commit() : 0;
+            _dbcontext.Entry(entity).State = EntityState.Modified;
+            return DbTransaction == null ? this.Commit() : 0;
         }
 
        public int Update<TEntity>(TEntity entity, params string[] modifystr) where TEntity : class
         {
-            dbcontext.Set<TEntity>().Attach(entity);
+            _dbcontext.Set<TEntity>().Attach(entity);
             foreach (string item in modifystr)
             {
-                    dbcontext.Entry(entity).Property(item).IsModified = true;
+                    _dbcontext.Entry(entity).Property(item).IsModified = true;
             }
-            return dbTransaction == null ? this.Commit() : 0;
+            return DbTransaction == null ? this.Commit() : 0;
         }
         public int Delete<TEntity>(TEntity entity) where TEntity : class
         {
-            dbcontext.Set<TEntity>().Attach(entity);
-            dbcontext.Entry<TEntity>(entity).State = EntityState.Deleted;
-            return dbTransaction == null ? this.Commit() : 0;
+            _dbcontext.Set<TEntity>().Attach(entity);
+            _dbcontext.Entry<TEntity>(entity).State = EntityState.Deleted;
+            return DbTransaction == null ? this.Commit() : 0;
         }
         public int Delete<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
         {
-            var entitys = dbcontext.Set<TEntity>().Where(predicate).ToList();
-            entitys.ForEach(m => dbcontext.Entry<TEntity>(m).State = EntityState.Deleted);
-            return dbTransaction == null ? this.Commit() : 0;
+            var entitys = _dbcontext.Set<TEntity>().Where(predicate).ToList();
+            entitys.ForEach(m => _dbcontext.Entry<TEntity>(m).State = EntityState.Deleted);
+            return DbTransaction == null ? this.Commit() : 0;
         }
         public TEntity FindEntity<TEntity>(object keyValue) where TEntity : class
         {
-            return dbcontext.Set<TEntity>().Find(keyValue);
+            return _dbcontext.Set<TEntity>().Find(keyValue);
         }
         public TEntity FindEntity<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
         {
-            return dbcontext.Set<TEntity>().FirstOrDefault(predicate);
+            return _dbcontext.Set<TEntity>().FirstOrDefault(predicate);
         }
-        public IQueryable<TEntity> IQueryable<TEntity>() where TEntity : class
+        public IQueryable<TEntity> Queryable<TEntity>() where TEntity : class
         {
-            return dbcontext.Set<TEntity>().AsNoTracking();
+            return _dbcontext.Set<TEntity>().AsNoTracking();
         }
-        public IQueryable<TEntity> IQueryable<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
+        public IQueryable<TEntity> Queryable<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
         {
-            return dbcontext.Set<TEntity>().Where(predicate);
+            return _dbcontext.Set<TEntity>().Where(predicate);
         }
         public List<TEntity> FindList<TEntity>(string strSql) where TEntity : class
         {
-            return dbcontext.Database.SqlQuery<TEntity>(strSql).ToList<TEntity>();
+            return _dbcontext.Database.SqlQuery<TEntity>(strSql).ToList<TEntity>();
         }
         public List<TEntity> FindList<TEntity>(string strSql, DbParameter[] dbParameter) where TEntity : class
         {
-            return dbcontext.Database.SqlQuery<TEntity>(strSql, dbParameter).ToList<TEntity>();
+            return _dbcontext.Database.SqlQuery<TEntity>(strSql, dbParameter).ToList<TEntity>();
         }
     }
 }

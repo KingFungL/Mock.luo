@@ -8,17 +8,17 @@ namespace Mock.Code.SignalR
         /// 调用hub方法
         /// </summary>
         /// <param name="methodName"></param>
-        public static void callMethod(string methodName, params object[] args)
+        public static void CallMethod(string methodName, params object[] args)
         {
-            var hubConnection = new HubConnection(Configs.GetValue("SignalRUrl"));
-            IHubProxy ChatsHub = hubConnection.CreateHubProxy("ChatsHub");
+            var hubConnection = new HubConnection(Configs.Configs.GetValue("SignalRUrl"));
+            IHubProxy chatsHub = hubConnection.CreateHubProxy("ChatsHub");
             bool done = false;
             hubConnection.Start().ContinueWith(task =>
             {
                 if (!task.IsFaulted)
                 //连接成功调用服务端方法
                 {
-                    ChatsHub.Invoke(methodName, args);
+                    chatsHub.Invoke(methodName, args);
                     done = true;
                 }
                 else

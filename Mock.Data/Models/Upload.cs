@@ -5,15 +5,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mock.Data.Infrastructure;
 
 namespace Mock.Data.Models
 {
     [Table("Upload")]
-    public class Upload : IEntity<Upload>, ICreationAudited, IDeleteAudited, IModificationAudited
+    public class Upload : Entity<Upload>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
 
         [Required, Key]
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public int? FId { get; set; }
         [StringLength(100)]
         public string Url { get; set; }

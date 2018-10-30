@@ -1,17 +1,16 @@
-﻿
-using System.Text;
+﻿using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Mock.Code
+namespace Mock.Code.Validate
 {
     public class Validate
     {
-        private static Regex RegNumber = new Regex("^[0-9]+$");
-        private static Regex RegNumberSign = new Regex("^[+-]?[0-9]+$");
-        private static Regex RegDecimal = new Regex("^[0-9]+[.]?[0-9]+$");
-        private static Regex RegDecimalSign = new Regex("^[+-]?[0-9]+[.]?[0-9]+$"); //等价于^[+-]?\d+[.]?\d+$
-        private static Regex RegEmail = new Regex(@"^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$");//w 英文字母或数字的字符串，和 [a-zA-Z0-9] 语法一样 
-        private static Regex RegCHZN = new Regex("[\u4e00-\u9fa5]");
+        private static Regex _regNumber = new Regex("^[0-9]+$");
+        private static Regex _regNumberSign = new Regex("^[+-]?[0-9]+$");
+        private static Regex _regDecimal = new Regex("^[0-9]+[.]?[0-9]+$");
+        private static Regex _regDecimalSign = new Regex("^[+-]?[0-9]+[.]?[0-9]+$"); //等价于^[+-]?\d+[.]?\d+$
+        private static Regex _regEmail = new Regex(@"^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$");//w 英文字母或数字的字符串，和 [a-zA-Z0-9] 语法一样 
+        private static Regex _regChzn = new Regex("[\u4e00-\u9fa5]");
 
         #region 用户名密码格式
 
@@ -72,7 +71,7 @@ namespace Mock.Code
         /// <returns></returns>
         public static bool IsNumber(string inputData)
         {
-            Match m = RegNumber.Match(inputData);
+            Match m = _regNumber.Match(inputData);
             return m.Success;
         }
 
@@ -83,7 +82,7 @@ namespace Mock.Code
         /// <returns></returns>
         public static bool IsNumberSign(string inputData)
         {
-            Match m = RegNumberSign.Match(inputData);
+            Match m = _regNumberSign.Match(inputData);
             return m.Success;
         }
 
@@ -94,7 +93,7 @@ namespace Mock.Code
         /// <returns></returns>
         public static bool IsDecimal(string inputData)
         {
-            Match m = RegDecimal.Match(inputData);
+            Match m = _regDecimal.Match(inputData);
             return m.Success;
         }
 
@@ -105,7 +104,7 @@ namespace Mock.Code
         /// <returns></returns>
         public static bool IsDecimalSign(string inputData)
         {
-            Match m = RegDecimalSign.Match(inputData);
+            Match m = _regDecimalSign.Match(inputData);
             return m.Success;
         }
 
@@ -118,9 +117,9 @@ namespace Mock.Code
         /// </summary>
         /// <param name="inputData"></param>
         /// <returns></returns>
-        public static bool IsHasCHZN(string inputData)
+        public static bool IsHasChzn(string inputData)
         {
-            Match m = RegCHZN.Match(inputData);
+            Match m = _regChzn.Match(inputData);
             return m.Success;
         }
 
@@ -128,7 +127,7 @@ namespace Mock.Code
         /// 检测含有中文字符串的实际长度 
         /// </summary> 
         /// <param name="str">字符串</param> 
-        public static int GetCHZNLength(string inputData)
+        public static int GetChznLength(string inputData)
         {
             System.Text.ASCIIEncoding n = new System.Text.ASCIIEncoding();
             byte[] bytes = n.GetBytes(inputData);
@@ -182,7 +181,7 @@ namespace Mock.Code
         /// <returns></returns>
         public static bool IsEmail(string inputData)
         {
-            Match m = RegEmail.Match(inputData);
+            Match m = _regEmail.Match(inputData);
             return m.Success;
         }
 
@@ -239,7 +238,7 @@ namespace Mock.Code
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        static public bool IsValidURL(string url)
+        static public bool IsValidUrl(string url)
         {
             return Regex.IsMatch(url, @"^(http|https|ftp)\://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&%\$#\=~])*[^\.\,\)\(\s]$");
         }
@@ -249,7 +248,7 @@ namespace Mock.Code
         /// </summary>
         /// <param name="ip"></param>
         /// <returns></returns>
-        public static bool IsValidIP(string ip)
+        public static bool IsValidIp(string ip)
         {
             return Regex.IsMatch(ip, @"^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$");
         }

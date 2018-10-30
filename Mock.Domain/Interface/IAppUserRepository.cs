@@ -1,13 +1,9 @@
-﻿using Mock.Code;
-using Mock.Data;
+﻿using Mock.Code.Web;
+using Mock.Data.AppModel;
 using Mock.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Mock.Data.Repository;
 
-namespace Mock.Domain
+namespace Mock.Domain.Interface
 {
     public interface IAppUserRepository : IRepositoryBase<AppUser>
     {
@@ -15,10 +11,10 @@ namespace Mock.Domain
         /// 根据条件得到用户列表数据
         /// </summary>
         /// <param name="pag">分页条件</param>
-        /// <param name="LoginName">登录名</param>
-        /// <param name="Email">邮箱</param>
+        /// <param name="loginName">登录名</param>
+        /// <param name="email">邮箱</param>
         /// <returns></returns>
-        DataGrid GetDataGrid(Pagination pag, string LoginName, string Email);
+        DataGrid GetDataGrid(PageDto pag, string loginName, string email);
         /// <summary>
         /// 新增用户，编辑用户信息
         /// </summary>
@@ -69,8 +65,8 @@ namespace Mock.Domain
         /// <summary>
         /// 根据用户id判断用户是否昌管理员
         /// </summary>
-        /// <param name="Id">用户id</param>
+        /// <param name="id">用户id</param>
         /// <returns></returns>
-        bool isSystem(int? Id);
+        bool IsSystem(int? id);
     }
 }

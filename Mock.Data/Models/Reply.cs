@@ -5,14 +5,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mock.Data.Infrastructure;
 
 namespace Mock.Data.Models
 {
     [Table("Reply")]
-    public class Reply : IEntity<Reply>, ICreationAudited, IDeleteAudited, IModificationAudited
+    public class Reply : Entity<Reply>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         [Key]
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public int? PId { get; set; }
         public string Text { get; set; }
         [StringLength(50)]
@@ -31,7 +32,7 @@ namespace Mock.Data.Models
         /// 使用的网络供应商
         /// </summary> 
         [StringLength(50)]
-        public string QQ { get; set; }
+        public string Qq { get; set; }
         [StringLength(50, ErrorMessage = "昵称不能超过50字符")]
         public string AuName { get; set; }
         [StringLength(400, ErrorMessage = "个人网址不能超过400字符")]

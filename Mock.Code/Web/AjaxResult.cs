@@ -1,34 +1,34 @@
 ﻿
 
-namespace Mock.Code
+namespace Mock.Code.Web
 {
     public class AjaxResult
     {
         /// <summary>
         /// 操作结果类型
         /// </summary>
-        public string state { get; set; }
+        public string State { get; set; }
         /// <summary>
         /// 获取 消息内容
         /// </summary>
-        public string message { get; set; }
+        public string Message { get; set; }
         /// <summary>
         /// 获取 返回数据
         /// </summary>
-        public object data { get; set; }
+        public object Data { get; set; }
 
         public static AjaxResult Info(string message, object data, string state)
         {
-            return new AjaxResult { state = state, message = message, data = data };
+            return new AjaxResult { State = state, Message = message, Data = data };
         }
 
         public static AjaxResult Success(string message, object data = null)
         {
-            return Info(message, data, ResultType.success.ToString());
+            return Info(message, data, ResultType.Success.ToString());
         }
         public static AjaxResult Error(string message, object data = null)
         {
-            return Info(message, data, ResultType.error.ToString());
+            return Info(message, data, ResultType.Error.ToString());
         }
 
     }
@@ -40,27 +40,27 @@ namespace Mock.Code
         /// <summary>
         /// 警告结果类型
         /// </summary>
-        warning,
+        Warning,
         /// <summary>
         /// 成功结果类型
         /// </summary>
-        success,
+        Success,
         /// <summary>
         /// 异常结果类型
         /// </summary>
-        error,
+        Error,
         /// <summary>
         /// 消息结果类型
         /// </summary>
-        info,
+        Info,
         /// <summary>
         /// 未登录
         /// </summary>
-        nologin,
+        Nologin,
         /// <summary>
         /// 没有权限
         /// </summary>
-        nopermission
+        Nopermission
 
     }
 }

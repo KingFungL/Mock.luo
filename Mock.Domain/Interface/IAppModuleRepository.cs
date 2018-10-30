@@ -1,14 +1,13 @@
-﻿using Mock.Code;
-using Mock.Data;
-using Mock.Data.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using Mock.Code.Web.Tree;
+using Mock.Code.Web.TreeGrid;
+using Mock.Data.AppModel;
+using Mock.Data.Models;
+using Mock.Data.Repository;
 
-namespace Mock.Domain
+namespace Mock.Domain.Interface
 {
     public interface IAppModuleRepository : IRepositoryBase<AppModule>
     {
@@ -35,25 +34,25 @@ namespace Mock.Domain
         /// </summary>
         /// <returns></returns>
 
-        List<TreeSelectModel> GetTreeJson(int PId);
+        List<TreeSelectModel> GetTreeJson(int pId);
         /// <summary>
         /// 子节点list结构
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        List<AppModule> GetListJson(int Id);
+        List<AppModule> GetListJson(int id);
         /// <summary>
         /// 得到按钮权限树形数据
         /// </summary>
         /// <returns></returns>
-        List<TreeGridModel> GetButtonTreeJson(int Id);
+        List<TreeGridModel> GetButtonTreeJson(int id);
         /// <summary>
         /// 保存菜单信息并且配置菜单下的按钮
         /// </summary>
         /// <param name="menu">菜单数据</param>
         /// <param name="buttonList">按钮List</param>
-        /// <param name="Id">菜单主键</param>
-        void SubmitForm(AppModule menu,List<AppModule>buttonList, int Id);
+        /// <param name="id">菜单主键</param>
+        void SubmitForm(AppModule menu,List<AppModule>buttonList, int id);
 
         /// <summary>
         /// 根据角色id获取分配权限

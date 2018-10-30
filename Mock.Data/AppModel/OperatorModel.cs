@@ -1,11 +1,11 @@
 ﻿
 using System;
 
-namespace Mock.Data
+namespace Mock.Data.AppModel
 {
     public class OperatorModel
     {
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
         public string UserCode { get; set; }
         public string LoginName { get; set; }
 

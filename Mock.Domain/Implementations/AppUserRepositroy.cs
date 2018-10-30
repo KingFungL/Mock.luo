@@ -1,14 +1,26 @@
-﻿using Mock.Data;
-using Mock.Data.Models;
-using System;
+﻿using System;
 using System.Linq;
-using Mock.Code;
 using System.Linq.Expressions;
-using Mock.Data.ExtensionModel;
-using Mock.Luo.Generic.Helper;
+using Mock.Code;
+using Mock.Code.Attribute;
+using Mock.Code.Cache;
+using Mock.Code.Configs;
+using Mock.Code.Extend;
 using Mock.Code.Helper;
+using Mock.Code.Log;
+using Mock.Code.Mail;
+using Mock.Code.Net;
+using Mock.Code.Security;
+using Mock.Code.Validate;
+using Mock.Code.Web;
+using Mock.Data.AppModel;
+using Mock.Data.ExtensionModel;
+using Mock.Data.Extensions;
+using Mock.Data.Models;
+using Mock.Data.Repository;
+using Mock.Domain.Interface;
 
-namespace Mock.Domain
+namespace Mock.Domain.Implementations
 {
     /// <summary>
     /// 仓储实现层 AppUserRepositroy
@@ -16,27 +28,27 @@ namespace Mock.Domain
     public class AppUserRepositroy : RepositoryBase<AppUser>, IAppUserRepository
     {
         #region 构造方法
-        private readonly IAppModuleRepository _ModuleService;
+        private readonly IAppModuleRepository _moduleService;
         private readonly IRedisHelper _iRedisHelper;
         private readonly IMailHelper _imailHelper;
         private readonly ILogInfoRepository _logService;
-        public AppUserRepositroy(IAppModuleRepository _ModuleService, IRedisHelper _iRedisHepler, IMailHelper _imailHelper,ILogInfoRepository _logService)
+        public AppUserRepositroy(IAppModuleRepository moduleService, IRedisHelper iRedisHepler, IMailHelper imailHelper,ILogInfoRepository logService)
         {
-            this._ModuleService = _ModuleService;
-            this._iRedisHelper = _iRedisHepler;
-            this._logService = _logService;
-            this._imailHelper = _imailHelper;
+            this._moduleService = moduleService;
+            this._iRedisHelper = iRedisHepler;
+            this._logService = logService;
+            this._imailHelper = imailHelper;
         }
         #endregion
 
         #region 根据条件得到用户列表数据
-        public DataGrid GetDataGrid(Pagination pag, string LoginName, string Email)
+        public DataGrid GetDataGrid(PageDto pag, string loginName, string email)
         {
 
-            Expression<Func<AppUser, bool>> predicate = u => u.DeleteMark == false && (LoginName == "" || u.LoginName.Contains(LoginName))
-            && (Email == "" || u.Email.Contains(Email));
+            Expression<Func<AppUser, bool>> predicate = u => u.DeleteMark == false && (loginName == "" || u.LoginName.Contains(loginName))
+            && (email == "" || u.Email.Contains(email));
 
-            var dglist = this.IQueryable(predicate).Where(pag).Select(u => new
+            var dglist = this.Queryable(predicate).Where(pag).Select(u => new
             {
                 u.LoginName,
                 u.NickName,
@@ -45,10 +57,10 @@ namespace Mock.Domain
                 u.LoginCount,
                 u.LastLoginTime,
                 u.StatusCode,
-                isBindQQ = u.AppUserAuths.Select(r => r.IdentityType == "QQ").Count() > 0,
+                isBindQQ = u.AppUserAuths.Select(r => r.IdentityType == "QQ").Any(),
                 UserRoleList = u.UserRoles.Select(r => r.AppRole.RoleName)
             }).ToList();
-            return new DataGrid { rows = dglist, total = pag.total };
+            return new DataGrid { Rows = dglist, Total = pag.Total };
         }
         #endregion
 
@@ -60,8 +72,8 @@ namespace Mock.Domain
             {
                 userEntity.Create();
                 string userPassword = "1234";//默认密码
-                userEntity.UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
-                userEntity.LoginPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userPassword, 32).ToLower(), userEntity.UserSecretkey).ToLower(), 32).ToLower();
+                userEntity.UserSecretkey = Md5Helper.Md5(Utils.CreateNo(), 16).ToLower();
+                userEntity.LoginPassword = Md5Helper.Md5(DesEncrypt.Encrypt(Md5Helper.Md5(userPassword, 32).ToLower(), userEntity.UserSecretkey).ToLower(), 32).ToLower();
                 userEntity.LoginCount = 0;
 
                 //新增时配置角色
@@ -71,7 +83,7 @@ namespace Mock.Domain
                     {
                         int.TryParse(id, out int result);
                         if (result == 0) continue;
-                        UserRole userRoleEntity = new UserRole { RoleId = result };
+                        AppUserRole userRoleEntity = new AppUserRole { RoleId = result };
                         userEntity.UserRoles.Add(userRoleEntity);
                     }
                 }
@@ -88,7 +100,7 @@ namespace Mock.Domain
                     string[] modifystrs = { "LoginName", "StatusCode", "Email", "NickName", "LastModifyUserId", "LastModifyTime" };
                     this.Update(userEntity, modifystrs);
 
-                    db.Delete<UserRole>(u => u.UserId == userEntity.Id);
+                    db.Delete<AppUserRole>(u => u.UserId == userEntity.Id);
 
                     if (roleIds.IsNotNullOrEmpty())
                     {
@@ -96,7 +108,7 @@ namespace Mock.Domain
                         {
                             int.TryParse(id, out int result);
                             if (result == 0) continue;
-                            UserRole userRoleEntity = new UserRole { RoleId = result, UserId = (int)userEntity.Id };
+                            AppUserRole userRoleEntity = new AppUserRole { RoleId = result, UserId = (int)userEntity.Id };
                             db.Insert(userRoleEntity);
                         }
                     }
@@ -118,14 +130,14 @@ namespace Mock.Domain
                     return AjaxResult.Success("用户名为空");
                 }
                 var loginNameExpression = predicate.And(r => r.LoginName == userEntity.LoginName);
-                if (this.IQueryable(loginNameExpression).Count() > 0)
+                if (this.Queryable(loginNameExpression).Count() > 0)
                 {
                     return AjaxResult.Error("用户名已存在！");
                 }
                 else
                 {
                     var emailExpression = predicate.And(r => r.Email == userEntity.Email);
-                    if (this.IQueryable(emailExpression).Count() > 0)
+                    if (this.Queryable(emailExpression).Count() > 0)
                     {
                         return AjaxResult.Error("此邮箱已存在！");
                     }
@@ -138,14 +150,14 @@ namespace Mock.Domain
                     return AjaxResult.Success("用户名为空");
                 }
                 var loginNameExpression = predicate.And(r => r.LoginName == userEntity.LoginName && r.Id != userEntity.Id);
-                if (this.IQueryable(loginNameExpression).Count() > 0)
+                if (this.Queryable(loginNameExpression).Count() > 0)
                 {
                     return AjaxResult.Error("用户名已存在！");
                 }
                 else
                 {
                     var emailExpression = predicate.And(r => userEntity.Email != "" && r.Email == userEntity.Email && r.Id != userEntity.Id);
-                    if (this.IQueryable(emailExpression).Count() > 0)
+                    if (this.Queryable(emailExpression).Count() > 0)
                     {
                         return AjaxResult.Error("此邮箱已存在！");
                     }
@@ -168,7 +180,7 @@ namespace Mock.Domain
             {
                 AppUser userEntity = new AppUser { };
 
-                userEntity = this.IQueryable().Where(t => (t.LoginName == loginName || t.Email == loginName) && t.DeleteMark == false).FirstOrDefault();
+                userEntity = this.Queryable().Where(t => (t.LoginName == loginName || t.Email == loginName) && t.DeleteMark == false).FirstOrDefault();
 
                 if (userEntity != null)
                 {
@@ -177,7 +189,7 @@ namespace Mock.Domain
                         throw new Exception("用户密钥丢失，请联系管理员！");
                     }
                     //登录成功
-                    string dbPassword = Md5.md5(DESEncrypt.Encrypt(pwd.ToLower(), userEntity.UserSecretkey).ToLower(), 32).ToLower();
+                    string dbPassword = Md5Helper.Md5(DesEncrypt.Encrypt(pwd.ToLower(), userEntity.UserSecretkey).ToLower(), 32).ToLower();
                     //登录成功
                     if (dbPassword == userEntity.LoginPassword)
                     {
@@ -245,8 +257,8 @@ namespace Mock.Domain
 
         public void ResetPassword(AppUser userEntity, string userPassword)
         {
-            userEntity.UserSecretkey = Md5.md5(Utils.CreateNo(), 16).ToLower();
-            userEntity.LoginPassword = Md5.md5(DESEncrypt.Encrypt(Md5.md5(userPassword, 32).ToLower(), userEntity.UserSecretkey).ToLower(), 32).ToLower();
+            userEntity.UserSecretkey = Md5Helper.Md5(Utils.CreateNo(), 16).ToLower();
+            userEntity.LoginPassword = Md5Helper.Md5(DesEncrypt.Encrypt(Md5Helper.Md5(userPassword, 32).ToLower(), userEntity.UserSecretkey).ToLower(), 32).ToLower();
 
             string[] modifstr = { "UserSecretkey", "LoginPassword", };
 
@@ -263,7 +275,7 @@ namespace Mock.Domain
         {
             OperatorProvider op = OperatorProvider.Provider;
 
-            bool isSystem = this.isSystem(userEntity.Id);
+            bool isSystem = this.IsSystem(userEntity.Id);
 
             //保存用户信息
             op.CurrentUser = new OperatorModel
@@ -304,7 +316,7 @@ namespace Mock.Domain
                 return AjaxResult.Error("邮箱格式不正确");
             }
 
-            AppUser userEntity = this.IQueryable(u => u.Email == email && u.DeleteMark == false).FirstOrDefault();
+            AppUser userEntity = this.Queryable(u => u.Email == email && u.DeleteMark == false).FirstOrDefault();
 
             if (userEntity == null)
             {
@@ -331,7 +343,7 @@ namespace Mock.Domain
 
                     ResetPwd resetpwdEntry = new ResetPwd
                     {
-                        UserID = (int)userEntity.Id,
+                        UserId = (int)userEntity.Id,
                         ModifyPwdToken = Utils.GuId(),
                         PwdCodeTme = DateTime.Now,
                         ModfiyPwdCode = Utils.RndNum(6),
@@ -349,7 +361,7 @@ namespace Mock.Domain
 
                     #endregion
                     //将修改密码的token返回给前端
-                    amm = AjaxResult.Info("验证码已发送至你的邮箱！", resetpwdEntry.ModifyPwdToken, ResultType.success.ToString());
+                    amm = AjaxResult.Info("验证码已发送至你的邮箱！", resetpwdEntry.ModifyPwdToken, ResultType.Success.ToString());
                 }
             }
             return amm;
@@ -361,7 +373,7 @@ namespace Mock.Domain
         {
             AjaxResult amm;
 
-            var userEntity = this.IQueryable(u => u.Email == account).FirstOrDefault();
+            var userEntity = this.Queryable(u => u.Email == account).FirstOrDefault();
 
             if (userEntity != null)
             {
@@ -405,9 +417,9 @@ namespace Mock.Domain
         #endregion
 
         #region 根据用户id判断用户是否是管理员
-        public bool isSystem(int? Id)
+        public bool IsSystem(int? id)
         {
-            return base.Db.Set<UserRole>().Where(r => r.UserId == Id).Select(r => r.AppRole.RoleName).Where(r => r.Contains("管理员")).Count() > 0;
+            return base.Db.Set<AppUserRole>().Where(r => r.UserId == id).Select(r => r.AppRole.RoleName).Where(r => r.Contains("管理员")).Count() > 0;
         } 
         #endregion
     }

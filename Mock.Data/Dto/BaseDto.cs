@@ -11,16 +11,16 @@ namespace Mock.Data.Dto
         /// <summary>
         /// 主键
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
        /// <summary>
        /// 显示名称
        /// </summary>
-        public string text { get; set; }
+        public string Text { get; set; }
 
         /// <summary>
         /// 编码
         /// </summary>
-        public string code { get; set; }
+        public string Code { get; set; }
     }
 }

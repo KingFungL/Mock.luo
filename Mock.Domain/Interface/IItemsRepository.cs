@@ -1,13 +1,10 @@
-﻿using Mock.Code;
-using Mock.Data;
+﻿using System.Collections.Generic;
+using Mock.Code.Web.Tree;
+using Mock.Code.Web.TreeGrid;
 using Mock.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Mock.Data.Repository;
 
-namespace Mock.Domain
+namespace Mock.Domain.Interface
 {
     public interface IItemsRepository : IRepositoryBase<Items>
     {

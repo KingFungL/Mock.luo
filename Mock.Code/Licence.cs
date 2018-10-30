@@ -1,5 +1,6 @@
 ﻿using System.Configuration;
 using System.Web;
+using Mock.Code.Security;
 
 namespace Mock.Code
 {
@@ -11,20 +12,20 @@ namespace Mock.Code
             if (host.Equals("localhost"))
                 return true;
             string licence = ConfigurationManager.AppSettings["LicenceKey"];
-            if (licence != null && licence == Md5.md5(key, 32))
+            if (licence != null && licence == Md5Helper.Md5(key, 32))
                 return true;
 
             return false;
         }
         public static string GetLicence()
         {
-            var licence = Configs.GetValue("LicenceKey");
+            var licence = Configs.Configs.GetValue("LicenceKey");
             if (string.IsNullOrEmpty(licence))
             {
                 licence = Utils.GuId();
-                Configs.SetValue("LicenceKey", licence);
+                Configs.Configs.SetValue("LicenceKey", licence);
             }
-            return Md5.md5(licence, 32);
+            return Md5Helper.Md5(licence, 32);
         }
     }
 }

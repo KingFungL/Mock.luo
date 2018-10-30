@@ -1,13 +1,9 @@
-﻿using Mock.Code;
-using Mock.Data;
+﻿using System.Collections.Generic;
+using Mock.Data.AppModel;
 using Mock.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Mock.Data.Repository;
 
-namespace Mock.Domain
+namespace Mock.Domain.Interface
 {
     public interface IAppRoleRepository : IRepositoryBase<AppRole>
     {
@@ -27,6 +23,6 @@ namespace Mock.Domain
         /// </summary>
         /// <param name="roleId"></param>
         /// <param name="roleModules"></param>
-        void SaveAuthorize(int roleId, List<RoleModule> roleModules);
+        void SaveAuthorize(int roleId, List<AppRoleModule> roleModules);
     }
 }

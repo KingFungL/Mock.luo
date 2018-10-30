@@ -1,38 +1,36 @@
-﻿
-
-using System;
+﻿using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Mock.Code
+namespace Mock.Code.Security
 {
     /// <summary>
     /// DES加密、解密帮助类
     /// </summary>
-    public class DESEncrypt
+    public class DesEncrypt
     {
-        private static string DESKey = "Mock_desencrypt_2016";
+        private static string _desKey = "Mock_desencrypt_2016";
         #region ========加密========
         /// <summary>
         /// 加密
         /// </summary>
-        /// <param name="Text"></param>
+        /// <param name="text"></param>
         /// <returns></returns>
-        public static string Encrypt(string Text)
+        public static string Encrypt(string text)
         {
-            return Encrypt(Text, DESKey);
+            return Encrypt(text, _desKey);
         }
         /// <summary> 
         /// 加密数据 
         /// </summary> 
-        /// <param name="Text"></param> 
+        /// <param name="text"></param> 
         /// <param name="sKey"></param> 
         /// <returns></returns> 
-        public static string Encrypt(string Text, string sKey)
+        public static string Encrypt(string text, string sKey)
         {
             DESCryptoServiceProvider des = new DESCryptoServiceProvider();
             byte[] inputByteArray;
-            inputByteArray = Encoding.Default.GetBytes(Text);
+            inputByteArray = Encoding.Default.GetBytes(text);
 
             des.Key = ASCIIEncoding.ASCII.GetBytes(DataHelper.Md5Hash(sKey).Substring(0, 8));
             des.IV = ASCIIEncoding.ASCII.GetBytes(DataHelper.Md5Hash(sKey).Substring(0, 8));
@@ -55,13 +53,13 @@ namespace Mock.Code
         /// <summary>
         /// 解密
         /// </summary>
-        /// <param name="Text"></param>
+        /// <param name="text"></param>
         /// <returns></returns>
-        public static string Decrypt(string Text)
+        public static string Decrypt(string text)
         {
-            if (!string.IsNullOrEmpty(Text))
+            if (!string.IsNullOrEmpty(text))
             {
-                return Decrypt(Text, DESKey);
+                return Decrypt(text, _desKey);
             }
             else
             {
@@ -71,19 +69,19 @@ namespace Mock.Code
         /// <summary> 
         /// 解密数据 
         /// </summary> 
-        /// <param name="Text"></param> 
+        /// <param name="text"></param> 
         /// <param name="sKey"></param> 
         /// <returns></returns> 
-        public static string Decrypt(string Text, string sKey)
+        public static string Decrypt(string text, string sKey)
         {
             DESCryptoServiceProvider des = new DESCryptoServiceProvider();
             int len;
-            len = Text.Length / 2;
+            len = text.Length / 2;
             byte[] inputByteArray = new byte[len];
             int x, i;
             for (x = 0; x < len; x++)
             {
-                i = Convert.ToInt32(Text.Substring(x * 2, 2), 16);
+                i = Convert.ToInt32(text.Substring(x * 2, 2), 16);
                 inputByteArray[x] = (byte)i;
             }
 

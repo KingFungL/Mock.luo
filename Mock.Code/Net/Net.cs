@@ -1,12 +1,13 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 using System.Web;
+using Mock.Code.Extend;
+using Mock.Code.Json;
 
-namespace Mock.Code
+namespace Mock.Code.Net
 {
     /// <summary>
     /// 网络操作
@@ -24,7 +25,7 @@ namespace Mock.Code
                 var result = string.Empty;
                 if (HttpContext.Current != null)
                     result = GetWebClientIp();
-                if (result.IsEmpty())
+                if (Ext.IsEmpty(result))
                     result = GetLanIp();
                 return result;
             }
@@ -134,8 +135,8 @@ namespace Mock.Code
             {
                 string url = "http://apis.juhe.cn/ip/ip2addr?ip=" + ip + "&dtype=json&key=b39857e36bee7a305d55cdb113a9d725";
                 res = HttpMethods.HttpGet(url);
-                var resjson = res.ToObject<objex>();
-                res = resjson.result.area + " " + resjson.result.location;
+                var resjson = res.ToObject<Objex>();
+                res = resjson.Result.Area + " " + resjson.Result.Location;
             }
             catch
             {
@@ -149,8 +150,8 @@ namespace Mock.Code
             {
                 string url = "https://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php?query=" + ip + "&resource_id=6006&ie=utf8&oe=gbk&format=json";
                 res = HttpMethods.HttpGet(url, Encoding.GetEncoding("GBK"));
-                var resjson = res.ToObject<obj>();
-                res = resjson.data[0].location;
+                var resjson = res.ToObject<Obj>();
+                res = resjson.Data[0].Location;
             }
             catch
             {
@@ -161,28 +162,28 @@ namespace Mock.Code
         /// <summary>
         /// 百度接口
         /// </summary>
-        public class obj
+        public class Obj
         {
-            public List<dataone> data { get; set; }
+            public List<Dataone> Data { get; set; }
         }
-        public class dataone
+        public class Dataone
         {
-            public string location { get; set; }
+            public string Location { get; set; }
         }
         /// <summary>
         /// 聚合数据
         /// </summary>
-        public class objex
+        public class Objex
         {
-            public string resultcode { get; set; }
-            public dataoneex result { get; set; }
-            public string reason { get; set; }
-            public string error_code { get; set; }
+            public string Resultcode { get; set; }
+            public Dataoneex Result { get; set; }
+            public string Reason { get; set; }
+            public string ErrorCode { get; set; }
         }
-        public class dataoneex
+        public class Dataoneex
         {
-            public string area { get; set; }
-            public string location { get; set; }
+            public string Area { get; set; }
+            public string Location { get; set; }
         }
         #endregion
 
@@ -208,7 +209,7 @@ namespace Mock.Code
         /// </summary>
         /// <param name="userAgent"></param>
         /// <returns></returns>
-        public static string GetOSNameByUserAgent(string userAgent)
+        public static string GetOsNameByUserAgent(string userAgent)
         {
             string osVersion = "未知";
 

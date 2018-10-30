@@ -4,10 +4,11 @@ using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using System.Data;
 using System.IO;
+using Mock.Code.Extend;
 
 namespace Mock.Code.Excel
 {
-    public class NPOIExcel
+    public class NpoiExcel
     {
         private string _title;
         private string _sheetName;
@@ -22,7 +23,7 @@ namespace Mock.Code.Excel
         {
             FileStream fs = new FileStream(this._filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
             IWorkbook workBook = new HSSFWorkbook();
-            this._sheetName = this._sheetName.IsEmpty() ? "sheet1" : this._sheetName;
+            this._sheetName = Ext.IsEmpty(this._sheetName) ? "sheet1" : this._sheetName;
             ISheet sheet = workBook.CreateSheet(this._sheetName);
 
             //处理表格标题

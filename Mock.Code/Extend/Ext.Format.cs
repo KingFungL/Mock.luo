@@ -1,4 +1,4 @@
-﻿namespace Mock.Code
+﻿namespace Mock.Code.Extend
 {
     public static partial class Ext
     {

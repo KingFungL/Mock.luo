@@ -1,6 +1,6 @@
 ﻿
 
-namespace Mock.Data
+namespace Mock.Data.Extensions
 {
     /// <summary>
     /// 实体接口相关扩展

@@ -1,18 +1,14 @@
-﻿using Mock.Code;
-using Mock.Data.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using System.Data.Entity.Infrastructure;
-using EntityFramework.Extensions;
 using System.Threading.Tasks;
-using System.Data.Entity;
-using System.Data.Common;
+using EntityFramework.Extensions;
 
-namespace Mock.Data
+namespace Mock.Data.Repository
 {
     /// <summary>
     /// 仓储实现
@@ -21,33 +17,26 @@ namespace Mock.Data
     public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class, new()
     {
         //public DbContext dbcontext = DbContextFactory.GetCurrentDbContext();
-        public DbContext dbcontext = DbContextFactory.DbContext();
+        public DbContext Dbcontext = DbContextFactory.DbContext();
 
         /// <summary>
         /// 数据源
         /// </summary>
-        /// <param name="entity"></param>
         /// <returns></returns>
-        public DbContext Db
-        {
-            get
-            {
-                return dbcontext;
-            }
-        }
+        public DbContext Db => Dbcontext;
 
         public int Insert(TEntity entity)
         {
-            dbcontext.Entry<TEntity>(entity).State = EntityState.Added;
-            return dbcontext.SaveChanges();
+            Dbcontext.Entry<TEntity>(entity).State = EntityState.Added;
+            return Dbcontext.SaveChanges();
         }
         public int Insert(List<TEntity> entitys)
         {
             foreach (var entity in entitys)
             {
-                dbcontext.Entry<TEntity>(entity).State = EntityState.Added;
+                Dbcontext.Entry<TEntity>(entity).State = EntityState.Added;
             }
-            return dbcontext.SaveChanges();
+            return Dbcontext.SaveChanges();
         }
         /// <summary>
         /// 根据实体属性全部字段修改
@@ -56,8 +45,8 @@ namespace Mock.Data
         /// <returns></returns>
         public int Update(TEntity entity)
         {
-            dbcontext.Entry(entity).State = EntityState.Modified;
-            return dbcontext.SaveChanges();
+            Dbcontext.Entry(entity).State = EntityState.Modified;
+            return Dbcontext.SaveChanges();
         }
 
         /// <summary>  
@@ -70,14 +59,14 @@ namespace Mock.Data
             int iret = 0;
             if (entity != null && fileds != null)
             {
-                dbcontext.Set<TEntity>().Attach(entity);
-                var SetEntry = ((IObjectContextAdapter)dbcontext).ObjectContext.
+                Dbcontext.Set<TEntity>().Attach(entity);
+                var setEntry = ((IObjectContextAdapter)Dbcontext).ObjectContext.
                     ObjectStateManager.GetObjectStateEntry(entity);
                 foreach (var t in fileds)
                 {
-                    SetEntry.SetModifiedProperty(t);
+                    setEntry.SetModifiedProperty(t);
                 }
-                iret = dbcontext.SaveChanges();
+                iret = Dbcontext.SaveChanges();
             }
             return iret;
         }
@@ -100,39 +89,39 @@ namespace Mock.Data
 
         public int Delete(TEntity entity)
         {
-            dbcontext.Set<TEntity>().Attach(entity);
-            dbcontext.Entry<TEntity>(entity).State = EntityState.Deleted;
-            return dbcontext.SaveChanges();
+            Dbcontext.Set<TEntity>().Attach(entity);
+            Dbcontext.Entry<TEntity>(entity).State = EntityState.Deleted;
+            return Dbcontext.SaveChanges();
         }
         public int Delete(Expression<Func<TEntity, bool>> predicate)
         {
-            var entitys = dbcontext.Set<TEntity>().Where(predicate).ToList();
-            entitys.ForEach(m => dbcontext.Entry<TEntity>(m).State = EntityState.Deleted);
-            return dbcontext.SaveChanges();
+            var entitys = Dbcontext.Set<TEntity>().Where(predicate).ToList();
+            entitys.ForEach(m => Dbcontext.Entry<TEntity>(m).State = EntityState.Deleted);
+            return Dbcontext.SaveChanges();
         }
         public TEntity FindEntity(object keyValue)
         {
-            return dbcontext.Set<TEntity>().Find(keyValue);
+            return Dbcontext.Set<TEntity>().Find(keyValue);
         }
         public TEntity FindEntity(Expression<Func<TEntity, bool>> predicate)
         {
-            return dbcontext.Set<TEntity>().AsNoTracking().FirstOrDefault(predicate);
+            return Dbcontext.Set<TEntity>().AsNoTracking().FirstOrDefault(predicate);
         }
-        public IQueryable<TEntity> IQueryable()
+        public IQueryable<TEntity> Queryable()
         {
-            return dbcontext.Set<TEntity>();
+            return Dbcontext.Set<TEntity>();
         }
-        public IQueryable<TEntity> IQueryable(Expression<Func<TEntity, bool>> predicate)
+        public IQueryable<TEntity> Queryable(Expression<Func<TEntity, bool>> predicate)
         {
-            return dbcontext.Set<TEntity>().AsNoTracking().Where(predicate);
+            return Dbcontext.Set<TEntity>().AsNoTracking().Where(predicate);
         }
         public List<TEntity> FindList(string strSql)
         {
-            return dbcontext.Database.SqlQuery<TEntity>(strSql).ToList<TEntity>();
+            return Dbcontext.Database.SqlQuery<TEntity>(strSql).ToList<TEntity>();
         }
-        public List<TEntity> FindList(string strSql, DbParameter[] dbParameter)
+        public List<TEntity> FindList(string strSql, object[] dbParameter)
         {
-            return dbcontext.Database.SqlQuery<TEntity>(strSql, dbParameter).ToList<TEntity>();
+            return Dbcontext.Database.SqlQuery<TEntity>(strSql, dbParameter).ToList<TEntity>();
         }
     }
 }

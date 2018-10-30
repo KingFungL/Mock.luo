@@ -1,30 +1,30 @@
 ﻿
 using log4net;
 
-namespace Mock.Code
+namespace Mock.Code.Log
 {
     public class Log
     {
-        private ILog logger;
+        private ILog _logger;
         public Log(ILog log)
         {
-            this.logger = log;
+            this._logger = log;
         }
         public void Debug(object message)
         {
-            this.logger.Debug(message);
+            this._logger.Debug(message);
         }
         public void Error(object message)
         {
-            this.logger.Error(message);
+            this._logger.Error(message);
         }
         public void Info(object message)
         {
-            this.logger.Info(message);
+            this._logger.Info(message);
         }
         public void Warn(object message)
         {
-            this.logger.Warn(message);
+            this._logger.Warn(message);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 using System.Data;
 
-namespace Mock.Code
+namespace Mock.Code.Extend
 {
     public static class ExtTable
     {
@@ -17,15 +17,15 @@ namespace Mock.Code
         {
             allPage = data.Rows.Count / pageSize;
             allPage += data.Rows.Count % pageSize == 0 ? 0 : 1;
-            DataTable Ntable = data.Clone();
+            DataTable ntable = data.Clone();
             int startIndex = pageIndex * pageSize;
             int endIndex = startIndex + pageSize > data.Rows.Count ? data.Rows.Count : startIndex + pageSize;
             if (startIndex < endIndex)
                 for (int i = startIndex; i < endIndex; i++)
                 {
-                    Ntable.ImportRow(data.Rows[i]);
+                    ntable.ImportRow(data.Rows[i]);
                 }
-            return Ntable;
+            return ntable;
         }
         /// <summary>
         /// 根据字段过滤表的内容

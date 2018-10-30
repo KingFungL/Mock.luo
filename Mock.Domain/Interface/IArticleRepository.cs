@@ -1,24 +1,21 @@
-﻿using Mock.Code;
-using Mock.Data;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Mock.Code.Web;
+using Mock.Data.AppModel;
 using Mock.Data.Dto;
 using Mock.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using Mock.Data.Repository;
 
-namespace Mock.Domain
+namespace Mock.Domain.Interface
 {
     public interface IArticleRepository : IRepositoryBase<Article>
     {
         /// <summary>
         /// 得到单个文章内容
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        ArtDetailDto GetOneArticle(int Id);
+        ArtDetailDto GetOneArticle(int id);
 
         /// <summary>
         /// 抽象取文章的列表数据 
@@ -31,7 +28,7 @@ namespace Mock.Domain
         /// </summary>
         /// <param name="pag"></param>
         /// <returns></returns>
-        DataGrid GetDataGrid(Pagination pag,string search);
+        DataGrid GetDataGrid(PageDto pag,string search);
         /// <summary>
         /// 得到最新的count篇文章 | 缓存
         /// </summary>
@@ -53,7 +50,7 @@ namespace Mock.Domain
         /// <param name="category"></param>
         /// <param name="tag"></param>
         /// <returns></returns>
-        DataGrid GetCategoryTagGrid(Pagination pag, string category, string tag,string archive);
+        DataGrid GetCategoryTagGrid(PageDto pag, string category, string tag,string archive);
 
         /// <summary>
         /// 缓存 得到站点统计数据
@@ -64,8 +61,8 @@ namespace Mock.Domain
         /// <summary>
         /// 根据文章Id得到相关内容
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        ArtRelateDto GetRelateDtoByAId(int Id);
+        ArtRelateDto GetRelateDtoByAId(int id);
     }
 }

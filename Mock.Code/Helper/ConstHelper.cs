@@ -13,7 +13,7 @@ namespace Mock.Code.Helper
         /// <summary>
         /// 分类详情
         /// </summary>
-        public const string ItemsDetail_ALL = "ItemsDetail_ALL-{0}";
+        public const string ItemsDetailAll = "ItemsDetail_ALL-{0}";
 
         /// <summary>
         /// 文章

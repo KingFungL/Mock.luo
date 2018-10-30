@@ -1,13 +1,10 @@
-﻿using Mock.Data;
+﻿using System.Linq;
+using Mock.Data.AppModel;
 using Mock.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mock.Code;
+using Mock.Data.Repository;
+using Mock.Domain.Interface;
 
-namespace Mock.Domain
+namespace Mock.Domain.Implementations
 {
     public class PointArticleRepository : RepositoryBase<PointArticle>, IPointArticleRepository
     {
@@ -16,9 +13,9 @@ namespace Mock.Domain
         /// </summary>
         /// <param name="ArticeId">文章主键</param>
         /// <returns>DataGrid实体</returns>
-        public DataGrid GetDataGrid(int ArticleId)
+        public DataGrid GetDataGrid(int articleId)
         {
-            var rows = base.IQueryable(u => u.AId == ArticleId).Select(u => new
+            var rows = base.Queryable(u => u.AId == articleId).Select(u => new
             {
                 u.Id,
                 u.Article.Title,
@@ -28,7 +25,7 @@ namespace Mock.Domain
                 u.AddTime
             }).ToList();
 
-            return new DataGrid { rows = rows, total = rows.Count() };
+            return new DataGrid { Rows = rows, Total = rows.Count() };
         }
     }
 }

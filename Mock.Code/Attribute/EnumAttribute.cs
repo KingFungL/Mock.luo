@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
-namespace Mock.Code
+namespace Mock.Code.Attribute
 {
     /// <summary>
     /// 获取实体类Attribute自定义属性
@@ -29,7 +26,7 @@ namespace Mock.Code
                 if (fieldInfo != null)
                 {
                     // 获取描述的属性。
-                    DescriptionAttribute attr = Attribute.GetCustomAttribute(fieldInfo,
+                    DescriptionAttribute attr = System.Attribute.GetCustomAttribute(fieldInfo,
                         typeof(DescriptionAttribute), false) as DescriptionAttribute;
                     if (attr != null)
                     {

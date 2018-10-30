@@ -3,24 +3,24 @@ using System.IO;
 using System.Threading;
 using System.Web;
 
-namespace Mock.Code
+namespace Mock.Code.File
 {
     public class FileDownHelper
     {
         public FileDownHelper()
         { }
-        public static string FileNameExtension(string FileName)
+        public static string FileNameExtension(string fileName)
         {
-            return Path.GetExtension(MapPathFile(FileName));
+            return Path.GetExtension(MapPathFile(fileName));
         }
-        public static string MapPathFile(string FileName)
+        public static string MapPathFile(string fileName)
         {
-            return HttpContext.Current.Server.MapPath(FileName);
+            return HttpContext.Current.Server.MapPath(fileName);
         }
-        public static bool FileExists(string FileName)
+        public static bool FileExists(string fileName)
         {
-            string destFileName = FileName;
-            if (File.Exists(destFileName))
+            string destFileName = fileName;
+            if (System.IO.File.Exists(destFileName))
             {
                 return true;
             }
@@ -29,10 +29,10 @@ namespace Mock.Code
                 return false;
             }
         }
-        public static void DownLoadold(string FileName, string name)
+        public static void DownLoadold(string fileName, string name)
         {
-            string destFileName = FileName;
-            if (File.Exists(destFileName))
+            string destFileName = fileName;
+            if (System.IO.File.Exists(destFileName))
             {
                 FileInfo fi = new FileInfo(destFileName);
                 HttpContext.Current.Response.Clear();
@@ -46,9 +46,9 @@ namespace Mock.Code
                 HttpContext.Current.Response.End();
             }
         }
-        public static void DownLoad(string FileName)
+        public static void DownLoad(string fileName)
         {
-            string filePath = MapPathFile(FileName);
+            string filePath = MapPathFile(fileName);
             long chunkSize = 204800;             //指定块大小 
             byte[] buffer = new byte[chunkSize]; //建立一个200K的缓冲区 
             long dataToRead = 0;                 //已读的字节数   
@@ -90,46 +90,46 @@ namespace Mock.Code
                 HttpContext.Current.Response.Close();
             }
         }
-        public static bool ResponseFile(HttpRequest _Request, HttpResponse _Response, string _fileName, string _fullPath, long _speed)
+        public static bool ResponseFile(HttpRequest request, HttpResponse response, string fileName, string fullPath, long speed)
         {
             try
             {
-                FileStream myFile = new FileStream(_fullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                FileStream myFile = new FileStream(fullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                 BinaryReader br = new BinaryReader(myFile);
                 try
                 {
-                    _Response.AddHeader("Accept-Ranges", "bytes");
-                    _Response.Buffer = false;
+                    response.AddHeader("Accept-Ranges", "bytes");
+                    response.Buffer = false;
 
                     long fileLength = myFile.Length;
                     long startBytes = 0;
                     int pack = 10240;  //10K bytes
-                    int sleep = (int)Math.Floor((double)(1000 * pack / _speed)) + 1;
+                    int sleep = (int)Math.Floor((double)(1000 * pack / speed)) + 1;
 
-                    if (_Request.Headers["Range"] != null)
+                    if (request.Headers["Range"] != null)
                     {
-                        _Response.StatusCode = 206;
-                        string[] range = _Request.Headers["Range"].Split(new char[] { '=', '-' });
+                        response.StatusCode = 206;
+                        string[] range = request.Headers["Range"].Split(new char[] { '=', '-' });
                         startBytes = Convert.ToInt64(range[1]);
                     }
-                    _Response.AddHeader("Content-Length", (fileLength - startBytes).ToString());
+                    response.AddHeader("Content-Length", (fileLength - startBytes).ToString());
                     if (startBytes != 0)
                     {
-                        _Response.AddHeader("Content-Range", string.Format(" bytes {0}-{1}/{2}", startBytes, fileLength - 1, fileLength));
+                        response.AddHeader("Content-Range", string.Format(" bytes {0}-{1}/{2}", startBytes, fileLength - 1, fileLength));
                     }
 
-                    _Response.AddHeader("Connection", "Keep-Alive");
-                    _Response.ContentType = "application/octet-stream";
-                    _Response.AddHeader("Content-Disposition", "attachment;filename=" + HttpUtility.UrlEncode(_fileName, System.Text.Encoding.UTF8));
+                    response.AddHeader("Connection", "Keep-Alive");
+                    response.ContentType = "application/octet-stream";
+                    response.AddHeader("Content-Disposition", "attachment;filename=" + HttpUtility.UrlEncode(fileName, System.Text.Encoding.UTF8));
 
                     br.BaseStream.Seek(startBytes, SeekOrigin.Begin);
                     int maxCount = (int)Math.Floor((double)((fileLength - startBytes) / pack)) + 1;
 
                     for (int i = 0; i < maxCount; i++)
                     {
-                        if (_Response.IsClientConnected)
+                        if (response.IsClientConnected)
                         {
-                            _Response.BinaryWrite(br.ReadBytes(pack));
+                            response.BinaryWrite(br.ReadBytes(pack));
                             Thread.Sleep(sleep);
                         }
                         else

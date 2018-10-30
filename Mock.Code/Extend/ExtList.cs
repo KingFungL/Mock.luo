@@ -25,7 +25,7 @@ namespace Mock.Code.Extend
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
         /// <returns></returns>
-        public static List<T> IListToList<T>(IList list)
+        public static List<T> ListToList<T>(IList list)
         {
             T[] array = new T[list.Count];
             list.CopyTo(array, 0);

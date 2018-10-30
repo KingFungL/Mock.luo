@@ -1,19 +1,17 @@
-﻿
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Web.Script.Serialization;
+using Mock.Code.Helper;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
-namespace Mock.Code
+namespace Mock.Code.Json
 {
     public static class Json
     {
-        public static object ToJson(this string Json)
+        public static object ToJson(this string json)
         {
 
-            return Json == null ? null : JsonConvert.DeserializeObject(Json);
+            return json == null ? null : JsonConvert.DeserializeObject(json);
         }
         public static string ToJson(this object obj)
         {
@@ -26,21 +24,21 @@ namespace Mock.Code
             jsSettings.DateFormatString = datetimeformats;
             return JsonConvert.SerializeObject(obj, jsSettings);
         }
-        public static T ToObject<T>(this string Json)
+        public static T ToObject<T>(this string json)
         {
-            return Json == null ? default(T) : JsonConvert.DeserializeObject<T>(Json);
+            return json == null ? default(T) : JsonConvert.DeserializeObject<T>(json);
         }
-        public static List<T> ToList<T>(this string Json)
+        public static List<T> ToList<T>(this string json)
         {
-            return Json == null ? null : JsonConvert.DeserializeObject<List<T>>(Json);
+            return json == null ? null : JsonConvert.DeserializeObject<List<T>>(json);
         }
-        public static DataTable ToTable(this string Json)
+        public static DataTable ToTable(this string json)
         {
-            return Json == null ? null : JsonConvert.DeserializeObject<DataTable>(Json);
+            return json == null ? null : JsonConvert.DeserializeObject<DataTable>(json);
         }
-        public static JObject ToJObject(this string Json)
+        public static JObject ToJObject(this string json)
         {
-            return Json == null ? JObject.Parse("{}") : JObject.Parse(Json.Replace("&nbsp;", ""));
+            return json == null ? JObject.Parse("{}") : JObject.Parse(json.Replace("&nbsp;", ""));
         }
     }
 }

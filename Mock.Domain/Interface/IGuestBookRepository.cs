@@ -1,14 +1,11 @@
-﻿using Mock.Code;
-using Mock.Data;
-using Mock.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using Mock.Code.Web;
+using Mock.Data.AppModel;
+using Mock.Data.Models;
+using Mock.Data.Repository;
 
-namespace Mock.Domain
+namespace Mock.Domain.Interface
 {
     public interface IGuestBookRepository : IRepositoryBase<GuestBook>
     {
@@ -18,7 +15,7 @@ namespace Mock.Domain
         /// <param name="pag">分页</param>
         /// <param name="param">标题/邮箱</param>
         /// <returns></returns>
-        DataGrid GetDataGrid(Expression<Func<GuestBook, bool>> predicate,Pagination pag,string param);
+        DataGrid GetDataGrid(Expression<Func<GuestBook, bool>> predicate,PageDto pag,string param);
         
     }
 }

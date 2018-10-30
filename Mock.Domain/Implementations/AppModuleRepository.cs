@@ -1,17 +1,21 @@
-﻿using Mock.Data;
-using Mock.Data.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mock.Code;
-using System.Linq.Expressions;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Linq.Expressions;
+using Mock.Code.Extend;
 using Mock.Code.Helper;
+using Mock.Code.Log;
+using Mock.Code.Web;
+using Mock.Code.Web.Tree;
+using Mock.Code.Web.TreeGrid;
+using Mock.Data.AppModel;
+using Mock.Data.Models;
+using Mock.Data.Repository;
+using Mock.Domain.Interface;
 
-namespace Mock.Domain
+namespace Mock.Domain.Implementations
 {
     /// <summary>
     /// 仓储实现层 AppModuleRepository
@@ -21,9 +25,9 @@ namespace Mock.Domain
         #region  Constructor
         private readonly IRedisHelper _iRedisHelper;
 
-        public AppModuleRepository(IRedisHelper _iRedisHelper)
+        public AppModuleRepository(IRedisHelper iRedisHelper)
         {
-            this._iRedisHelper = _iRedisHelper;
+            this._iRedisHelper = iRedisHelper;
         } 
         #endregion
 
@@ -41,7 +45,7 @@ namespace Mock.Domain
         public DataGrid GetTreeGrid()
         {
             var entities = this.GetAppModuleList(u => true);
-            return new DataGrid { rows = entities, total = entities.Count() };
+            return new DataGrid { Rows = entities, Total = entities.Count() };
         }
         #endregion
 
@@ -50,7 +54,7 @@ namespace Mock.Domain
         public List<AppModule> GetAppModuleList(Expression<Func<AppModule, bool>> predicate)
         {
             predicate = predicate.And(r => r.DeleteMark == false);
-            return this.IQueryable(predicate).OrderBy(r => r.SortCode).ToList().Select(u => new AppModule
+            return System.Linq.Queryable.OrderBy<AppModule, int?>(this.Queryable(predicate), r => r.SortCode).ToList().Select(u => new AppModule
             {
                 Id = u.Id,
                 PId = u.PId,
@@ -71,18 +75,18 @@ namespace Mock.Domain
         /// 下拉树json数据
         /// </summary>
         /// <returns></returns>
-        public List<TreeSelectModel> GetTreeJson(int PId)
+        public List<TreeSelectModel> GetTreeJson(int pId)
         {
             //Type=1时为按钮，下拉菜单框中为选上级菜单，去除按钮
-            List<TreeSelectModel> treeList = this.IQueryable(u => u.DeleteMark == false && (PId == 0 || u.PId == PId)).OrderBy(r => r.SortCode).ToList()
+            List<TreeSelectModel> treeList = System.Linq.Queryable.OrderBy<AppModule, int?>(this.Queryable(u => u.DeleteMark == false && (pId == 0 || u.PId == pId)), r => r.SortCode).ToList()
                                     .Select(u => new TreeSelectModel
                                     {
-                                        id = u.Id.ToString(),
-                                        text = u.Name,
-                                        parentId = u.PId.ToString()
+                                        Id = u.Id.ToString(),
+                                        Text = u.Name,
+                                        ParentId = u.PId.ToString()
                                     }).ToList();
 
-            treeList.Insert(0, new TreeSelectModel { id = "-1", text = "==请选择==", parentId = "0" });
+            treeList.Insert(0, new TreeSelectModel { Id = "-1", Text = "==请选择==", ParentId = "0" });
             return treeList;
         }
         #endregion
@@ -91,11 +95,11 @@ namespace Mock.Domain
         /// <summary>
         /// 子节点list结构
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public List<AppModule> GetListJson(int Id)
+        public List<AppModule> GetListJson(int id)
         {
-            return this.GetModuleChildrenList(Id);
+            return this.GetModuleChildrenList(id);
         }
         #endregion
 
@@ -103,9 +107,9 @@ namespace Mock.Domain
         /// <summary>
         ///根据id找到子节点
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        private List<AppModule> GetModuleChildrenList(int Id)
+        private List<AppModule> GetModuleChildrenList(int id)
         {
             //这个sql语句能够找到PId下的所有子节点数据,正好解决递归查询的问题
             //Id,PId,Name,SortCode,EnCode,LinkUrl
@@ -124,7 +128,7 @@ WITH TEMP AS
  )  
 SELECT * FROM TEMP ORDER BY SortCode";
             DbParameter[] parameter = new SqlParameter[] {
-                new SqlParameter("Id",Id)
+                new SqlParameter("Id",id)
             };
             List<AppModule> dglist = this.FindList(sql, parameter);
             return dglist;
@@ -136,19 +140,19 @@ SELECT * FROM TEMP ORDER BY SortCode";
         /// 得到按钮权限树形数据
         /// </summary>
         /// <returns></returns>
-        public List<TreeGridModel> GetButtonTreeJson(int Id)
+        public List<TreeGridModel> GetButtonTreeJson(int id)
         {
-            List<AppModule> dglist = this.GetModuleChildrenList(Id).Where(u => u.TypeCode == ModuleCode.Button.ToString() || u.TypeCode == ModuleCode.Permission.ToString()).ToList();
+            List<AppModule> dglist = this.GetModuleChildrenList(id).Where(u => u.TypeCode == ModuleCode.Button.ToString() || u.TypeCode == ModuleCode.Permission.ToString()).ToList();
             var treeList = new List<TreeGridModel>();
             foreach (var item in dglist)
             {
                 TreeGridModel treeModel = new TreeGridModel();
                 bool hasChildren = dglist.Count(t => t.PId == item.Id) == 0 ? false : true;
-                treeModel.id = item.Id.ToString();
-                treeModel.isLeaf = hasChildren;
-                treeModel.parentId = item.PId.ToString();
-                treeModel.expanded = hasChildren;
-                treeModel.entityJson = JsonHelper.SerializeObject(new { item.Id, item.PId, item.Icon, item.Name, item.SortCode, item.EnCode, item.LinkUrl, item.TypeCode });
+                treeModel.Id = item.Id.ToString();
+                treeModel.IsLeaf = hasChildren;
+                treeModel.ParentId = item.PId.ToString();
+                treeModel.Expanded = hasChildren;
+                treeModel.EntityJson = JsonHelper.SerializeObject(new { item.Id, item.PId, item.Icon, item.Name, item.SortCode, item.EnCode, item.LinkUrl, item.TypeCode });
                 treeList.Add(treeModel);
             }
             return treeList;
@@ -161,15 +165,15 @@ SELECT * FROM TEMP ORDER BY SortCode";
         /// </summary>
         /// <param name="menu">菜单数据</param>
         /// <param name="buttonList">按钮List</param>
-        /// <param name="Id">菜单主键</param>
-        public void SubmitForm(AppModule module, List<AppModule> buttonList, int Id)
+        /// <param name="id">菜单主键</param>
+        public void SubmitForm(AppModule module, List<AppModule> buttonList, int id)
         {
             List<AppModule> modulePIdList = new List<AppModule>();
             //源数据,从按钮及权限下通过深copy
-            List<int?> moduleSourceIdList = buttonList.Select(u => u.Id).ToList();
+            List<int?> moduleSourceIdList = buttonList.Select<AppModule, int?>(u => u.Id).ToList();
             IRepositoryBase db = new RepositoryBase().BeginTrans();
             //前台自动生成了一个小于0的Id
-            if (Id <= 0)
+            if (id <= 0)
             {
                 module.Create();
                 db.Insert(module);
@@ -208,7 +212,7 @@ SELECT * FROM TEMP ORDER BY SortCode";
                         db.Update(item, modifyList);
                     }
                 }
-                List<AppModule> childrenButtonList = this.GetModuleChildrenList(Id);
+                List<AppModule> childrenButtonList = this.GetModuleChildrenList(id);
 
                 //存在删除行为
                 if (childrenButtonList.Count != buttonList.Count)
@@ -245,9 +249,9 @@ SELECT * FROM TEMP ORDER BY SortCode";
                      * 再将加入数据库的buttoList[下标]的Id作为modulePIdList[i]下的PId
                      */
                     int count = 0;
-                    foreach (int? id in moduleSourceIdList)
+                    foreach (int? moduleId in moduleSourceIdList)
                     {
-                        if (item.PId == id) break;
+                        if (item.PId == moduleId) break;
                         count++;
                     }
                     if (count < moduleSourceIdList.Count)
@@ -256,14 +260,14 @@ SELECT * FROM TEMP ORDER BY SortCode";
                     }
                     i++;
                 }
-                var baseDB = new RepositoryBase().BeginTrans();
+                var baseDb = new RepositoryBase().BeginTrans();
                 {
                     string[] modiystr = { "PId" };
                     foreach (var item in modulePIdList)
                     {
-                        baseDB.Update(item, modiystr);
+                        baseDb.Update(item, modiystr);
                     }
-                    baseDB.Commit();
+                    baseDb.Commit();
                 }
             }
         }
@@ -277,14 +281,13 @@ SELECT * FROM TEMP ORDER BY SortCode";
         /// <returns></returns>
         public dynamic GetRoleModuleAuth(int roleId)
         {
-            var moduleList = this.IQueryable(u => u.DeleteMark == false).OrderBy(u => u.SortCode)
-               .Select(u => new
+            var moduleList = System.Linq.Queryable.Select(System.Linq.Queryable.OrderBy<AppModule, int?>(this.Queryable(u => u.DeleteMark == false), u => u.SortCode), u => new
                {
                    id = u.Id,
                    pId = u.PId,
                    name = u.Name,
                    u.Icon,
-                   @checked = u.RoleModules.Where(r => r.RoleId == roleId && r.ModuleId == u.Id).Count() > 0 ? true : false,
+                   @checked = Enumerable.Where<AppRoleModule>(u.RoleModules, r => r.RoleId == roleId && r.ModuleId == u.Id).Count() > 0 ? true : false,
                    open = true
                }).ToList();
 
@@ -300,15 +303,15 @@ SELECT * FROM TEMP ORDER BY SortCode";
              {
                  if (OperatorProvider.Provider.CurrentUser.IsAdmin)
                  {
-                     return this.IQueryable(r => r.DeleteMark == false).ToList();
+                     return this.Queryable(r => r.DeleteMark == false).ToList();
                  }
                  //1.根据用户编号得到角色编号(集合)
-                 List<int> roleIdList = this.Db.Set<UserRole>().Where(u => u.UserId == userId).Select(u => u.RoleId).ToList();
+                 List<int> roleIdList = this.Db.Set<AppUserRole>().Where(u => u.UserId == userId).Select(u => u.RoleId).ToList();
                  //2.根据角色ID取出菜单编号
-                 List<int> menuIdList = this.Db.Set<RoleModule>().Where(u => roleIdList.Contains(u.RoleId)).Select(u => u.ModuleId).ToList();
+                 List<int> menuIdList = this.Db.Set<AppRoleModule>().Where(u => roleIdList.Contains(u.RoleId)).Select(u => u.ModuleId).ToList();
 
                  //根据菜单编号得到菜单的具体信息
-                 List<AppModule> listModules = this.IQueryable(p => (menuIdList.Contains((int)p.Id))).ToList();
+                 List<AppModule> listModules = this.Queryable(p => (menuIdList.Contains((int)p.Id))).ToList();
 
                  return listModules;
              });

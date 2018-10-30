@@ -18,9 +18,9 @@ namespace Mock.Code
 
         #region  把对象转换成JSON格式
         //js序列化器
-        static JavaScriptSerializer jss = new JavaScriptSerializer();
+        static JavaScriptSerializer _jss = new JavaScriptSerializer();
         //日期序列化模版
-        static IsoDateTimeConverter timeConverter = new IsoDateTimeConverter();
+        static IsoDateTimeConverter _timeConverter = new IsoDateTimeConverter();
         /// <summary>
         /// 把对象转换成JSON格式
         /// </summary>
@@ -29,14 +29,14 @@ namespace Mock.Code
         public static string ObjToJson(object obj)
         {
 
-            return jss.Serialize(obj);
+            return _jss.Serialize(obj);
         }
 
         //序列化成固定日期格式的JSON数据
         public static string ObjToJsonFormatDate(object obj)
         {
-            timeConverter.DateTimeFormat = "yyyy'-'MM'-'dd";
-            return JsonConvert.SerializeObject(obj, Formatting.Indented, timeConverter);
+            _timeConverter.DateTimeFormat = "yyyy'-'MM'-'dd";
+            return JsonConvert.SerializeObject(obj, Formatting.Indented, _timeConverter);
         }
         #endregion
 
@@ -70,17 +70,17 @@ namespace Mock.Code
             return sBuilder.ToString();
         }
 
-        public static Dictionary<string, object> GetAddOrEditOrDel<T>(HttpRequestBase Request)
+        public static Dictionary<string, object> GetAddOrEditOrDel<T>(HttpRequestBase request)
         {
             List<T> insertedList, deletedList, updatedList;
-            string Inserted = Request["Inserted"] ?? "[]";
-            insertedList = jss.Deserialize<List<T>>(Inserted);
+            string inserted = request["Inserted"] ?? "[]";
+            insertedList = _jss.Deserialize<List<T>>(inserted);
 
-            string Deleted = Request["Deleted"] ?? "[]";
-            deletedList = jss.Deserialize<List<T>>(Deleted);
+            string deleted = request["Deleted"] ?? "[]";
+            deletedList = _jss.Deserialize<List<T>>(deleted);
 
-            string Updated = Request["Updated"] ?? "[]";
-            updatedList = jss.Deserialize<List<T>>(Updated);
+            string updated = request["Updated"] ?? "[]";
+            updatedList = _jss.Deserialize<List<T>>(updated);
 
             Dictionary<string, object> di = new Dictionary<string, object>();
             di.Add("Inserted", insertedList);
