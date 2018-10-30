@@ -1,16 +1,18 @@
-﻿using Mock.Data;
-using Mock.Data.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mock.Code;
 using System.Linq.Expressions;
-using Mock.Data.Dto;
+using Mock.Code.Extend;
 using Mock.Code.Helper;
+using Mock.Code.Web;
+using Mock.Data.AppModel;
+using Mock.Data.Dto;
+using Mock.Data.Extensions;
+using Mock.Data.Models;
+using Mock.Data.Repository;
+using Mock.Domain.Interface;
 
-namespace Mock.Domain
+namespace Mock.Domain.Implementations
 {
     /// <summary>
     /// 仓储实现层 ReviewRepository
@@ -32,23 +34,23 @@ namespace Mock.Domain
         /// </summary>
         /// <param name="predicate"></param>
         /// <param name="pag"></param>
-        /// <param name="Email"></param>
-        /// <param name="AId"></param>
+        /// <param name="email"></param>
+        /// <param name="aId"></param>
         /// <returns></returns>
-        public DataGrid GetDataGrid(Expression<Func<Review, bool>> predicate, Pagination pag, string Email, int AId)
+        public DataGrid GetDataGrid(Expression<Func<Review, bool>> predicate, PageDto pag, string email, int aId)
         {
             predicate = predicate.And(u => u.DeleteMark == false
-               && (Email == "" || u.AuEmail.Contains(Email))
-               && (AId == 0 || u.AId == AId));
+               && (email == "" || u.AuEmail.Contains(email))
+               && (aId == 0 || u.AId == aId));
 
-            var reviewList = base.IQueryable(u => u.AId == AId).Select(u => new
+            var reviewList = base.Queryable(u => u.AId == aId).Select(u => new
             {
                 u.PId,
                 u.Id,
                 u.AuName
             }).ToList();
 
-            var dglist = base.IQueryable(predicate).Where(pag).Select(u=>new {
+            var dglist = base.Queryable(predicate).Where(pag).Select(u=>new {
                 u.Article.Title,
                 Avatar = u.AppUser == null ? u.Avatar : u.AppUser.Avatar,
                 u=u
@@ -71,7 +73,7 @@ namespace Mock.Domain
                 r.u.IsAduit,
                 r.u.CreatorTime
             }).ToList();
-            return new DataGrid { rows = dglist, total = pag.total };
+            return new DataGrid { Rows = dglist, Total = pag.Total };
         }
         #endregion
 
@@ -80,7 +82,7 @@ namespace Mock.Domain
         {
             return _iRedisHelper.UnitOfWork(string.Format(ConstHelper.Review, "GetRecentReview"), () =>
             {
-                return this.IQueryable().OrderByDescending(u => u.Id).Take(count).Select(u => new
+                return this.Queryable().OrderByDescending(u => u.Id).Take(count).Select(u => new
                 {
                     u.Article.Title,
                     Avatar = u.AppUser != null ? u.AppUser.Avatar : u.Avatar,

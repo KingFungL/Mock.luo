@@ -1,13 +1,9 @@
-﻿using Mock.Code;
-using Mock.Domain;
-using Mock.Luo.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using Mock.Code.Web;
+using Mock.Domain.Interface;
+using Mock.luo.Controllers;
 
-namespace Mock.Luo.Areas.Plat.Controllers
+namespace Mock.luo.Areas.Plat.Controllers
 {
     public class LogInfoController : BaseController
     {
@@ -20,7 +16,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
 
 
-        public ActionResult GetDataGrid(Pagination pag,string search="")
+        public ActionResult GetDataGrid(PageDto pag,string search="")
         {
             return Result(_service.GetDataGrid(pag, search));
         }

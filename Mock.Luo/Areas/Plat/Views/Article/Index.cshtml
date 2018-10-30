@@ -48,19 +48,19 @@
                     this.editinfo('新增', 0);
                 },
                 btn_edit: function () {
-                    com.edit('#dginfo', 'boot', function (Id) {
-                        vm.editinfo('编辑', Id);
+                    com.edit('#dginfo', 'boot', function (id) {
+                        vm.editinfo('编辑', id);
                     });
                 },
                 btn_delete: function () {
                     com.delete('/Plat/Article/Delete');
                 },
-                editinfo: function (title, Id) {
+                editinfo: function (title, id) {
                     $.layerOpen({
                         title: title,
                         width: '80%',
                         height: '70%',
-                        content: '/Plat/Article/Form/' + Id,
+                        content: '/Plat/Article/Form/' + id,
                         yes: function (iframebody, iframeWin, index) {
                             iframeWin.vm.submit(function () {
                                 $('#dginfo').bootstrapTable("refresh");
@@ -129,9 +129,9 @@
                             $('.pull-right.search .form-control').attr('placeholder', '输入标题/作者');
                         }
                     });
-                }, show_review: function (Id) {
+                }, show_review: function (id) {
                     $.layerOpen({
-                        content: '/Plat/Review/Index?Id=' + Id,
+                        content: '/Plat/Review/Index?Id=' + id,
                         width: '70%',
                         height: '69%',
                         btn:['关闭'],
@@ -139,9 +139,9 @@
                             top.layer.close(index);
                         }
                     });
-                }, show_point: function (Id) {
+                }, show_point: function (id) {
                     $.layerOpen({
-                        content: '/Plat/PointArticle/Index?Id=' + Id,
+                        content: '/Plat/PointArticle/Index?Id=' + id,
                         width: '70%',
                         height: '69%',
                         btn: ['关闭'],

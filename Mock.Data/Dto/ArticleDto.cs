@@ -10,7 +10,7 @@ namespace Mock.Data.Dto
 {
     public class ArticleDto
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         //类别Id
         public int? FId { get; set; }
@@ -31,7 +31,7 @@ namespace Mock.Data.Dto
         //评论
         public int? CommentQuantity { get; set; }
         public int? PointQuantity { get; set; }
-        public string thumbnail { get; set; }
+        public string Thumbnail { get; set; }
         public bool? IsAudit { get; set; }
         public bool? Recommend { get; set; }
         public bool? IsStickie { get; set; }

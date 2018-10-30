@@ -193,13 +193,13 @@
                 var content = ue.getContent();
                 vm.Content = encodeURIComponent(content);
                 vm.FId = vm.FId.id;
-                var TagArray = [];
+                var tagArray = [];
                 $.each(vm.Tag, function (i, v) {
                     if (v.Active == true) {
-                        TagArray.push(v.id);
+                        tagArray.push(v.id);
                     }
                 });
-                vm.Tag = String(TagArray);
+                vm.Tag = String(tagArray);
                 if (json.FId == -1) {
                     json.FId = null;
                 }
@@ -264,9 +264,9 @@
                     }
                 })
             },
-            toogle_tag: function (Id) {
+            toogle_tag: function (id) {
                 $.each(vm.Tag, function (i,d) {
-                    if (Id == d.id) {
+                    if (id == d.id) {
                         if (d.Active == true) {
                             vm.Tag[i].Active = false;
                         } else {

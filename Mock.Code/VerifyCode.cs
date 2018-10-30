@@ -7,6 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mock.Code.Security;
+using Mock.Code.Web;
 
 namespace Mock.Code
 {
@@ -31,7 +33,7 @@ namespace Mock.Code
                 chkCode += character[rnd.Next(character.Length)];
             }
             //写入Session、
-            WebHelper.WriteSession("Mock_session_verifycode", DESEncrypt.Encrypt(chkCode.ToLower()));
+            WebHelper.WriteSession("Mock_session_verifycode", DesEncrypt.Encrypt(chkCode.ToLower()));
             //创建画布
             Bitmap bmp = new Bitmap(codeW, codeH);
             Graphics g = Graphics.FromImage(bmp);

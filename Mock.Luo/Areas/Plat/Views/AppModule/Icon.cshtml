@@ -23,8 +23,8 @@
             $("#icons .filter-icon a").dblclick(function () {
                 var icon = $(this).find('i').attr('class');
                 //表单弹出框id一定要是Form
-                var layui_iframe_name = top.$('#' + formId).children('iframe')[0].name;
-                top[layui_iframe_name].vm[controlId] = icon;
+                var layuiIframeName = top.$('#' + formId).children('iframe')[0].name;
+                top[layuiIframeName].vm[controlId] = icon;
                 $.layerClose();
             })
         });

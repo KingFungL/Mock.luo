@@ -1,16 +1,14 @@
-﻿using Autofac;
-using Mock.Code;
-using Mock.Data.Models;
-using Mock.Domain;
-using Mock.Luo.Areas.Plat.Models;
-using Mock.Luo.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
+using Autofac;
+using Mock.Code.Web.Tree;
+using Mock.Code.Web.TreeGrid;
+using Mock.Data.Models;
+using Mock.Domain.Interface;
+using Mock.luo.Areas.Plat.Models;
+using Mock.luo.Controllers;
 
-namespace Mock.Luo.Areas.Plat.Controllers
+namespace Mock.luo.Areas.Plat.Controllers
 {
     public class ItemsController : CrudController<Items, ItemsViewModel>
     {
@@ -56,11 +54,11 @@ namespace Mock.Luo.Areas.Plat.Controllers
             int codeCount = 0;
             if (id == 0)
             {
-                codeCount = _service.IQueryable(u => u.EnCode == viewModel.EnCode).Count();
+                codeCount = _service.Queryable(u => u.EnCode == viewModel.EnCode).Count();
             }
             else
             {
-                codeCount = _service.IQueryable(u => u.EnCode == viewModel.EnCode && u.Id != id).Count();
+                codeCount = _service.Queryable(u => u.EnCode == viewModel.EnCode && u.Id != id).Count();
             }
             if (codeCount > 0)
             {

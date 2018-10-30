@@ -1,20 +1,17 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json.Linq;
 
 /// <summary>
 /// Config 的摘要说明
 /// </summary>
-namespace ueditor
+namespace Mock.luo.Content.js.ueditor.net.App_Code
 {
     public static class Config
     {
-        private static bool noCache = true;
+        private static bool _noCache = true;
         private static JObject BuildItems()
         {
             var json = File.ReadAllText(HttpContext.Current.Server.MapPath("config.json"));
@@ -25,14 +22,14 @@ namespace ueditor
         {
             get
             {
-                if (noCache || _Items == null)
+                if (_noCache || _items == null)
                 {
-                    _Items = BuildItems();
+                    _items = BuildItems();
                 }
-                return _Items;
+                return _items;
             }
         }
-        private static JObject _Items;
+        private static JObject _items;
 
 
         public static T GetValue<T>(string key)

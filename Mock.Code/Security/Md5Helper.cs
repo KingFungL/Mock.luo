@@ -1,9 +1,9 @@
-﻿namespace Mock.Code
+﻿namespace Mock.Code.Security
 {
     /// <summary>
     /// MD5加密
     /// </summary>
-    public class Md5
+    public class Md5Helper
     {
         /// <summary>
         /// MD5加密
@@ -11,7 +11,7 @@
         /// <param name="str">加密字符</param>
         /// <param name="code">加密位数16/32</param>
         /// <returns></returns>
-        public static string md5(string str, int code)
+        public static string Md5(string str, int code)
         {
             string strEncrypt = string.Empty;
             if (code == 16)

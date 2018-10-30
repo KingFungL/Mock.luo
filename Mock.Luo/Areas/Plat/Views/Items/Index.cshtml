@@ -61,19 +61,19 @@
                     this.editinfo('新增', 0);
                 },
                 btn_edit: function () {
-                    com.edit('#dginfo', 'jq', function (Id) {
-                        vm.editinfo('编辑', Id);
+                    com.edit('#dginfo', 'jq', function (id) {
+                        vm.editinfo('编辑', id);
                     });
                 },
                 btn_delete: function () {
                     com.delete('/Plat/Items/Delete', '#dginfo', 'jq');
                 },
-                editinfo: function (title, Id) {
+                editinfo: function (title, id) {
                     $.layerOpen({
                         title: title,
                         width: '62%',
                         height: '70%',
-                        content: '/Plat/Items/Form/' + Id,
+                        content: '/Plat/Items/Form/' + id,
                         yes: function (iframebody, iframeWin, index) {
                             iframeWin.vm.submit(function () {
                                 vm.btn_refresh();

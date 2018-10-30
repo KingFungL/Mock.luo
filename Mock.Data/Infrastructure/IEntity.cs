@@ -1,47 +1,53 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mock.Code;
+using Mock.Data.AppModel;
 
-namespace Mock.Data
+namespace Mock.Data.Infrastructure
 {
-    public class IEntity<TEntity>
+    public class Entity<TEntity>
     {
         public virtual void Create()
         {
             var entity = this as ICreationAudited;
-            var LoginInfo = OperatorProvider.Provider.CurrentUser;
-            if (LoginInfo != null)
+            var loginInfo = OperatorProvider.Provider.CurrentUser;
+            if (loginInfo != null)
             {
-                entity.CreatorUserId = LoginInfo.UserId;
+                if (entity != null) entity.CreatorUserId = loginInfo.UserId;
             }
-            entity.DeleteMark = false;
-            entity.CreatorTime = DateTime.Now;
-        }
-        public virtual void Modify(int? keyValue)
-        {
-            var entity = this as IModificationAudited;
-            entity.Id = keyValue;
-            var LoginInfo = OperatorProvider.Provider.CurrentUser;
-            if (LoginInfo != null)
-            {
-                entity.LastModifyUserId = LoginInfo.UserId;
-            }
-            entity.LastModifyTime = DateTime.Now;
 
+            if (entity != null)
+            {
+                entity.DeleteMark = false;
+                entity.CreatorTime = DateTime.Now;
+            }
+        }
+        public virtual void Modify(int keyValue)
+        {
+            if (this is IModificationAudited entity)
+            {
+                entity.Id = keyValue;
+                var loginInfo = OperatorProvider.Provider.CurrentUser;
+                if (loginInfo != null)
+                {
+                    entity.LastModifyUserId = loginInfo.UserId;
+                }
+
+                entity.LastModifyTime = DateTime.Now;
+            }
         }
         public virtual void Remove()
         {
             var entity = this as IDeleteAudited;
-            var LoginInfo = OperatorProvider.Provider.CurrentUser;
-            if (LoginInfo != null)
+            var loginInfo = OperatorProvider.Provider.CurrentUser;
+            if (loginInfo != null)
             {
-                entity.DeleteUserId = LoginInfo.UserId;
+                if (entity != null) entity.DeleteUserId = loginInfo.UserId;
             }
-            entity.DeleteTime = DateTime.Now;
-            entity.DeleteMark = true;
+
+            if (entity != null)
+            {
+                entity.DeleteTime = DateTime.Now;
+                entity.DeleteMark = true;
+            }
         }
     }
 }

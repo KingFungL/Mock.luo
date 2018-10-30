@@ -1,13 +1,9 @@
-﻿using Mock.Luo.Controllers;
-using System;
-using Mock.Code;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
 using System.Web.Mvc;
-using Mock.Data;
+using Mock.Code.Mail;
+using Mock.luo.Controllers;
 
-namespace Mock.Luo.Areas.Mock.Controllers
+namespace Mock.luo.Areas.Mock.Controllers
 {
     public class EditorController : BaseController
     {
@@ -64,7 +60,7 @@ namespace Mock.Luo.Areas.Mock.Controllers
             MailHelper helper = new MailHelper();
             try
             {
-                bool flag = helper.Send(entity.sendTo, entity.mainTitle, entity.content);
+                bool flag = helper.Send(entity.SendTo, entity.MainTitle, entity.Content);
 
                 if (flag == true)
                 {
@@ -86,9 +82,9 @@ namespace Mock.Luo.Areas.Mock.Controllers
     }
     public class EmailEntity
     {
-        public string sendTo { get; set; }
-        public string mainTitle { get; set; }
-        public string content { get; set; }
-        public int status { get; set; }
+        public string SendTo { get; set; }
+        public string MainTitle { get; set; }
+        public string Content { get; set; }
+        public int Status { get; set; }
     }
 }

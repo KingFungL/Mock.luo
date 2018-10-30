@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Mock.Luo.Models
+﻿namespace Mock.luo.Models
 {
     public class EmailViewModel
     {

@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.Web;
-namespace Mock.Code
+
+namespace Mock.Code.Configs
 {
     public class Configs
     {

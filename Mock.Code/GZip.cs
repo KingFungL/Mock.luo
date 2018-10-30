@@ -5,6 +5,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using Mock.Code.Extend;
 
 namespace Mock.Code
 {
@@ -16,7 +17,7 @@ namespace Mock.Code
         /// <param name="text">文本</param>
         public static string Compress(string text)
         {
-            if (text.IsEmpty())
+            if (Ext.IsEmpty(text))
                 return string.Empty;
             byte[] buffer = Encoding.UTF8.GetBytes(text);
             return Convert.ToBase64String(Compress(buffer));
@@ -28,7 +29,7 @@ namespace Mock.Code
         /// <param name="text">文本</param>
         public static string Decompress(string text)
         {
-            if (text.IsEmpty())
+            if (Ext.IsEmpty(text))
                 return string.Empty;
             byte[] buffer = Convert.FromBase64String(text);
             using (var ms = new MemoryStream(buffer))

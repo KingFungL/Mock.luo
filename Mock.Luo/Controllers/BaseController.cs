@@ -1,25 +1,22 @@
-﻿using Mock.Code;
-using Mock.Data;
-using Mock.Luo.Generic;
-using Mock.Luo.Generic.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
+using Mock.Code.Helper;
+using Mock.Code.Json;
+using Mock.Code.Web;
+using Mock.Data.AppModel;
 
-namespace Mock.Luo.Controllers
+namespace Mock.luo.Controllers
 {
     public abstract class BaseController : Controller
     {
-        public OperatorProvider op = OperatorProvider.Provider;
+        public OperatorProvider Op = OperatorProvider.Provider;
         //[HandlerAuthorize]
 
         public virtual ActionResult Index()
         {
             return View();
         }
-        public virtual ActionResult Detail(int Id)
+        public virtual ActionResult Detail(int id)
         {
             return View();
         }
@@ -33,23 +30,23 @@ namespace Mock.Luo.Controllers
         }
         protected virtual ActionResult Success(string message)
         {
-            return Content(new AjaxResult { state = ResultType.success.ToString(), message = message }.ToJson());
+            return Content(new AjaxResult { State = ResultType.Success.ToString(), Message = message }.ToJson());
         }
         protected virtual ActionResult Success(string message, object data)
         {
-            return Content(new AjaxResult { state = ResultType.success.ToString(), message = message, data = data }.ToJson());
+            return Content(new AjaxResult { State = ResultType.Success.ToString(), Message = message, Data = data }.ToJson());
         }
         protected virtual ActionResult Error(string message)
         {
-            return Content(new AjaxResult { state = ResultType.error.ToString(), message = message }.ToJson());
+            return Content(new AjaxResult { State = ResultType.Error.ToString(), Message = message }.ToJson());
         }
         protected virtual ActionResult Error(ResultType state, string message, object data)
         {
-            return Content(new AjaxResult { state = state.ToString(), message = message, data = data }.ToJson());
+            return Content(new AjaxResult { State = state.ToString(), Message = message, Data = data }.ToJson());
         }
-        protected virtual ActionResult Error(ModelStateDictionary ModelState)
+        protected virtual ActionResult Error(ModelStateDictionary modelState)
         {
-            return Error(ModelState.Values.Where(u => u.Errors.Count > 0).FirstOrDefault().Errors[0].ErrorMessage);
+            return Error(modelState.Values.Where(u => u.Errors.Count > 0).FirstOrDefault().Errors[0].ErrorMessage);
         }
 
         /// <summary>

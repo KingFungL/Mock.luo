@@ -185,9 +185,9 @@
                     });
                 },
                 init_table_button: function () {
-                    var Id = json.Id == null ? "-1" : json.Id
+                    var id = json.Id == null ? "-1" : json.Id
                     com.ajax({
-                        url: "/Plat/AppModule/GetListJson?Id=" + Id,
+                        url: "/Plat/AppModule/GetListJson?Id=" + id,
                         type: "get",
                         success: function (data) {
                             vm.buttonJson = data;
@@ -195,7 +195,7 @@
                     });
                     var $grid = $("#gridTable-button");
                     $grid.jqGrid({
-                        url: "/Plat/AppModule/GetButtonTreeJson?Id=" + Id,
+                        url: "/Plat/AppModule/GetButtonTreeJson?Id=" + id,
                         datatype: "json",
                         treeGrid: true,
                         treeGridModel: "adjacency",
@@ -268,8 +268,8 @@
                     this.editinfo('新增', vm.autoId--);
                 },
                 btn_edit: function () {
-                    com.edit('#gridTable-button', 'jq', function (Id) {
-                        vm.editinfo('编辑', Id);
+                    com.edit('#gridTable-button', 'jq', function (id) {
+                        vm.editinfo('编辑', id);
                     });
                 },
                 btn_delete: function () {
@@ -302,23 +302,23 @@
 
                     vm.array_to_TreeJson(vm.buttonJson);
                 },
-                editinfo: function (title, Id) {
+                editinfo: function (title, id) {
                     $.layerOpen({
                         id: "ButtonForm",
                         title: title,
                         width: '60%',
                         height: '55%',
-                        content: '/Plat/AppModule/Button?PId=' + json.Id + '&Id=' + Id,
+                        content: '/Plat/AppModule/Button?PId=' + json.Id + '&Id=' + id,
                         yes: function (iframebody, iframeWin, index) {
                             iframeWin.vm.submit(function (data) {
                                 //新增
-                                if (Id <= 0 && data.IsNew == true) {
+                                if (id <= 0 && data.IsNew == true) {
                                     data.IsNew = false;
                                     vm.buttonJson.push(data);
                                 }
                                 else {
                                     $.each(vm.buttonJson, function (i) {
-                                        if (vm.buttonJson[i].Id == Id) {
+                                        if (vm.buttonJson[i].Id == id) {
                                             vm.buttonJson[i] = data;
                                         }
                                     });

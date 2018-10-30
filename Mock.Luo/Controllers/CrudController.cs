@@ -1,30 +1,31 @@
-﻿using Autofac;
-using AutoMapper;
-using Mock.Code;
-using Mock.Data;
-using Mock.Luo.Generic.Filters;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using Autofac;
+using AutoMapper;
+using Mock.Code.Helper;
+using Mock.Code.Json;
+using Mock.Data.AppModel;
+using Mock.Data.Infrastructure;
+using Mock.Data.Repository;
+using Mock.luo.Generic.Filters;
 
-namespace Mock.Luo.Controllers
+namespace Mock.luo.Controllers
 {
     public class CrudController<TEntityModel, TViewModel> : BaseController where TEntityModel : class, new() where TViewModel : class, new()
     {
 
         private readonly IRepositoryBase<TEntityModel> _ibase;
-        protected readonly IRedisHelper _redisHelper;
+        protected readonly IRedisHelper RedisHelper;
         public CrudController(IComponentContext container)
         {
             _ibase = container.Resolve<IRepositoryBase<TEntityModel>>();
-            this._redisHelper = container.Resolve<IRedisHelper>();
+            this.RedisHelper = container.Resolve<IRedisHelper>();
         }
         //[HandlerAuthorize]
-        public virtual ActionResult Form(int Id)
+        public virtual ActionResult Form(int id)
         {
-            ViewBag.ViewModel = this.GetFormJson(Id);
+            ViewBag.ViewModel = this.GetFormJson(id);
             return View();
         }
 
@@ -32,14 +33,14 @@ namespace Mock.Luo.Controllers
         /// <summary>
         /// 此时表单中没有默认值，就可以用这个
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public string GetFormJson(int Id = 0)
+        public string GetFormJson(int id = 0)
         {
             TViewModel viewModel = new TViewModel { };
-            if (Id != 0)
+            if (id != 0)
             {
-                TEntityModel entity = _ibase.FindEntity(Id);
+                TEntityModel entity = _ibase.FindEntity(id);
                 if (entity != null)
                 {
 
@@ -121,17 +122,17 @@ namespace Mock.Luo.Controllers
         /// <summary>
         /// 统一的删除功能，其类要继承IDeleteAduited这个类才行。
         /// </summary>
-        /// <param name="Id">主键Id</param>
+        /// <param name="id">主键Id</param>
         /// <returns></returns>
         [HttpPost]
         [HandlerAuthorize]
-        public ActionResult Delete(int Id)
+        public ActionResult Delete(int id)
         {
-            var codetableEntity = _ibase.FindEntity(Id);
+            var codetableEntity = _ibase.FindEntity(id);
 
             if (codetableEntity == null)
-                return Error($"Id为{Id}未找到任何类型为{codetableEntity.GetType().Name}的实体对象");
-            IDeleteAudited deleteAudited = new DeleteAudited { Id = Id, DeleteMark = true, DeleteTime = DateTime.Now, DeleteUserId = OperatorProvider.Provider.CurrentUser.UserId };
+                return Error($"Id为{id}未找到任何类型为{codetableEntity.GetType().Name}的实体对象");
+            IDeleteAudited deleteAudited = new DeleteAudited { Id = id, DeleteMark = true, DeleteTime = DateTime.Now, DeleteUserId = OperatorProvider.Provider.CurrentUser.UserId };
 
             TEntityModel entity = Mapper.Map(deleteAudited, codetableEntity);
 

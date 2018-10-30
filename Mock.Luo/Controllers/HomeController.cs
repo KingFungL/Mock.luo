@@ -1,17 +1,13 @@
-﻿
-using Mock.Code;
-using Mock.Code.Util;
-using Mock.Data;
-using Mock.Data.Models;
-using Mock.Domain;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-
-namespace Mock.Luo.Controllers
+using Mock.Code.Json;
+using Mock.Code.Util;
+using Mock.Code.Web;
+using Mock.Data.AppModel;
+using Mock.Data.Models;
+using Mock.Domain.Interface;
+namespace Mock.luo.Controllers
 {
     public class HomeController : BaseController
     {
@@ -19,12 +15,12 @@ namespace Mock.Luo.Controllers
         private readonly IItemsDetailRepository _itemsDetailSevice;
         private readonly IItemsRepository _itemsService;
         private readonly IAppModuleRepository _appModuleService;
-        public HomeController(IItemsDetailRepository _itemsDetailSevice, IItemsRepository _itemsService, IAppModuleRepository _appModuleService)
+        public HomeController(IItemsDetailRepository itemsDetailSevice, IItemsRepository itemsService, IAppModuleRepository appModuleService)
         {
             // this.iRedisHelper = iRedisHelper;
-            this._itemsDetailSevice = _itemsDetailSevice;
-            this._itemsService = _itemsService;
-            this._appModuleService = _appModuleService;
+            this._itemsDetailSevice = itemsDetailSevice;
+            this._itemsService = itemsService;
+            this._appModuleService = appModuleService;
         }
         public ActionResult MainView()
         {
@@ -66,7 +62,7 @@ namespace Mock.Luo.Controllers
             var data = new
             {
                 dataItems = this.GetDataItemList(),
-                user = op.CurrentUser,
+                user = Op.CurrentUser,
                 authorizeMenu = this.GetMenuList(),
                 authorizeButton = this.GetModuleButtonData()
             };
@@ -80,7 +76,7 @@ namespace Mock.Luo.Controllers
         {
             List<ItemsDetail> itemdata = _itemsDetailSevice.GetList();
             Dictionary<string, object> dictionaryItem = new Dictionary<string, object>();
-            List<Items> itemsList = _itemsService.IQueryable(u => u.DeleteMark == false).ToList();
+            List<Items> itemsList = _itemsService.Queryable(u => u.DeleteMark == false).ToList();
             foreach (Items item in itemsList)
             {
                 List<ItemsDetail> dataItemList = itemdata.FindAll(t => t.FId == item.Id);

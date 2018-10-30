@@ -6,19 +6,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mock.Data.Infrastructure;
 
 namespace Mock.Data.Models
 {
     [Table("Article")]
     [Serializable]
-    public class Article : IEntity<Article>, ICreationAudited, IDeleteAudited, IModificationAudited
+    public class Article : Entity<Article>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         public Article()
         {
             this.Reviews = new HashSet<Review>();
             this.TagArts = new HashSet<TagArt>();
         }
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public int? FId { get; set; }
         [ForeignKey("FId")]
         public ItemsDetail ItemsDetail { get; set; }
@@ -35,7 +36,7 @@ namespace Mock.Data.Models
         public int? CommentQuantity { get; set; }
         public int? PointQuantity { get; set; }
         [StringLength(400)]
-        public string thumbnail { get; set; }
+        public string Thumbnail { get; set; }
         public bool? IsAudit { get; set; }
         public bool? Recommend { get; set; }
         public bool? IsStickie { get; set; }

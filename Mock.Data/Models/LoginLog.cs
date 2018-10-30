@@ -19,7 +19,7 @@ namespace Mock.Data.Models
         [StringLength(50)]
         public string LoginResult { get; set; }
         [StringLength(50)]
-        public string IP { get; set; }
+        public string Ip { get; set; }
         [StringLength(50)]
         public string Agent { get; set; }
 

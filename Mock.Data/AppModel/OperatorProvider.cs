@@ -1,15 +1,15 @@
-﻿using Mock.Code;
-using Mock.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.SessionState;
+using Mock.Code;
+using Mock.Code.Configs;
+using Mock.Code.Extend;
+using Mock.Code.Json;
+using Mock.Code.Net;
+using Mock.Code.Security;
+using Mock.Code.Web;
 
-namespace Mock.Data
+namespace Mock.Data.AppModel
 {
     public class OperatorProvider
     {
@@ -34,23 +34,23 @@ namespace Mock.Data
         /// <summary>
         /// 登录用户的key
         /// </summary>
-        private string LoginUserKey = "mock_luo_loginuserkey_2017";
+        private string _loginUserKey = "mock_luo_loginuserkey_2017";
         /// <summary>
         /// 配置信息session或cookies
         /// </summary>
-        private string LoginProvider = Configs.GetValue("LoginProvider");
+        private string _loginProvider = Configs.GetValue("LoginProvider");
         /// <summary>
         /// 单点登录标志
         /// </summary>
-        private bool loginOnce = Configs.GetValue("loginOnce").ToBool();
+        private bool _loginOnce = Configs.GetValue("loginOnce").ToBool();
         /// <summary>
         /// 验证码
         /// </summary>
-        private string Admin_Code = "Mock_session_verifycode";
+        private string _adminCode = "Mock_session_verifycode";
         /// <summary>
         /// 登录token
         /// </summary>
-        private string Admin_Token = "Admin_Token";
+        private string _adminToken = "Admin_Token";
 
         #endregion
 
@@ -90,28 +90,28 @@ namespace Mock.Data
             get
             {
                 OperatorModel operatorModel = new OperatorModel();
-                if (LoginProvider == "Cookie")
+                if (_loginProvider == "Cookie")
                 {
-                    operatorModel = DESEncrypt.Decrypt(WebHelper.GetCookie(LoginUserKey)?.ToString()).ToObject<OperatorModel>();
+                    operatorModel = DesEncrypt.Decrypt(WebHelper.GetCookie(_loginUserKey)?.ToString()).ToObject<OperatorModel>();
                 }
                 else
                 {
-                    operatorModel = DESEncrypt.Decrypt(WebHelper.GetSession(LoginUserKey)?.ToString()).ToObject<OperatorModel>();
+                    operatorModel = DesEncrypt.Decrypt(WebHelper.GetSession(_loginUserKey)?.ToString()).ToObject<OperatorModel>();
                 }
                 return operatorModel;
             }
 
             set
             {
-                if (LoginProvider == "Cookie")
+                if (_loginProvider == "Cookie")
                 {
-                    WebHelper.WriteCookie(LoginUserKey, DESEncrypt.Encrypt(value.ToJson()), 60);
-                    WebHelper.WriteCookie("moblog_mac", Md5.md5(Net.GetMacByNetworkInterface().ToJson(), 32));
+                    WebHelper.WriteCookie(_loginUserKey, DesEncrypt.Encrypt(value.ToJson()), 60);
+                    WebHelper.WriteCookie("moblog_mac", Md5Helper.Md5(Net.GetMacByNetworkInterface().ToJson(), 32));
                     WebHelper.WriteCookie("moblog_licence", Licence.GetLicence());
                 }
                 else
                 {
-                    WebHelper.WriteSession(LoginUserKey, DESEncrypt.Encrypt(value.ToJson()));
+                    WebHelper.WriteSession(_loginUserKey, DesEncrypt.Encrypt(value.ToJson()));
                 }
                 HttpRuntime.Cache[value.UserId.ToString()] = HttpContext.Current.Session.SessionID;
             }
@@ -124,13 +124,13 @@ namespace Mock.Data
         /// </summary>
         public void RemoveCurrent()
         {
-            if (LoginProvider == "Cookie")
+            if (_loginProvider == "Cookie")
             {
-                WebHelper.RemoveCookie(LoginUserKey.Trim());
+                WebHelper.RemoveCookie(_loginUserKey.Trim());
             }
             else
             {
-                WebHelper.RemoveSession(LoginUserKey.Trim());
+                WebHelper.RemoveSession(_loginUserKey.Trim());
             }
         }
         #endregion
@@ -140,8 +140,8 @@ namespace Mock.Data
         /// </summary>
         public string CurrentCode
         {
-            get => DESEncrypt.Decrypt(WebHelper.GetSession(Admin_Code)?.ToString());
-            set => WebHelper.WriteSession(Admin_Code,DESEncrypt.Encrypt(value));
+            get => DesEncrypt.Decrypt(WebHelper.GetSession(_adminCode)?.ToString());
+            set => WebHelper.WriteSession(_adminCode,DesEncrypt.Encrypt(value));
         }
 
         /// <summary>
@@ -149,8 +149,8 @@ namespace Mock.Data
         /// </summary>
         public string CurrentToken
         {
-            get => DESEncrypt.Decrypt(WebHelper.GetSession(Admin_Token)?.ToString());
-            set => WebHelper.WriteSession(Admin_Token, DESEncrypt.Encrypt(value));
+            get => DesEncrypt.Decrypt(WebHelper.GetSession(_adminToken)?.ToString());
+            set => WebHelper.WriteSession(_adminToken, DesEncrypt.Encrypt(value));
         }
 
     }

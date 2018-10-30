@@ -5,7 +5,9 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
-namespace Mock.Code
+using Mock.Code.Extend;
+
+namespace Mock.Code.Web
 {
     public class WebHelper
     {
@@ -127,7 +129,7 @@ namespace Mock.Code
         /// <param name="value">Session的键值</param>
         public static void WriteSession<T>(string key, T value)
         {
-            if (key.IsEmpty())
+            if (Ext.IsEmpty(key))
                 return;
             HttpContext.Current.Session[key] = value;
         }
@@ -148,7 +150,7 @@ namespace Mock.Code
         /// <param name="key">Session的键名</param>        
         public static string GetSession(string key)
         {
-            if (key.IsEmpty())
+            if (Ext.IsEmpty(key))
                 return string.Empty;
             return HttpContext.Current.Session[key] as string;
         }
@@ -158,7 +160,7 @@ namespace Mock.Code
         /// <param name="key">Session的键名</param>
         public static void RemoveSession(string key)
         {
-            if (key.IsEmpty())
+            if (Ext.IsEmpty(key))
                 return;
             HttpContext.Current.Session.Contents.Remove(key);
         }
@@ -214,10 +216,10 @@ namespace Mock.Code
         /// <summary>
         /// 删除Cookie对象
         /// </summary>
-        /// <param name="CookiesName">Cookie对象名称</param>
-        public static void RemoveCookie(string CookiesName)
+        /// <param name="cookiesName">Cookie对象名称</param>
+        public static void RemoveCookie(string cookiesName)
         {
-            HttpCookie objCookie = new HttpCookie(CookiesName.Trim());
+            HttpCookie objCookie = new HttpCookie(cookiesName.Trim());
             objCookie.Expires = DateTime.Now.AddYears(-5);
             HttpContext.Current.Response.Cookies.Add(objCookie);
         }
@@ -333,34 +335,34 @@ namespace Mock.Code
         /// </summary>
         /// <param name="NoHTML">包括HTML的源码 </param>
         /// <returns>已经去除后的文字</returns>
-        public static string NoHtml(string Htmlstring)
+        public static string NoHtml(string htmlstring)
         {
             //删除脚本
-            Htmlstring = Regex.Replace(Htmlstring, @"<script[^>]*?>.*?</script>", "", RegexOptions.IgnoreCase);
+            htmlstring = Regex.Replace(htmlstring, @"<script[^>]*?>.*?</script>", "", RegexOptions.IgnoreCase);
             //删除HTML
-            Htmlstring = Regex.Replace(Htmlstring, @"<(.[^>]*)>", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"([\r\n])[\s]+", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"-->", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"<!--.*", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(quot|#34);", "\"", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(amp|#38);", "&", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(lt|#60);", "<", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(gt|#62);", ">", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(nbsp|#160);", " ", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(iexcl|#161);", "\xa1", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(cent|#162);", "\xa2", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(pound|#163);", "\xa3", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&(copy|#169);", "\xa9", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&#(\d+);", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&hellip;", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&mdash;", "", RegexOptions.IgnoreCase);
-            Htmlstring = Regex.Replace(Htmlstring, @"&ldquo;", "", RegexOptions.IgnoreCase);
-            Htmlstring.Replace("<", "");
-            Htmlstring = Regex.Replace(Htmlstring, @"&rdquo;", "", RegexOptions.IgnoreCase);
-            Htmlstring.Replace(">", "");
-            Htmlstring.Replace("\r\n", "");
-            Htmlstring = HttpContext.Current.Server.HtmlEncode(Htmlstring).Trim();
-            return Htmlstring;
+            htmlstring = Regex.Replace(htmlstring, @"<(.[^>]*)>", "", RegexOptions.IgnoreCase);
+            htmlstring = Regex.Replace(htmlstring, @"([\r\n])[\s]+", "", RegexOptions.IgnoreCase);
+            htmlstring = Regex.Replace(htmlstring, @"-->", "", RegexOptions.IgnoreCase);
+            htmlstring = Regex.Replace(htmlstring, @"<!--.*", "", RegexOptions.IgnoreCase);
+            htmlstring = Regex.Replace(htmlstring, @"&(quot|#34);", "\"", RegexOptions.IgnoreCase);
+            htmlstring = Regex.Replace(htmlstring, @"&(amp|#38);", "&", RegexOptions.IgnoreCase);
+            htmlstring = Regex.Replace(htmlstring, @"&(lt|#60);", "<", RegexOptions.IgnoreCase);
+            htmlstring = Regex.Replace(htmlstring, @"&(gt|#62);", ">", RegexOptions.IgnoreCase);
+            htmlstring = Regex.Replace(htmlstring, @"&(nbsp|#160);", " ", RegexOptions.IgnoreCase);
+            htmlstring = Regex.Replace(htmlstring, @"&(iexcl|#161);", "\xa1", RegexOptions.IgnoreCase);
+            htmlstring = Regex.Replace(htmlstring, @"&(cent|#162);", "\xa2", RegexOptions.IgnoreCase);
+            htmlstring = Regex.Replace(htmlstring, @"&(pound|#163);", "\xa3", RegexOptions.IgnoreCase);
+            htmlstring = Regex.Replace(htmlstring, @"&(copy|#169);", "\xa9", RegexOptions.IgnoreCase);
+            htmlstring = Regex.Replace(htmlstring, @"&#(\d+);", "", RegexOptions.IgnoreCase);
+            htmlstring = Regex.Replace(htmlstring, @"&hellip;", "", RegexOptions.IgnoreCase);
+            htmlstring = Regex.Replace(htmlstring, @"&mdash;", "", RegexOptions.IgnoreCase);
+            htmlstring = Regex.Replace(htmlstring, @"&ldquo;", "", RegexOptions.IgnoreCase);
+            htmlstring.Replace("<", "");
+            htmlstring = Regex.Replace(htmlstring, @"&rdquo;", "", RegexOptions.IgnoreCase);
+            htmlstring.Replace(">", "");
+            htmlstring.Replace("\r\n", "");
+            htmlstring = HttpContext.Current.Server.HtmlEncode(htmlstring).Trim();
+            return htmlstring;
 
         }
         #endregion

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Mock.Luo.Areas.Plat.Models
+﻿namespace Mock.luo.Areas.Plat.Models
 {
     public class ItemsDetailViewModel
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public int FId { get; set; }
         public string ItemCode { get; set; }
         public string ItemName { get; set; }

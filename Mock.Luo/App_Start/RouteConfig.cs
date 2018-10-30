@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Mock.Luo
+namespace Mock.luo
 {
     public class RouteConfig
     {

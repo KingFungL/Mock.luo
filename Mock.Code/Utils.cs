@@ -116,13 +116,13 @@ namespace Mock.Code
         /// 删除最后结尾的长度
         /// </summary>
         /// <param name="str"></param>
-        /// <param name="Length"></param>
+        /// <param name="length"></param>
         /// <returns></returns>
-        public static string DelLastLength(string str, int Length)
+        public static string DelLastLength(string str, int length)
         {
             if (string.IsNullOrEmpty(str))
                 return "";
-            str = str.Substring(0, str.Length - Length);
+            str = str.Substring(0, str.Length - length);
             return str;
         }
         #endregion

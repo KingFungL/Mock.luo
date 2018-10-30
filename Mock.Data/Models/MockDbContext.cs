@@ -17,9 +17,9 @@ namespace Mock.Data.Models
         }
         public DbSet<AppUser> AppUser { get; set; }
         public DbSet<AppRole> AppRole { get; set; }
-        public DbSet<UserRole> UserRole { get; set; }
+        public DbSet<AppUserRole> UserRole { get; set; }
         public DbSet<AppModule> AppModule { get; set; }
-        public DbSet<RoleModule> RoleMenu { get; set; }
+        public DbSet<AppRoleModule> RoleMenu { get; set; }
         public DbSet<Article> Article { get; set; }
         public DbSet<Upload> Upload { get; set; }
         public DbSet<Items> Items { get; set; }

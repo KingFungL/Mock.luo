@@ -3,14 +3,14 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 
-namespace Mock.Data
+namespace Mock.Data.Extensions
 {
     public class DbHelper
     {
-        private static string connstring = ConfigurationManager.ConnectionStrings["MockDbContext"].ConnectionString;
+        private static string _connstring = ConfigurationManager.ConnectionStrings["MockDbContext"].ConnectionString;
         public static int ExecuteSqlCommand(string cmdText)
         {
-            using (DbConnection conn = new SqlConnection(connstring))
+            using (DbConnection conn = new SqlConnection(_connstring))
             {
                 DbCommand cmd = new SqlCommand();
                 PrepareCommand(cmd, conn, null, CommandType.Text, cmdText, null);

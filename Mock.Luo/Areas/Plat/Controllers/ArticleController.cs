@@ -1,18 +1,21 @@
-﻿using Autofac;
-using AutoMapper;
-using Mock.Code;
-using Mock.Code.Helper;
-using Mock.Data;
-using Mock.Data.Models;
-using Mock.Domain;
-using Mock.Luo.Areas.Plat.Models;
-using Mock.Luo.Controllers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-namespace Mock.Luo.Areas.Plat.Controllers
+using Autofac;
+using AutoMapper;
+using Mock.Code.Attribute;
+using Mock.Code.Helper;
+using Mock.Code.Json;
+using Mock.Code.Web;
+using Mock.Data.AppModel;
+using Mock.Data.Models;
+using Mock.Data.Repository;
+using Mock.Domain.Interface;
+using Mock.luo.Areas.Plat.Models;
+using Mock.luo.Controllers;
+
+namespace Mock.luo.Areas.Plat.Controllers
 {
     public class ArticleController : CrudController<Article, ArticleViewModel>
     {
@@ -26,17 +29,17 @@ namespace Mock.Luo.Areas.Plat.Controllers
             this._itemsDetailRepository = itemsDetailRepository;
         }
 
-        public override ActionResult Form(int Id)
+        public override ActionResult Form(int id)
         {
             //取出文章对应的多个标签Id
-            var tagActive = _service.IQueryable(u => u.DeleteMark == false && u.Id == Id)
+            var tagActive = _service.Queryable(u => u.DeleteMark == false && u.Id == id)
                 .Select(u => u.TagArts.Select(r => r.TagId)).FirstOrDefault();
 
             ViewBag.TagActive = JsonHelper.SerializeObject(tagActive);
 
-            return base.Form(Id);
+            return base.Form(id);
         }
-        public ActionResult GetDataGrid(Pagination pag, string search = "")
+        public ActionResult GetDataGrid(PageDto pag, string search = "")
         {
             return Content(_service.GetDataGrid(pag, search).ToJson());
         }
@@ -56,19 +59,19 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// <param name="pag"></param>
         /// <returns></returns>
         [Skip]
-        public ActionResult GetIndexGird(Pagination pag, string category = "", string tag = "", string archive = "")
+        public ActionResult GetIndexGird(PageDto pag, string category = "", string tag = "", string archive = "")
         {
             if (category.IsNullOrEmpty() && tag.IsNullOrEmpty() && archive.IsNullOrEmpty())
             {
                 throw new ArgumentNullException("参数异常!!");
             }
-            if (pag.sort.IsNullOrEmpty())
+            if (pag.Sort.IsNullOrEmpty())
             {
-                pag.sort = "Id";
+                pag.Sort = "Id";
             }
-            if (pag.order.IsNullOrEmpty())
+            if (pag.Order.IsNullOrEmpty())
             {
-                pag.order = "desc";
+                pag.Order = "desc";
             }
             DataGrid dg = _service.GetCategoryTagGrid(pag, category, tag, archive);
             return Content(dg.ToJson());
@@ -88,11 +91,11 @@ namespace Mock.Luo.Areas.Plat.Controllers
                 return Error(ModelState.Values.Where(u => u.Errors.Count > 0).FirstOrDefault().Errors[0].ErrorMessage);
             }
 
-            string TagIds = Request["Tag"].ToString();
+            string tagIds = Request["Tag"].ToString();
             List<TagArt> tagArtList = new List<TagArt> { };
-            if (TagIds.IsNotNullOrEmpty())
+            if (tagIds.IsNotNullOrEmpty())
             {
-                foreach (var i in TagIds.Split(',').Select(u => Convert.ToInt32(u)).ToList())
+                foreach (var i in tagIds.Split(',').Select(u => Convert.ToInt32(u)).ToList())
                 {
                     tagArtList.Add(new TagArt
                     {
@@ -132,21 +135,21 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
             if (entity.FId != null)
             {
-                string itemCode = _itemsDetailRepository.IQueryable(u => u.Id == entity.FId).Select(r => r.ItemCode).FirstOrDefault();
+                string itemCode = _itemsDetailRepository.Queryable(u => u.Id == entity.FId).Select(r => r.ItemCode).FirstOrDefault();
                 if (itemCode.IsNotNullOrEmpty())
                 {
-                    if (itemCode.Equals(CategoryCode.justfun))
+                    if (itemCode.Equals(CategoryCode.Justfun))
                     {
-                        _redisHelper.KeyDeleteAsync(string.Format(ConstHelper.App, "JustFun"));
+                        RedisHelper.KeyDeleteAsync(string.Format(ConstHelper.App, "JustFun"));
                     }
-                    if (itemCode.Equals(CategoryCode.feelinglife))
+                    if (itemCode.Equals(CategoryCode.Feelinglife))
                     {
-                        _redisHelper.KeyDeleteAsync(string.Format(ConstHelper.App, "FellLife"));
+                        RedisHelper.KeyDeleteAsync(string.Format(ConstHelper.App, "FellLife"));
                     }
                 }
             }
-            _redisHelper.KeyDeleteAsync(string.Format(ConstHelper.Article, "GetRecentArticle"));
-            _redisHelper.KeyDelete(string.Format(ConstHelper.Article, "archiveFile"));
+            RedisHelper.KeyDeleteAsync(string.Format(ConstHelper.Article, "GetRecentArticle"));
+            RedisHelper.KeyDelete(string.Format(ConstHelper.Article, "archiveFile"));
 
             return Success();
         }

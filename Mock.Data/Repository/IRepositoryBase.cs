@@ -1,11 +1,10 @@
-﻿using Mock.Code;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Mock.Data
+namespace Mock.Data.Repository
 {
     public interface IRepositoryBase : IDisposable
     {
@@ -19,8 +18,8 @@ namespace Mock.Data
         int Delete<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class;
         TEntity FindEntity<TEntity>(object keyValue) where TEntity : class;
         TEntity FindEntity<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class;
-        IQueryable<TEntity> IQueryable<TEntity>() where TEntity : class;
-        IQueryable<TEntity> IQueryable<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class;
+        IQueryable<TEntity> Queryable<TEntity>() where TEntity : class;
+        IQueryable<TEntity> Queryable<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class;
         List<TEntity> FindList<TEntity>(string strSql) where TEntity : class;
         List<TEntity> FindList<TEntity>(string strSql, DbParameter[] dbParameter) where TEntity : class;
       

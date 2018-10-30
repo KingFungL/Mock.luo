@@ -11,7 +11,7 @@ using StackExchange.Redis;
 
 #endregion
 
-namespace Mock.Code
+namespace Mock.Code.Helper
 {
     /// <summary>
     ///     Redis 排序类型

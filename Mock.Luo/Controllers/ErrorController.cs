@@ -1,11 +1,7 @@
-﻿using Mock.Code;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using Mock.Code.Attribute;
 
-namespace Mock.Luo.Controllers
+namespace Mock.luo.Controllers
 {
     [Skip]
     public class ErrorController : Controller

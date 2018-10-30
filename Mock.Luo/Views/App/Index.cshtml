@@ -62,8 +62,8 @@
             <!--main-inner start-->
             <div class="main-inner">
                 @{
-                    List<ArtDetailDto> LatestArticles = ViewData["LatestArticles"] as List<ArtDetailDto>;
-                    foreach (var item in LatestArticles)
+                    List<ArtDetailDto> latestArticles = ViewData["LatestArticles"] as List<ArtDetailDto>;
+                    foreach (var item in latestArticles)
                     {
                         <div class="flbox">
                             <article class="post">
@@ -160,18 +160,18 @@
                 <div id="hot_article" class="hot_article">
                     <ul>
                         @{
-                            List<Article> HotArticles = ViewData["HotArticles"] as List<Article>;
-                            string li_number = "li-number";
+                            List<Article> hotArticles = ViewData["HotArticles"] as List<Article>;
+                            string liNumber = "li-number";
                             int i = 0;
-                            foreach (var item in HotArticles)
+                            foreach (var item in hotArticles)
                             {
                                 if (i == 3)
                                 {
-                                    li_number += "s";
+                                    liNumber += "s";
                                 }
                                 i++;
                                 <li>
-                                    <span class="hotp-title"><span class="@li_number">@i</span><a href="/App/Detail/@item.Id" rel="bookmark" style="margin-left: 0px;">@item.Title</a></span>
+                                    <span class="hotp-title"><span class="@liNumber">@i</span><a href="/App/Detail/@item.Id" rel="bookmark" style="margin-left: 0px;">@item.Title</a></span>
                                 </li>
                             }
                         }
@@ -189,8 +189,8 @@
                 <div class="hot_article message-widget">
                     <ul>
                         @{
-                            List<ReplyDto> SpitslotList = ViewData["SpitslotList"] as List<ReplyDto>;
-                            foreach (var item in SpitslotList)
+                            List<ReplyDto> spitslotList = ViewData["SpitslotList"] as List<ReplyDto>;
+                            foreach (var item in spitslotList)
                             {
                                 <li>
                                     <a href="/App/Detail/@item.AId#anchor-comment-@item.Id" data-toggle='tooltip' title="@item.ArticleTitle" rel="external nofollow">
@@ -223,21 +223,21 @@
     </div>
     <div class="row">
 
-        @{ List<ArtDetailDto> FellLifeList = ViewData["FellLife"] as List<ArtDetailDto>;
+        @{ List<ArtDetailDto> fellLifeList = ViewData["FellLife"] as List<ArtDetailDto>;
             ArticleDto fell = new ArticleDto { };
-            if (FellLifeList.Count > 0)
+            if (fellLifeList.Count > 0)
             {
-                fell = FellLifeList[0];
+                fell = fellLifeList[0];
             }
         }
-        @if (FellLifeList.Count > 0)
+        @if (fellLifeList.Count > 0)
         {
             <div class="col-md-6">
                 <div class="cat-box fadeInUp" data-wow-delay="0.3s">
                     <h3 class="cat-title"><a href="/App/Category?category=@fell.TypeCode"><i class="fa fa-heartbeat"></i>@fell.TypeName<i class="fa fa-angle-right"></i></a></h3>
                     <div class="clear"></div>
                     <div class="cat-site">
-                        <h4 class="entry-title"><i class="fa fa-angle-right"></i><a href="/App/Detail/@fell.Id" rel="bookmark">@fell.Title</a></h4>						<figure class="thumbnail"><a href="/App/Detail/@fell.Id"><img src="@fell.thumbnail" alt="@fell.Title"></a></figure>
+                        <h4 class="entry-title"><i class="fa fa-angle-right"></i><a href="/App/Detail/@fell.Id" rel="bookmark">@fell.Title</a></h4>						<figure class="thumbnail"><a href="/App/Detail/@fell.Id"><img src="@fell.Thumbnail" alt="@fell.Title"></a></figure>
                         <div class="cat-main">
                             @Html.Raw(fell.Excerpt)
                         </div>
@@ -245,10 +245,10 @@
 
                         <ul class="cat-list">
                             @{
-                                for (int j = 1; j < FellLifeList.Count; j++)
+                                for (int j = 1; j < fellLifeList.Count; j++)
                                 {
-                                    <li class="list-date">@FellLifeList[j].CreatorTime.ToDateTime().ToString("yyyy/MM/dd")</li>
-                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="/App/Detail/@FellLifeList[j].Id">@FellLifeList[j].Title</a></li>
+                                    <li class="list-date">@fellLifeList[j].CreatorTime.ToDateTime().ToString("yyyy/MM/dd")</li>
+                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="/App/Detail/@fellLifeList[j].Id">@fellLifeList[j].Title</a></li>
                                 }
                             }
                         </ul>
@@ -270,7 +270,7 @@
                     <h3 class="cat-title"><a href="/App/Category?category=@fell.TypeCode"><i class="fa fa-heartbeat"></i>轻松时刻<i class="fa fa-angle-right"></i></a></h3>
                     <div class="clear"></div>
                     <div class="cat-site">
-                        <h4 class="entry-title"><i class="fa fa-angle-right"></i><a href="/app/detail/@func.Id" rel="bookmark">@func.Title</a></h4><figure class="thumbnail"><a href="/app/detail/@func.Id"><img src="@func.thumbnail" alt="@func.Title"></a></figure>
+                        <h4 class="entry-title"><i class="fa fa-angle-right"></i><a href="/app/detail/@func.Id" rel="bookmark">@func.Title</a></h4><figure class="thumbnail"><a href="/app/detail/@func.Id"><img src="@func.Thumbnail" alt="@func.Title"></a></figure>
                         <div class="cat-main">
                             @Html.Raw(func.Excerpt)
                         </div>

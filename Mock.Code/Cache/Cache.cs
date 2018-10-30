@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Web;
-namespace Mock.Code
+
+namespace Mock.Code.Cache
 {
     public class Cache : ICache
     {
-        private static System.Web.Caching.Cache cache = HttpRuntime.Cache;
+        private static System.Web.Caching.Cache _cache = HttpRuntime.Cache;
         /// <summary>
         /// 根据键值得到缓存数据
         /// </summary>
@@ -14,9 +15,9 @@ namespace Mock.Code
         /// <returns></returns>
         public T GetCache<T>(string cacheKey) where T : class
         {
-            if (cache[cacheKey] != null)
+            if (_cache[cacheKey] != null)
             {
-                return (T)cache[cacheKey];
+                return (T)_cache[cacheKey];
             }
             return default(T);
         }
@@ -28,7 +29,7 @@ namespace Mock.Code
         /// <param name="value"></param>
         public void Insert<T>(string cacheKey, T value) where T : class
         {
-            cache.Insert(cacheKey, value);
+            _cache.Insert(cacheKey, value);
         }
         /// <summary>
         /// 根据键值写入缓存数据，绝对过期时间为10分钟
@@ -38,7 +39,7 @@ namespace Mock.Code
         /// <param name="cacheKey">用于该对象的缓存键</param>
         public void WriteCache<T>( string cacheKey,T value) where T : class
         {
-            cache.Insert(cacheKey, value, null, DateTime.UtcNow.AddMinutes(10), System.Web.Caching.Cache.NoSlidingExpiration);
+            _cache.Insert(cacheKey, value, null, DateTime.UtcNow.AddMinutes(10), System.Web.Caching.Cache.NoSlidingExpiration);
         }
         /// <summary>
         /// 根据键值写入缓存数据，绝对过期时间为DateTime.UtcNow
@@ -49,7 +50,7 @@ namespace Mock.Code
         /// <param name="expireTime">过期日期</param>
         public void WriteCache<T>(string cacheKey, T value,  DateTime expireTime) where T : class
         {
-            cache.Insert(cacheKey, value, null, expireTime, System.Web.Caching.Cache.NoSlidingExpiration);
+            _cache.Insert(cacheKey, value, null, expireTime, System.Web.Caching.Cache.NoSlidingExpiration);
         }
         /// <summary>
         /// 从应用程序的 System.Web.Caching.Cache 对象移除指定项
@@ -57,17 +58,17 @@ namespace Mock.Code
         /// <param name="cacheKey">要移除的缓存项的 System.String 标识符。</param>
         public void RemoveCache(string cacheKey)
         {
-            cache.Remove(cacheKey);
+            _cache.Remove(cacheKey);
         }
         /// <summary>
         /// 从应用程序的 System.Web.Caching.Cache 对象移除所有缓存
         /// </summary>
         public void RemoveCache()
         {
-            IDictionaryEnumerator CacheEnum = cache.GetEnumerator();
-            while (CacheEnum.MoveNext())
+            IDictionaryEnumerator cacheEnum = _cache.GetEnumerator();
+            while (cacheEnum.MoveNext())
             {
-                cache.Remove(CacheEnum.Key.ToString());
+                _cache.Remove(cacheEnum.Key.ToString());
             }
         }
     }

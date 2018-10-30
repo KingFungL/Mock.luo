@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
+﻿using System.Configuration;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Autofac;
-using Autofac.Integration.Mvc;
-using Autofac.Builder;
-using System.Reflection;
-using Mock.Luo.App_Start;
+using Mock.Data.Models;
 
-namespace Mock.Luo
+namespace Mock.luo
 {
 
     public class WebApiApplication : System.Web.HttpApplication
@@ -20,14 +14,16 @@ namespace Mock.Luo
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
+            
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutofacConfig.Register();
             AutoMapperConfig.RegisterMappings();
 
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<MockDbContext, Mock.Data.Migrations.Configuration>());
+            var dbMigrator = new DbMigrator(new Mock.Data.Migrations.Configuration());
+            dbMigrator.Update();
         }
     }
 }

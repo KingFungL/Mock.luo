@@ -1,22 +1,18 @@
-﻿using RazorEngine;
+﻿using System.Web;
+using RazorEngine;
 using RazorEngine.Templating;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.SessionState;
 
-namespace Mock.Luo.Generic.Helper
+namespace Mock.Code.Helper
 {
     public class UiHelper
     {
-        public static string FormatEmail<T>(T viewModel, string FormTemplate)
+        public static string FormatEmail<T>(T viewModel, string formTemplate)
         {
-            string path = HttpContext.Current.Server.MapPath("~/Views/Generic/" + FormTemplate + ".cshtml");
+            string path = HttpContext.Current.Server.MapPath("~/Views/Generic/" + formTemplate + ".cshtml");
 
             string template = System.IO.File.ReadAllText(path);
 
-            var body = Engine.Razor.RunCompile(template, FormTemplate, null, viewModel);
+            var body = Engine.Razor.RunCompile(template, formTemplate, null, viewModel);
 
             return body;
         }

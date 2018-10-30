@@ -1,15 +1,9 @@
-﻿using log4net.Core;
-using log4net.Layout.Pattern;
-using log4net.Util;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using log4net.Core;
+using log4net.Layout.Pattern;
 
-namespace Mock.Code
+namespace Mock.Code.Log
 {
     public class ActionConverter : PatternLayoutConverter
     {

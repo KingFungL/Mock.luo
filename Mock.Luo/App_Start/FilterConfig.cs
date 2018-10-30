@@ -1,7 +1,7 @@
-﻿using Mock.Luo.Generic.Filters;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using Mock.luo.Generic.Filters;
 
-namespace Mock.Luo
+namespace Mock.luo
 {
     public class FilterConfig
     {

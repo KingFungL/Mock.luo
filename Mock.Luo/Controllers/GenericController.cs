@@ -1,14 +1,11 @@
-﻿using Mock.Code;
-using Mock.Data.ExtensionModel;
-using Mock.Luo.Models;
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Web;
+﻿using System;
 using System.Web.Mvc;
+using Mock.Code;
+using Mock.Code.Extend;
+using Mock.Data.ExtensionModel;
+using Mock.luo.Models;
 
-namespace Mock.Luo.Controllers
+namespace Mock.luo.Controllers
 {
     public class GenericController : BaseController
     {
@@ -67,7 +64,7 @@ namespace Mock.Luo.Controllers
         {
             ResetPwd resetpwdEntry = new ResetPwd
             {
-                UserID = (int)1,
+                UserId = (int)1,
                 ModifyPwdToken = Utils.GuId(),
                 PwdCodeTme = DateTime.Now,
                 ModfiyPwdCode = Utils.RndNum(6),

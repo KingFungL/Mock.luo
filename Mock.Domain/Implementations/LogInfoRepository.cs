@@ -1,26 +1,22 @@
-﻿using Mock.Data;
-using Mock.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mock.Code;
-using System.Linq.Expressions;
-using Mock.Data.Dto;
+﻿using System;
 using System.Web;
+using Mock.Code.Log;
+using Mock.Code.Net;
+using Mock.Code.Web;
+using Mock.Data.AppModel;
+using Mock.Domain.Interface;
 
-namespace Mock.Domain
+namespace Mock.Domain.Implementations
 {
     public class LogInfoRepository :  ILogInfoRepository
     {
-        public DataGrid GetDataGrid(Pagination pag, string search)
+        public DataGrid GetDataGrid(PageDto pag, string search)
         {
             //Expression<Func<LogInfo, bool>> predicate = u => (search == "" || u.Message.Contains(search));
 
             //var dglist = this.IQueryable(predicate).Where(pag).ToList();
 
-            return new DataGrid { rows = "", total = pag.total };
+            return new DataGrid { Rows = "", Total = pag.Total };
         }
 
 
@@ -28,7 +24,7 @@ namespace Mock.Domain
         /// 写日志
         /// </summary>
         /// <param name="logEntity">对象</param>
-        public void LogError(LogMessage logEntity,string LogName)
+        public void LogError(LogMessage logEntity,string logName)
         {
             logEntity.Url = HttpContext.Current.Request.RawUrl;
             logEntity.OperateTime = DateTime.Now;
@@ -36,7 +32,7 @@ namespace Mock.Domain
             logEntity.IpAddress = Net.Ip;
             logEntity.Host = Net.Host;
             logEntity.Browser = Net.Browser;
-            Log log = LogFactory.GetLogger(LogName);
+            Log log = LogFactory.GetLogger(logName);
             log.Error(logEntity);
 
         }

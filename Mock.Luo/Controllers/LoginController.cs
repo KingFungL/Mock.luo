@@ -1,14 +1,14 @@
-﻿using Mock.Code;
-using Mock.Data;
-using Mock.Domain;
-using Mock.Luo.Generic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Web;
 using System.Web.Mvc;
+using Mock.Code;
+using Mock.Code.Attribute;
+using Mock.Code.Json;
+using Mock.Code.Web;
+using Mock.Data.AppModel;
+using Mock.Domain.Interface;
 
-namespace Mock.Luo.Controllers
+namespace Mock.luo.Controllers
 {
     [Skip]
     public class LoginController : BaseController
@@ -16,9 +16,9 @@ namespace Mock.Luo.Controllers
         // GET: Login
 
         private readonly IAppUserRepository _service;
-        public LoginController(IAppUserRepository _service)
+        public LoginController(IAppUserRepository service)
         {
-            this._service = _service;
+            this._service = service;
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Mock.Luo.Controllers
             {
                 return Error("邮箱不能为空！");
             }
-            else if (op.CurrentCode != code)
+            else if (Op.CurrentCode != code)
             {
                 return Error("验证码错误，请重新输入");
             }

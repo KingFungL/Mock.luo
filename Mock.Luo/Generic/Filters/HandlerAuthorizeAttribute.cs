@@ -1,12 +1,11 @@
-﻿using Mock.Code;
-using Mock.Data;
-using Mock.Domain;
-using System.Net;
-using System.Text;
-using System.Web;
+﻿using System.Net;
 using System.Web.Mvc;
+using Mock.Code.Attribute;
+using Mock.Code.Web;
+using Mock.Data.AppModel;
+using Mock.Domain.Interface;
 
-namespace Mock.Luo.Generic.Filters
+namespace Mock.luo.Generic.Filters
 {
     /// <summary>
     ///描述：（权限认证+安全）拦截组件
@@ -15,7 +14,7 @@ namespace Mock.Luo.Generic.Filters
     {
 
 
-        public IAppModuleRepository _appModuleRepository { get; set; }
+        public IAppModuleRepository AppModuleRepository { get; set; }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (OperatorProvider.Provider.CurrentUser.IsAdmin == true)
@@ -40,7 +39,7 @@ namespace Mock.Luo.Generic.Filters
                 }
                 else
                 {
-                    AjaxResult amm = AjaxResult.Info("很抱歉！您的权限不足，访问被拒绝！", "", ResultType.nopermission.ToString());
+                    AjaxResult amm = AjaxResult.Info("很抱歉！您的权限不足，访问被拒绝！", "", ResultType.Nopermission.ToString());
                     filterContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;//无权限状态码  
                     filterContext.Result = new JsonResult { Data = amm, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
@@ -77,7 +76,7 @@ namespace Mock.Luo.Generic.Filters
             }
             ///Plat/AppUser/Form/0  也会报权限出错
             //string currentUrl = HttpContext.Current.Request.ServerVariables["SCRIPT_NAME"].ToString();
-            return _appModuleRepository.ActionAuthorize(SystemInfo.CurrentUserId, SystemInfo.CurrentModuleId, requestUrl);
+            return AppModuleRepository.ActionAuthorize(SystemInfo.CurrentUserId, SystemInfo.CurrentModuleId, requestUrl);
 
         }
     }

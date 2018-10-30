@@ -14,7 +14,7 @@ namespace Mock.Data.ExtensionModel
         public string NickName { get; set; }
         public string ModifyPwdToken { get; set; }
         public DateTime PwdCodeTme { get; set; }
-        public int UserID { get; set; }
+        public int UserId { get; set; }
         public string ModfiyPwdCode { get; set; }
     }
 }

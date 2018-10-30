@@ -5,17 +5,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mock.Data.Infrastructure;
 
 namespace Mock.Data.Models
 {
     [Table("AppRole")]
-    public class AppRole : IEntity<AppRole>, ICreationAudited, IDeleteAudited, IModificationAudited
+    public class AppRole : Entity<AppRole>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         public AppRole()
         {
-            this.UserRoles = new HashSet<UserRole>();
+            this.UserRoles = new HashSet<AppUserRole>();
         }
-        public int? Id { get; set; }
+        public int Id { get; set; }
         [StringLength(50)]
         public string RoleName { get; set; }
         [StringLength(50)]
@@ -23,7 +24,7 @@ namespace Mock.Data.Models
         public int? SortCode { get; set; }
 
         public bool? IsEnableMark { get; set; }
-        public virtual ICollection<UserRole> UserRoles { get; set; }
+        public virtual ICollection<AppUserRole> UserRoles { get; set; }
         public int? CreatorUserId { get; set; }
         public DateTime? CreatorTime { get; set; }
         public bool? DeleteMark { get; set; }

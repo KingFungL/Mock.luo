@@ -1,11 +1,10 @@
-﻿
-using System;
+﻿using System;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Mock.Code
+namespace Mock.Code.Extend
 {
     public static partial class ExtLinq
     {

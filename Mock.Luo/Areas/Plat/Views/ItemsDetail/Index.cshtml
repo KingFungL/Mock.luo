@@ -120,19 +120,19 @@
                     }
                 },
                 btn_edit: function () {
-                    com.edit('#dginfo', 'boot', function (Id) {
-                        vm.editinfo('编辑', Id, 0);
+                    com.edit('#dginfo', 'boot', function (id) {
+                        vm.editinfo('编辑', id, 0);
                     })
                 },
                 btn_delete: function () {
                     com.delete('/Plat/ItemsDetail/Delete');
                 },
-                editinfo: function (title, Id, FId) {
+                editinfo: function (title, id, fId) {
                     $.layerOpen({
                         title: title,
                         width: '62%',
                         height: '70%',
-                        content: '/Plat/ItemsDetail/Form?FId=' + FId + '&id=' + Id,
+                        content: '/Plat/ItemsDetail/Form?FId=' + fId + '&id=' + id,
                         yes: function (iframebody, iframeWin, index) {
                             iframeWin.vm.submit(function () {
                                 $('#dginfo').bootstrapTable("refresh", { query: { 'EnCode': vm.EnCode } });

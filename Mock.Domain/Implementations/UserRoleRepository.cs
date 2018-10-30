@@ -1,16 +1,13 @@
-﻿using Mock.Data;
-using Mock.Data.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mock.Code;
-using System.Linq.Expressions;
+using Mock.Code.Web;
+using Mock.Data.Models;
+using Mock.Data.Repository;
+using Mock.Domain.Interface;
 
-namespace Mock.Domain
+namespace Mock.Domain.Implementations
 {
-    public class UserRoleRepository : RepositoryBase<UserRole>, IUserRoleRepository
+    public class UserRoleRepository : RepositoryBase<AppUserRole>, IUserRoleRepository
     {
         #region 根据角色id得到分配的用户数据
         public dynamic GetAllotUserGrid(int roleId)
@@ -32,13 +29,13 @@ namespace Mock.Domain
         #endregion
 
         #region 保存角色对应的用户
-        public AjaxResult SaveMembers(List<UserRole> entities, int roleId)
+        public AjaxResult SaveMembers(List<AppUserRole> entities, int roleId)
         {
             AjaxResult msg;
             int iret = 0;
             using (var db = new RepositoryBase().BeginTrans())
             {
-                db.Delete<UserRole>(u => u.RoleId == roleId);
+                db.Delete<AppUserRole>(u => u.RoleId == roleId);
                 db.Insert(entities);
                 iret = db.Commit();
             }

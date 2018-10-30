@@ -5,18 +5,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mock.Data.Infrastructure;
 
 namespace Mock.Data.Models
 {
     [Table("ItemsDetail")]
-    public class ItemsDetail : IEntity<ItemsDetail>, ICreationAudited, IDeleteAudited, IModificationAudited
+    public class ItemsDetail : Entity<ItemsDetail>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         public ItemsDetail()
         {
             this.TagArts = new HashSet<TagArt>();
         }
 
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         public int FId { get; set; }
         [ForeignKey("FId")]

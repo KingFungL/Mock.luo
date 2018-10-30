@@ -1,28 +1,23 @@
-﻿using Mock.Data;
-using Mock.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using Mock.Code;
-using System.Linq.Expressions;
-using Mock.Domain.Interface;
 using EntityFramework.Extensions;
+using Mock.Data.Models;
+using Mock.Data.Repository;
+using Mock.Domain.Interface;
 
-namespace Mock.Domain
+namespace Mock.Domain.Implementations
 {
 
     public class AppUserAuthRepositroy : RepositoryBase<AppUserAuth>, IAppUserAuthRepository
     {
 
-        public Task DeleteAsync(int Id)
+        public Task DeleteAsync(int id)
         {
             AppUserAuth user = new AppUserAuth
             {
-                Id = Id
+                Id = id
             };
-            return Db.Set<AppUserAuth>().Where(u => u.Id == Id).DeleteAsync();
+            return Db.Set<AppUserAuth>().Where(u => u.Id == id).DeleteAsync();
         }
     }
 }

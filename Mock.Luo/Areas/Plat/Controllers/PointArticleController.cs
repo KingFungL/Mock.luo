@@ -1,15 +1,11 @@
-﻿using Autofac;
-using Mock.Data;
-using Mock.Data.Models;
-using Mock.Domain;
-using Mock.Luo.Controllers;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using Mock.Data.Models;
+using Mock.Domain.Interface;
+using Mock.luo.Controllers;
 
-namespace Mock.Luo.Areas.Plat.Controllers
+namespace Mock.luo.Areas.Plat.Controllers
 {
     public class PointArticleController : BaseController
     {
@@ -17,25 +13,25 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
         private readonly IPointArticleRepository _service;
         private readonly IArticleRepository _articleRepository;
-        public PointArticleController(IPointArticleRepository service, IArticleRepository _articleRepository)
+        public PointArticleController(IPointArticleRepository service, IArticleRepository articleRepository)
         {
             this._service = service;
-            this._articleRepository = _articleRepository;
+            this._articleRepository = articleRepository;
         }
 
         //根据文章id得到点赞人信息
-        public ActionResult GetDataGrid(int AId)
+        public ActionResult GetDataGrid(int aId)
         {
-            return Result(_service.GetDataGrid(AId));
+            return Result(_service.GetDataGrid(aId));
         }
 
         //用户点赞
         public ActionResult Edit(PointArticle entry)
         {
             entry.AddTime = DateTime.Now;
-            entry.UserId = (int)op.CurrentUser.UserId;
+            entry.UserId = (int)Op.CurrentUser.UserId;
 
-            var pointCount = _service.IQueryable(u => u.UserId == entry.UserId && u.AId == entry.AId).Count();
+            var pointCount = _service.Queryable(u => u.UserId == entry.UserId && u.AId == entry.AId).Count();
             //点当前文章已经被点赞时，用户再次点赞，
             if (pointCount > 0)
             {
@@ -46,9 +42,9 @@ namespace Mock.Luo.Areas.Plat.Controllers
             else
             {
                 _service.Insert(entry);
-                int? PointQuantity=_articleRepository.IQueryable(r => r.Id == entry.AId).Select(r => r.PointQuantity).FirstOrDefault();
+                int? pointQuantity=_articleRepository.Queryable(r => r.Id == entry.AId).Select(r => r.PointQuantity).FirstOrDefault();
 
-                _articleRepository.Update(new Article { Id = entry.AId, PointQuantity = PointQuantity + 1 }, "PointQuantity");
+                _articleRepository.Update(new Article { Id = entry.AId, PointQuantity = pointQuantity + 1 }, "PointQuantity");
             }
 
             return Success("成功点赞");

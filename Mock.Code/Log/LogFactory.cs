@@ -1,10 +1,9 @@
-﻿
-using log4net;
-using System;
+﻿using System;
 using System.IO;
 using System.Web;
+using log4net;
 
-namespace Mock.Code
+namespace Mock.Code.Log
 {
     public class LogFactory
     {

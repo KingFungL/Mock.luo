@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Mock.Data
+﻿namespace Mock.Data.AppModel
 {
     public class DataGrid
     {
-        public int total { get; set; }
-        public object rows { get; set; }
-        public object footer { get; set; }
+        public int Total { get; set; }
+        public object Rows { get; set; }
+        public object Footer { get; set; }
     }
 }

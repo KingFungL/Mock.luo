@@ -1,18 +1,20 @@
-﻿using EntityFramework.Extensions;
-using Mock.Code;
-using Mock.Data;
-using Mock.Data.Models;
-using Mock.Domain;
-using Mock.Luo.Generic.Helper;
-using Mock.Luo.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Mock.Code;
+using Mock.Code.Helper;
+using Mock.Code.Mail;
+using Mock.Code.Net;
+using Mock.Code.Security;
+using Mock.Code.Validate;
+using Mock.Code.Web;
+using Mock.Data.AppModel;
+using Mock.Data.Models;
+using Mock.Domain.Interface;
+using Mock.luo.Models;
 
-namespace Mock.Luo.Controllers
+namespace Mock.luo.Controllers
 {
     public class AccountController : BaseController
     {
@@ -24,13 +26,13 @@ namespace Mock.Luo.Controllers
         private readonly IAppUserRepository _appUserRepository;
         private readonly IReviewRepository _reviewRepository;
         private readonly IGuestBookRepository _guestBookRepository;
-        public AccountController(IRedisHelper _redisHelper, IMailHelper _imailHelper, IAppUserRepository _appUserRepository, IReviewRepository _reviewRepository, IGuestBookRepository _guestBookRepository)
+        public AccountController(IRedisHelper redisHelper, IMailHelper imailHelper, IAppUserRepository appUserRepository, IReviewRepository reviewRepository, IGuestBookRepository guestBookRepository)
         {
-            this._redisHelper = _redisHelper;
-            this._imailHelper = _imailHelper;
-            this._appUserRepository = _appUserRepository;
-            this._reviewRepository = _reviewRepository;
-            this._guestBookRepository = _guestBookRepository;
+            this._redisHelper = redisHelper;
+            this._imailHelper = imailHelper;
+            this._appUserRepository = appUserRepository;
+            this._reviewRepository = reviewRepository;
+            this._guestBookRepository = guestBookRepository;
         }
 
         #endregion
@@ -41,12 +43,12 @@ namespace Mock.Luo.Controllers
         /// <returns></returns>
         public ActionResult Set()
         {
-            int? userid = op.CurrentUser.UserId;
-            var viewModel = _appUserRepository.IQueryable(r => r.Id == userid).Select(r => new
+            int? userid = Op.CurrentUser.UserId;
+            var viewModel = _appUserRepository.Queryable(r => r.Id == userid).Select(r => new
             {
                 r.LoginName,
                 r.Email,
-                r.QQ,
+                QQ = r.Qq,
                 r.EmailIsValid,
                 r.Phone,
                 r.NickName,
@@ -54,8 +56,8 @@ namespace Mock.Luo.Controllers
                 r.Gender,
                 r.PersonSignature,
                 r.PersonalWebsite,
-                PwdIsSet = r.LoginPassword == null ? false : true,
-                isBindQQ = r.AppUserAuths.Select(u => u.IdentityType == "QQ").Count() > 0
+                PwdIsSet = r.LoginPassword != null,
+                isBindQQ = r.AppUserAuths.Select(u => u.IdentityType == "QQ").Any()
             }).FirstOrDefault();
 
             ViewBag.viewModel = JsonHelper.SerializeObject(viewModel);
@@ -105,20 +107,20 @@ namespace Mock.Luo.Controllers
         /// <summary>
         /// 根据邮箱发送四位验证码，并将token返回给前端
         /// </summary>
-        /// <param name="Email"></param>
+        /// <param name="email"></param>
         /// <returns></returns>
 
-        public ActionResult GetActiveCode(string Email)
+        public ActionResult GetActiveCode(string email)
         {
-            if (Email.IsNullOrEmpty())
+            if (email.IsNullOrEmpty())
             {
                 return Error("Email不能为空!!!");
             }
-            if (!Validate.IsEmail(Email))
+            if (!Validate.IsEmail(email))
             {
                 return Error("Email格式不正确!!!");
             }
-            int? Id = op.CurrentUser.UserId;
+            int id = Op.CurrentUser.UserId;
 
             //bool EmailIsValid = _appUserRepository.IQueryable(u => u.Id == Id).Select(r => r.EmailIsValid).FirstOrDefault();
 
@@ -129,8 +131,8 @@ namespace Mock.Luo.Controllers
 
             //为了安全，一个用户IP10分钟内只能请求此接口3次
 
-            string IP = Net.Ip;
-            int count = _redisHelper.StringGet<int>(IP);
+            string ip = Net.Ip;
+            int count = _redisHelper.StringGet<int>(ip);
 
             if (count >= 3)
             {
@@ -139,15 +141,15 @@ namespace Mock.Luo.Controllers
 
             count += 1;
 
-            _redisHelper.StringSet(IP, count, new TimeSpan(0, 10, 0));
+            _redisHelper.StringSet(ip, count, new TimeSpan(0, 10, 0));
 
             var amm = _appUserRepository.IsRepeat(new AppUser
             {
-                Id = Id,
+                Id = id,
                 LoginName=Utils.GuId(),
-                Email = Email
+                Email = email
             });
-            if (amm.state.Equals(ResultType.error.ToString()))
+            if (amm.State.Equals(ResultType.Error.ToString()))
             {
                 return Error("该邮箱已被绑定其他用户绑定!");
             }
@@ -160,17 +162,17 @@ namespace Mock.Luo.Controllers
             string rand4Num = Utils.RndNum(4);
 
             //redis缓存绑定邮箱随机token作为键，email作为值，随机u为键，当前登录id为值
-            _redisHelper.StringSet(token, Email, saveTime);
-            _redisHelper.StringSet(token + Email, rand4Num, saveTime);
+            _redisHelper.StringSet(token, email, saveTime);
+            _redisHelper.StringSet(token + email, rand4Num, saveTime);
 
             EmailViewModel emailViewModel = new EmailViewModel
             {
-                ToUserName = Email,
+                ToUserName = email,
                 Code = rand4Num
             };
 
             string body = UiHelper.FormatEmail(emailViewModel, "SendCodeTemplate");
-            _imailHelper.SendByThread(Email, "[、天上有木月博客] 邮箱激活通知", body);
+            _imailHelper.SendByThread(email, "[、天上有木月博客] 邮箱激活通知", body);
 
             return Success("邮箱发送成功，请查收", token);
         }
@@ -179,13 +181,13 @@ namespace Mock.Luo.Controllers
         /// 生成一个token,发送邮箱给用户邮箱  
         /// /// </summary>
         /// <returns></returns>
-        public ActionResult ActiveSendEmail(string Email)
+        public ActionResult ActiveSendEmail(string email)
         {
-            if (Email.IsNullOrEmpty())
+            if (email.IsNullOrEmpty())
             {
                 return Error("Email不能为空!!!");
             }
-            if (!Validate.IsEmail(Email))
+            if (!Validate.IsEmail(email))
             {
                 return Error("Email格式不正确!!!");
             }
@@ -197,19 +199,19 @@ namespace Mock.Luo.Controllers
             string u = Utils.GuId();
 
             //redis缓存绑定邮箱随机token作为键，email作为值，随机u为键，当前登录id为值
-            _redisHelper.StringSet(token, Email, saveTime);
-            _redisHelper.StringSet(u, op.CurrentUser.UserId, saveTime);
+            _redisHelper.StringSet(token, email, saveTime);
+            _redisHelper.StringSet(u, Op.CurrentUser.UserId, saveTime);
 
             string rootUrl = Request.Url.Authority;
 
             EmailViewModel emailViewModel = new EmailViewModel
             {
-                ToUserName = Email,
+                ToUserName = email,
                 Link = "http://" + rootUrl + "/App/ActiveEmail?t=" + token + "&u=" + u
             };
             string body = UiHelper.FormatEmail(emailViewModel, "ActiveEmailTemplate");
 
-            _imailHelper.SendByThread(Email, "[、天上有木月博客] 邮箱激活通知", body);
+            _imailHelper.SendByThread(email, "[、天上有木月博客] 邮箱激活通知", body);
 
             return Success("邮箱发送成功，请查收");
         }
@@ -217,51 +219,51 @@ namespace Mock.Luo.Controllers
         /// <summary>
         /// 修改email，需要上次缓存的验证码和token
         /// </summary>
-        /// <param name="Email"></param>
-        /// <param name="EmailToken"></param>
-        /// <param name="Code"></param>
+        /// <param name="email"></param>
+        /// <param name="emailToken"></param>
+        /// <param name="code"></param>
         /// <returns></returns>
-        public ActionResult SetEmail(string Email, string EmailToken, string Code)
+        public ActionResult SetEmail(string email, string emailToken, string code)
         {
 
-            if (Code.IsNullOrEmpty())
+            if (code.IsNullOrEmpty())
             {
                 return Error("验证码不能为空");
             }
-            if (EmailToken.IsNullOrEmpty())
+            if (emailToken.IsNullOrEmpty())
             {
                 return Error("邮件标识符异常，请重新获取验证码！");
             }
 
-            string email = _redisHelper.StringGet(EmailToken);
+            string emailByToken = _redisHelper.StringGet(emailToken);
 
-            if (email.IsNullOrEmpty())
+            if (emailByToken.IsNullOrEmpty())
             {
                 return Error("您的操作已过期，请重试！");
             }
 
-            if (Email.IsNullOrEmpty() || !email.Equals(Email))
+            if (emailByToken.IsNullOrEmpty() || !email.Equals(emailByToken))
             {
                 return Error("邮箱参数异常");
             }
-            string code = _redisHelper.StringGet(EmailToken + email);
-            if (code.IsNullOrEmpty())
+            string codeNew = _redisHelper.StringGet(emailToken + email);
+            if (codeNew.IsNullOrEmpty())
             {
                 return Error("您的操作已过期，请重试！");
             }
 
-            if (!Code.Equals(code))
+            if (!codeNew.Equals(code))
             {
                 return Error("您输入的验证码不正确，请重试!");
             }
 
-            _appUserRepository.Update(_appUserRepository.IQueryable(u => u.Id == op.CurrentUser.UserId), u => new AppUser
+            _appUserRepository.Update(_appUserRepository.Queryable(u => u.Id == Op.CurrentUser.UserId), u => new AppUser
             {
-                Email = Email,
+                Email = email,
                 EmailIsValid = true
             });
-            _redisHelper.KeyDeleteAsync(EmailToken);
-            _redisHelper.KeyDeleteAsync(EmailToken + Email);
+            _redisHelper.KeyDeleteAsync(emailToken);
+            _redisHelper.KeyDeleteAsync(emailToken + email);
 
             return Success("绑定成功！");
         }
@@ -270,37 +272,37 @@ namespace Mock.Luo.Controllers
         /// <summary>
         /// 设置用户名|仅一次，且不重复
         /// </summary>
-        /// <param name="LoginName"></param>
+        /// <param name="loginName"></param>
         /// <returns></returns>
-        public ActionResult SetLoginName(string LoginName)
+        public ActionResult SetLoginName(string loginName)
         {
 
-            bool nameValidate = Validate.IsValidUserName(LoginName);
+            bool nameValidate = Validate.IsValidUserName(loginName);
             if (!nameValidate)
             {
                 return Error("您填写的用户名称不合法！");
             }
-            int? UserId = op.CurrentUser.UserId;
+            int userId = Op.CurrentUser.UserId;
 
             //判断当前用户名是否存在重复
             var amm = _appUserRepository.IsRepeat(new AppUser
             {
-                Id = UserId,
-                LoginName = LoginName
+                Id = userId,
+                LoginName = loginName
             });
             //重复直接返回
-            if (amm.state.Equals(ResultType.error.ToString()))
+            if (amm.State.Equals(ResultType.Error.ToString()))
             {
                 return Result(amm);
             }
-            var tempIQueryable = _appUserRepository.IQueryable(u => u.Id == UserId && u.DeleteMark == false);
+            var tempIQueryable = _appUserRepository.Queryable(u => u.Id == userId && u.DeleteMark == false);
             string loginNameMs = tempIQueryable.Select(r => r.LoginName).FirstOrDefault();
             //只有当前id查询出的用户名为空，才表明未设置过用户名
             if (loginNameMs.IsNullOrEmpty())
             {
                 _appUserRepository.Update(tempIQueryable, u => new AppUser
                 {
-                    LoginName = LoginName
+                    LoginName = loginName
                 });
             }
             else
@@ -315,7 +317,7 @@ namespace Mock.Luo.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Error(ModelState.Values.Where(u => u.Errors.Count > 0).FirstOrDefault().Errors[0].ErrorMessage);
+                return Error(ModelState.Values.FirstOrDefault(u => u.Errors.Count > 0)?.Errors[0].ErrorMessage);
             }
             if (userEntity.NickName.IsNullOrEmpty())
             {
@@ -326,7 +328,7 @@ namespace Mock.Luo.Controllers
             {
                 return Error("昵称不合法，给我换、");
             }
-            OperatorModel oUserModel = op.CurrentUser;
+            OperatorModel oUserModel = Op.CurrentUser;
 
             userEntity.Modify(oUserModel.UserId);
             //_appUserRepository.IQueryable(u => u.Id == oUserModel.UserId).Update(u => userEntity);
@@ -334,7 +336,7 @@ namespace Mock.Luo.Controllers
             _appUserRepository.Update(userEntity, "QQ", "Phone", "NickName", "Gender", "PersonSignature", "PersonalWebsite");
 
             oUserModel.NickName = userEntity.NickName;
-            op.CurrentUser = oUserModel;
+            Op.CurrentUser = oUserModel;
 
             return Success();
         }
@@ -343,25 +345,25 @@ namespace Mock.Luo.Controllers
         /// 保存用户头像| 用于上传头像的回调
         /// </summary>
         /// <returns></returns>
-        public ActionResult SaveAvatar(string Avatar)
+        public ActionResult SaveAvatar(string avatar)
         {
-            int? id = op.CurrentUser.UserId;
-            _appUserRepository.Update(_appUserRepository.IQueryable(u => u.Id == id), r => new AppUser
+            int? id = Op.CurrentUser.UserId;
+            _appUserRepository.Update(_appUserRepository.Queryable(u => u.Id == id), r => new AppUser
             {
-                Avatar = Avatar
+                Avatar = avatar
             });
-            OperatorModel oUserModel = op.CurrentUser;
-            oUserModel.Avatar = Avatar;
-            op.CurrentUser = oUserModel;
+            OperatorModel oUserModel = Op.CurrentUser;
+            oUserModel.Avatar = avatar;
+            Op.CurrentUser = oUserModel;
 
             return Success();
         }
 
         [HttpPost]
-        public ActionResult ResetPwd(string newPwd, string LoginPassword = "")
+        public ActionResult ResetPwd(string newPwd, string loginPassword = "")
         {
 
-            int userId = (int)op.CurrentUser.UserId;
+            int userId = (int)Op.CurrentUser.UserId;
 
             if (newPwd.IsNullOrEmpty())
             {
@@ -380,7 +382,7 @@ namespace Mock.Luo.Controllers
                 else
                 {
 
-                    if (LoginPassword.IsNullOrEmpty())
+                    if (loginPassword.IsNullOrEmpty())
                     {
                         return Error("旧密码不能为空");
                     }
@@ -388,7 +390,7 @@ namespace Mock.Luo.Controllers
                     {
                         return Error("用户密钥丢失，请联系管理员重置密码");
                     }
-                    string dbPwd = Md5.md5(DESEncrypt.Encrypt(LoginPassword.ToLower(), userEntity.UserSecretkey).ToLower(), 32).ToLower();
+                    string dbPwd = Md5Helper.Md5(DesEncrypt.Encrypt(loginPassword.ToLower(), userEntity.UserSecretkey).ToLower(), 32).ToLower();
 
                     if (userEntity.LoginPassword.Equals(dbPwd))
                     {
@@ -411,9 +413,9 @@ namespace Mock.Luo.Controllers
         /// 得到自己的评论列表
         /// </summary>
         /// <returns></returns>
-        public ActionResult GetCommentGrid(Pagination pag)
+        public ActionResult GetCommentGrid(PageDto pag)
         {
-            int? userId = op.CurrentUser.UserId;
+            int? userId = Op.CurrentUser.UserId;
             DataGrid dg = _reviewRepository.GetDataGrid(u => u.CreatorUserId == userId, pag, "", 0);
 
             return Result(dg);
@@ -423,9 +425,9 @@ namespace Mock.Luo.Controllers
         /// 得到自己的留言列表
         /// </summary>
         /// <returns></returns>
-        public ActionResult GetGuestGrid(Pagination pag)
+        public ActionResult GetGuestGrid(PageDto pag)
         {
-            int? userId = op.CurrentUser.UserId;
+            int? userId = Op.CurrentUser.UserId;
             DataGrid dg = _guestBookRepository.GetDataGrid(u => u.CreatorUserId == userId, pag, "");
             return Result(dg);
         }

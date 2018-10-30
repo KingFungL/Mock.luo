@@ -1,11 +1,11 @@
-﻿using Mock.Code;
-using System;
-using System.Web.Mvc;
-using Mock.Data;
-using System.Text;
-using System.Web;
+﻿using System.Web.Mvc;
+using Mock.Code.Attribute;
+using Mock.Code.Cache;
+using Mock.Code.Configs;
+using Mock.Code.Web;
+using Mock.Data.AppModel;
 
-namespace Mock.Luo.Generic.Filters
+namespace Mock.luo.Generic.Filters
 {
     public class HandlerLoginAttribute : AuthorizeAttribute
     {

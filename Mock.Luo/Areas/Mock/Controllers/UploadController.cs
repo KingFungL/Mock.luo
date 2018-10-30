@@ -1,13 +1,13 @@
-﻿using Mock.Code;
-using Mock.Luo.Controllers;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Mock.Code.Json;
+using Mock.Code.Web;
+using Mock.luo.Controllers;
 
-namespace Mock.Luo.Areas.Mock.Controllers
+namespace Mock.luo.Areas.Mock.Controllers
 {
     public class UploadController : BaseController
     {
@@ -26,8 +26,8 @@ namespace Mock.Luo.Areas.Mock.Controllers
             string extionName = Path.GetExtension(file.FileName);//  得到 :   .jpg  
             string postfix = extionName.Substring(1, extionName.Length - 1);
 
-            string[] img_type = { "jpg", "jpeg", "gif", "png", "bmp", "webp" };
-            if (!img_type.Contains(postfix))
+            string[] imgType = { "jpg", "jpeg", "gif", "png", "bmp", "webp" };
+            if (!imgType.Contains(postfix))
             {
                 return AjaxResult.Error("请使用常用的图片类型！你的类型为:" + extionName);
             }
@@ -90,12 +90,12 @@ namespace Mock.Luo.Areas.Mock.Controllers
         {
             AjaxResult amm = UploadImg();
             string title = Request.Files[0].FileName;
-            if (amm.state== ResultType.error.ToString())
+            if (amm.State== ResultType.Error.ToString())
             {
                 var codeMsg = new
                 {
                     code = 1,
-                    msg =amm.message,
+                    msg =amm.Message,
                     data = new
                     {
                         src = "",
@@ -112,7 +112,7 @@ namespace Mock.Luo.Areas.Mock.Controllers
                     msg = "上传成功",
                     data = new
                     {
-                        src = amm.data,
+                        src = amm.Data,
                         title = title
                     }
                 };

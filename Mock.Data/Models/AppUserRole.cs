@@ -8,16 +8,17 @@ using System.Threading.Tasks;
 
 namespace Mock.Data.Models
 {
-    [Table("RoleModule")]
-    public class RoleModule
+    [Table("AppUserRole")]
+    public class AppUserRole
     {
         [Key]
         public int Id { get; set; }
+
         public int RoleId { get; set; }
         [ForeignKey("RoleId")]
         public AppRole AppRole { get; set; }
-        public int ModuleId { get; set; }
-        [ForeignKey("ModuleId")]
-        public AppModule AppModule { get; set; }
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public AppUser AppUser { get; set; }
     }
 }

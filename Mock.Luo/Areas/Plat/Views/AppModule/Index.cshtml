@@ -72,7 +72,7 @@
             },
             methods: {
                 init_fancytree: function () {
-                    var glyph_opts = {
+                    var glyphOpts = {
                         preset: "bootstrap3",
                         map: {
                             expanderClosed: "glyphicon glyphicon-menu-right",  // glyphicon-plus-sign
@@ -88,7 +88,7 @@
                         icons: true,
                         selectMode: 1,
                         quicksearch: true,
-                        glyph: glyph_opts,
+                        glyph: glyphOpts,
                         source: { url: "/Plat/AppModule/GetFancyTreeGrid", debugDelay: 1000 },
                         table: {
                             checkboxColumnIdx: 0,
@@ -131,9 +131,9 @@
                     this.editinfo('新增', 0);
                 },
                 btn_edit: function () {
-                    var select_nodes = $('#treetable').fancytree('getTree').getSelectedNodes();
-                    if (select_nodes.length > 0) {
-                        var node = select_nodes[0].data;
+                    var selectNodes = $('#treetable').fancytree('getTree').getSelectedNodes();
+                    if (selectNodes.length > 0) {
+                        var node = selectNodes[0].data;
                         if (node.TypeCode == 'Menu' || node.TypeCode == 'PMenu') {
                             this.editinfo('编辑', node.Id);
                         } else {
@@ -144,13 +144,13 @@
                     }
                 },
                 btn_delete: function () {
-                    var select_nodes = $('#treetable').fancytree('getTree').getSelectedNodes();
-                    if (select_nodes.length > 0) {
+                    var selectNodes = $('#treetable').fancytree('getTree').getSelectedNodes();
+                    if (selectNodes.length > 0) {
                         $.layerConfirm({
                             content: '您确定要删除你勾选的记录吗?',
                             callback: function () {
                                 com.ajax({
-                                    url: '/Plat/AppModule/Delete/' + select_nodes[0].data.Id,
+                                    url: '/Plat/AppModule/Delete/' + selectNodes[0].data.Id,
                                     showMsg: true,
                                     success: function () {
                                         vm.btn_refresh();
@@ -162,13 +162,13 @@
                         $.layerMsg('请选中您要删除的记录！');
                     }
                 },
-                editinfo: function (title, Id) {
+                editinfo: function (title, id) {
                     $.layerOpen({
                         id: "Form",
                         title: title,
                         width: '65%',
                         height: '70%',
-                        content: '/Plat/AppModule/Form/' + Id,
+                        content: '/Plat/AppModule/Form/' + id,
                         btn: null,
                         yes: function (iframebody, iframeWin, index) {
                             iframeWin.vm.submit(function () {
@@ -177,21 +177,21 @@
                         }
                     });
                 },
-                format_typecode: function (type_code) {
-                    var text = '数据为空', label_class = 'warning';
-                    switch (type_code) {
+                format_typecode: function (typeCode) {
+                    var text = '数据为空', labelClass = 'warning';
+                    switch (typeCode) {
                         case 'PMenu': text = '父菜单';
-                            label_class = 'success'; break;
+                            labelClass = 'success'; break;
                         case 'Menu': text = "菜单";
-                            label_class = 'danger'; break;
+                            labelClass = 'danger'; break;
                         case 'Button': text = "按钮";
-                            label_class = 'warning'; break;
+                            labelClass = 'warning'; break;
                         case 'Permission': text = "权限";
-                            label_class = 'info'; break;
-                        default: text = '数据为空', label_class = 'warning'; break;
+                            labelClass = 'info'; break;
+                        default: text = '数据为空', labelClass = 'warning'; break;
                     }
 
-                    return com.format_str('<span class="label label-{0}">{1}</span>', label_class, text);
+                    return com.format_str('<span class="label label-{0}">{1}</span>', labelClass, text);
                 }
             }
         });

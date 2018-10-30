@@ -1,8 +1,8 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
+using Mock.Code.Json;
 
-namespace Mock.Code
+namespace Mock.Code.Web.Tree
 {
     public static class TreeSelect
     {
@@ -22,30 +22,30 @@ namespace Mock.Code
         private static string TreeSelectJson(List<TreeSelectModel> data, string parentId, string blank)
         {
             StringBuilder sb = new StringBuilder();
-            var ChildNodeList = data.FindAll(t => t.parentId == parentId);
+            var childNodeList = data.FindAll(t => t.ParentId == parentId);
             var tabline = "";
             if (parentId != "0")
             {
                 tabline = "　　";
             }
-            if (ChildNodeList.Count > 0)
+            if (childNodeList.Count > 0)
             {
                 tabline = tabline + blank;
             }
-            foreach (TreeSelectModel entity in ChildNodeList)
+            foreach (TreeSelectModel entity in childNodeList)
             {
-                entity.text = tabline + entity.text;
+                entity.Text = tabline + entity.Text;
                 string strJson = entity.ToJson();
                 sb.Append(strJson);
-                sb.Append(TreeSelectJson(data, entity.id, tabline));
+                sb.Append(TreeSelectJson(data, entity.Id, tabline));
             }
             return sb.ToString().Replace("}{", "},{");
         }
 
-        public static string ComboboxTreeJson(this List<TreeSelectModel> data,int PId=0)
+        public static string ComboboxTreeJson(this List<TreeSelectModel> data,int pId=0)
         {
             List<TreeSelectModel> listTreeNodes = new List<TreeSelectModel>();
-            ComboboxTreeJson(data, listTreeNodes, PId.ToString());
+            ComboboxTreeJson(data, listTreeNodes, pId.ToString());
             return listTreeNodes.ToJson();
         }
 
@@ -53,19 +53,19 @@ namespace Mock.Code
         {
             foreach (TreeSelectModel item in listModels)
             {
-                if (item.parentId == pid)
+                if (item.ParentId == pid)
                 {
                     TreeSelectModel node = new TreeSelectModel
                     {
-                        id = item.id,
-                        text = item.text,
-                        parentId = item.parentId,
-                        hasChildren=listModels.TreeWhere(u=>u.parentId==item.id).Count>0?true:false,
+                        Id = item.Id,
+                        Text = item.Text,
+                        ParentId = item.ParentId,
+                        HasChildren=listModels.TreeWhere(u=>u.ParentId==item.Id).Count>0?true:false,
                         ChildNodes = new List<TreeSelectModel>()
                     };
                     listTreeNodes.Add(node);
 
-                    ComboboxTreeJson(listModels, node.ChildNodes, node.id);
+                    ComboboxTreeJson(listModels, node.ChildNodes, node.Id);
                 }
             }
         }

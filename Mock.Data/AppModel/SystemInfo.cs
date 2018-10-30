@@ -1,24 +1,14 @@
-﻿using Mock.Code;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Mock.Code.Web;
 
-namespace Mock.Data
+namespace Mock.Data.AppModel
 {
     public class SystemInfo
     {
         /// <summary>
         /// 当前Tab页面模块Id
         /// </summary>
-        public static string CurrentModuleId
-        {
-            get
-            {
-                return WebHelper.GetCookie("currentmoduleId");
-            }
-        }
+        public static string CurrentModuleId => WebHelper.GetCookie("currentmoduleId");
+
         /// <summary>
         /// 当前登录用户Id
         /// </summary>
@@ -26,7 +16,8 @@ namespace Mock.Data
         {
             get
             {
-                return (int)OperatorProvider.Provider.CurrentUser.UserId;
+                return (int) OperatorProvider.Provider.CurrentUser.UserId;
+               
             }
         }
     }

@@ -4,7 +4,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading;
 
-namespace Mock.Code
+namespace Mock.Code.Mail
 {
     public class MailHelper:IMailHelper
     {
@@ -26,10 +26,10 @@ namespace Mock.Code
         public string MailName { get; set; }
         public MailHelper()
         {
-            this.MailName = Configs.GetValue("MailName");
-            this.MailPassword = Configs.GetValue("MailPassword");
-            this.MailServer = Configs.GetValue("MailHost");
-            this.MailUserName = Configs.GetValue("MailUserName");
+            this.MailName = Configs.Configs.GetValue("MailName");
+            this.MailPassword = Configs.Configs.GetValue("MailPassword");
+            this.MailServer = Configs.Configs.GetValue("MailHost");
+            this.MailUserName = Configs.Configs.GetValue("MailUserName");
         }
         public MailHelper(string mailServer, string mailUserName, string mailPwd, string mailName)
         {
@@ -74,7 +74,7 @@ namespace Mock.Code
                 throw new ArgumentException("no body provided");
             }
 
-            if (!Validate.IsEmail(to))
+            if (!Validate.Validate.IsEmail(to))
             {
                 throw new AggregateException("邮箱格式不正确!");
             }
@@ -130,7 +130,7 @@ namespace Mock.Code
                 throw new ArgumentException("no body provided");
             }
 
-            if(!Validate.IsEmail(to))
+            if(!Validate.Validate.IsEmail(to))
             {
                 throw new AggregateException("邮箱格式不正确!");
             }

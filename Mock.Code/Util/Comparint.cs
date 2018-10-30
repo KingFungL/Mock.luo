@@ -8,12 +8,12 @@ namespace Mock.Code.Util
 {
     public class Comparint<T> : IEqualityComparer<T> where T : class, new()
     {
-        private string[] comparintFiledName = { };
+        private string[] _comparintFiledName = { };
 
         public Comparint() { }
         public Comparint(params string[] comparintFiledName)
         {
-            this.comparintFiledName = comparintFiledName;
+            this._comparintFiledName = comparintFiledName;
         }
         bool IEqualityComparer<T>.Equals(T x, T y)
         {
@@ -21,14 +21,14 @@ namespace Mock.Code.Util
             {
                 return false;
             }
-            if (comparintFiledName.Length == 0)
+            if (_comparintFiledName.Length == 0)
             {
                 return x.Equals(y);
             }
             bool result = true;
             var typeX = x.GetType();//获取类型
             var typeY = y.GetType();
-            foreach (var filedName in comparintFiledName)
+            foreach (var filedName in _comparintFiledName)
             {
                 var xPropertyInfo = (from p in typeX.GetProperties() where p.Name.Equals(filedName) select p).FirstOrDefault();
                 var yPropertyInfo = (from p in typeY.GetProperties() where p.Name.Equals(filedName) select p).FirstOrDefault();

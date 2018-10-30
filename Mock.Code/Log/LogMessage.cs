@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Mock.Code
+namespace Mock.Code.Log
 {
     /// <summary>
     /// 日志消息

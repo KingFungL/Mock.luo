@@ -1,18 +1,19 @@
-﻿using Autofac;
-using Mock.Code;
-using Mock.Data;
-using Mock.Data.Models;
-using Mock.Domain;
-using Mock.Luo.Areas.Plat.Models;
-using Mock.Luo.Controllers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using Autofac;
+using Mock.Code.Helper;
+using Mock.Code.Json;
+using Mock.Code.Web.Tree;
+using Mock.Code.Web.TreeGrid;
+using Mock.Data.AppModel;
+using Mock.Data.Models;
+using Mock.Domain.Interface;
+using Mock.luo.Areas.Plat.Models;
+using Mock.luo.Controllers;
 
-
-namespace Mock.Luo.Areas.Plat.Controllers
+namespace Mock.luo.Areas.Plat.Controllers
 {
     public class AppModuleController : CrudController<AppModule, AppModuleViewModel>
     {
@@ -55,31 +56,31 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// <summary>
         /// 下拉菜单树结构
         /// </summary>
-        /// <param name="PId">父节点</param>
+        /// <param name="pId">父节点</param>
         /// <returns></returns>
-        public ActionResult GetComboBoxTreeJson(int PId = 0)
+        public ActionResult GetComboBoxTreeJson(int pId = 0)
         {
-            List<TreeSelectModel> treeList = _service.GetTreeJson(PId);
-            return Content(treeList.ComboboxTreeJson(PId));
+            List<TreeSelectModel> treeList = _service.GetTreeJson(pId);
+            return Content(treeList.ComboboxTreeJson(pId));
         }
 
         /// <summary>
         /// 系统按钮列表数据
         /// </summary>
-        /// <param name="Id">父ID</param>
+        /// <param name="id">父ID</param>
         /// <returns></returns>
-        public ActionResult GetListJson(int Id)
+        public ActionResult GetListJson(int id)
         {
-            return Result(_service.GetListJson(Id));
+            return Result(_service.GetListJson(id));
         }
         /// <summary>
         /// 按钮树形jqGrid数据
         /// </summary>
-        /// <param name="Id">父ID</param>
+        /// <param name="id">父ID</param>
         /// <returns></returns>
-        public ActionResult GetButtonTreeJson(int Id)
+        public ActionResult GetButtonTreeJson(int id)
         {
-            return Content(_service.GetButtonTreeJson(Id).TreeGridJson(Id));
+            return Content(_service.GetButtonTreeJson(id).TreeGridJson(id));
         }
 
         public ActionResult ButtonList()
@@ -99,7 +100,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// 将button数组转成前台jqGrid对应的树形表格
         /// </summary>
         /// <returns></returns>
-        public ActionResult ToButtonTreeJson(string moduleButtonJson, int Id = 0)
+        public ActionResult ToButtonTreeJson(string moduleButtonJson, int id = 0)
         {
             List<AppModuleViewModel> dglist = JsonHelper.DeserializeJsonToList<AppModuleViewModel>(moduleButtonJson).OrderBy(u => u.SortCode).ToList();
 
@@ -108,14 +109,14 @@ namespace Mock.Luo.Areas.Plat.Controllers
             {
                 TreeGridModel treeModel = new TreeGridModel();
                 bool hasChildren = dglist.Count(t => t.PId == item.Id) == 0 ? false : true;
-                treeModel.id = item.Id.ToString();
-                treeModel.isLeaf = hasChildren;
-                treeModel.parentId = item.PId.ToString();
-                treeModel.expanded = hasChildren;
-                treeModel.entityJson = JsonHelper.SerializeObject(new { item.Id, item.PId, item.Icon, item.Name, item.SortCode, item.EnCode, item.LinkUrl, item.TypeCode });
+                treeModel.Id = item.Id.ToString();
+                treeModel.IsLeaf = hasChildren;
+                treeModel.ParentId = item.PId.ToString();
+                treeModel.Expanded = hasChildren;
+                treeModel.EntityJson = JsonHelper.SerializeObject(new { item.Id, item.PId, item.Icon, item.Name, item.SortCode, item.EnCode, item.LinkUrl, item.TypeCode });
                 treeList.Add(treeModel);
             }
-            return Content(treeList.TreeGridJson(Id));
+            return Content(treeList.TreeGridJson(id));
         }
 
         /// <summary>
@@ -123,13 +124,13 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// </summary>
         /// <param name="viewModel"></param>
         /// <param name="buttonJson"></param>
-        /// <param name="Id"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult SubmitForm(AppModule viewModel, string buttonJson, int Id = 0)
+        public ActionResult SubmitForm(AppModule viewModel, string buttonJson, int id = 0)
         {
             List<AppModule> buttonList = JsonHelper.DeserializeJsonToList<AppModule>(buttonJson);
 
-            _service.SubmitForm(viewModel, buttonList, Id);
+            _service.SubmitForm(viewModel, buttonList, id);
 
             return Success();
         }
@@ -138,7 +139,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// </summary>
         /// <param name="moduleButtonJson"></param>
         /// <returns></returns>
-        public ActionResult ListToTreeJson(string moduleButtonJson, int Id = 0)
+        public ActionResult ListToTreeJson(string moduleButtonJson, int id = 0)
         {
             List<AppModuleViewModel> dglist = JsonHelper.DeserializeJsonToList<AppModuleViewModel>(moduleButtonJson);
 
@@ -147,15 +148,15 @@ namespace Mock.Luo.Areas.Plat.Controllers
             {
                 treeList.Add(new TreeSelectModel
                 {
-                    id = item.Id.ToString(),
-                    text = item.Name,
-                    parentId = item.PId.ToString()
+                    Id = item.Id.ToString(),
+                    Text = item.Name,
+                    ParentId = item.PId.ToString()
                 });
             }
 
-            treeList.Insert(0, new TreeSelectModel { id = "-1", text = "==请选择==", parentId = Convert.ToString(Id) });
+            treeList.Insert(0, new TreeSelectModel { Id = "-1", Text = "==请选择==", ParentId = Convert.ToString(id) });
 
-            return Content(treeList.ComboboxTreeJson(Id));
+            return Content(treeList.ComboboxTreeJson(id));
         }
         /// <summary>
         /// 根据角色id获取分配权限

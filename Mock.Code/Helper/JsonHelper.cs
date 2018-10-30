@@ -1,10 +1,8 @@
-﻿using Mock.Code.Helpers;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
 
-namespace Mock.Code
+namespace Mock.Code.Helper
 {
     /// <summary>
     /// Json帮助类
@@ -78,7 +76,7 @@ namespace Mock.Code
         public static T DeserializeJsonFileToList<T>(string fileUrl) where T : class
         {
             JsonSerializer serializer = new JsonSerializer();
-            StringReader sr = new StringReader(FileHelper.GetFileName(fileUrl));
+            StringReader sr = new StringReader(File.FileHelper.GetFileName(fileUrl));
             object o = serializer.Deserialize(new JsonTextReader(sr), typeof(T));
             T t = o as T;
             return t;

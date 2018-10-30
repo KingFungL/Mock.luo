@@ -1,15 +1,21 @@
-﻿using Mock.Code;
-using Mock.Data;
-using Mock.Domain;
-using System;
+﻿using System;
 using System.Web.Mvc;
+using Mock.Code.Attribute;
+using Mock.Code.Configs;
+using Mock.Code.Extend;
+using Mock.Code.Json;
+using Mock.Code.Log;
+using Mock.Code.Mail;
+using Mock.Code.Web;
+using Mock.Data.AppModel;
+using Mock.Domain.Interface;
 
-namespace Mock.Luo.Generic.Filters
+namespace Mock.luo.Generic.Filters
 {
     public class HandlerErrorAttribute : HandleErrorAttribute
     {
-        private ILogInfoRepository _iLogRepository { get; set; }
-        private IMailHelper _mailHelper { get; set; }
+        private ILogInfoRepository LogRepository { get; set; }
+        private IMailHelper MailHelper { get; set; }
         public override void OnException(ExceptionContext context)
         {
             base.OnException(context);
@@ -17,7 +23,7 @@ namespace Mock.Luo.Generic.Filters
             context.HttpContext.Response.StatusCode = 200;
 
 
-            ContentResult conResult = new ContentResult { Content = new AjaxResult { state = ResultType.error.ToString(), message = context.Exception.Message }.ToJson() };
+            ContentResult conResult = new ContentResult { Content = new AjaxResult { State = ResultType.Error.ToString(), Message = context.Exception.Message }.ToJson() };
 
 
             context.Result = conResult;
@@ -38,20 +44,20 @@ namespace Mock.Luo.Generic.Filters
                 Class = context.Controller.ToString(),
                 OperateAccount = OperatorProvider.Provider.CurrentUser.LoginName + "（" + OperatorProvider.Provider.CurrentUser.UserId + "）"
             };
-            Exception Error = context.Exception;
-            if (Error.InnerException == null)
+            Exception error = context.Exception;
+            if (error.InnerException == null)
             {
-                logMessage.ExceptionInfo = Error.Message;
+                logMessage.ExceptionInfo = error.Message;
             }
             else
             {
-                logMessage.ExceptionInfo = Error.InnerException.Message;
+                logMessage.ExceptionInfo = error.InnerException.Message;
             }
             string strMessage = new LogFormat().ExceptionFormat(logMessage);
 
             logMessage.ExecuteResultJson = strMessage;
 
-            _iLogRepository.LogError(logMessage, "错误日志");
+            LogRepository.LogError(logMessage, "错误日志");
 
 
             SendMail(strMessage);
@@ -63,11 +69,11 @@ namespace Mock.Luo.Generic.Filters
         /// </summary>
         private void SendMail(string body)
         {
-            bool ErrorToMail = Configs.GetValue("ErrorToMail").ToBool();
-            if (ErrorToMail == true)
+            bool errorToMail = Configs.GetValue("ErrorToMail").ToBool();
+            if (errorToMail == true)
             {
-                string SystemName = Configs.GetValue("SystemName");//系统名称
-                _mailHelper.SendByThread("710277267@qq.com", SystemName + " - 发生异常", body.Replace("-", ""));
+                string systemName = Configs.GetValue("SystemName");//系统名称
+                MailHelper.SendByThread("710277267@qq.com", systemName + " - 发生异常", body.Replace("-", ""));
             }
         }
 

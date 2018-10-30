@@ -1,17 +1,18 @@
-﻿using Mock.Data;
-using Mock.Data.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mock.Code;
 using System.Linq.Expressions;
-using Mock.Data.Dto;
+using Mock.Code.Extend;
 using Mock.Code.Helper;
+using Mock.Code.Web;
+using Mock.Data.AppModel;
+using Mock.Data.Dto;
 using Mock.Data.Extensions;
+using Mock.Data.Models;
+using Mock.Data.Repository;
+using Mock.Domain.Interface;
 
-namespace Mock.Domain
+namespace Mock.Domain.Implementations
 {
     /// <summary>
     /// 仓储实现层 ArticleRepositroy
@@ -29,9 +30,9 @@ namespace Mock.Domain
         #endregion
 
         #region private methods
-        private DataGrid GetGridByExpression(Expression<Func<Article, bool>> predicate, Pagination pag)
+        private DataGrid GetGridByExpression(Expression<Func<Article, bool>> predicate, PageDto pag)
         {
-            var dglist = this.IQueryable(predicate).Where(pag).Select(t => new
+            var dglist = this.Queryable(predicate).Where(pag).Select(t => new
             {
                 t.Id,
                 t.ItemsDetail.ItemCode,
@@ -44,7 +45,7 @@ namespace Mock.Domain
                 t.CommentQuantity,
                 t.Keywords,
                 t.Source,
-                t.thumbnail,
+                thumbnail = t.Thumbnail,
                 t.AppUser.LoginName,
                 t.IsAudit,
                 t.IsStickie,
@@ -52,13 +53,13 @@ namespace Mock.Domain
                 t.Recommend
             }).ToList();
 
-            return new DataGrid { rows = dglist, total = pag.total };
+            return new DataGrid { Rows = dglist, Total = pag.Total };
         }
         #endregion
 
-        public ArtDetailDto GetOneArticle(int Id)
+        public ArtDetailDto GetOneArticle(int id)
         {
-            ArtDetailDto artEntry = IQueryable(u => u.Id == Id && u.DeleteMark == false).Select(r => new ArtDetailDto
+            ArtDetailDto artEntry = Queryable(u => u.Id == id && u.DeleteMark == false).Select(r => new ArtDetailDto
             {
                 TypeName = r.ItemsDetail.ItemName,
                 TypeCode = r.ItemsDetail.ItemCode,
@@ -73,7 +74,7 @@ namespace Mock.Domain
                 CreatorUserId = r.CreatorUserId,
                 CreatorTime = r.CreatorTime,
                 ViewHits = r.ViewHits,
-                thumbnail = r.thumbnail,
+                Thumbnail = r.Thumbnail,
                 PointQuantity = r.PointQuantity
             }).FirstOrDefault();
 
@@ -99,7 +100,7 @@ namespace Mock.Domain
                 CreatorUserId = r.CreatorUserId,
                 CreatorTime = r.CreatorTime,
                 ViewHits = r.ViewHits,
-                thumbnail = r.thumbnail,
+                Thumbnail = r.Thumbnail,
             }).ToList();
 
             artList.ForEach(u =>
@@ -111,7 +112,7 @@ namespace Mock.Domain
         #endregion
 
         #region 后台管理的分页列表数据
-        public DataGrid GetDataGrid(Pagination pag, string search)
+        public DataGrid GetDataGrid(PageDto pag, string search)
         {
             Expression<Func<Article, bool>> predicate = u => u.DeleteMark == false
                 && (search == "" || u.Title.Contains(search) || u.AppUser.LoginName.Contains(search));
@@ -130,7 +131,7 @@ namespace Mock.Domain
         {
             return _iRedisHelper.UnitOfWork(string.Format(ConstHelper.Article, "GetRecentArticle"), () =>
             {
-                IQueryable<Article> artiQuaryable = this.IQueryable(u => u.DeleteMark == false).OrderByDescending(r => r.Id).Take(count);
+                IQueryable<Article> artiQuaryable = this.Queryable(u => u.DeleteMark == false).OrderByDescending(r => r.Id).Take(count);
                 return this.GetArticleList(artiQuaryable);
             });
         }
@@ -141,7 +142,7 @@ namespace Mock.Domain
         {
             return _iRedisHelper.UnitOfWork(string.Format(ConstHelper.Article, "GetHotArticle"), () =>
             {
-                return this.IQueryable(u => u.DeleteMark == false).Select(u => new
+                return this.Queryable(u => u.DeleteMark == false).Select(u => new
                 {
                     u.Id,
                     u.Title,
@@ -165,14 +166,14 @@ namespace Mock.Domain
         /// <param name="category"></param>
         /// <param name="tag"></param>
         /// <returns></returns>
-        public DataGrid GetCategoryTagGrid(Pagination pag, string category, string tag, string archive)
+        public DataGrid GetCategoryTagGrid(PageDto pag, string category, string tag, string archive)
         {
 
             Expression<Func<Article, bool>> expression = u => u.DeleteMark == false;
 
             if (tag.IsNotNullOrEmpty())//tag:标签时，按照标签内容去查询列表数据
             {
-                expression = expression.And(u => u.TagArts.Where(r => r.ItemsDetail.ItemCode == tag).Count() > 0);
+                expression = expression.And(u => Enumerable.Where<TagArt>(u.TagArts, r => r.ItemsDetail.ItemCode == tag).Count() > 0);
             }
             else if (category.IsNotNullOrEmpty())
             {
@@ -183,11 +184,11 @@ namespace Mock.Domain
                 expression = expression.And(u => u.Archive == archive);
             }
 
-            IQueryable<Article> iQueryableArt = base.IQueryable(expression);
+            IQueryable<Article> iQueryableArt = base.Queryable(expression);
             //前台文章列表的特殊性，需要按照特定要求取出数据
             List<ArtDetailDto> rows = this.GetArticleList(iQueryableArt.Where(pag));
 
-            return new DataGrid { total = iQueryableArt.Count(), rows = rows };
+            return new DataGrid { Total = iQueryableArt.Count(), Rows = rows };
 
         }
 
@@ -195,7 +196,7 @@ namespace Mock.Domain
         {
             return _iRedisHelper.UnitOfWork(string.Format(ConstHelper.Article, "GetSiteData"), () =>
             {
-                var artQuery = base.IQueryable(u => u.DeleteMark == false);
+                var artQuery = base.Queryable(u => u.DeleteMark == false);
                 return new SiteStatistics
                 {
                     ArticleCount = artQuery.Count(),
@@ -210,15 +211,15 @@ namespace Mock.Domain
         }
 
         #region 根据文章Id得到相关内容
-        public ArtRelateDto GetRelateDtoByAId(int Id)
+        public ArtRelateDto GetRelateDtoByAId(int id)
         {
 
-            IQueryable<Article> iQ = base.IQueryable(u => u.DeleteMark == false);
+            IQueryable<Article> iQ = base.Queryable(u => u.DeleteMark == false);
 
             //文章归档 | 可缓存
             List<BaseDto> archiveFile = _iRedisHelper.UnitOfWork(string.Format(ConstHelper.Article, "archiveFile"), () =>
             {
-                return base.IQueryable(u => u.DeleteMark == false && u.IsAudit == true).GroupBy(u => u.Archive).Select(u => new
+                return base.Queryable(u => u.DeleteMark == false && u.IsAudit == true).GroupBy(u => u.Archive).Select(u => new
                 {
                     u.Key,
                     u.FirstOrDefault().Archive,
@@ -226,8 +227,8 @@ namespace Mock.Domain
                     count = u.Count(),
                 }).OrderBy(u=>u.CreatorTime).ToList().Select(u => new BaseDto
                 {
-                    text = u.Archive,
-                    code = u.count.ToString()
+                    Text = u.Archive,
+                    Code = u.count.ToString()
                 }).ToList();
 
             });
@@ -236,46 +237,46 @@ namespace Mock.Domain
             //从文章列表中取出5条博主最后新增时间的置顶文章 | 可缓存
             List<BaseDto> recommendArt = _iRedisHelper.UnitOfWork(string.Format(ConstHelper.Article, "recommendArt"), () =>
             {
-                return base.IQueryable(u => u.DeleteMark == false && u.IsAudit == true).OrderByDescending(u => u.CreatorTime).Take(5).ToList().Select(u => new BaseDto { Id = u.Id, text = u.Title }).ToList();
+                return base.Queryable(u => u.DeleteMark == false && u.IsAudit == true).OrderByDescending(u => u.CreatorTime).Take(5).ToList().Select(u => new BaseDto { Id = u.Id, Text = u.Title }).ToList();
             });
 
             //取出分类目录:分类编码，分类名称
             List<BaseDto> category = _iRedisHelper.UnitOfWork(string.Format(ConstHelper.Article, "category"), () =>
             {
-                return base.Db.Set<ItemsDetail>().AsNoTracking().Where(u => u.Items.EnCode == EnCode.FTypeCode.ToString()).Select(u => new BaseDto { Id = u.Id, text = u.ItemName, code = u.ItemCode }).ToList();
+                return base.Db.Set<ItemsDetail>().AsNoTracking().Where(u => u.Items.EnCode == EnCode.FTypeCode.ToString()).Select(u => new BaseDto { Id = u.Id, Text = u.ItemName, Code = u.ItemCode }).ToList();
             });
 
             //取出分类FId,和文章对应的标签多个Id
-            var iTagFid = iQ.Where(r => r.Id == Id).Select(r => new
+            var iTagFid = iQ.Where(r => r.Id == id).Select(r => new
             {
                 r.FId,
                 TagArts = r.TagArts.Select(u => new { u.AId, u.TagId, u.ItemsDetail.ItemCode, u.ItemsDetail.ItemName })
             }).FirstOrDefault();
 
-            int? FId = iTagFid.FId;
+            int? fId = iTagFid.FId;
             List<int> tagIdList = iTagFid.TagArts.Select(u => u.TagId).ToList();
-            Expression<Func<Article, bool>> predicate = u => u.FId == FId;
+            Expression<Func<Article, bool>> predicate = u => u.FId == fId;
 
             //文章对应的多个标签
-            List<BaseDto> ArtTag = new List<BaseDto>();
+            List<BaseDto> artTag = new List<BaseDto>();
 
             if (tagIdList.Count > 0)
             {
                 predicate = predicate.Or(u => u.TagArts.Select(r => tagIdList.Contains(r.Id)).Count() > 0);
-                ArtTag = iTagFid.TagArts.Select(u => new BaseDto
+                artTag = iTagFid.TagArts.Select(u => new BaseDto
                 {
                     Id = u.TagId,
-                    text = u.ItemName,
-                    code = u.ItemCode
+                    Text = u.ItemName,
+                    Code = u.ItemCode
                 }).ToList();
             }
 
             //有关本文章的相关文章5条
             List<BaseDto> relateArt = iQ.Where(predicate)
-            .OrderByNewId().Take(5).Select(u => new BaseDto { Id = u.Id, text = u.Title }).ToList();
+            .OrderByNewId().Take(5).Select(u => new BaseDto { Id = u.Id, Text = u.Title }).ToList();
 
             //随机文章
-            List<BaseDto> randomArt = iQ.Select(u => new BaseDto { Id = u.Id, text = u.Title }).Take(5).ToList();
+            List<BaseDto> randomArt = iQ.Select(u => new BaseDto { Id = u.Id, Text = u.Title }).Take(5).ToList();
 
             ArtRelateDto ardList = new ArtRelateDto
             {
@@ -284,7 +285,7 @@ namespace Mock.Domain
                 RecommendArt = recommendArt,
                 ArchiveFile = archiveFile,
                 RandomArt = randomArt,
-                ArtTag = ArtTag
+                ArtTag = artTag
             };
             return ardList;
         } 

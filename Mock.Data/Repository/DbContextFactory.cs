@@ -1,10 +1,9 @@
-﻿using Mock.Data.Models;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
-namespace Mock.Data
+using Mock.Data.Models;
+
+namespace Mock.Data.Repository
 {
     public class DbContextFactory
     {

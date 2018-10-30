@@ -1,16 +1,15 @@
-﻿using Autofac;
-using Mock.Code;
-using Mock.Data.Models;
-using Mock.Domain;
-using Mock.Luo.Areas.Plat.Models;
-using Mock.Luo.Controllers;
-using Mock.Luo.Generic.Filters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-namespace Mock.Luo.Areas.Plat.Controllers
+using Autofac;
+using Mock.Data.Models;
+using Mock.Domain.Interface;
+using Mock.luo.Areas.Plat.Models;
+using Mock.luo.Controllers;
+using Mock.luo.Generic.Filters;
+
+namespace Mock.luo.Areas.Plat.Controllers
 {
     public class AppRoleController : CrudController<AppRole, AppRoleViewModel>
     {
@@ -19,10 +18,10 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
         private readonly IAppRoleRepository _service;
         private readonly IUserRoleRepository _urService;
-        public AppRoleController(IAppRoleRepository service, IUserRoleRepository _urService, IComponentContext container) : base(container)
+        public AppRoleController(IAppRoleRepository service, IUserRoleRepository urService, IComponentContext container) : base(container)
         {
             this._service = service;
-            this._urService = _urService;
+            this._urService = urService;
         }
         /// <summary>
         /// 角色下拉框
@@ -65,13 +64,13 @@ namespace Mock.Luo.Areas.Plat.Controllers
         [HandlerAuthorize]
         public ActionResult SaveMembers(string userIds, int roleId)
         {
-            List<UserRole> urList = new List<UserRole>();
+            List<AppUserRole> urList = new List<AppUserRole>();
             if (!userIds.IsNullOrEmpty())
             {
                 List<int> useridList = userIds.Split(',').Select(u => Convert.ToInt32(u)).ToList();
                 foreach (var id in useridList)
                 {
-                    urList.Add(new UserRole
+                    urList.Add(new AppUserRole
                     {
                         UserId = id,
                         RoleId = roleId
@@ -107,12 +106,12 @@ namespace Mock.Luo.Areas.Plat.Controllers
                 moduleIds = data.Split(',').Select(u => Convert.ToInt32(u)).ToList();
             }
 
-            List<RoleModule> roleModules = new List<RoleModule>();
+            List<AppRoleModule> roleModules = new List<AppRoleModule>();
 
             DateTime now = DateTime.Now;
             foreach (var moduleId in moduleIds)
             {
-                RoleModule entity = new RoleModule
+                AppRoleModule entity = new AppRoleModule
                 {
                     RoleId = roleId,
                     ModuleId = moduleId

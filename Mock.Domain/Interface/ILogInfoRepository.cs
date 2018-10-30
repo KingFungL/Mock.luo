@@ -1,14 +1,8 @@
-﻿using Mock.Code;
-using Mock.Data;
-using Mock.Data.Dto;
-using Mock.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Mock.Code.Log;
+using Mock.Code.Web;
+using Mock.Data.AppModel;
 
-namespace Mock.Domain
+namespace Mock.Domain.Interface
 {
     public interface ILogInfoRepository 
     {
@@ -18,8 +12,8 @@ namespace Mock.Domain
         /// </summary>
         /// <param name="pag">分页条件</param>
         /// <returns>DataGrid实体</returns>
-        DataGrid GetDataGrid(Pagination pag, string search);
+        DataGrid GetDataGrid(PageDto pag, string search);
 
-        void LogError(LogMessage logEntity, string LogName);
+        void LogError(LogMessage logEntity, string logName);
     }
 }

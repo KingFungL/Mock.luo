@@ -5,6 +5,7 @@
     ViewBag.Title = @entry.Title;
 }
 @using Mock.Data;
+@using Mock.Data.AppModel
 <div class="container" style="margin-top:80px;" id="v-app">
     <div class="row">
         <div class="col-md-8 col-xs-12">
@@ -93,7 +94,7 @@
                                     <i class="fa fa-angle-left"></i> 上一篇
                                 </span>
                                 <br />
-                                @entry.PreviousPage.text
+                                @entry.PreviousPage.Text
                             </div>
                         </a>
                     }
@@ -117,7 +118,7 @@
                                     下一篇<i class="fa fa-angle-right"></i>
                                 </span>
                                 <br />
-                                @entry.NextPage.text
+                                @entry.NextPage.Text
                             </div>
                         </a>
                     }
@@ -426,13 +427,13 @@
                         }
                     });
                 },
-                reply_review: function (Id) {
-                    console.log(Id);
+                reply_review: function (id) {
+                    console.log(id);
                     $('html,body').animate({
                         scrollTop: $('.scroll-comments').offset().top
                     }, 800);
                     $.each(vm.review, function (i, v) {
-                        if (v.Id == Id) {
+                        if (v.Id == id) {
                             vm.reply.PName = v.AuName;
                             vm.reply.PId = v.Id;
                             return false;

@@ -1,21 +1,18 @@
-﻿using Mock.Data;
+﻿using System.Linq;
 using Mock.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Mock.Data.Repository;
+using Mock.Domain.Interface;
 
-namespace Mock.Domain
+namespace Mock.Domain.Implementations
 {
     /// <summary>
     /// 仓储实现层 UploadRepository
     /// </summary>]
     public class UploadRepositroy : RepositoryBase<Upload>, IUploadRepository
     {
-        public dynamic GetFormById(int Id)
+        public dynamic GetFormById(int id)
         {
-            var d = this.IQueryable(u => u.Id == Id).Select(u => new
+            var d = this.Queryable(u => u.Id == id).Select(u => new
             {
                 u.Id
             }).FirstOrDefault();

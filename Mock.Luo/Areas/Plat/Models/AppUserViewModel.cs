@@ -1,10 +1,7 @@
-﻿using Mock.Code;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using Mock.Code.Web.Tree;
 
-namespace Mock.Luo.Areas.Plat.Models
+namespace Mock.luo.Areas.Plat.Models
 {
     public class AppUserViewModel
     {
@@ -13,7 +10,7 @@ namespace Mock.Luo.Areas.Plat.Models
         public string LoginName { get; set; }
         public string NickName { get; set; }
         public string StatusCode { get; set; }
-        public List<TreeSelectModel> roleIds { get; set; }
+        public List<TreeSelectModel> RoleIds { get; set; }
     }
 
 }

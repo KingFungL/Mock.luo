@@ -1,23 +1,24 @@
-﻿using Mock.Code;
-using Mock.Code.Helper;
-using Mock.Data;
-using Mock.Data.Dto;
-using Mock.Data.Extensions;
-using Mock.Data.Models;
-using Mock.Domain;
-using Mock.Domain.Interface;
-using Mock.Luo.Models;
-using QConnectSDK;
-using QConnectSDK.Context;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Mock.Code.Attribute;
+using Mock.Code.Helper;
+using Mock.Code.Json;
+using Mock.Code.Log;
+using Mock.Code.Net;
+using Mock.Code.Web;
+using Mock.Code.Web.Tree;
+using Mock.Data.AppModel;
+using Mock.Data.Dto;
+using Mock.Data.Models;
+using Mock.Domain.Interface;
+using QConnectSDK;
+using QConnectSDK.Context;
 
-namespace Mock.Luo.Controllers
+namespace Mock.luo.Controllers
 {
     [Skip]
     public class AppController : BaseController
@@ -60,16 +61,16 @@ namespace Mock.Luo.Controllers
             ViewData["Tag"] = tagItemsList;
 
             //最新文章
-            List<ArtDetailDto> LatestArticles = _articleRepository.GetRecentArticle(5);
-            ViewData["LatestArticles"] = LatestArticles;
+            List<ArtDetailDto> latestArticles = _articleRepository.GetRecentArticle(5);
+            ViewData["LatestArticles"] = latestArticles;
 
             //最热文章
-            List<Article> HotArticles = _articleRepository.GetHotArticle(8);
-            ViewData["HotArticles"] = HotArticles;
+            List<Article> hotArticles = _articleRepository.GetHotArticle(8);
+            ViewData["HotArticles"] = hotArticles;
 
             //吐槽
-            List<ReplyDto> SpitslotList = _reviewRepository.GetRecentReview(8);
-            ViewData["SpitslotList"] = SpitslotList;
+            List<ReplyDto> spitslotList = _reviewRepository.GetRecentReview(8);
+            ViewData["SpitslotList"] = spitslotList;
 
             //统计
             SiteStatistics site = _articleRepository.GetSiteData();
@@ -79,7 +80,7 @@ namespace Mock.Luo.Controllers
             //轻松时刻 | 缓存
             ViewData["JustFun"] = _iredisHelper.UnitOfWork(string.Format(ConstHelper.App, "JustFun"), () =>
               {
-                  List<ArtDetailDto> justFunList = _articleRepository.GetArticleList(_articleRepository.IQueryable(u => u.DeleteMark == false && u.ItemsDetail.ItemCode == CategoryCode.justfun.ToString())).OrderByDescending(u => u.Id).Take(5).ToList();
+                  List<ArtDetailDto> justFunList = _articleRepository.GetArticleList(_articleRepository.Queryable(u => u.DeleteMark == false && u.ItemsDetail.ItemCode == CategoryCode.Justfun.ToString())).OrderByDescending(u => u.Id).Take(5).ToList();
                   if (justFunList.Count > 0)
                   {
                       justFunList[0].Content = Server.UrlDecode(justFunList[0].Content);
@@ -90,7 +91,7 @@ namespace Mock.Luo.Controllers
             //人生感悟 | 缓存
             ViewData["FellLife"] = _iredisHelper.UnitOfWork(string.Format(ConstHelper.App, "FellLife"), () =>
             {
-                List<ArtDetailDto> feLifeList = _articleRepository.GetArticleList(_articleRepository.IQueryable(u => u.DeleteMark == false && u.ItemsDetail.ItemCode == CategoryCode.feelinglife.ToString())).OrderByDescending(u => u.Id).Take(5).ToList();
+                List<ArtDetailDto> feLifeList = _articleRepository.GetArticleList(_articleRepository.Queryable(u => u.DeleteMark == false && u.ItemsDetail.ItemCode == CategoryCode.Feelinglife.ToString())).OrderByDescending(u => u.Id).Take(5).ToList();
                 if (feLifeList.Count > 0)
                 {
                     feLifeList[0].Content = Server.UrlDecode(feLifeList[0].Content);
@@ -103,35 +104,35 @@ namespace Mock.Luo.Controllers
         #endregion
 
         #region 博客文章详情页
-        public override ActionResult Detail(int Id)
+        public override ActionResult Detail(int id)
         {
-            ArtDetailDto entry = _articleRepository.GetOneArticle(Id);
+            ArtDetailDto entry = _articleRepository.GetOneArticle(id);
             if (entry == null) throw new ArgumentNullException("根据Id,我去查了，但文章就是未找到！");
             //找到当前的上一个，下一个的文章
 
-            Expression<Func<Article, bool>> nextlambda = u => u.Id > Id && u.DeleteMark == false;
+            Expression<Func<Article, bool>> nextlambda = u => u.Id > id && u.DeleteMark == false;
 
-            var next = _articleRepository.IQueryable(nextlambda).FirstOrDefault();
+            var next = _articleRepository.Queryable(nextlambda).FirstOrDefault();
             if (next != null)
             {
                 entry.NextPage = new BaseDto
                 {
                     Id = next.Id,
-                    text = next.Title
+                    Text = next.Title
                 };
             }
-            Expression<Func<Article, bool>> previouslabmda = u => u.Id < Id && u.DeleteMark == false;
-            var pre = _articleRepository.IQueryable(previouslabmda).OrderByDescending(u => u.Id).FirstOrDefault();
+            Expression<Func<Article, bool>> previouslabmda = u => u.Id < id && u.DeleteMark == false;
+            var pre = _articleRepository.Queryable(previouslabmda).OrderByDescending(u => u.Id).FirstOrDefault();
             if (pre != null)
             {
                 entry.PreviousPage = new BaseDto
                 {
                     Id = pre.Id,
-                    text = pre.Title
+                    Text = pre.Title
                 };
             }
 
-            IQueryable<Article> queryable = _articleRepository.IQueryable(u => u.Id == Id);
+            IQueryable<Article> queryable = _articleRepository.Queryable(u => u.Id == id);
             _articleRepository.Update(queryable, u => new Article
             {
                 ViewHits = entry.ViewHits + 1
@@ -140,7 +141,7 @@ namespace Mock.Luo.Controllers
             entry.Content = Server.UrlDecode(entry.Content);
             ViewData["ArticleDto"] = entry;
 
-            ViewBag.AId = Id;
+            ViewBag.AId = id;
 
             return base.View();
         }
@@ -157,27 +158,27 @@ namespace Mock.Luo.Controllers
         {
             if (category.IsNullOrEmpty() && tag.IsNullOrEmpty() && archive.IsNullOrEmpty())
             {
-                throw new ArgumentNullException("参数不正确！！!");
+                throw new ArgumentNullException("参数不正确!");
             }
-            Pagination pag = new Pagination
+            PageDto pag = new PageDto
             {
-                sort = "Id",
-                order = "desc",
-                limit = 10,
-                offset = 0
+                Sort = "Id",
+                Order = "desc",
+                Limit = 10,
+                Offset = 0
             };
             DataGrid dg = _articleRepository.GetCategoryTagGrid(pag, category, tag, archive);
-            string TypeName = "";
+            string typeName = "";
             if (category.IsNotNullOrEmpty() || tag.IsNotNullOrEmpty())
             {
 
-                TypeName = _itemsDetailRepository.IQueryable(r => r.ItemCode == category || r.ItemCode == tag).Select(r => r.ItemName).FirstOrDefault();
+                typeName = _itemsDetailRepository.Queryable(r => r.ItemCode == category || r.ItemCode == tag).Select(r => r.ItemName).FirstOrDefault();
             }
             else
             {
-                TypeName = archive;
+                typeName = archive;
             }
-            ViewBag.TypeName = TypeName.IsNullOrEmpty() ? "亲，您迷路了啊！|、天上有木月" : TypeName;
+            ViewBag.TypeName = typeName.IsNullOrEmpty() ? "亲，您迷路了啊！|、天上有木月" : typeName;
 
             ViewBag.ViewModel = dg.ToJson();
 
@@ -193,12 +194,12 @@ namespace Mock.Luo.Controllers
 
         public ActionResult GuestBook()
         {
-            Pagination pag = new Pagination
+            PageDto pag = new PageDto
             {
-                sort = "Id",
-                order = "desc",
-                limit = 10,
-                offset = 0
+                Sort = "Id",
+                Order = "desc",
+                Limit = 10,
+                Offset = 0
             };
             DataGrid dg = _gusetbookRepository.GetDataGrid(u => true, pag, "");
 
@@ -209,9 +210,9 @@ namespace Mock.Luo.Controllers
         #endregion
 
         #region 获取文章相关内容：文章归档，置顶文章，分类，标签，相关文章，随机文章
-        public ActionResult GetRelateList(int Id)
+        public ActionResult GetRelateList(int id)
         {
-            var ardList = _articleRepository.GetRelateDtoByAId(Id);
+            var ardList = _articleRepository.GetRelateDtoByAId(id);
 
             return Result(ardList);
         }
@@ -243,7 +244,7 @@ namespace Mock.Luo.Controllers
         /// <summary> 
         /// 回调页面 
         /// </summary>
-        public ActionResult QQConnect()
+        public ActionResult QqConnect()
         {
             if (Request.Params["code"] != null)
             {
@@ -266,7 +267,7 @@ namespace Mock.Luo.Controllers
                     var accessToken = qzone.OAuthToken.AccessToken;
                     var expiresAt = qzone.OAuthToken.ExpiresAt;
                     DateTime now = DateTime.Now;
-                    AppUserAuth userAuth = _appAuthRepository.IQueryable(r => r.OpenId == openId && r.DeleteMark == false).FirstOrDefault();
+                    AppUserAuth userAuth = _appAuthRepository.Queryable(r => r.OpenId == openId && r.DeleteMark == false).FirstOrDefault();
                     //如果未找到一个openid存在，说明当前用户未使用qq第三方登录
                     if (userAuth == null)
                     {
@@ -281,15 +282,15 @@ namespace Mock.Luo.Controllers
                             LastLogIp = Net.Ip,
                             DeleteMark = false,
                             StatusCode = StatusCode.Enable.ToString(),
-                            UserRoles = new List<UserRole> {
-                                new UserRole{
+                            UserRoles = new List<AppUserRole> {
+                                new AppUserRole{
                                     RoleId=3
                                 }
                             },
                             AppUserAuths = new List<AppUserAuth>
                             {
                                 new AppUserAuth{
-                                    IdentityType=IdentityType.QQ.ToString(),
+                                    IdentityType=IdentityType.Qq.ToString(),
                                     OpenId=openId,
                                     AccessToken=accessToken,
                                     ExpiresAt=expiresAt,
@@ -308,7 +309,7 @@ namespace Mock.Luo.Controllers
                         userAuth.LastModifyTime = DateTime.Now;
                         _appAuthRepository.Update(userAuth, "AccessToken", "ExpiresAt", "LastModifyTime");
 
-                        appUserEntity = _appUserRepository.IQueryable(r => r.Id == userAuth.UserId && userAuth.DeleteMark == false).FirstOrDefault();
+                        appUserEntity = _appUserRepository.Queryable(r => r.Id == userAuth.UserId && userAuth.DeleteMark == false).FirstOrDefault();
                         appUserEntity.LoginCount += 1;
                         appUserEntity.LastLoginTime = now;
                         appUserEntity.LastLogIp = Net.Ip;
@@ -327,7 +328,7 @@ namespace Mock.Luo.Controllers
                     op.CurrentUser = new OperatorModel
                     {
                         UserId = appUserEntity.Id,
-                        IsSystem = _appUserRepository.isSystem(appUserEntity.Id),
+                        IsSystem = _appUserRepository.IsSystem(appUserEntity.Id),
                         IsAdmin = appUserEntity.LoginName == "admin" ? true : false,
                         LoginName = appUserEntity.LoginName,
                         LoginToken = accessToken,
@@ -337,7 +338,7 @@ namespace Mock.Luo.Controllers
                         Email = appUserEntity.Email,
                         PersonalWebsite = appUserEntity.PersonalWebsite
                     };
-                    bool isSystem = _appUserRepository.isSystem(appUserEntity.Id);
+                    bool isSystem = _appUserRepository.IsSystem(appUserEntity.Id);
 
                     if (isSystem)
                     {
@@ -372,7 +373,7 @@ namespace Mock.Luo.Controllers
                 }
                 else
                 {
-                    _appUserRepository.Update(_appUserRepository.IQueryable(r => r.Email == emailByToken && r.Id == userId), r => new AppUser
+                    _appUserRepository.Update(_appUserRepository.Queryable(r => r.Email == emailByToken && r.Id == userId), r => new AppUser
                     {
                         Email = emailByToken,
                         EmailIsValid = true

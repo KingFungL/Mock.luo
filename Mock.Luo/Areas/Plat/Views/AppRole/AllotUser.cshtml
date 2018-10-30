@@ -73,7 +73,7 @@
                 },
                 init_userlist: function (data) {
                     if (data.length > 0) {
-                        var _html = "";
+                        var html = "";
 
                         $.each(data, function (i) {
                             var row = data[i];
@@ -100,19 +100,19 @@
                             if (row.RealName == null) {
                                 row.RealName = "";
                             }
-                            _html += '<div class="card-box ' + active + '">';
-                            _html += '    <div class="card-box-img">';
-                            _html += '        <img src="' + imgNameUrl + '" style="width:40px;height:45px;"/>';
-                            _html += '    </div>';
-                            _html += '    <div id="' + row.Id + '" class="card-box-content">';
-                            _html += '        <p title="' + row.LoginName + '">账户：' + row.LoginName + '</p>';
-                            _html += '        <p>昵称：' + row.NickName + '</p>';
-                            _html += '        <p>性别：' + sex + '</p>';
-                            _html += '    </div><i></i>';
-                            _html += '</div>';
+                            html += '<div class="card-box ' + active + '">';
+                            html += '    <div class="card-box-img">';
+                            html += '        <img src="' + imgNameUrl + '" style="width:40px;height:45px;"/>';
+                            html += '    </div>';
+                            html += '    <div id="' + row.Id + '" class="card-box-content">';
+                            html += '        <p title="' + row.LoginName + '">账户：' + row.LoginName + '</p>';
+                            html += '        <p>昵称：' + row.NickName + '</p>';
+                            html += '        <p>性别：' + sex + '</p>';
+                            html += '    </div><i></i>';
+                            html += '</div>';
                         });
 
-                        $(".gridPanel").html(_html)
+                        $(".gridPanel").html(html)
 
                         $(".card-box").click(function () {
                             if (!$(this).hasClass("active")) {

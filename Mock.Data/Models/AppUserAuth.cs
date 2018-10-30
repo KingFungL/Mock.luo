@@ -5,14 +5,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mock.Data.Infrastructure;
 
 namespace Mock.Data.Models
 {
     [Table("AppUserAuth")]
-    public class AppUserAuth : IEntity<AppUserAuth>, ICreationAudited, IDeleteAudited, IModificationAudited
+    public class AppUserAuth : Entity<AppUserAuth>, ICreationAudited, IDeleteAudited, IModificationAudited
     {
         [Key]
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public int? UserId { get; set; }
         [ForeignKey("UserId")]
         public virtual  AppUser AppUser { get; set; }

@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
 using Mock.Data;
+using Mock.Data.Infrastructure;
 using Mock.Data.Models;
-using Mock.Luo.Areas.Plat.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using Mock.luo.Areas.Plat.Models;
 
-namespace Mock.Luo.App_Start
+namespace Mock.luo
 {
     public static class AutoMapperConfig
     {

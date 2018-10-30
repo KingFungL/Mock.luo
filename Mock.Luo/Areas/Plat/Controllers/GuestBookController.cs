@@ -1,45 +1,48 @@
-﻿using Autofac;
-using Mock.Code;
-using Mock.Code.Helper;
-using Mock.Data;
-using Mock.Data.Models;
-using Mock.Domain;
-using Mock.Luo.Areas.Plat.Models;
-using Mock.Luo.Controllers;
-using Mock.Luo.Generic.Helper;
-using Mock.Luo.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using Autofac;
+using Mock.Code.Attribute;
+using Mock.Code.Configs;
+using Mock.Code.Extend;
+using Mock.Code.Helper;
+using Mock.Code.Mail;
+using Mock.Code.Net;
+using Mock.Code.Validate;
+using Mock.Code.Web;
+using Mock.Data.AppModel;
+using Mock.Data.Models;
+using Mock.Domain.Interface;
+using Mock.luo.Areas.Plat.Models;
+using Mock.luo.Controllers;
+using Mock.luo.Models;
 
-namespace Mock.Luo.Areas.Plat.Controllers
+namespace Mock.luo.Areas.Plat.Controllers
 {
     public class GuestBookController : CrudController<GuestBook, GuestBookViewModel>
     {
         // GET: Plat/GuestBook
         private readonly IGuestBookRepository _guestBookRepository;
         private readonly IMailHelper _imailHelper;
-        public GuestBookController(IGuestBookRepository _guestBookRepository, IMailHelper _imailHelper, IComponentContext container) : base(container)
+        public GuestBookController(IGuestBookRepository guestBookRepository, IMailHelper imailHelper, IComponentContext container) : base(container)
         {
-            this._guestBookRepository = _guestBookRepository;
-            this._imailHelper = _imailHelper;
+            this._guestBookRepository = guestBookRepository;
+            this._imailHelper = imailHelper;
         }
         [Skip]
-        public ActionResult GetDataGrid(Pagination pag, string search = "")
+        public ActionResult GetDataGrid(PageDto pag, string search = "")
         {
-            if (pag.sort.IsNullOrEmpty())
+            if (pag.Sort.IsNullOrEmpty())
             {
-                pag.sort = "Id";
+                pag.Sort = "Id";
             }
-            if (pag.order.IsNullOrEmpty())
+            if (pag.Order.IsNullOrEmpty())
             {
-                pag.order = "desc";
+                pag.Order = "desc";
             }
-            if (pag.limit > 20)
+            if (pag.Limit > 20)
             {
-                pag.limit = 10;
+                pag.Limit = 10;
             }
             return Result(_guestBookRepository.GetDataGrid(u => true, pag, search));
         }
@@ -47,15 +50,15 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// <summary>
         /// 审核、拉黑留言
         /// </summary>
-        /// <param name="IsAduit"></param>
-        /// <param name="Id"></param>
+        /// <param name="isAduit"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Aduit(bool IsAduit, int Id)
+        public ActionResult Aduit(bool isAduit, int id)
         {
-            GuestBook entity = new GuestBook { Id = Id, IsAduit = IsAduit };
-            entity.Modify(Id);
+            GuestBook entity = new GuestBook { Id = id, IsAduit = isAduit };
+            entity.Modify(id);
             _guestBookRepository.Update(entity, "IsAduit", "LastModifyUserId", "LastModifyTime");
-            return Success(IsAduit ? "审核成功！" : "拉黑成功！");
+            return Success(isAduit ? "审核成功！" : "拉黑成功！");
         }
 
         /// <summary>
@@ -80,7 +83,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
             }
             viewModel.Ip = Net.Ip;
 
-            string userIp = _redisHelper.StringGet(string.Format(ConstHelper.GuestBook, "IP-" + viewModel.Ip));
+            string userIp = RedisHelper.StringGet(string.Format(ConstHelper.GuestBook, "IP-" + viewModel.Ip));
 
             if (userIp.IsNotNull())
             {
@@ -104,7 +107,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
             viewModel.Create();
 
-            viewModel.System = Net.GetOSNameByUserAgent(Request.UserAgent);
+            viewModel.System = Net.GetOsNameByUserAgent(Request.UserAgent);
             viewModel.UserHost = Net.Host;
             viewModel.GeoPosition = Net.GetLocation(viewModel.Ip);
             viewModel.Agent = Net.Browser;
@@ -113,7 +116,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
             _guestBookRepository.Insert(viewModel);
 
             //缓存用户ip一分钟，用于频繁操作警告
-            _redisHelper.StringSet(string.Format(ConstHelper.GuestBook, "IP-" + viewModel.Ip), 1, new TimeSpan(0, 1, 0));
+            RedisHelper.StringSet(string.Format(ConstHelper.GuestBook, "IP-" + viewModel.Ip), 1, new TimeSpan(0, 1, 0));
 
             //留言成功后，给博主的email邮箱发送信息
 

@@ -1,18 +1,15 @@
-﻿using Autofac;
-using AutoMapper;
-using Mock.Code;
-using Mock.Data.Models;
-using Mock.Domain;
-using Mock.Luo.Areas.Plat.Models;
-using Mock.Luo.Controllers;
-using Mock.Luo.Generic.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
+using Autofac;
+using Mock.Code.Json;
+using Mock.Code.Web;
+using Mock.Data.Models;
+using Mock.Domain.Interface;
+using Mock.luo.Areas.Plat.Models;
+using Mock.luo.Controllers;
+using Mock.luo.Generic.Filters;
 
-namespace Mock.Luo.Areas.Plat.Controllers
+namespace Mock.luo.Areas.Plat.Controllers
 {
     public class AppUserController : CrudController<AppUser, AppUserViewModel>
     {
@@ -33,7 +30,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
             }
             else
             {
-                var userEntity = _service.IQueryable(u => u.Id == id).Select(u => new {
+                var userEntity = _service.Queryable(u => u.Id == id).Select(u => new {
                     u.Id,
                     u.LoginName,
                     u.NickName,
@@ -51,9 +48,9 @@ namespace Mock.Luo.Areas.Plat.Controllers
         }
         [HttpPost]
         [HandlerAuthorize]
-        public ActionResult GetDataGrid(Pagination pag, string LoginName = "", string Email = "")
+        public ActionResult GetDataGrid(PageDto pag, string loginName = "", string email = "")
         {
-            return Content(_service.GetDataGrid(pag, LoginName, Email).ToJson());
+            return Content(_service.GetDataGrid(pag, loginName, email).ToJson());
         }
 
         [HandlerAuthorize]
@@ -66,7 +63,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
             AjaxResult result = _service.IsRepeat(userEntity);
 
             //用户名或邮箱重复
-            if (result.state == ResultType.error.ToString())
+            if (result.State == ResultType.Error.ToString())
             {
                 return Content(result.ToJson());
             }
@@ -79,12 +76,12 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// <summary>
         /// 重置用户密码
         /// </summary>
-        /// <param name="Id">主键</param>
+        /// <param name="id">主键</param>
         /// <returns></returns>
         [HandlerAuthorize]
-        public ActionResult ResetPassword(int Id)
+        public ActionResult ResetPassword(int id)
         {
-            _service.ResetPassword(new AppUser { Id = Id }, "1234");
+            _service.ResetPassword(new AppUser { Id = id }, "1234");
             return Success();
         }
     }
