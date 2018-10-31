@@ -147,8 +147,8 @@
             el: "#v-app",
             data: {
                 limit: 10,
-                total: vmJson.total,
-                review: vmJson.rows,
+                total: vmJson.Total,
+                review: vmJson.Rows,
                 index: "",
                 reply: reply
             },
@@ -195,15 +195,15 @@
                     com.ajax({
                         url: '/Plat/GuestBook/GetDataGrid',
                         data: data,
-                        success: function (json) {
+                        success: function(json) {
                             vm.$data.review = json.rows;
-                            vm.total = json.total;
+                            vm.total = json.Total;
                             if (typeof (callback) == 'function') {
                                 callback(json);
                             }
                             vm.init_hover();
                         }
-                    })
+                    });
                 },
                 cancel: function () {
                     vm.reply.PId = 0;

@@ -1,4 +1,4 @@
-﻿namespace Mock.luo.Areas.Plat.Models
+﻿namespace Mock.Luo.Areas.Plat.Models
 {
     public class ArticleViewModel
     {

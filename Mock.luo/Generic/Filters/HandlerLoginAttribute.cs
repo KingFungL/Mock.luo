@@ -5,7 +5,7 @@ using Mock.Code.Configs;
 using Mock.Code.Web;
 using Mock.Data.AppModel;
 
-namespace Mock.luo.Generic.Filters
+namespace Mock.Luo.Generic.Filters
 {
     public class HandlerLoginAttribute : AuthorizeAttribute
     {

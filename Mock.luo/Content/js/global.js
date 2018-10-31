@@ -19,7 +19,7 @@ $.layerOpen = function (options) {
         btn: ['确认', '取消'],
         btnclass: ['btn btn-primary', 'btn btn-danger'],
         yes: null,
-        shadeClose:true,
+        shadeClose: true,
     };
     options = $.extend(defaults, options);
     if (!com.ispc()) {
@@ -46,7 +46,7 @@ $.layerOpen = function (options) {
                 options.yes(index, layero);
                 return;
             }
-            if (options.yes && $.isFunction(options.yes) ) {
+            if (options.yes && $.isFunction(options.yes)) {
                 var iframebody = layer.getChildFrame('body', index);
                 var iframeWin = layero.find('iframe')[0].contentWindow;
                 options.yes(iframebody, iframeWin, index);
@@ -157,10 +157,10 @@ $.layerMsg = function (content, type, callback) {
 };
 
 $.procAjaxMsg = function (json, funcSuc, funcErr) {
-    if (!json.state) {
+    if (!json.State) {
         return;
     }
-    var state = json.state;
+    var state = json.State.toLocaleLowerCase();
     switch (state) {
 
         case "success":
@@ -175,18 +175,18 @@ $.procAjaxMsg = function (json, funcSuc, funcErr) {
             break;
         case "nologin":
             //是否登录
-            $.alertMsg(json.message, '系统提示', function () {
+            $.alertMsg(json.Message, '系统提示', function () {
                 if (window !== top) {
-                    top.location.href = json.data;
+                    top.location.href = json.Data;
                 }
                 else {
-                    window.location.href = json.data;
+                    window.location.href = json.Data;
                 }
             }, state);
             break;
         case "nopermission":
             //是否有权
-            $.alertMsg(json.message, '系统提示', null, state);
+            $.alertMsg(json.Message, '系统提示', null, state);
             break;
     }
 };
@@ -328,11 +328,11 @@ $.fn.bindChangeEvent = function ($event) {
  * @param {callback} 回调函数
  */
 $.fn.authorizeButton = function (callback) {
-    
+
     var $element = $(this);
     $element.find('button.btn').attr('authorize', 'no')
     $element.find('ul.dropdown-menu').find('li').attr('authorize', 'no')
-    var moduleId =com.tabiframe_Name().substr(6);
+    var moduleId = com.tabiframe_Name().substr(6);
     var data = top.$ui.data.authorizeButton[moduleId];
     if (data !== undefined) {
         $.each(data, function (i) {
@@ -519,6 +519,12 @@ $.fn.dataGrid = function (options) {
             } else {
                 element.addClass('table-responsive');
             }
+        }, responseHandler: function (res) {
+            //将服务端你的数据转换成bootstrap table 能接收的类型
+            return {
+                "total": res.Total,//总页数
+                "rows": res.Rows   //数据
+            };
         },
         onLoadSuccess: function (data) {
             $element.parent('.fixed-table-body').addClass('table-responsive');
@@ -530,7 +536,7 @@ $.fn.dataGrid = function (options) {
             if (status == 403) {
                 var json = response.responseJSON;
                 $element.find('tr.no-records-found td').html(json.Msg);
-                $.alertMsg(json.message, '系统提示', '', json.state);
+                $.alertMsg(json.Message, '系统提示', '', json.State);
             }
         }
     };
@@ -700,34 +706,34 @@ $.fn.extend({
         var e = $(window);
         var f = $(this);
         if (f.length <= 0) {
-            return false
+            return false;
         }
         var g = f.position().top;
         var h = d.container.height();
         var i = f.css("position");
         var j;
         if (d.bottomObj == '' || $(d.bottomObj).length <= 0) {
-             j = false
+            j = false;
         } else {
-             j = true
+            j = true;
         }
         e.scroll(function (a) {
             var b = f.height();
             if (f.css("position") == i) {
-                g = f.position().top
+                g = f.position().top;
             }
-            scrollTop = e.scrollTop();
-            topPosition = Math.max(0, g - scrollTop);
+            var scrollTop = e.scrollTop();
+            var topPosition = Math.max(0, g - scrollTop);
             if (j == true) {
                 var c = $(d.bottomObj).position().top - d.marginBottom - d.marginTop;
-                topPosition = Math.min(topPosition, (c - scrollTop) - b)
+                topPosition = Math.min(topPosition, (c - scrollTop) - b);
             }
             if (scrollTop > g) {
                 if (j == true && (g + b > c)) {
                     f.css({
                         position: i,
                         top: g
-                    })
+                    });
                 } else {
                     if (window.XMLHttpRequest) {
                         f.css({
@@ -740,16 +746,16 @@ $.fn.extend({
                             position: "absolute",
                             top: scrollTop + topPosition + d.marginTop + 'px',
                             'z-index': d.zindex
-                        })
+                        });
                     }
                 }
             } else {
                 f.css({
                     position: i,
                     top: g
-                })
+                });
             }
         });
-        return this
+        return this;
     }
 });

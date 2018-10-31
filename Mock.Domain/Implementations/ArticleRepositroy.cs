@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using Mock.Code.Extend;
+﻿using Mock.Code.Extend;
 using Mock.Code.Helper;
 using Mock.Code.Web;
 using Mock.Data.AppModel;
@@ -11,6 +7,10 @@ using Mock.Data.Extensions;
 using Mock.Data.Models;
 using Mock.Data.Repository;
 using Mock.Domain.Interface;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Mock.Domain.Implementations
 {
@@ -78,9 +78,13 @@ namespace Mock.Domain.Implementations
                 PointQuantity = r.PointQuantity
             }).FirstOrDefault();
 
-            artEntry.TimeSpan = TimeHelper.GetDateFromNow(artEntry.CreatorTime.ToDateTime());
+            if (artEntry != null)
+            {
+                artEntry.TimeSpan = TimeHelper.GetDateFromNow(artEntry.CreatorTime.ToDateTime());
 
+            }
             return artEntry;
+
         }
 
         #region 抽象取文章 列表数据
@@ -173,7 +177,7 @@ namespace Mock.Domain.Implementations
 
             if (tag.IsNotNullOrEmpty())//tag:标签时，按照标签内容去查询列表数据
             {
-                expression = expression.And(u => Enumerable.Where<TagArt>(u.TagArts, r => r.ItemsDetail.ItemCode == tag).Count() > 0);
+                expression = expression.And(u => u.TagArts.Any(r => r.ItemsDetail.ItemCode == tag));
             }
             else if (category.IsNotNullOrEmpty())
             {
@@ -201,9 +205,9 @@ namespace Mock.Domain.Implementations
                 {
                     ArticleCount = artQuery.Count(),
                     PointViewCount = artQuery.Sum(u => u.PointQuantity),
-                    ArticleTypeCount = base.Db.Set<ItemsDetail>().AsNoTracking().Where(u => u.DeleteMark == false && u.Items.EnCode == EnCode.FTypeCode.ToString()).Count(),
-                    TagCount = base.Db.Set<ItemsDetail>().AsNoTracking().Where(u => u.DeleteMark == false && u.Items.EnCode == EnCode.Tag.ToString()).Count(),
-                    ReplyCount = base.Db.Set<Review>().AsNoTracking().Where(u => u.DeleteMark == false).Count(),
+                    ArticleTypeCount = base.Db.Set<ItemsDetail>().AsNoTracking().Count(u => u.DeleteMark == false && u.Items.EnCode == EnCode.FTypeCode.ToString()),
+                    TagCount = base.Db.Set<ItemsDetail>().AsNoTracking().Count(u => u.DeleteMark == false && u.Items.EnCode == EnCode.Tag.ToString()),
+                    ReplyCount = base.Db.Set<Review>().AsNoTracking().Count(u => u.DeleteMark == false),
                     ViewHitCount = artQuery.Sum(r => r.ViewHits)
                 };
             });
@@ -225,7 +229,7 @@ namespace Mock.Domain.Implementations
                     u.FirstOrDefault().Archive,
                     u.FirstOrDefault().CreatorTime,
                     count = u.Count(),
-                }).OrderBy(u=>u.CreatorTime).ToList().Select(u => new BaseDto
+                }).OrderByDescending(u => u.CreatorTime).ToList().Select(u => new BaseDto
                 {
                     Text = u.Archive,
                     Code = u.count.ToString()
@@ -253,16 +257,16 @@ namespace Mock.Domain.Implementations
                 TagArts = r.TagArts.Select(u => new { u.AId, u.TagId, u.ItemsDetail.ItemCode, u.ItemsDetail.ItemName })
             }).FirstOrDefault();
 
-            int? fId = iTagFid.FId;
-            List<int> tagIdList = iTagFid.TagArts.Select(u => u.TagId).ToList();
+            int? fId = iTagFid?.FId;
+            List<int> tagIdList = iTagFid?.TagArts.Select(u => u.TagId).ToList();
             Expression<Func<Article, bool>> predicate = u => u.FId == fId;
 
             //文章对应的多个标签
             List<BaseDto> artTag = new List<BaseDto>();
 
-            if (tagIdList.Count > 0)
+            if (tagIdList != null && tagIdList.Count > 0)
             {
-                predicate = predicate.Or(u => u.TagArts.Select(r => tagIdList.Contains(r.Id)).Count() > 0);
+                predicate = predicate.Or(u => u.TagArts.Select(r => tagIdList.Contains(r.Id)).Any());
                 artTag = iTagFid.TagArts.Select(u => new BaseDto
                 {
                     Id = u.TagId,
@@ -288,7 +292,7 @@ namespace Mock.Domain.Implementations
                 ArtTag = artTag
             };
             return ardList;
-        } 
+        }
         #endregion
     }
 }

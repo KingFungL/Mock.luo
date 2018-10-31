@@ -5,15 +5,13 @@ using Mock.Code.Web;
 using Mock.Data.AppModel;
 using Mock.Domain.Interface;
 
-namespace Mock.luo.Generic.Filters
+namespace Mock.Luo.Generic.Filters
 {
     /// <summary>
     ///描述：（权限认证+安全）拦截组件
     /// </summary>
     public class HandlerAuthorizeAttribute : ActionFilterAttribute
     {
-
-
         public IAppModuleRepository AppModuleRepository { get; set; }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {

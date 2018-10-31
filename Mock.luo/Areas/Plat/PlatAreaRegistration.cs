@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Mock.luo.Areas.Plat
+namespace Mock.Luo.Areas.Plat
 {
     public class PlatAreaRegistration : AreaRegistration 
     {

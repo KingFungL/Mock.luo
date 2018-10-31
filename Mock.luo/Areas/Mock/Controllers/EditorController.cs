@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Web.Mvc;
 using Mock.Code.Mail;
-using Mock.luo.Controllers;
+using Mock.Luo.Controllers;
 
-namespace Mock.luo.Areas.Mock.Controllers
+namespace Mock.Luo.Areas.Mock.Controllers
 {
     public class EditorController : BaseController
     {

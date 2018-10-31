@@ -116,7 +116,8 @@ namespace Mock.Data.Models
                     TreeNode node = new TreeNode
                     {
                         Id = (int)item.Id,
-                        Title = item.Name,
+                        Text = item.Name,
+                        Title=item.Name,
                         Expanded = item.Expanded,
                         Folder = listMenus.FindAll(u => u.PId == item.Id).Count > 0 ? true : false,
                         Data = new

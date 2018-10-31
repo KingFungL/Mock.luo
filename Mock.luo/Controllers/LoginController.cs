@@ -8,7 +8,7 @@ using Mock.Code.Web;
 using Mock.Data.AppModel;
 using Mock.Domain.Interface;
 
-namespace Mock.luo.Controllers
+namespace Mock.Luo.Controllers
 {
     [Skip]
     public class LoginController : BaseController

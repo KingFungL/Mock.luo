@@ -27,17 +27,17 @@ $(function () {
                 </a>';
 
                 var jsonobj = menulist[i];
-                html += com.format_str(template, jsonobj.iconcls, jsonobj.text);
+                html += com.format_str(template, jsonobj.Iconcls, jsonobj.Text);
                 html += '<ul class="nav nav-second-level collapse">';
 
                 var temple = '<li>\
                           <a class="J_menuItem" href="{0}" target="{1}"  data-index={4}><i class="{2}"></i>{3}\
                       ';
-                if (jsonobj.children.length > 0) {
+                if (jsonobj.Children.length > 0) {
 
-                    for (var j = 0; j < jsonobj.children.length; j++) {
-                        var m = jsonobj.children[j];
-                        html += com.format_str(temple, m.href, m.target, m.iconcls, m.text,m.id);
+                    for (var j = 0; j < jsonobj.Children.length; j++) {
+                        var m = jsonobj.Children[j];
+                        html += com.format_str(temple, m.Href, m.Target, m.Iconcls, m.Text,m.Id);
                         var json3 = m;
                         if (m && m.children && m.children.length > 0) {
                             html += '<span class="fa arrow"></span></a>';
@@ -47,7 +47,7 @@ $(function () {
                                      </li>';
                             for (var k = 0; k < m.children.length; k++) {
                                 var t = m.children[k];
-                                html += com.format_str(template3, t.href, t.target, t.iconcls, t.text,t.id);
+                                html += com.format_str(template3, t.Href, t.Target, t.Iconcls, t.Text,t.Id);
                             }
                             html += '</ul>';
                         } else {

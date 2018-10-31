@@ -4,8 +4,10 @@ using Mock.Code.Helper;
 using Mock.Code.Json;
 using Mock.Code.Web;
 using Mock.Data.AppModel;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
-namespace Mock.luo.Controllers
+namespace Mock.Luo.Controllers
 {
     public abstract class BaseController : Controller
     {
@@ -46,7 +48,7 @@ namespace Mock.luo.Controllers
         }
         protected virtual ActionResult Error(ModelStateDictionary modelState)
         {
-            return Error(modelState.Values.Where(u => u.Errors.Count > 0).FirstOrDefault().Errors[0].ErrorMessage);
+            return Error(modelState.Values.FirstOrDefault(u => u.Errors.Count > 0)?.Errors[0].ErrorMessage);
         }
 
         /// <summary>
@@ -57,6 +59,19 @@ namespace Mock.luo.Controllers
         protected virtual ActionResult Result(object data)
         {
             return Content(JsonHelper.SerializeObject(data));
+        }
+
+        protected virtual ActionResult CamelCaseJson(object data)
+        {
+            var json = JsonConvert.SerializeObject(data,
+                Formatting.Indented,
+                new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),        //小驼峰命名法
+                    DateFormatString = "yyyy-MM-dd HH:mm:ss"
+                }
+            );
+            return Content(json);
         }
 
     }

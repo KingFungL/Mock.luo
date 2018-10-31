@@ -178,9 +178,7 @@ namespace Mock.Domain.Implementations
             AjaxResult ajaxResult;
             try
             {
-                AppUser userEntity = new AppUser { };
-
-                userEntity = this.Queryable().Where(t => (t.LoginName == loginName || t.Email == loginName) && t.DeleteMark == false).FirstOrDefault();
+                var userEntity = this.Queryable().FirstOrDefault(t => (t.LoginName == loginName || t.Email == loginName) && t.DeleteMark == false);
 
                 if (userEntity != null)
                 {

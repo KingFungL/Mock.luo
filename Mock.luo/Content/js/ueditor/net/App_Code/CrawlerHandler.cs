@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 
-namespace Mock.luo.Content.js.ueditor.net.App_Code
+namespace Mock.Luo.Content.js.ueditor.net.App_Code
 {
     /// <summary>
     /// Crawler 的摘要说明

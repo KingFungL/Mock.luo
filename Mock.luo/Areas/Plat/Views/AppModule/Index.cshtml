@@ -110,11 +110,11 @@
                                 $tdList = $(node.tr).find(">td");
                             //$tdList.eq(0).text(node.getIndexHier());
                             var d = node.data;
-                            $tdList.eq(2).css('text-align', 'center').text(d.LinkUrl);
-                            $tdList.eq(3).css('text-align', 'center').text(d.SortCode);
-                            $tdList.eq(4).css('text-align', 'center').html(vm.format_typecode(d.TypeCode));
-                            $tdList.eq(5).css('text-align', 'center').html(d.EnCode);
-                            $tdList.eq(6).css('text-align', 'center').html('<i class="' + d.Icon + '"></i>');
+                            $tdList.eq(2).css('text-align', 'center').text(d.linkUrl);
+                            $tdList.eq(3).css('text-align', 'center').text(d.sortCode);
+                            $tdList.eq(4).css('text-align', 'center').html(vm.format_typecode(d.typeCode));
+                            $tdList.eq(5).css('text-align', 'center').html(d.enCode);
+                            $tdList.eq(6).css('text-align', 'center').html('<i class="' + d.icon + '"></i>');
                             var target = {
                                 "expand": "无页面",
                                 "iframe": "框架页",
@@ -134,8 +134,8 @@
                     var selectNodes = $('#treetable').fancytree('getTree').getSelectedNodes();
                     if (selectNodes.length > 0) {
                         var node = selectNodes[0].data;
-                        if (node.TypeCode == 'Menu' || node.TypeCode == 'PMenu') {
-                            this.editinfo('编辑', node.Id);
+                        if (node.typeCode == 'Menu' || node.typeCode == 'PMenu') {
+                            this.editinfo('编辑', node.id);
                         } else {
                             $.layerMsg('我不能这个地方就被你改变！请选择我所属的菜单项，小姐姐');
                         }
@@ -150,7 +150,7 @@
                             content: '您确定要删除你勾选的记录吗?',
                             callback: function () {
                                 com.ajax({
-                                    url: '/Plat/AppModule/Delete/' + selectNodes[0].data.Id,
+                                    url: '/Plat/AppModule/Delete/' + selectNodes[0].data.id,
                                     showMsg: true,
                                     success: function () {
                                         vm.btn_refresh();

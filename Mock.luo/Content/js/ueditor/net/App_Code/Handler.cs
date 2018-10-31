@@ -2,7 +2,7 @@
 using System.Web;
 using Newtonsoft.Json;
 
-namespace Mock.luo.Content.js.ueditor.net.App_Code
+namespace Mock.Luo.Content.js.ueditor.net.App_Code
 {
     /// <summary>
     /// Handler 的摘要说明

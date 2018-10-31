@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace Mock.luo
+namespace Mock.Luo
 {
     public class BundleConfig
     {

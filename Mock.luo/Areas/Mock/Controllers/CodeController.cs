@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Mock.luo.Areas.Mock.Controllers
+namespace Mock.Luo.Areas.Mock.Controllers
 {
     public class CodeController : Controller
     {

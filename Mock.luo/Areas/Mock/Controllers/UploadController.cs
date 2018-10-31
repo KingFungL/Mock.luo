@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using Mock.Code.Json;
 using Mock.Code.Web;
-using Mock.luo.Controllers;
+using Mock.Luo.Controllers;
 
-namespace Mock.luo.Areas.Mock.Controllers
+namespace Mock.Luo.Areas.Mock.Controllers
 {
     public class UploadController : BaseController
     {

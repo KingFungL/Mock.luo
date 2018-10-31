@@ -3,9 +3,9 @@ using System.Linq;
 using System.Web.Mvc;
 using Mock.Data.Models;
 using Mock.Domain.Interface;
-using Mock.luo.Controllers;
+using Mock.Luo.Controllers;
 
-namespace Mock.luo.Areas.Plat.Controllers
+namespace Mock.Luo.Areas.Plat.Controllers
 {
     public class PointArticleController : BaseController
     {

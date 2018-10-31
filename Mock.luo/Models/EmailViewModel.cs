@@ -1,4 +1,4 @@
-﻿namespace Mock.luo.Models
+﻿namespace Mock.Luo.Models
 {
     public class EmailViewModel
     {

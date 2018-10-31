@@ -88,7 +88,7 @@
         })
         var vmJson = com.replaceSpce('@Html.Raw(ViewBag.ViewModel)');
         var request = com.get_params();
-         var vm = new Vue({
+        var vm = new Vue({
             el: "#v-app",
             data: {
                 limit: 10,
@@ -99,19 +99,19 @@
                 RecommendArt: [],
                 ArchiveFile: [],
                 RandomArt: [],
-                ArtTag:[]
+                ArtTag: []
             },
-            mounted: function () {
+            mounted: function() {
                 this.init_datagrid();
                 this.get_relate_list();
             },
             methods: {
-                init_datagrid: function () {
+                init_datagrid: function() {
                     var that = this;
                     that.layuipage(vmJson.total);
                 },
-                layuipage: function (total) {
-                    var that= this;
+                layuipage: function(total) {
+                    var that = this;
                     layui.laypage.render({
                         elem: 'review-page',
                         limit: that.limit,
@@ -119,14 +119,14 @@
                         curr: 1,
                         groups: 5,
                         layout: ['prev', 'page', 'next', 'skip'],
-                        jump: function (obj, first) {
+                        jump: function(obj, first) {
                             //首次不执行
                             if (!first) {
                                 //1.跳转分页时也需要将查询参数携带给后台，才算真正的分页效果,
                                 var data = {
                                     'limit': that.limit,
                                     'offset': (obj.curr - 1) * that.limit,
-                                    'archive':request.archive,
+                                    'archive': request.archive,
                                     'category': request.category,
                                     'tag': request.tag
                                 };
@@ -135,12 +135,12 @@
                         }
                     });
                 },
-                get_itemgrid: function (data,callback) {
+                get_itemgrid: function(data, callback) {
                     com.ajax({
                         url: '/Plat/Article/GetIndexGird',
                         data: data,
-                        showLoading:false,
-                        success: function (json) {
+                        showLoading: false,
+                        success: function(json) {
                             vm.$data.items = json.rows;
                             if (typeof (callback) == 'function') {
                                 callback(json);
@@ -148,12 +148,12 @@
                         }
                     })
                 },
-                get_relate_list: function () {
+                get_relate_list: function() {
                     com.ajax({
                         url: '/App/GetRelateList',
                         showLoading: false,
-                        data: { Id:1 },
-                        success: function (data) {
+                        data: { Id: 1 },
+                        success: function(data) {
                             vm.RelateArt = data.RelateArt;
                             vm.Category = data.Category;
                             vm.RecommendArt = data.RecommendArt;
@@ -162,10 +162,10 @@
                             vm.ArtTag = data.ArtTag;
 
                         }
-                    })
+                    });
                 }
             }
-        })
+        });
     </script>
 }
 

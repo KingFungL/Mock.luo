@@ -18,7 +18,7 @@ using Mock.Domain.Interface;
 using QConnectSDK;
 using QConnectSDK.Context;
 
-namespace Mock.luo.Controllers
+namespace Mock.Luo.Controllers
 {
     [Skip]
     public class AppController : BaseController
@@ -148,11 +148,13 @@ namespace Mock.luo.Controllers
         #endregion
 
         #region 分类文章|标签视图
+
         /// <summary>
         /// 分类文章|标签
         /// </summary>
         /// <param name="category"></param>
         /// <param name="tag"></param>
+        /// <param name="archive"></param>
         /// <returns></returns>
         public ActionResult Category(string category = "", string tag = "", string archive = "")
         {

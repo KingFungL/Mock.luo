@@ -59,7 +59,8 @@
                             { field: 'AuEmail', title: '留言者邮箱' },
                         { field: 'CreatorTime', title: '留言时间', sortable: true },
                         { field: 'Ip', title: 'Ip地址', sortable: true, align: 'center' },
-                        { field: 'Agent', title: '浏览器环境', align: 'center' },
+                        { field: 'Agent', title: '浏览器环境', align: 'center' },
+
                         ],
                         callback: function () {
                             $('.pull-right.search .form-control').attr('placeholder', '输入邮箱/留言内容');
@@ -86,7 +87,7 @@
                     this.editinfo(false, id);
                 },
                 btn_delete: function () {
-                    com.delete('/Plat/GuestBook/Delete', '#dginfo');
+                    com.deleted('/Plat/GuestBook/Delete', '#dginfo');
                 },
                 editinfo: function (isaduit, id) {
                     com.ajax({

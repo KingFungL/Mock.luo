@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace Mock.luo.Content.js.ueditor.net.App_Code
+namespace Mock.Luo.Content.js.ueditor.net.App_Code
 {
     /// <summary>
     /// UploadHandler 的摘要说明

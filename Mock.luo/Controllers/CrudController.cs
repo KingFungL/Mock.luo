@@ -8,9 +8,9 @@ using Mock.Code.Json;
 using Mock.Data.AppModel;
 using Mock.Data.Infrastructure;
 using Mock.Data.Repository;
-using Mock.luo.Generic.Filters;
+using Mock.Luo.Generic.Filters;
 
-namespace Mock.luo.Controllers
+namespace Mock.Luo.Controllers
 {
     public class CrudController<TEntityModel, TViewModel> : BaseController where TEntityModel : class, new() where TViewModel : class, new()
     {
@@ -142,5 +142,6 @@ namespace Mock.luo.Controllers
             }
             return Error("删除失败！");
         }
+
     }
 }

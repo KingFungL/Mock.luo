@@ -60,7 +60,7 @@ com.ajax = function (options) {
                         $.layerClose();
                     }
                     //然后弹出成功操作的提示
-                    $.layerMsg(data.message, data.state, function () {
+                    $.layerMsg(data.Message, data.State, function () {
                         //回调成功后的刷新表格操作
                         if (options.success && $.isFunction(options.success)) {
                             options.success(data);
@@ -69,7 +69,7 @@ com.ajax = function (options) {
                 }, function () {
                     console.log(data);
                     //操作失败时
-                    $.layerMsg(data.message, data.state);
+                    $.layerMsg(data.Message, data.State);
                 })
             } else {
                 if (options.success && $.isFunction(options.success)) {
@@ -96,7 +96,8 @@ com.ajax = function (options) {
         },
         statusCode: {
             403: function (data) {
-                $.alertMsg(data.responseJSON.message, '系统提示', '', data.responseJSON.state)
+                debugger
+                $.alertMsg(data.responseJSON.Message, '系统提示', '', data.responseJSON.State)
             }
         }
     });
@@ -264,34 +265,34 @@ com.image_preview_dialog = function (url) {
 function:统一的删除方法,必要的条件是，列表数据的主键为Id,后端使用统一的删除方法
 date:2017-8-10
 */
-com.delete = function (url, element, type) {
-    var Id = 0;
+com.deleted = function (url, element, type) {
+    var id = 0;
     if (!element) {
-        element = '#dginfo'
+        element = '#dginfo';
     }
     if (!type) {
         type = 'boot';
     }
     var $grid = $(element);
-    Id = com.get_selectid(element, type);
+    id = com.get_selectid(element, type);
 
-    if (!Id) { layer.msg('请先选择需要删除的信息！'); return; }
+    if (!id) { layer.msg('请先选择需要删除的信息！'); return; }
     $.layerConfirm({
         content: '是否删除这条信息?',
         callback: function () {
             com.ajax({
-                url: url + '/' + Id,
+                url: url + '/' + id,
                 type: 'post',
                 success: function (dataJson) {
                     $.procAjaxMsg(dataJson, function () {
-                        layer.msg(dataJson.message);
+                        layer.msg(dataJson.Message);
                         if (type === 'boot') {
                             $(element).bootstrapTable("refresh");
                         } else {
                             $(element).trigger('reloadGrid').jqGrid('resetSelection');
                         }
                     }, function () {
-                        layer.msg(dataJson.message);
+                        layer.msg(dataJson.Message);
                     });
                 }
             });

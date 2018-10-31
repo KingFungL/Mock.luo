@@ -57,7 +57,7 @@
             <a href="http://igeekfan.cn/" target="_blank">
                 天上有木月博客<span>·</span>
             </a><a> 2016~@DateTime.Now.Year ©</a><span>·</span>
-            <a href="https://github.com/luoyunchong/Mock.luo" target="_blank">获取igeekfan博客代码</a>
+            <a href="https://github.com/luoyunchong/Mock.Luo" target="_blank">获取igeekfan博客代码</a>
         </p>
         <p>
         </p>
@@ -103,15 +103,19 @@
                         url: '/Login/CheckLogin',
                         data: postdata,
                         success: function (jsondata) {
-                            $.procAjaxMsg(jsondata, function () {
-                                $.layerMsg(jsondata.message, jsondata.state, function () {
-                                    window.location.href = jsondata.data;
+                            $.procAjaxMsg(jsondata,
+                                function() {
+                                    $.layerMsg(jsondata.Message,
+                                        jsondata.State,
+                                        function() {
+                                            window.location.href = jsondata.Data;
+                                        });
+                                },
+                                function() {
+                                    $.layerMsg(jsondata.Message, jsondata.State);
                                 });
-                            }, function () {
-                                $.layerMsg(jsondata.message, jsondata.state)
-                            })
                         }
-                    })
+                    });
 
                 },
                 btn_register: function () {

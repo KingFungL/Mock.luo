@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using Mock.Code.Attribute;
 
-namespace Mock.luo.Controllers
+namespace Mock.Luo.Controllers
 {
     [Skip]
     public class ErrorController : Controller

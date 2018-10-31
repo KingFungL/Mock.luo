@@ -2,9 +2,9 @@
 using Mock.Data;
 using Mock.Data.Infrastructure;
 using Mock.Data.Models;
-using Mock.luo.Areas.Plat.Models;
+using Mock.Luo.Areas.Plat.Models;
 
-namespace Mock.luo
+namespace Mock.Luo
 {
     public static class AutoMapperConfig
     {

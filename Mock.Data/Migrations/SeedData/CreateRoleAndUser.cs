@@ -34,7 +34,8 @@ namespace Mock.Data.Migrations.SeedData
                 _dbContext.AppRole.Add(new AppRole()
                 {
                     RoleName = "超级管理员",
-                    IsEnableMark = true
+                    IsEnableMark = true,
+                    DeleteMark = false
                 });
 
             }
@@ -49,7 +50,8 @@ namespace Mock.Data.Migrations.SeedData
                 {
                     LoginName = "admin",
                     LoginPassword = loginPassword,
-                    UserSecretkey = userSecretkey
+                    UserSecretkey = userSecretkey,
+                    DeleteMark = false
                 });
 
             }

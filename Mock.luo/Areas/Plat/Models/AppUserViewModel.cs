@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Mock.Code.Web.Tree;
 
-namespace Mock.luo.Areas.Plat.Models
+namespace Mock.Luo.Areas.Plat.Models
 {
     public class AppUserViewModel
     {

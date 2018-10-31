@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 /// <summary>
 /// Config 的摘要说明
 /// </summary>
-namespace Mock.luo.Content.js.ueditor.net.App_Code
+namespace Mock.Luo.Content.js.ueditor.net.App_Code
 {
     public static class Config
     {

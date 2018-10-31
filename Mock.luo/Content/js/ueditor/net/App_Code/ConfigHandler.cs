@@ -1,6 +1,6 @@
 ﻿using System.Web;
 
-namespace Mock.luo.Content.js.ueditor.net.App_Code
+namespace Mock.Luo.Content.js.ueditor.net.App_Code
 {
     /// <summary>
     /// Config 的摘要说明

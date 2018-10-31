@@ -12,10 +12,10 @@ using Mock.Data.AppModel;
 using Mock.Data.Models;
 using Mock.Data.Repository;
 using Mock.Domain.Interface;
-using Mock.luo.Areas.Plat.Models;
-using Mock.luo.Controllers;
+using Mock.Luo.Areas.Plat.Models;
+using Mock.Luo.Controllers;
 
-namespace Mock.luo.Areas.Plat.Controllers
+namespace Mock.Luo.Areas.Plat.Controllers
 {
     public class ArticleController : CrudController<Article, ArticleViewModel>
     {

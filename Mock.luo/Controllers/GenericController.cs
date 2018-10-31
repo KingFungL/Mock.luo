@@ -3,9 +3,9 @@ using System.Web.Mvc;
 using Mock.Code;
 using Mock.Code.Extend;
 using Mock.Data.ExtensionModel;
-using Mock.luo.Models;
+using Mock.Luo.Models;
 
-namespace Mock.luo.Controllers
+namespace Mock.Luo.Controllers
 {
     public class GenericController : BaseController
     {

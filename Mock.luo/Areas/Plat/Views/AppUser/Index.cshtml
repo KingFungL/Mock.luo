@@ -60,7 +60,7 @@
             el: '#v-app',
             data: {
                 LoginName: '',
-                Email: '',
+                Email: ''
             },
             mounted: function () {
                 $('#toolbar').authorizeButton();
@@ -84,15 +84,10 @@
                     });
                 },
                 btn_delete: function () {
-                    com.delete('/Plat/AppUser/Delete');
+                    com.deleted('/Plat/AppUser/Delete');
                 },
                 btn_query: function () {
                     $('#dginfo').bootstrapTable('refresh');
-                },
-                btn_clear: function () {
-                    this.Email = '';
-                    this.LoginName = '';
-                    $('#dginfo').bootstrapTable("refresh");
                 },
                 btn_reset_pwd: function () {
                     com.edit('#dginfo', 'boot', function (id) {
@@ -123,7 +118,7 @@
                     });
                 },
                 get_status: function (code) {
-                    if (code == null || code == undefined || code == "") return null;
+                    if (code == null || code === "") return null;
                     var obj = { 'Enable': true, 'Forbidden': false };
                     return obj[code];
                 },
@@ -146,7 +141,7 @@
                             { field: 'NickName', title: '昵称', sortable: true },
                             {
                                 field: 'Id', title: '配置角色', formatter: function (value, row) {
-                                    return String(row.UserRoleList)
+                                    return String(row.UserRoleList);
                                 }
                             },
                             { field: 'LoginCount', title: '登录次数', sortable: true },

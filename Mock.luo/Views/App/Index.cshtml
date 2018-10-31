@@ -69,7 +69,7 @@
                             <article class="post">
                                 <figure class="thumbnail box-hide box-show">
                                     <a href="/App/Detail/@item.Id">
-                                        <img src="@item.thumbnail" alt="@item.Title">
+                                        <img src="@item.Thumbnail" alt="@item.Title">
                                     </a>
                                 </figure>
                                 <span class="new-ico">NEW</span>
@@ -84,7 +84,7 @@
                                             <i class="fa fa-clock-o"></i>
                                             &nbsp;@item.TimeSpan
                                         </span>
-                                        @if (item.TypeCode.IsNotNullOrEmpty())
+                                        @if (!item.TypeCode.IsNullOrWhiteSpace())
                                         {
                                             <span class="cat">
                                                 <i class="fa fa-folder"></i>&nbsp;
@@ -104,8 +104,8 @@
                                         </span>
                                     </span>
                                     <br>
-                                    <div class="archive-content" >
-                                      @item.Excerpt
+                                    <div class="archive-content">
+                                        @item.Excerpt
                                         @* 摘要 *@
                                     </div>
                                     @*<script>
@@ -154,6 +154,8 @@
 
             @{Html.RenderPartial("TagHtml", ViewData["Tag"]); }
 
+            @using Microsoft.Ajax.Utilities
+            @using Mock.Code.Extend
             @using Mock.Data.Models;
             <aside class="widget fadeInUp" data-wow-delay="0.3s">
                 <h3 class="widget-title">点击排行</h3>
@@ -247,7 +249,7 @@
                             @{
                                 for (int j = 1; j < fellLifeList.Count; j++)
                                 {
-                                    <li class="list-date">@fellLifeList[j].CreatorTime.ToDateTime().ToString("yyyy/MM/dd")</li>
+                                    <li class="list-date">@fellLifeList[j].CreatorTime.ToDateString()</li>
                                     <li class="list-title"><i class="fa fa-angle-right"></i><a href="/App/Detail/@fellLifeList[j].Id">@fellLifeList[j].Title</a></li>
                                 }
                             }
@@ -255,7 +257,7 @@
                     </div>
                 </div>
             </div>
-                                }
+        }
         @{ List<ArtDetailDto> funcList = ViewData["JustFun"] as List<ArtDetailDto>;
             ArticleDto func = new ArticleDto { };
             if (funcList.Count > 0)
@@ -279,15 +281,15 @@
                             @{
                                 for (int j = 1; j < funcList.Count; j++)
                                 {
-                                    <li class="list-date">@funcList[j].CreatorTime.ToDateTime().ToString("yyyy/MM/dd")</li>
-                                    <li class="list-title" ><i class="fa fa-angle-right"></i><a href="/App/Detail/@funcList[j].Id">@funcList[j].Title</a></li>
+                                    <li class="list-date">@funcList[j].CreatorTime.ToDateString()</li>
+                                    <li class="list-title"><i class="fa fa-angle-right"></i><a href="/App/Detail/@funcList[j].Id">@funcList[j].Title</a></li>
                                 }
                             }
                         </ul>
                     </div>
                 </div>
             </div>
-                                }
+        }
 
     </div>
 </div>
@@ -317,7 +319,7 @@
                     $("[data-toggle='tooltip']").tooltip();
                 },
                 show_info: function (img) {
-                    var img_url = '/Content/Images/' + img ;
+                    var img_url = '/Content/Images/' + img;
 
                     var json = {
                         "title": "", //相册标题
@@ -333,7 +335,7 @@
                     };
                     layer.photos({
                         photos: json
-                        , anim:0 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+                        , anim: 0 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
                     });
 
                 }

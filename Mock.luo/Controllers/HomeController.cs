@@ -7,7 +7,7 @@ using Mock.Code.Web;
 using Mock.Data.AppModel;
 using Mock.Data.Models;
 using Mock.Domain.Interface;
-namespace Mock.luo.Controllers
+namespace Mock.Luo.Controllers
 {
     public class HomeController : BaseController
     {
@@ -94,14 +94,13 @@ namespace Mock.luo.Controllers
         /// <summary>
         /// 当前登录用户的菜单权限
         /// </summary>
-        /// <returns>List<TreeNode>树形递归数据</returns>
+        /// <returns>List树形递归数据</returns>
         private List<TreeNode> GetMenuList()
         {
             OperatorProvider op = OperatorProvider.Provider;
-            List<AppModule> userModuleEntities;
             //权限为空时，根据当前登录的用户Id,获取权限模块数据
            
-            userModuleEntities = _appModuleService.GetUserModules(op.CurrentUser.UserId);
+            var userModuleEntities = _appModuleService.GetUserModules(op.CurrentUser.UserId);
             
             List<AppModule> userMenuEntities = userModuleEntities.Where(u => u.TypeCode != ModuleCode.Button.ToString() && u.TypeCode != ModuleCode.Permission.ToString()).ToList();
 

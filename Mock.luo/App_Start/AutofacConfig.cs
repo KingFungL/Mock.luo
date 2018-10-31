@@ -1,12 +1,15 @@
 ﻿using System.Reflection;
+using System.Web.Compilation;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Mock.Code;
 using Mock.Code.Helper;
 using Mock.Code.Mail;
+using Mock.Domain.Interface;
+using Mock.Luo.Generic.Filters;
 
-namespace Mock.luo
+namespace Mock.Luo
 {
     public class AutofacConfig
     {
@@ -22,10 +25,10 @@ namespace Mock.luo
 
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
 
-            builder.RegisterAssemblyTypes(service).AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(service).AsImplementedInterfaces().PropertiesAutowired();
 
             builder.RegisterType<RedisHelper>().As<IRedisHelper>().SingleInstance();
-            builder.RegisterType<MailHelper>().As<IMailHelper>().SingleInstance();
+            builder.RegisterType<MailHelper>().As<IMailHelper>().SingleInstance().PropertiesAutowired();
 
             //注入特性
             builder.RegisterFilterProvider();
@@ -37,4 +40,6 @@ namespace Mock.luo
 
         }
     }
+
+
 }

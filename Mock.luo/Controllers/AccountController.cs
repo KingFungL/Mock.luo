@@ -12,9 +12,9 @@ using Mock.Code.Web;
 using Mock.Data.AppModel;
 using Mock.Data.Models;
 using Mock.Domain.Interface;
-using Mock.luo.Models;
+using Mock.Luo.Models;
 
-namespace Mock.luo.Controllers
+namespace Mock.Luo.Controllers
 {
     public class AccountController : BaseController
     {

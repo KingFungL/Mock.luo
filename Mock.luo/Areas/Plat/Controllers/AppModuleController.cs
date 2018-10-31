@@ -10,10 +10,10 @@ using Mock.Code.Web.TreeGrid;
 using Mock.Data.AppModel;
 using Mock.Data.Models;
 using Mock.Domain.Interface;
-using Mock.luo.Areas.Plat.Models;
-using Mock.luo.Controllers;
+using Mock.Luo.Areas.Plat.Models;
+using Mock.Luo.Controllers;
 
-namespace Mock.luo.Areas.Plat.Controllers
+namespace Mock.Luo.Areas.Plat.Controllers
 {
     public class AppModuleController : CrudController<AppModule, AppModuleViewModel>
     {
@@ -50,7 +50,7 @@ namespace Mock.luo.Areas.Plat.Controllers
 
         public ActionResult GetFancyTreeGrid()
         {
-            return Result(_service.GetFancyTreeGrid());
+            return CamelCaseJson(_service.GetFancyTreeGrid());
         }
 
         /// <summary>

@@ -64,9 +64,9 @@ namespace Mock.Domain.Interface
         /// <summary>
         /// 根据用户ID得到权限模块 GetUserMenus 缓存
         /// </summary>
-        /// <param name="userid">用户ID</param>
+        /// <param name="userId">用户ID</param>
         /// <returns>用户菜单List</returns>
-         List<AppModule> GetUserModules(int? userId);
+        List<AppModule> GetUserModules(int? userId);
 
         /// <summary>
         /// Action执行权限认证

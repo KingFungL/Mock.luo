@@ -5,10 +5,10 @@ using Mock.Code.Helper;
 using Mock.Code.Web;
 using Mock.Data.Models;
 using Mock.Domain.Interface;
-using Mock.luo.Areas.Plat.Models;
-using Mock.luo.Controllers;
+using Mock.Luo.Areas.Plat.Models;
+using Mock.Luo.Controllers;
 
-namespace Mock.luo.Areas.Plat.Controllers
+namespace Mock.Luo.Areas.Plat.Controllers
 {
     public class ItemsDetailController : CrudController<ItemsDetail, ItemsDetailViewModel>
     {

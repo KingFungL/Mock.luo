@@ -13,11 +13,11 @@ using Mock.Code.Web;
 using Mock.Data.AppModel;
 using Mock.Data.Models;
 using Mock.Domain.Interface;
-using Mock.luo.Areas.Plat.Models;
-using Mock.luo.Controllers;
-using Mock.luo.Models;
+using Mock.Luo.Areas.Plat.Models;
+using Mock.Luo.Controllers;
+using Mock.Luo.Models;
 
-namespace Mock.luo.Areas.Plat.Controllers
+namespace Mock.Luo.Areas.Plat.Controllers
 {
     public class GuestBookController : CrudController<GuestBook, GuestBookViewModel>
     {

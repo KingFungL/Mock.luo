@@ -6,7 +6,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Mock.Data.Models;
 
-namespace Mock.luo
+namespace Mock.Luo
 {
 
     public class WebApiApplication : System.Web.HttpApplication

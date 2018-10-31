@@ -1,6 +1,6 @@
-﻿using Mock.luo.Controllers;
+﻿using Mock.Luo.Controllers;
 
-namespace Mock.luo.Areas.Plat.Controllers
+namespace Mock.Luo.Areas.Plat.Controllers
 {
     public class CloudController : BaseController
     {
