@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mock.Data", "Mock.Data\Mock
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mock.Domain", "Mock.Domain\Mock.Domain.csproj", "{513DD367-6A38-48DD-8E7E-B25CBD0154E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mock.Luo", "Mock.luo\Mock.Luo.csproj", "{6050D8AF-E3EE-4418-B4EE-5289092FD145}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mock.Luo", "Mock.Luo\Mock.Luo.csproj", "{6050D8AF-E3EE-4418-B4EE-5289092FD145}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
