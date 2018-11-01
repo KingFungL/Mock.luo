@@ -1667,6 +1667,8 @@
     <Content Include="Content\user\99.png" />
     <Content Include="favicon.ico" />
     <Content Include="Files\readme.txt" />
+    <Content Include="Files\SQL\1.sql" />
+    <Content Include="Files\SQL\2.sql" />
     <Content Include="Files\博客系统截图\%40_99`%252}%29`D5RGG~MBE8%40FW.png" />
     <Content Include="Files\博客系统截图\05XUB9W7%24%24D9DH]9`5`RY%25F.png" />
     <Content Include="Files\博客系统截图\BQNE~`}C%25]{T_NY0H1%24%29HWS.png" />
