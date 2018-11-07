@@ -175,7 +175,7 @@
                 autoHeight: true
             });
 
-            json.Content = decodeURIComponent(json.Content)
+            json.Content = decodeURIComponent(json.Content);
             if (json.Id != null) {
                 ue.addListener("ready", function () {
                     // editor准备好之后才可以使用

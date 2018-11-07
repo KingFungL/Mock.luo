@@ -30,7 +30,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// <returns></returns>
         public ActionResult GetCombobox(string encode)
         {
-            return Result(_service.GetCombobox(encode));
+            return CamelCaseJson(_service.GetCombobox(encode));
         }
         /// <summary>
         /// 重写编辑方法，验证编码的唯一性

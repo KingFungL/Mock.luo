@@ -21,8 +21,8 @@ namespace Mock.Luo.Areas.Plat.Controllers
     {
         // GET: Plat/Article
 
-        IArticleRepository _service;
-        IItemsDetailRepository _itemsDetailRepository;
+        readonly IArticleRepository _service;
+        readonly IItemsDetailRepository _itemsDetailRepository;
         public ArticleController(IArticleRepository service, IItemsDetailRepository itemsDetailRepository, IComponentContext container) : base(container)
         {
             this._service = service;
@@ -33,7 +33,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         {
             //取出文章对应的多个标签Id
             var tagActive = _service.Queryable(u => u.DeleteMark == false && u.Id == id)
-                .Select(u => u.TagArts.Select(r => r.TagId)).FirstOrDefault();
+                .Select(u => u.TagArts.Select(r => r.TagId)).AsEnumerable().FirstOrDefault();
 
             ViewBag.TagActive = JsonHelper.SerializeObject(tagActive);
 
