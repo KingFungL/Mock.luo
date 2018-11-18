@@ -54,12 +54,13 @@ namespace Mock.Luo.Controllers
 
 
         #region Edit 统一的新增，编辑方法，每次用一次拆箱，装箱，不知道会不会影响速度
+
         /// <summary>
         /// author:luozQ
         /// function:Edit 统一的新增，编辑方法，每次用一次拆箱，装箱，不知道会不会影响速度
         /// </summary>
-        /// <param name="Id">主键</param>
         /// <param name="viewModel">实体对象</param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
         //[HandlerAuthorize]
@@ -67,7 +68,7 @@ namespace Mock.Luo.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Error(ModelState.Values.Where(u => u.Errors.Count > 0).FirstOrDefault().Errors[0].ErrorMessage);
+                return Error(ModelState.Values.FirstOrDefault(u => u.Errors.Count > 0)?.Errors[0].ErrorMessage);
             }
 
             var userid = OperatorProvider.Provider.CurrentUser.UserId;
@@ -76,8 +77,7 @@ namespace Mock.Luo.Controllers
             {
                 TEntityModel entity = Mapper.Map<TViewModel, TEntityModel>(viewModel);
 
-                var d = entity as ICreationAudited;
-                if (d != null)
+                if (entity is ICreationAudited d)
                 {
                     d.CreatorTime = DateTime.Now;
                     d.CreatorUserId = userid;
@@ -85,7 +85,7 @@ namespace Mock.Luo.Controllers
                     TEntityModel tEntityModel = d as TEntityModel;
                    
 
-                    if (tEntityModel != null && _ibase.Insert(tEntityModel) > 0)
+                    if (_ibase.Insert(tEntityModel) > 0)
                     {
                         return Success("新增成功");
                     }
@@ -131,7 +131,7 @@ namespace Mock.Luo.Controllers
             var codetableEntity = _ibase.FindEntity(id);
 
             if (codetableEntity == null)
-                return Error($"Id为{id}未找到任何类型为{codetableEntity.GetType().Name}的实体对象");
+                return Error($"Id为{id}未找到任何类型为{typeof(TEntityModel).Name}的实体对象");
             IDeleteAudited deleteAudited = new DeleteAudited { Id = id, DeleteMark = true, DeleteTime = DateTime.Now, DeleteUserId = OperatorProvider.Provider.CurrentUser.UserId };
 
             TEntityModel entity = Mapper.Map(deleteAudited, codetableEntity);

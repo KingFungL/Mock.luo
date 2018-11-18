@@ -321,7 +321,7 @@
             data: {
                 AId: '@ViewBag.AId',
                 review: [],
-                limit: 5,
+                limit: 20,
                 index: "",
                 reply: reply,
                 pointQuantity: '@entry.PointQuantity' == '' ? 0 : '@entry.PointQuantity',
@@ -385,7 +385,7 @@
                             }
                             vm.init_hover();
                         }
-                    })
+                    });
                 },
                 init_hover: function () {
                     window.setTimeout(function () {
@@ -405,11 +405,11 @@
                     var text = $('#layui_edit').val();
                     if ($.trim(text) == "") {
                         $.layerMsg('请填写评论内容！', 'info');
-                        return;
+                        return false;
                     }
                     if ($.trim(text) != "" && $.trim(text).length > 500) {
                         $.layerMsg('评论内容太多了！', 'info');
-                        return;
+                        return false;
                     }
 
                     vm.reply.Text = com.escape(text);
@@ -469,7 +469,7 @@
                             $.procAjaxMsg(d, function () {
                                 vm.pointQuantity++;
                             }, function () {
-                                $.layerMsg(d.message, 'info');
+                                $.layerMsg(d.Message, 'info');
                             });
                         }
                     });

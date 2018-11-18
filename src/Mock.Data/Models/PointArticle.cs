@@ -17,9 +17,22 @@ namespace Mock.Data.Models
         [ForeignKey("AId")]
         public Article Article { get; set; }
         public int UserId { get; set; }
-        [ForeignKey("UserId")]
         public virtual AppUser AppUser { get; set; }
         public DateTime? AddTime { get; set; }
+       /// <summary>
+       /// 点赞人IP
+       /// </summary>
+       [StringLength(500)]
+        public string IP { get; set; }
+        [StringLength(500)]
+        public string Browser { get; set; }
+        [StringLength(500)]
+        public string System { get; set; }
+        [StringLength(50)]
+        public string Email { get; set; }
+        [StringLength(50)]
+        public string LoginName { get; set; }
+        [StringLength(500)]
+        public string Agent { get; set; }
     }
-
 }

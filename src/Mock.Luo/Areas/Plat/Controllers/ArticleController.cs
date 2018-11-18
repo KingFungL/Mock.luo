@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using Autofac;
+﻿using Autofac;
 using AutoMapper;
 using Mock.Code.Attribute;
 using Mock.Code.Helper;
@@ -14,6 +10,10 @@ using Mock.Data.Repository;
 using Mock.Domain.Interface;
 using Mock.Luo.Areas.Plat.Models;
 using Mock.Luo.Controllers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace Mock.Luo.Areas.Plat.Controllers
 {
@@ -21,8 +21,8 @@ namespace Mock.Luo.Areas.Plat.Controllers
     {
         // GET: Plat/Article
 
-        readonly IArticleRepository _service;
-        readonly IItemsDetailRepository _itemsDetailRepository;
+        private readonly IArticleRepository _service;
+        private readonly IItemsDetailRepository _itemsDetailRepository;
         public ArticleController(IArticleRepository service, IItemsDetailRepository itemsDetailRepository, IComponentContext container) : base(container)
         {
             this._service = service;
@@ -63,7 +63,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         {
             if (category.IsNullOrEmpty() && tag.IsNullOrEmpty() && archive.IsNullOrEmpty())
             {
-                throw new ArgumentNullException("参数异常!!");
+                throw new ArgumentNullException("参数异常!!tag" + tag);
             }
             if (pag.Sort.IsNullOrEmpty())
             {
@@ -88,7 +88,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Error(ModelState.Values.Where(u => u.Errors.Count > 0).FirstOrDefault().Errors[0].ErrorMessage);
+                return Error(ModelState.Values.FirstOrDefault(u => u.Errors.Count > 0)?.Errors[0].ErrorMessage);
             }
 
             string tagIds = Request["Tag"].ToString();
@@ -136,13 +136,13 @@ namespace Mock.Luo.Areas.Plat.Controllers
             if (entity.FId != null)
             {
                 string itemCode = _itemsDetailRepository.Queryable(u => u.Id == entity.FId).Select(r => r.ItemCode).FirstOrDefault();
-                if (itemCode.IsNotNullOrEmpty())
+                if (itemCode != null)
                 {
-                    if (itemCode.Equals(CategoryCode.Justfun))
+                    if (itemCode.Equals(CategoryCode.Justfun.ToString()))
                     {
                         RedisHelper.KeyDeleteAsync(string.Format(ConstHelper.App, "JustFun"));
                     }
-                    if (itemCode.Equals(CategoryCode.Feelinglife))
+                    if (itemCode.Equals(CategoryCode.Feelinglife.ToString()))
                     {
                         RedisHelper.KeyDeleteAsync(string.Format(ConstHelper.App, "FellLife"));
                     }

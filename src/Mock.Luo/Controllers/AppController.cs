@@ -193,7 +193,6 @@ namespace Mock.Luo.Controllers
         /// 留言互动页面
         /// </summary>
         /// <returns></returns>
-
         public ActionResult GuestBook()
         {
             PageDto pag = new PageDto
@@ -203,7 +202,7 @@ namespace Mock.Luo.Controllers
                 Limit = 10,
                 Offset = 0
             };
-            DataGrid dg = _gusetbookRepository.GetDataGrid(u => true, pag, "");
+            DataGrid dg = _gusetbookRepository.GetDataGrid(u => u.IsAduit==true, pag, "");
 
             ViewBag.ViewModel = dg.ToJson();
 
@@ -250,14 +249,12 @@ namespace Mock.Luo.Controllers
         {
             if (Request.Params["code"] != null)
             {
-                QOpenClient qzone = null;
-
                 var verifier = Request.Params["code"];
                 var state = Request.Params["state"];
                 string requestState = Session["requeststate"]?.ToString();
                 if (state == requestState)
                 {
-                    qzone = new QOpenClient(verifier, state);
+                    var qzone = new QOpenClient(verifier, state);
                     var currentUser = qzone.GetCurrentUser();
                     if (this.Session["QzoneOauth"] == null)
                     {
@@ -312,12 +309,16 @@ namespace Mock.Luo.Controllers
                         _appAuthRepository.Update(userAuth, "AccessToken", "ExpiresAt", "LastModifyTime");
 
                         appUserEntity = _appUserRepository.Queryable(r => r.Id == userAuth.UserId && userAuth.DeleteMark == false).FirstOrDefault();
-                        appUserEntity.LoginCount += 1;
-                        appUserEntity.LastLoginTime = now;
-                        appUserEntity.LastLogIp = Net.Ip;
-                        appUserEntity.LastModifyTime = now;
+                        if (appUserEntity != null)
+                        {
+                            appUserEntity.LoginCount += 1;
+                            appUserEntity.LastLoginTime = now;
+                            appUserEntity.LastLogIp = Net.Ip;
+                            appUserEntity.LastModifyTime = now;
 
-                        _appUserRepository.Update(appUserEntity, "LoginCount", "LastLoginTime", "LastLogIp", "LastModifyTime");
+                            _appUserRepository.Update(appUserEntity, "LoginCount", "LastLoginTime", "LastLogIp",
+                                "LastModifyTime");
+                        }
                     }
 
                     var isPersistentCookie = true;
@@ -327,24 +328,27 @@ namespace Mock.Luo.Controllers
                     OperatorProvider op = OperatorProvider.Provider;
 
                     //保存用户信息
-                    op.CurrentUser = new OperatorModel
+                    if (appUserEntity != null)
                     {
-                        UserId = appUserEntity.Id,
-                        IsSystem = _appUserRepository.IsSystem(appUserEntity.Id),
-                        IsAdmin = appUserEntity.LoginName == "admin" ? true : false,
-                        LoginName = appUserEntity.LoginName,
-                        LoginToken = accessToken,
-                        LoginTime = now,
-                        NickName = appUserEntity.NickName,
-                        Avatar = appUserEntity.Avatar,
-                        Email = appUserEntity.Email,
-                        PersonalWebsite = appUserEntity.PersonalWebsite
-                    };
-                    bool isSystem = _appUserRepository.IsSystem(appUserEntity.Id);
+                        op.CurrentUser = new OperatorModel
+                        {
+                            UserId = appUserEntity.Id,
+                            IsSystem = _appUserRepository.IsSystem(appUserEntity.Id),
+                            IsAdmin = appUserEntity.LoginName == "admin" ? true : false,
+                            LoginName = appUserEntity.LoginName,
+                            LoginToken = accessToken,
+                            LoginTime = now,
+                            NickName = appUserEntity.NickName,
+                            Avatar = appUserEntity.Avatar,
+                            Email = appUserEntity.Email,
+                            PersonalWebsite = appUserEntity.PersonalWebsite
+                        };
+                        bool isSystem = _appUserRepository.IsSystem(appUserEntity.Id);
 
-                    if (isSystem)
-                    {
-                        return Redirect(Url.Action("Index", "Home"));
+                        if (isSystem)
+                        {
+                            return Redirect(Url.Action("Index", "Home"));
+                        }
                     }
                 }
                 else

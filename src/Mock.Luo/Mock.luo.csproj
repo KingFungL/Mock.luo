@@ -1701,7 +1701,6 @@
     <Compile Include="Areas\Plat\Controllers\AppRoleController.cs" />
     <Compile Include="Areas\Plat\Controllers\AppUserController.cs" />
     <Compile Include="Areas\Plat\Controllers\ArticleController.cs" />
-    <Compile Include="Areas\Plat\Controllers\CloudController.cs" />
     <Compile Include="Areas\Plat\Controllers\GuestBookController.cs" />
     <Compile Include="Areas\Plat\Controllers\ItemsController.cs" />
     <Compile Include="Areas\Plat\Controllers\ItemsDetailController.cs" />
@@ -1769,7 +1768,6 @@
     <Content Include="Areas\Plat\Views\AppUser\Index.cshtml" />
     <Content Include="Areas\Plat\Views\Article\Form.cshtml" />
     <Content Include="Areas\Plat\Views\Article\Index.cshtml" />
-    <Content Include="Areas\Plat\Views\Cloud\Index.cshtml" />
     <Content Include="Areas\Plat\Views\GuestBook\Index.cshtml" />
     <Content Include="Areas\Plat\Views\ItemsDetail\Form.cshtml" />
     <Content Include="Areas\Plat\Views\ItemsDetail\Index.cshtml" />

@@ -71,7 +71,7 @@ namespace Mock.Domain.Implementations
             if (userEntity.Id == 0)
             {
                 userEntity.Create();
-                string userPassword = "1234";//默认密码
+                string userPassword = "123qwe";//默认密码
                 userEntity.UserSecretkey = Md5Helper.Md5(Utils.CreateNo(), 16).ToLower();
                 userEntity.LoginPassword = Md5Helper.Md5(DesEncrypt.Encrypt(Md5Helper.Md5(userPassword, 32).ToLower(), userEntity.UserSecretkey).ToLower(), 32).ToLower();
                 userEntity.LoginCount = 0;
@@ -130,14 +130,14 @@ namespace Mock.Domain.Implementations
                     return AjaxResult.Success("用户名为空");
                 }
                 var loginNameExpression = predicate.And(r => r.LoginName == userEntity.LoginName);
-                if (this.Queryable(loginNameExpression).Count() > 0)
+                if (this.Queryable(loginNameExpression).Any())
                 {
                     return AjaxResult.Error("用户名已存在！");
                 }
                 else
                 {
                     var emailExpression = predicate.And(r => r.Email == userEntity.Email);
-                    if (this.Queryable(emailExpression).Count() > 0)
+                    if (this.Queryable(emailExpression).Any())
                     {
                         return AjaxResult.Error("此邮箱已存在！");
                     }
@@ -150,14 +150,14 @@ namespace Mock.Domain.Implementations
                     return AjaxResult.Success("用户名为空");
                 }
                 var loginNameExpression = predicate.And(r => r.LoginName == userEntity.LoginName && r.Id != userEntity.Id);
-                if (this.Queryable(loginNameExpression).Count() > 0)
+                if (this.Queryable(loginNameExpression).Any())
                 {
                     return AjaxResult.Error("用户名已存在！");
                 }
                 else
                 {
                     var emailExpression = predicate.And(r => userEntity.Email != "" && r.Email == userEntity.Email && r.Id != userEntity.Id);
-                    if (this.Queryable(emailExpression).Count() > 0)
+                    if (this.Queryable(emailExpression).Any())
                     {
                         return AjaxResult.Error("此邮箱已存在！");
                     }
@@ -170,11 +170,13 @@ namespace Mock.Domain.Implementations
         #region 验证登录
         public AjaxResult CheckLogin(string loginName, string pwd, bool rememberMe)
         {
-            LogMessage logEntity = new LogMessage();
-            logEntity.CategoryId = 1;
-            logEntity.OperateType = EnumAttribute.GetDescription(DbLogType.Login);
-            logEntity.OperateAccount = loginName;
-            logEntity.Module = Configs.GetValue("SoftName");
+            LogMessage logEntity = new LogMessage
+            {
+                CategoryId = 1,
+                OperateType = EnumAttribute.GetDescription(DbLogType.Login),
+                OperateAccount = loginName,
+                Module = Configs.GetValue("SoftName")
+            };
             AjaxResult ajaxResult;
             try
             {
@@ -195,14 +197,9 @@ namespace Mock.Domain.Implementations
                         //根据登录实体，去缓存用户数据
                         this.SaveUserSession(userEntity);
 
-                        if (OperatorProvider.Provider.CurrentUser.IsSystem==true)
-                        {
-                            backUrl = "/Home/Index";
-                        }
-                        else
-                        {
-                            backUrl = "/App/Index";
-                        }
+                        backUrl = OperatorProvider.Provider.CurrentUser.IsSystem==true 
+                            ? "/Home/Index" 
+                            : "/App/Index";
 
                         //记住密码
                         if (rememberMe == true)
@@ -417,7 +414,7 @@ namespace Mock.Domain.Implementations
         #region 根据用户id判断用户是否是管理员
         public bool IsSystem(int? id)
         {
-            return base.Db.Set<AppUserRole>().Where(r => r.UserId == id).Select(r => r.AppRole.RoleName).Where(r => r.Contains("管理员")).Count() > 0;
+            return base.Db.Set<AppUserRole>().Where(r => r.UserId == id).Select(r => r.AppRole.RoleName).Any(r => r.Contains("管理员"));
         } 
         #endregion
     }

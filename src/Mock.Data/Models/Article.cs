@@ -32,14 +32,14 @@ namespace Mock.Data.Models
         [StringLength(400)]
         public string Excerpt { get; set; }
         public string Content { get; set; }
-        public int? ViewHits { get; set; }
-        public int? CommentQuantity { get; set; }
-        public int? PointQuantity { get; set; }
+        public int ViewHits { get; set; }
+        public int CommentQuantity { get; set; }
+        public int PointQuantity { get; set; }
         [StringLength(400)]
         public string Thumbnail { get; set; }
-        public bool? IsAudit { get; set; }
-        public bool? Recommend { get; set; }
-        public bool? IsStickie { get; set; }
+        public bool IsAudit { get; set; }
+        public bool Recommend { get; set; }
+        public bool IsStickie { get; set; }
         /// <summary>
         /// 随笔档案   如2019年1月
         /// </summary>

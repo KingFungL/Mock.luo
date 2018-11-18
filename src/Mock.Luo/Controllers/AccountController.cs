@@ -333,7 +333,7 @@ namespace Mock.Luo.Controllers
             userEntity.Modify(oUserModel.UserId);
             //_appUserRepository.IQueryable(u => u.Id == oUserModel.UserId).Update(u => userEntity);
 
-            _appUserRepository.Update(userEntity, "QQ", "Phone", "NickName", "Gender", "PersonSignature", "PersonalWebsite");
+            _appUserRepository.Update(userEntity, "Qq", "Phone", "NickName", "Gender", "PersonSignature", "PersonalWebsite");
 
             oUserModel.NickName = userEntity.NickName;
             Op.CurrentUser = oUserModel;

@@ -15,6 +15,11 @@ namespace Mock.Data.Models
         [Key]
         public int Id { get; set; }
         public int? PId { get; set; }
+        /// <summary>
+        /// @的用户名，用于前台的显示效果
+        /// </summary>
+        [StringLength(50)]
+        public string PName { get; set; }
         public string Text { get; set; }
         [StringLength(50)]
         public string Ip { get; set; }

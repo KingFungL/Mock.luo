@@ -232,7 +232,7 @@
                             Email: vm.user.Email
                         },
                         success: function (d) {
-                            $.layerMsg(d.message, d.state);
+                            $.layerMsg(d.Message, d.State);
 
                             $.procAjaxMsg(d, function () {
                                 vm.EmailToken = d.data;
@@ -251,7 +251,7 @@
                         return;
                     }
                     $.post('/Account/SetLoginName', { LoginName: this.user.LoginName }, function (d) {
-                        $.layerMsg(d.message, d.state);
+                        $.layerMsg(d.Message, d.State);
                         $.procAjaxMsg(d, function () {
                             vm.LoginNameIsShow = false;
                         }, function () {

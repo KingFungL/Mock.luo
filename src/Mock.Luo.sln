@@ -15,6 +15,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mock.Domain", "Mock.Domain\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mock.luo", "Mock.Luo\Mock.luo.csproj", "{6050D8AF-E3EE-4418-B4EE-5289092FD145}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00 Docs 文档", "00 Docs 文档", "{C877B387-E94C-4F7D-B020-30677469757D}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\1.博客系统研究报告.docx = ..\docs\1.博客系统研究报告.docx
+		..\docs\2.博客系统设计报告.docx = ..\docs\2.博客系统设计报告.docx
+		..\docs\4.博客系统代码文档.docx = ..\docs\4.博客系统代码文档.docx
+		..\docs\5.博客系统用户使用说明书.docx = ..\docs\5.博客系统用户使用说明书.docx
+		..\docs\Mock数据bak文件20171129.zip = ..\docs\Mock数据bak文件20171129.zip
+		..\docs\mock数据库备选方案还原.zip = ..\docs\mock数据库备选方案还原.zip
+		..\docs\readme.txt = ..\docs\readme.txt
+		..\docs\数据字典.docx = ..\docs\数据字典.docx
+		..\docs\概要设计说明.md = ..\docs\概要设计说明.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -23,9 +23,6 @@
                                 </strong>
                                 <span class="ua-info">
                                     <span class="WB-OS">
-                                        <img src="http://www.99bsy.com/wp-content/themes/begin/show-useragent/browsers/chrome.png"
-                                             title="Chrome" alt="Chrome"> <img src="http://www.99bsy.com/wp-content/themes/begin/show-useragent/browsers/windows_win7.png" title="windows 7"
-                                                                               alt="windows 7">
                                     </span> 江苏 南京 联通
                                 </span>
                                 <span class="lv">博主</span>
@@ -51,7 +48,13 @@
                                     <a href="#">{{item.AuName}}</a>
                                 </strong>
                                 <span class="ua-info">
-                                    <span class="WB-OS"><img src="http://www.99bsy.com/wp-content/themes/begin/show-useragent/browsers/chrome.png" v-bind:title="item.Agent" v-bind:alt="item.Agent"> <img src="http://www.99bsy.com/wp-content/themes/begin/show-useragent/browsers/windows_win7.png" v-bind:title="item.System" v-bind:alt="item.System"> </span>{{item.GeoPosition}} {{item.UseNet}}
+                                    <span class="WB-OS">
+                                        {{item.Agent}}
+                                        {{item.System}}
+                                        @*<img src="http://www.99bsy.com/wp-content/themes/begin/show-useragent/browsers/chrome.png" v-bind:title="item.Agent" v-bind:alt="item.Agent">
+                                            <img src="http://www.99bsy.com/wp-content/themes/begin/show-useragent/browsers/windows_win7.png" v-bind:title="item.System" v-bind:alt="item.System">*@
+                                    </span>
+                                    {{item.GeoPosition}}
                                 </span>
                                 <span class="comment-meta">
                                     <a href="/App/Detail/1#comment-712"></a><br>
@@ -63,7 +66,7 @@
                                 </span>
                             </div>
                             <p class="review-content">
-                                <span class="at" v-show="item.PId!=0">@@<a v-bind:href="'#author-comment-'+ item.PId" v-text="item.PName"></a></span>
+                                <span class="at" v-show="item.PId!=0&&item.PName!=null">@@<a v-bind:href="'#author-comment-'+ item.PId" v-text="item.PName"></a></span>
                                 <span v-html="com.decodeText(item.Text)"></span>
                             </p>
                         </div>
@@ -104,6 +107,8 @@
 </div>
 @section css{
     <link href="~/Content/js/layui/css/font_24081_lyaxcfn8fp1iqkt9.css" rel="stylesheet" />
+    <style>
+    </style>
 }
 
 @section scripts{
@@ -193,7 +198,7 @@
                 },
                 get_itemgrid: function (data, callback) {
                     com.ajax({
-                        url: '/Plat/GuestBook/GetDataGrid',
+                        url: '/Plat/GuestBook/GetAduitDataGrid',
                         data: data,
                         success: function(json) {
                             vm.$data.review = json.Rows;

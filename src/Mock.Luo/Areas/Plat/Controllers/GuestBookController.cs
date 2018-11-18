@@ -30,6 +30,23 @@ namespace Mock.Luo.Areas.Plat.Controllers
             this._imailHelper = imailHelper;
         }
         [Skip]
+        public ActionResult GetAduitDataGrid(PageDto pag, string search = "")
+        {
+            if (pag.Sort.IsNullOrEmpty())
+            {
+                pag.Sort = "Id";
+            }
+            if (pag.Order.IsNullOrEmpty())
+            {
+                pag.Order = "desc";
+            }
+            if (pag.Limit > 20)
+            {
+                pag.Limit = 10;
+            }
+            return Result(_guestBookRepository.GetDataGrid(u => u.IsAduit==true, pag, search));
+        }
+
         public ActionResult GetDataGrid(PageDto pag, string search = "")
         {
             if (pag.Sort.IsNullOrEmpty())
@@ -92,7 +109,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
             if (!ModelState.IsValid)
             {
-                return Error(ModelState.Values.Where(u => u.Errors.Count > 0).FirstOrDefault().Errors[0].ErrorMessage);
+                return Error(ModelState.Values.FirstOrDefault(u => u.Errors.Count > 0)?.Errors[0].ErrorMessage);
             }
             OperatorProvider op = OperatorProvider.Provider;
 

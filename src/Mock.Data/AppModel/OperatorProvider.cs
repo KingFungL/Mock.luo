@@ -1,4 +1,4 @@
-
+﻿
 using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.SessionState;
@@ -82,23 +82,17 @@ namespace Mock.Data.AppModel
 
 
         #region 当前登录用户信息cookie或者session CurrentUser
+
         /// <summary>
         /// 当前登录用户信息cookie或者session
         /// </summary>
-        /// <param name="operatorModel"></param>
         public OperatorModel CurrentUser
         {
             get
             {
-                OperatorModel operatorModel = new OperatorModel();
-                if (_loginProvider == "Cookie")
-                {
-                    operatorModel = DesEncrypt.Decrypt(WebHelper.GetCookie(_loginUserKey)?.ToString()).ToObject<OperatorModel>();
-                }
-                else
-                {
-                    operatorModel = DesEncrypt.Decrypt(WebHelper.GetSession(_loginUserKey)?.ToString()).ToObject<OperatorModel>();
-                }
+                var operatorModel = _loginProvider == "Cookie" 
+                    ? DesEncrypt.Decrypt(WebHelper.GetCookie(_loginUserKey)?.ToString()).ToObject<OperatorModel>()
+                    : DesEncrypt.Decrypt(WebHelper.GetSession(_loginUserKey)?.ToString()).ToObject<OperatorModel>();
                 return operatorModel;
             }
 

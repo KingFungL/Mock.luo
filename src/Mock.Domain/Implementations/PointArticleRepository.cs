@@ -11,7 +11,7 @@ namespace Mock.Domain.Implementations
         /// <summary>
         /// 根据文章id得到点赞人信息 
         /// </summary>
-        /// <param name="ArticeId">文章主键</param>
+        /// <param name="articleId">文章主键</param>
         /// <returns>DataGrid实体</returns>
         public DataGrid GetDataGrid(int articleId)
         {
@@ -19,10 +19,13 @@ namespace Mock.Domain.Implementations
             {
                 u.Id,
                 u.Article.Title,
-                u.AppUser.Email,
                 u.AId,
-                u.AppUser.LoginName,
-                u.AddTime
+                u.AddTime,
+                u.IP,
+                u.Browser,
+                u.Email,
+                u.System,
+                u.LoginName
             }).ToList();
 
             return new DataGrid { Rows = rows, Total = rows.Count() };
