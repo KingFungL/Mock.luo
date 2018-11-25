@@ -49,6 +49,13 @@ namespace Mock.Code.Web.Tree
             return listTreeNodes.ToJson();
         }
 
+        public static List<TreeSelectModel> ComboboxTreeObject(this List<TreeSelectModel> data, int pId = 0)
+        {
+            List<TreeSelectModel> listTreeNodes = new List<TreeSelectModel>();
+            ComboboxTreeJson(data, listTreeNodes, pId.ToString());
+            return listTreeNodes;
+        }
+
         private static void ComboboxTreeJson(List<TreeSelectModel> listModels, List<TreeSelectModel>listTreeNodes,string pid)
         {
             foreach (TreeSelectModel item in listModels)

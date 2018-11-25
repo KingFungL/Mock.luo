@@ -14,14 +14,14 @@ namespace Mock.Luo.Areas.Plat.Controllers
     {
         // GET: Plat/ItemsDetail
 
-        private readonly IItemsDetailRepository _service;
-        public ItemsDetailController(IItemsDetailRepository service, IComponentContext container) : base(container)
+        private readonly IItemsDetailRepository _itemsDetailRepository;
+        public ItemsDetailController(IItemsDetailRepository itemsDetailRepository, IComponentContext container) : base(container)
         {
-            this._service = service;
+            this._itemsDetailRepository = itemsDetailRepository;
         }
         public ActionResult GetDataGrid(PageDto pag, string search = "",string enCode="")
         {
-            return Result(_service.GetDataGrid(pag, search, enCode));
+            return Result(_itemsDetailRepository.GetDataGrid(pag, search, enCode));
         }
         /// <summary>
         /// 根据主表的编码，获取分表ItemsDetail的关联数据，做为下拉列表数据
@@ -30,7 +30,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// <returns></returns>
         public ActionResult GetCombobox(string encode)
         {
-            return CamelCaseJson(_service.GetCombobox(encode));
+            return CamelCaseJson(_itemsDetailRepository.GetCombobox(encode));
         }
         /// <summary>
         /// 重写编辑方法，验证编码的唯一性
@@ -43,11 +43,11 @@ namespace Mock.Luo.Areas.Plat.Controllers
             int codeCount = 0;
             if (id == 0)
             {
-                codeCount = _service.Queryable(u => u.ItemCode == viewModel.ItemCode).Count();
+                codeCount = _itemsDetailRepository.Queryable(u => u.ItemCode == viewModel.ItemCode).Count();
             }
             else
             {
-                codeCount = _service.Queryable(u => u.ItemCode == viewModel.ItemCode && u.Id != id).Count();
+                codeCount = _itemsDetailRepository.Queryable(u => u.ItemCode == viewModel.ItemCode && u.Id != id).Count();
             }
             if (codeCount > 0)
             {

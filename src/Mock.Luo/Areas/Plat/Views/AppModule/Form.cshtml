@@ -257,12 +257,12 @@
                         data: vm.$data,
                         showMsg: true,
                         close: false,
-                        success: function () {
+                        success: function() {
                             //刷新菜单管理列表项
                             com.currentIframe().vm.btn_refresh();
                             $.layerClose();
                         }
-                    })
+                    });
                 },
                 btn_add: function () {
                     this.editinfo('新增', vm.autoId--);

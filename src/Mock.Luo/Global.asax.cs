@@ -14,11 +14,12 @@ namespace Mock.Luo
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            
+
+            AutofacConfig.Register();
+
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AutofacConfig.Register();
             AutoMapperConfig.RegisterMappings();
 
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<MockDbContext, Mock.Data.Migrations.Configuration>());

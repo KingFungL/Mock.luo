@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using Mock.Code.Helper;
 using Mock.Code.Json;
+using Mock.Code.Log;
 using Mock.Code.Web;
 using Mock.Data.AppModel;
 using Newtonsoft.Json;
@@ -12,6 +13,15 @@ namespace Mock.Luo.Controllers
     public abstract class BaseController : Controller
     {
         public OperatorProvider Op = OperatorProvider.Provider;
+        private Log _logger;
+        /// <summary>
+        /// 日志操作
+        /// </summary>
+        public Log Logger
+        {
+            get { return _logger ?? (_logger = LogFactory.GetLogger(this.GetType().ToString())); }
+        }
+
         //[HandlerAuthorize]
 
         public virtual ActionResult Index()

@@ -14,10 +14,10 @@ namespace Mock.Luo.Areas.Plat.Controllers
     public class AppUserController : CrudController<AppUser, AppUserViewModel>
     {
         // GET: Plat/AppUser
-        IAppUserRepository _service;
-        public AppUserController(IAppUserRepository service, IComponentContext container) : base(container)
+        private readonly IAppUserRepository _appUserRepository;
+        public AppUserController(IAppUserRepository appUserRepository, IComponentContext container) : base(container)
         {
-            this._service = service;
+            this._appUserRepository = appUserRepository;
         }
 
         [HttpGet]
@@ -30,7 +30,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
             }
             else
             {
-                var userEntity = _service.Queryable(u => u.Id == id).Select(u => new {
+                var userEntity = _appUserRepository.Queryable(u => u.Id == id).Select(u => new {
                     u.Id,
                     u.LoginName,
                     u.NickName,
@@ -50,7 +50,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         [HandlerAuthorize]
         public ActionResult GetDataGrid(PageDto pag, string loginName = "", string email = "")
         {
-            return Content(_service.GetDataGrid(pag, loginName, email).ToJson());
+            return Content(_appUserRepository.GetDataGrid(pag, loginName, email).ToJson());
         }
 
         [HandlerAuthorize]
@@ -60,7 +60,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
             {
                 return Error(ModelState);
             }
-            AjaxResult result = _service.IsRepeat(userEntity);
+            AjaxResult result = _appUserRepository.IsRepeat(userEntity);
 
             //用户名或邮箱重复
             if (result.State == ResultType.Error.ToString())
@@ -68,7 +68,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
                 return Content(result.ToJson());
             }
 
-            _service.SubmitForm(userEntity, roleIds);
+            _appUserRepository.SubmitForm(userEntity, roleIds);
 
             return Success();
 
@@ -81,7 +81,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         [HandlerAuthorize]
         public ActionResult ResetPassword(int id)
         {
-            _service.ResetPassword(new AppUser { Id = id }, "1234");
+            _appUserRepository.ResetPassword(new AppUser { Id = id }, "1234");
             return Success();
         }
     }

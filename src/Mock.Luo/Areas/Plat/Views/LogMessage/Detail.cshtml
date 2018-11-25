@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewBag.Title = "类别新增编辑管理";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+@model Mock.Code.Log.LogMessage
+<div class="layui-container" style="margin-top:15px;">
+    <form class="layui-form layui-box layui-form-pane" action="" id="v-app">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">操作类型</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="@Model.OperateType" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">操作时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="@Model.OperateTime" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">操作账号</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="@Model.OperateAccount" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">IpAddress</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="@Model.IpAddress" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">主机</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="@Model.Host" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">浏览器</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="@Model.Browser" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">ExecuteResult</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="@Model.ExecuteResult" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">方法名</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="@Model.MethodName" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">服务地址</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="@Model.ServiceName" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <input type="hidden" name="Parameters" id="Parameters" value="@Model.Parameters" />
+            <label class="layui-form-label">参数</label>
+            <div class="layui-input-block">
+                <pre id="AuditLogDetailModal_Parameters"></pre>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">来源</label>
+            <div class="layui-input-block">
+                <pre id="AuditLogDetailModal_ExceptionSource">@Model.ExceptionSource</pre>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">实例</label>
+            <div class="layui-input-block">
+                <pre id="AuditLogDetailModal_ExceptionRemark">@Model.ExceptionRemark</pre>
+            </div>
+        </div>
+    </form>
+</div>
+@section css{
+}
+@section scripts{
+    <script>
+
+        function getFormattedParameters(parameters) {
+            try {
+                var json = JSON.parse(parameters);
+                return JSON.stringify(json, null, 4);
+            } catch (e) {
+                return parameters;
+            }
+        }
+
+        $('#AuditLogDetailModal_Parameters').html(getFormattedParameters($('#Parameters').val()));
+
+    </script>
+}

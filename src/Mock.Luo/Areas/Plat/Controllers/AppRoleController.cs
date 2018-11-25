@@ -16,12 +16,12 @@ namespace Mock.Luo.Areas.Plat.Controllers
         // GET: Plat/AppRole
 
 
-        private readonly IAppRoleRepository _service;
-        private readonly IUserRoleRepository _urService;
-        public AppRoleController(IAppRoleRepository service, IUserRoleRepository urService, IComponentContext container) : base(container)
+        private readonly IAppRoleRepository _appRoleRepository;
+        private readonly IUserRoleRepository _userRoleRepository;
+        public AppRoleController(IAppRoleRepository appRoleRepository, IUserRoleRepository userRoleRepository, IComponentContext container) : base(container)
         {
-            this._service = service;
-            this._urService = urService;
+            this._appRoleRepository = appRoleRepository;
+            this._userRoleRepository = userRoleRepository;
         }
         /// <summary>
         /// 角色下拉框
@@ -29,12 +29,12 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// <returns></returns>
         public ActionResult GetRoleJson()
         {
-            return Result(_service.GetRoleJson());
+            return Result(_appRoleRepository.GetRoleJson());
         }
 
         public ActionResult GetDataGrid(string search = "")
         {
-            return Result(_service.GetDataGrid(search));
+            return Result(_appRoleRepository.GetDataGrid(search));
         }
         /// <summary>
         /// 为角色分配用户视图
@@ -52,7 +52,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// <returns></returns>
         public ActionResult GetAllotUserGrid(int roleId)
         {
-            return Result(_urService.GetAllotUserGrid(roleId));
+            return Result(_userRoleRepository.GetAllotUserGrid(roleId));
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
                     });
                 }
             }
-            return Result(_urService.SaveMembers(urList, roleId));
+            return Result(_userRoleRepository.SaveMembers(urList, roleId));
         }
         /// <summary>
         /// 为角色分配权限视图
@@ -118,7 +118,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
                 };
                 roleModules.Add(entity);
             }
-            _service.SaveAuthorize(roleId, roleModules);
+            _appRoleRepository.SaveAuthorize(roleId, roleModules);
             return Success();
         }
 

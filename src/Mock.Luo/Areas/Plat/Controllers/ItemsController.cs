@@ -52,14 +52,10 @@ namespace Mock.Luo.Areas.Plat.Controllers
         public override ActionResult Edit(ItemsViewModel viewModel, int id = 0)
         {
             int codeCount = 0;
-            if (id == 0)
-            {
-                codeCount = _service.Queryable(u => u.EnCode == viewModel.EnCode).Count();
-            }
-            else
-            {
-                codeCount = _service.Queryable(u => u.EnCode == viewModel.EnCode && u.Id != id).Count();
-            }
+            codeCount = id == 0 
+                ? _service.Queryable(u => u.EnCode == viewModel.EnCode).Count()
+                : _service.Queryable(u => u.EnCode == viewModel.EnCode && u.Id != id).Count();
+
             if (codeCount > 0)
             {
                 return Error("编码不唯一!");

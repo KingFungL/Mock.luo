@@ -759,6 +759,7 @@
     <Content Include="Content\js\jquery.js" />
     <Content Include="Content\js\jquery.metisMenu.js" />
     <Content Include="Content\js\jquery.slimscroll.min.js" />
+    <Content Include="Areas\Plat\Views\LogMessage\Detail.cshtml" />
     <None Include="Content\js\jquery.validate-vsdoc.js" />
     <Content Include="Content\js\jquery.validate.js" />
     <Content Include="Content\js\jquery.validate.min.js" />
@@ -1704,7 +1705,7 @@
     <Compile Include="Areas\Plat\Controllers\GuestBookController.cs" />
     <Compile Include="Areas\Plat\Controllers\ItemsController.cs" />
     <Compile Include="Areas\Plat\Controllers\ItemsDetailController.cs" />
-    <Compile Include="Areas\Plat\Controllers\LogInfoController.cs" />
+    <Compile Include="Areas\Plat\Controllers\LogMessageController.cs" />
     <Compile Include="Areas\Plat\Controllers\PointArticleController.cs" />
     <Compile Include="Areas\Plat\Controllers\ReviewController.cs" />
     <Compile Include="Areas\Plat\Models\AppModuleViewModel.cs" />
@@ -1773,7 +1774,7 @@
     <Content Include="Areas\Plat\Views\ItemsDetail\Index.cshtml" />
     <Content Include="Areas\Plat\Views\Items\Form.cshtml" />
     <Content Include="Areas\Plat\Views\Items\Index.cshtml" />
-    <Content Include="Areas\Plat\Views\LogInfo\Index.cshtml" />
+    <Content Include="Areas\Plat\Views\LogMessage\Index.cshtml" />
     <Content Include="Areas\Plat\Views\PointArticle\Index.cshtml" />
     <Content Include="Areas\Plat\Views\Review\Index.cshtml" />
     <Content Include="Areas\Plat\Views\Shared\_Layout.cshtml" />

@@ -5,7 +5,7 @@ namespace Mock.Code.Log
 {
     public class Log
     {
-        private ILog _logger;
+        private readonly ILog _logger;
         public Log(ILog log)
         {
             this._logger = log;

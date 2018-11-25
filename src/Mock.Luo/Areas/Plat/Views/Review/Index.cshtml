@@ -50,9 +50,9 @@
                             return params;
                         },
                         columns: [{ checkbox: true },
-                        { field: 'Title', title: '文章标题',align: 'center' },
+                        { field: 'Title', title: '文章标题'},
                         {
-                            field: 'Text', title: '评论的内容', sortable: true, align: 'center', formatter: function (value, row) {
+                            field: 'Text', title: '评论的内容', sortable: true, formatter: function (value, row) {
                                 return com.content(value);
                             }
                         },

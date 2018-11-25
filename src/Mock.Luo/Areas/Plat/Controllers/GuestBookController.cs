@@ -23,11 +23,11 @@ namespace Mock.Luo.Areas.Plat.Controllers
     {
         // GET: Plat/GuestBook
         private readonly IGuestBookRepository _guestBookRepository;
-        private readonly IMailHelper _imailHelper;
+        private readonly IMailHelper _mailHelper;
         public GuestBookController(IGuestBookRepository guestBookRepository, IMailHelper imailHelper, IComponentContext container) : base(container)
         {
             this._guestBookRepository = guestBookRepository;
-            this._imailHelper = imailHelper;
+            this._mailHelper = imailHelper;
         }
         [Skip]
         public ActionResult GetAduitDataGrid(PageDto pag, string search = "")
@@ -137,7 +137,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
             //留言成功后，给博主的email邮箱发送信息
 
-            _imailHelper.SendByThread(Configs.GetValue("DeveloperEmail"), "有人在你的（、天上有木月）博客发表的留言", UiHelper.FormatEmail(new EmailViewModel
+            _mailHelper.SendByThread(Configs.GetValue("DeveloperEmail"), "有人在你的（、天上有木月）博客发表的留言", UiHelper.FormatEmail(new EmailViewModel
             {
                 Title = "有留言了！！！",
                 ToUserName = "、天上有木月",

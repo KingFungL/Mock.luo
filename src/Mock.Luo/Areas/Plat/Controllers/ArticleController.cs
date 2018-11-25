@@ -21,18 +21,18 @@ namespace Mock.Luo.Areas.Plat.Controllers
     {
         // GET: Plat/Article
 
-        private readonly IArticleRepository _service;
+        private readonly IArticleRepository _articleRepository;
         private readonly IItemsDetailRepository _itemsDetailRepository;
-        public ArticleController(IArticleRepository service, IItemsDetailRepository itemsDetailRepository, IComponentContext container) : base(container)
+        public ArticleController(IArticleRepository articleRepository, IItemsDetailRepository itemsDetailRepository, IComponentContext container) : base(container)
         {
-            this._service = service;
+            this._articleRepository = articleRepository;
             this._itemsDetailRepository = itemsDetailRepository;
         }
 
         public override ActionResult Form(int id)
         {
             //取出文章对应的多个标签Id
-            var tagActive = _service.Queryable(u => u.DeleteMark == false && u.Id == id)
+            var tagActive = _articleRepository.Queryable(u => u.DeleteMark == false && u.Id == id)
                 .Select(u => u.TagArts.Select(r => r.TagId)).AsEnumerable().FirstOrDefault();
 
             ViewBag.TagActive = JsonHelper.SerializeObject(tagActive);
@@ -41,7 +41,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         }
         public ActionResult GetDataGrid(PageDto pag, string search = "")
         {
-            return Content(_service.GetDataGrid(pag, search).ToJson());
+            return Content(_articleRepository.GetDataGrid(pag, search).ToJson());
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// <returns></returns>
         public ActionResult GetRecentArticle()
         {
-            return Result(_service.GetRecentArticle(5));
+            return Result(_articleRepository.GetRecentArticle(5));
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
             {
                 pag.Order = "desc";
             }
-            DataGrid dg = _service.GetCategoryTagGrid(pag, category, tag, archive);
+            DataGrid dg = _articleRepository.GetCategoryTagGrid(pag, category, tag, archive);
             return Content(dg.ToJson());
         }
 
@@ -111,11 +111,11 @@ namespace Mock.Luo.Areas.Plat.Controllers
                 entity.Create();
                 entity.TagArts = tagArtList;
                 entity.Archive = DateTime.Now.ToString("yyy年MM月");
-                _service.Insert(entity);
+                _articleRepository.Insert(entity);
             }
             else
             {
-                var tEntityModel = _service.FindEntity(id);
+                var tEntityModel = _articleRepository.FindEntity(id);
 
                 if (tEntityModel == null)
                     return Error($"Id为{id}未找到任何类型为{viewModel.GetType().Name}的实体对象");

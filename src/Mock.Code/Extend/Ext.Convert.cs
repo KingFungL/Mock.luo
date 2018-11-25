@@ -1,9 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Linq;
 
 namespace Mock.Code.Extend
 {
     public static partial class Ext
     {
+        public static IDictionary<string, string> ToDictionary(
+            this NameValueCollection source)
+        {
+            return source.AllKeys.ToDictionary(k => k, k => source[k]);
+        }
+  
         #region 数值转换
         /// <summary>
         /// 转换为整型

@@ -42,7 +42,7 @@ namespace Mock.Data.Migrations.SeedData
                     new AppModule(){PId = 1,Name = "角色管理",LinkUrl = "/Plat/AppRole/Index",Target = iframe,TypeCode = menu,Icon = "fa fa-user-circle",DeleteMark = false},
                     new AppModule(){PId = 1,Name = "系统功能",LinkUrl = "/Plat/AppModule/Index",Target = iframe,TypeCode = menu,Icon = "fa fa-anchor",DeleteMark = false},
                     new AppModule(){PId = 1,Name = "测试管理",LinkUrl = "/Home/TestView",Target = iframe,TypeCode = menu,Icon = "fa fa-street-view",DeleteMark = false},
-                    new AppModule(){PId = 1,Name = "系统日志",LinkUrl = "/Plat/LogInfo/Index",Target = iframe,TypeCode = menu,Icon = "fa fa-home",DeleteMark = false},
+                    new AppModule(){PId = 1,Name = "系统日志",LinkUrl = "/Plat/LogMessage/Index",Target = iframe,TypeCode = menu,Icon = "fa fa-home",DeleteMark = false},
 
                     new AppModule(){PId = 0,Name = "博客管理",Target = expand,TypeCode = pmenu,Icon = "fa fa-cloud-download",DeleteMark = false},
                     new AppModule(){PId = 7,Name = "字典管理",LinkUrl = "/Plat/ItemsDetail/Index",Target = iframe,TypeCode = menu,Icon = "fa fa-key",DeleteMark = false},
@@ -66,6 +66,13 @@ namespace Mock.Data.Migrations.SeedData
                     new AppModule(){PId = 3,Name = "编辑角色界面",LinkUrl = "/Plat/AppRole/Form",Target = iframe,TypeCode = permission,DeleteMark = false},
                     new AppModule(){PId = 3,Name = "新增角色界面",LinkUrl = "/Plat/AppRole/Form",Target = iframe,TypeCode = permission,DeleteMark = false},
                     new AppModule(){PId = 3,Name = "刷新角色列表",LinkUrl = "/Plat/AppRole/GetDataGrid",Target = iframe,TypeCode = permission,DeleteMark = false},
+
+
+                    new AppModule(){PId = 9,Name = "编辑",LinkUrl = "/Plat/Article/Form",Target = iframe,TypeCode = permission,DeleteMark = false},
+                    new AppModule(){PId = 9,Name = "新增",LinkUrl = "/Plat/Article/Form",Target = iframe,TypeCode = permission,DeleteMark = false},
+                    new AppModule(){PId = 9,Name = "刷新",LinkUrl = "/Plat/Article/GetDataGrid",Target = iframe,TypeCode = permission,DeleteMark = false},
+                    new AppModule(){PId = 9,Name = "删除用户",LinkUrl = "/Plat/Article/Delete",Target = iframe,TypeCode = permission,DeleteMark = false},
+
 
                 });
             }

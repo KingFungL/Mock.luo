@@ -23,17 +23,17 @@ namespace Mock.Luo.Areas.Plat.Controllers
         private readonly IReviewRepository _reviewRepositroy;
         private readonly IArticleRepository _articleRepository;
         private readonly IRedisHelper _redisHelper;
-        private readonly IMailHelper _imailHelper;
+        private readonly IMailHelper _mailHelper;
 
         public ReviewController(IReviewRepository reviewRepositroy,
             IArticleRepository articleRepository,
-            IMailHelper imailHelper,
+            IMailHelper mailHelper,
             IRedisHelper redisHelper)
         {
             this._reviewRepositroy = reviewRepositroy;
             this._articleRepository = articleRepository;
             this._redisHelper = redisHelper;
-            this._imailHelper = imailHelper;
+            this._mailHelper = mailHelper;
         }
         #endregion
 

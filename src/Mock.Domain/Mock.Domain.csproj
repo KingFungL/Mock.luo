@@ -71,14 +71,14 @@
     <Compile Include="Interface\IItemsRepository.cs" />
     <Compile Include="Interface\IAppUserRepository.cs" />
     <Compile Include="Interface\IArticleRepository.cs" />
-    <Compile Include="Interface\ILogInfoRepository.cs" />
+    <Compile Include="Interface\ILogMessageRepository.cs" />
     <Compile Include="Interface\IReviewRepository.cs" />
     <Compile Include="Interface\IUploadRepository.cs" />
     <Compile Include="Interface\IUserRoleRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Implementations\UserRoleRepository.cs" />
     <Compile Include="Implementations\AppRoleRepository.cs" />
-    <Compile Include="Implementations\LogInfoRepository.cs" />
+    <Compile Include="Implementations\LogMessageRepository.cs" />
     <Compile Include="Implementations\AppModuleRepository.cs" />
     <Compile Include="Implementations\ItemsDetailRepository.cs" />
     <Compile Include="Implementations\ItemsRepositroy.cs" />

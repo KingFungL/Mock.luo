@@ -89,7 +89,6 @@
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\Items.cs" />
     <Compile Include="Models\ItemsDetail.cs" />
-    <Compile Include="Models\LogInfo.cs" />
     <Compile Include="Models\LoginLog.cs" />
     <Compile Include="Models\MockDbContext.cs" />
     <Compile Include="Models\PointArticle.cs" />

@@ -1,0 +1,82 @@
+﻿@{
+    Layout = "~/Views/Shared/_Index.cshtml";
+    ViewBag.Title = "日志列表";
+}
+<section class="content-header">
+    <ol class="breadcrumb" style="margin-bottom:0px;">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 系统管理</a></li>
+        <li class="active">系统日志</li>
+    </ol>
+</section>
+
+<div class="layui-fluid" style="margin-top:20px;" id="v-app">
+    <div id="toolbar" class="btn-group" style="margin-bottom:15px;">
+        <button type="button" class="btn btn-default" v-on:click="btn_refresh">
+            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>刷新
+        </button>
+    </div>
+    <table id="dginfo"></table>
+</div>
+
+@section css{
+}
+@section scripts{
+    <script>
+        var vm = new Vue({
+            el: '#v-app',
+            mounted: function () {
+                this.init_datagrid();
+            },
+            methods: {
+                init_datagrid: function () {
+                    $('#dginfo').dataGrid({
+                        url: '/Plat/LogMessage/GetDataGrid',
+                        sortOrder: "desc",
+                        search: true,
+                        sortName: 'LogId',
+                        queryParams: function (params) {
+                            return params;
+                        },
+                        columns: [
+                            { checkbox: true },
+                            {
+                                field: 'LogId',
+                                title: '操作',
+                                formatter: function (value) {
+                                    return com.format_str('<button class="btn btn-default btn-xs" type="button" onclick="vm.btn_detail(\'{0}\')"><i class="fa fa-search"></i></button>', value);
+                                }
+                            },
+                            { field: 'OperateType', title: '操作类型', sortable: true },
+                            { field: 'OperateTime', title: '操作时间', sortable: true },
+                            { field: 'OperateAccount', title: '操作账号' },
+                            //{ field: 'Module', title: '模块'},
+                            { field: 'IpAddress', title: 'IP', align: 'center' },
+                            { field: 'Host', title: '主机', align: 'center' },
+                            { field: 'Browser', title: '浏览器', align: 'center' },
+                            { field: 'ExecuteResult', title: '结果', align: 'center' }
+                        ],
+                        callback: function () {
+                            $('.pull-right.search .form-control').attr('placeholder', '输入日志内容');
+                        }
+                    });
+                },
+                btn_refresh: function () {
+                    $('#dginfo').bootstrapTable("refresh");
+                },
+                btn_detail: function (id) {
+                    $.layerOpen({
+                        title: '日志详情',
+                        width: '100%',
+                        height: '100%',
+                        content: '/Plat/LogMessage/Detail/' + id,
+                        btn: ['关闭'],
+                        yes: function (iframebody, iframeWin, index) {
+                            top.layer.close(index);
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+
+}

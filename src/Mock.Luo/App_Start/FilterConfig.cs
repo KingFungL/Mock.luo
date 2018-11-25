@@ -7,8 +7,8 @@ namespace Mock.Luo
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
             filters.Add(new HandlerLoginAttribute());
+            filters.Add(DependencyResolver.Current.GetService<HandlerErrorAttribute>());
         }
     }
 }

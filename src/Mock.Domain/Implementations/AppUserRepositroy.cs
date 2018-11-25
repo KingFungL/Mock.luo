@@ -31,8 +31,8 @@ namespace Mock.Domain.Implementations
         private readonly IAppModuleRepository _moduleService;
         private readonly IRedisHelper _iRedisHelper;
         private readonly IMailHelper _imailHelper;
-        private readonly ILogInfoRepository _logService;
-        public AppUserRepositroy(IAppModuleRepository moduleService, IRedisHelper iRedisHepler, IMailHelper imailHelper,ILogInfoRepository logService)
+        private readonly ILogMessageRepository _logService;
+        public AppUserRepositroy(IAppModuleRepository moduleService, IRedisHelper iRedisHepler, IMailHelper imailHelper,ILogMessageRepository logService)
         {
             this._moduleService = moduleService;
             this._iRedisHelper = iRedisHepler;

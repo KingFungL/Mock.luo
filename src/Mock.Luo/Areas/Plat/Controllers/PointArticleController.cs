@@ -13,18 +13,18 @@ namespace Mock.Luo.Areas.Plat.Controllers
     {
         // GET: Plat/PointArticle
 
-        private readonly IPointArticleRepository _service;
+        private readonly IPointArticleRepository _pointArticleRepository;
         private readonly IArticleRepository _articleRepository;
-        public PointArticleController(IPointArticleRepository service, IArticleRepository articleRepository)
+        public PointArticleController(IPointArticleRepository pointArticleRepository, IArticleRepository articleRepository)
         {
-            this._service = service;
+            this._pointArticleRepository = pointArticleRepository;
             this._articleRepository = articleRepository;
         }
 
         //根据文章id得到点赞人信息
         public ActionResult GetDataGrid(int aId)
         {
-            return Result(_service.GetDataGrid(aId));
+            return Result(_pointArticleRepository.GetDataGrid(aId));
         }
 
         [Skip]
@@ -43,11 +43,11 @@ namespace Mock.Luo.Areas.Plat.Controllers
                 entry.UserId = (int)currentUser.UserId;
                 entry.LoginName = currentUser.LoginName;
                 entry.Email = currentUser.Email;
-                pointCount = _service.Queryable(u => u.UserId == entry.UserId && u.AId == entry.AId).Count();
+                pointCount = _pointArticleRepository.Queryable(u => u.UserId == entry.UserId && u.AId == entry.AId).Count();
             }
             else
             {
-                pointCount = _service.Queryable(r => r.IP == entry.IP && r.AId == entry.AId).Count();
+                pointCount = _pointArticleRepository.Queryable(r => r.IP == entry.IP && r.AId == entry.AId).Count();
             }
             //点当前文章已经被点赞时，用户再次点赞，
             if (pointCount > 0)
@@ -56,7 +56,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
             }
             else
             {
-                _service.Insert(entry);
+                _pointArticleRepository.Insert(entry);
                 int pointQuantity = _articleRepository.Queryable(r => r.Id == entry.AId).Select(r => r.PointQuantity).FirstOrDefault();
 
                 _articleRepository.Update(new Article { Id = entry.AId, PointQuantity = pointQuantity + 1 }, "PointQuantity");

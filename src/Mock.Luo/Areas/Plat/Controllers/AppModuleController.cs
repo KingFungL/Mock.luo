@@ -18,16 +18,16 @@ namespace Mock.Luo.Areas.Plat.Controllers
     public class AppModuleController : CrudController<AppModule, AppModuleViewModel>
     {
         // GET: Plat/AppModule
-        private readonly IAppModuleRepository _service;
-        public AppModuleController(IAppModuleRepository service, IComponentContext container) : base(container)
+        private readonly IAppModuleRepository _appModuleRepository;
+        public AppModuleController(IAppModuleRepository appModuleRepository, IComponentContext container) : base(container)
         {
-            this._service = service;
+            this._appModuleRepository = appModuleRepository;
         }
 
         #region 根据当前登录的用户得到用户菜单权限
         public ActionResult GetUserModule()
         {
-            List<AppModule> userModuleEntities = _service.GetAppModuleList(u => u.TypeCode != "Button" && u.TypeCode != "Permission");
+            List<AppModule> userModuleEntities = _appModuleRepository.GetAppModuleList(u => u.TypeCode != "Button" && u.TypeCode != "Permission");
 
             List<TreeNode> treeNodes = AppModule.ConvertTreeNodes(userModuleEntities);
 
@@ -38,7 +38,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
         public ActionResult GetTreeGrid()
         {
-            DataGrid dg = _service.GetTreeGrid();
+            DataGrid dg = _appModuleRepository.GetTreeGrid();
 
             return Content(dg.ToJson());
         }
@@ -50,7 +50,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
         public ActionResult GetFancyTreeGrid()
         {
-            return CamelCaseJson(_service.GetFancyTreeGrid());
+            return CamelCaseJson(_appModuleRepository.GetFancyTreeGrid());
         }
 
         /// <summary>
@@ -60,8 +60,8 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// <returns></returns>
         public ActionResult GetComboBoxTreeJson(int pId = 0)
         {
-            List<TreeSelectModel> treeList = _service.GetTreeJson(pId);
-            return Content(treeList.ComboboxTreeJson(pId));
+            List<TreeSelectModel> treeList = _appModuleRepository.GetTreeJson(pId);
+            return CamelCaseJson(treeList.ComboboxTreeObject(pId));
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// <returns></returns>
         public ActionResult GetListJson(int id)
         {
-            return Result(_service.GetListJson(id));
+            return Result(_appModuleRepository.GetListJson(id));
         }
         /// <summary>
         /// 按钮树形jqGrid数据
@@ -80,7 +80,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// <returns></returns>
         public ActionResult GetButtonTreeJson(int id)
         {
-            return Content(_service.GetButtonTreeJson(id).TreeGridJson(id));
+            return Content(_appModuleRepository.GetButtonTreeJson(id).TreeGridJson(id));
         }
 
         public ActionResult ButtonList()
@@ -108,7 +108,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
             foreach (var item in dglist)
             {
                 TreeGridModel treeModel = new TreeGridModel();
-                bool hasChildren = dglist.Count(t => t.PId == item.Id) == 0 ? false : true;
+                bool hasChildren = dglist.Count(t => t.PId == item.Id) != 0;
                 treeModel.Id = item.Id.ToString();
                 treeModel.IsLeaf = hasChildren;
                 treeModel.ParentId = item.PId.ToString();
@@ -130,7 +130,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         {
             List<AppModule> buttonList = JsonHelper.DeserializeJsonToList<AppModule>(buttonJson);
 
-            _service.SubmitForm(viewModel, buttonList, id);
+            _appModuleRepository.SubmitForm(viewModel, buttonList, id);
 
             return Success();
         }
@@ -156,7 +156,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
             treeList.Insert(0, new TreeSelectModel { Id = "-1", Text = "==请选择==", ParentId = Convert.ToString(id) });
 
-            return Content(treeList.ComboboxTreeJson(id));
+            return CamelCaseJson(treeList.ComboboxTreeObject(id));
         }
         /// <summary>
         /// 根据角色id获取分配权限
@@ -165,7 +165,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// <returns></returns>
         public ActionResult GetRoleModuleAuth(int roleId)
         {
-            return Result(_service.GetRoleModuleAuth(roleId));
+            return Result(_appModuleRepository.GetRoleModuleAuth(roleId));
         }
 
     }
