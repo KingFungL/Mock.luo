@@ -16,5 +16,6 @@
         public bool IsAudit { get; set; } = true;
         public bool Recommend { get; set; } = false;
         public bool IsStickie { get; set; } = false;
+        public string ArticleType { get; set; }
     }
 }

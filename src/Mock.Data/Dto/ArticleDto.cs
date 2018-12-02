@@ -35,6 +35,8 @@ namespace Mock.Data.Dto
         public bool IsAudit { get; set; }
         public bool Recommend { get; set; }
         public bool IsStickie { get; set; }
+
+        public bool IsNew { get; set; }
         public int? CreatorUserId { get; set; }
         public DateTime? CreatorTime { get; set; }
     }

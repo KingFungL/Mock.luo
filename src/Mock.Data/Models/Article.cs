@@ -1,12 +1,8 @@
-﻿using Mock.Code.Helper;
+﻿using Mock.Data.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mock.Data.Infrastructure;
 
 namespace Mock.Data.Models
 {
@@ -59,6 +55,25 @@ namespace Mock.Data.Models
 
         public virtual ICollection<TagArt> TagArts { get; set; }
 
-     
+        [StringLength(50)]
+        public string ArticleType { get; set; }
+
+    }
+
+    public enum ArticleType
+    {
+        /// <summary>
+        /// 原创
+        /// </summary>
+        original,
+        /// <summary>
+        /// 转载
+        /// </summary>
+        repost,
+        /// <summary>
+        /// 翻译
+        /// </summary>
+        translated,
     }
 }
+

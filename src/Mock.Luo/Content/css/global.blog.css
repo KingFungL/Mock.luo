@@ -302,8 +302,6 @@ body .layui-edit-face .layui-layer-content { padding: 0; background-color: #fff;
 @media screen and (max-width:768px) {
     .readers a.item-top { width: 48% }
     .entry-content .archive-content { overflow: hidden; height: 84px }
-    .user-main > .panel-user { width: auto; margin-left: 0; transition: all .3s; -webkit-transition: all .3s; }
-    .site-tree-mobile { display: block !important; position: fixed; z-index: 100000; bottom: 20px; left: 10px; width: 50px; height: 50px; line-height: 50px; border-radius: 2px; text-align: center; background-color: rgba(0,0,0,.7); color: #fff; }
     .cat-site .cat-list .list-date { line-height: 210%; }
     .cat-box .cat-site .cat-list li.list-title { width: 75%; }
     .cat-box .cat-site .cat-main { height: 79px; white-space: nowrap; }
@@ -397,6 +395,61 @@ body .layui-edit-face .layui-layer-content { padding: 0; background-color: #fff;
     .tab-hd .current { width: 88px !important }
     .tab-hd-con { width: 86px !important }
 }
+
+@media screen and (max-width: 768px) {
+    .fly-main { width: 100%; }
+
+    /* 顶边距 */
+    .fly-marginTop { margin-top: 0; }
+
+    /* 头部 */
+    .fly-header .fly-nav-user li .fly-nav-avatar { padding-right: 15px; }
+    .fly-header .fly-nav-user { margin-right: 5px; }
+
+    /* 专栏 */
+    .fly-column { height: auto; }
+        .fly-column ul { padding: 10px; font-size: 0; }
+            .fly-column ul li { float: left; width: 33.33%; height: 36px; line-height: 36px; font-size: 14px; vertical-align: middle; text-align: center; box-sizing: border-box; }
+    .fly-column-right { right: 10px; }
+    .fly-column ul li.layui-this:after { display: none; }
+
+    /* 页脚 */
+    .fly-footer { margin-top: 0; border-top: none; }
+
+    /* 分页 */
+    .laypage-main a, .laypage-main span { display: none; }
+    .laypage-main .laypage-prev,
+    .laypage-main .laypage-curr,
+    .laypage-main .laypage-next { display: inline-block; }
+
+    /* 列表 */
+    .fly-list li h2 a { max-width: 72%; }
+
+    /* Detail 页 */
+    .fly-admin-box { display: block; margin: 0; margin-top: 10px; }
+    .fly-detail-info .fly-list-nums { top: -2px; }
+    .fly-edit span { border-right: none; }
+
+    /* 组件平台 */
+    .fly-extend-banner-search .layui-input { width: 180px; }
+    .fly-extend-list-header .fly-extend-title { padding-right: 50px; }
+
+    /* 案例 */
+    .fly-case-list,
+    .fly-case-list li { width: 100%; -webkit-box-sizing: border-box !important; -moz-box-sizing: border-box !important; box-sizing: border-box !important; }
+    .fly-case-img { text-align: center; }
+        .fly-case-img img { max-width: 100%; }
+    .fly-case-banner { width: 300px; margin-left: -150px; }
+
+    body .fly-user-main { width: auto; }
+    .user-main > .layui-nav { left: -300px; transition: all .3s; -webkit-transition: all .3s; }
+    .user-main > .panel-user { width: auto; margin-left: 0; transition: all .3s; -webkit-transition: all .3s; }
+    .site-tree-mobile { display: block !important; position: fixed; z-index: 100000; bottom: 20px; left: 10px; width: 50px; height: 50px; line-height: 50px; border-radius: 2px; text-align: center; background-color: #7db3dc; color: #fff; }
+    .site-mobile .site-tree-mobile { display: none !important; }
+    .site-mobile .user-main > .layui-nav { left: 0; }
+    .site-mobile .site-mobile-shade { content: ''; position: fixed; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0,0,0,.9); z-index: 999; }
+}
+
 
 .animated { -webkit-animation-duration: 1s; animation-duration: 1s; -webkit-animation-fill-mode: both; animation-fill-mode: both }
 

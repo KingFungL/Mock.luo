@@ -52,6 +52,11 @@ $.layerOpen = function (options) {
                 options.yes(iframebody, iframeWin, index);
             }
         },
+        btn2: function (index, layero) {
+            if (options.btn2 && $.isFunction(options.btn2)) {
+                options.btn2(index, layero);
+            }
+        },
         cancel: function (index, layero) {
             if ($.isFunction(options.cancel)) {
                 options.cancel(index, layero);

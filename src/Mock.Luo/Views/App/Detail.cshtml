@@ -70,14 +70,14 @@
                 <div class="authorarea">
                     <div class="authorinfo">
                         <div class="author-avater">
-                            <img class="avaterimg" alt="@entry.NickName" title="作者：@entry.NickName " src="@entry.Avatar" height="50" width="50">
+                            <img class="avaterimg" alt="@entry.NickName" title="作者：@entry.NickName " src="@entry.Avatar" height="50" width="50" onerror="com.nofind()">
                         </div>
                         <div class="author-des">
                             <div class="author-meta">
                                 <span class="post-author-name"><a href="" title="由 @entry.NickName 发布" rel="author">@entry.NickName</a></span>
                                 @*<span class="post-author-tatus"><a href="/app/author-1" target="_blank">258篇文章</a></span>*@
                                 <template v-for="item in ArtTag">
-                                    <span class="post-author-weibo"><a :href="'/App/Category?tag='+item.code" target="_blank" v-text="item.Text"></a></span>
+                                    <span class="post-author-weibo"><a :href="'/App/Category?tag='+item.Code" target="_blank" v-text="item.Text"></a></span>
                                 </template>
                             </div>
                             <p class="author-description">@entry.PersonSignature </p>

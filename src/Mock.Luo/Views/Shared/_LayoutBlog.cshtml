@@ -89,6 +89,17 @@
     </nav>
     @RenderBody()
 
+    <div class="site-tree-mobile layui-hide">
+        <i class="layui-icon">&#xe602;</i>
+    </div>
+    <div class="site-mobile-shade"></div>
+
+    <div class="site-tree-mobile layui-hide">
+        <i class="layui-icon">&#xe602;</i>
+    </div>
+    <div class="site-mobile-shade"></div>
+
+
     <footer class="footer">
         <div class="container">
             <div class="col-xs-12 col-sm-12 col-lg-12">
@@ -190,12 +201,24 @@
                     btn: '关闭',
                     type: 1,
                     content: '<div class="row" style="margin:20px 0 0 10px;"><div class="col-md-4" style="text-align:center;"><a pjax="no" href="/App/Login">\
-                                 <img src="/Content/Images/qqlogin.png" ></a></div>\
-                             <div class="col-md-8" style="text-align:center;">其他接口开发中...o(╯□╰)o</div></div>',
+                                         <img src="/Content/Images/qqlogin.png" ></a></div>\
+                                     <div class="col-md-8" style="text-align:center;">其他接口开发中...o(╯□╰)o</div></div>',
                     yes: function (index, layero) {
                         layer.close(index); //如果设定了yes回调，需进行手工关闭
                     }
                 });
+            });
+
+            //手机设备的简单适配
+            var treeMobile = $('.site-tree-mobile')
+                , shadeMobile = $('.site-mobile-shade')
+
+            treeMobile.on('click', function () {
+                $('body').addClass('site-mobile');
+            });
+
+            shadeMobile.on('click', function () {
+                $('body').removeClass('site-mobile');
             });
         });
     </script>

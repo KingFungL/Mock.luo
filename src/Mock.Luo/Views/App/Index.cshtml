@@ -72,7 +72,10 @@
                                         <img src="@item.Thumbnail" alt="@item.Title">
                                     </a>
                                 </figure>
-                                <span class="new-ico">NEW</span>
+                                @if (item.IsNew == true)
+                                {
+                                    <span class="new-ico">NEW</span>
+                                }
                                 <header class="entry-header">
                                     <h4 class="entry-title">
                                         <a href="/App/Detail/@item.Id">@item.Title</a>

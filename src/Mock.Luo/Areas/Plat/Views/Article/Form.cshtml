@@ -19,6 +19,17 @@
                     </td>
                 </tr>
                 <tr>
+                    <th width="80">博客分类</th>
+                    <td>
+                        <select class="form-control" v-model="ArticleType">
+                            <option value="0" selected="selected">请选择</option>
+                            <option value="original">原创</option>
+                            <option value="repost">转载</option>
+                            <option value="translated">翻译</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
                     <th>关键词</th>
                     <td>
                         <input id="Keywords" name="Keywords" v-model="Keywords" title="请输入标题" class="form-control" type="text" checkexpession="LenStr" length="400">

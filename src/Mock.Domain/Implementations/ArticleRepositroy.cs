@@ -104,12 +104,14 @@ namespace Mock.Domain.Implementations
                 CreatorUserId = r.CreatorUserId,
                 CreatorTime = r.CreatorTime,
                 ViewHits = r.ViewHits,
-                Thumbnail = r.Thumbnail,
+                Thumbnail = r.Thumbnail
             }).ToList();
-
+            DateTime now = DateTime.Now;
             artList.ForEach(u =>
             {
                 u.TimeSpan = TimeHelper.GetDateFromNow(u.CreatorTime.ToDateTime());
+
+                u.IsNew = DateTime.Compare(now.AddDays(-2), u.CreatorTime.ToDateTime()) > 0 ? false : true;
             });
             return artList;
         }

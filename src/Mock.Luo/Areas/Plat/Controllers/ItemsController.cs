@@ -26,7 +26,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
         public ActionResult GetTreeJson()
         {
-            return Content(_service.GetTreeJson().ComboboxTreeJson());
+            return CamelCaseJson(_service.GetTreeJson().ComboboxTreeObject());
         }
         /// <summary>
         /// zTree左树结构的数据
