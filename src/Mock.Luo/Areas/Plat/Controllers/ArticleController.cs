@@ -39,6 +39,24 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
             return base.Form(id);
         }
+
+        public ActionResult TitleContent(int id)
+        {
+            ViewBag.ViewModel = this.GetFormJson(id);
+            return View();
+        }
+
+        public ActionResult Md(int id)
+        {
+            //取出文章对应的多个标签Id
+            var tagActive = _articleRepository.Queryable(u => u.DeleteMark == false && u.Id == id)
+                .Select(u => u.TagArts.Select(r => r.TagId)).AsEnumerable().FirstOrDefault();
+
+            ViewBag.TagActive = JsonHelper.SerializeObject(tagActive);
+            ViewBag.ViewModel = this.GetFormJson(id);
+            return View();
+        }
+
         public ActionResult GetDataGrid(PageDto pag, string search = "")
         {
             return Content(_articleRepository.GetDataGrid(pag, search).ToJson());

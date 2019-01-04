@@ -58,6 +58,11 @@ namespace Mock.Data.Models
         [StringLength(50)]
         public string ArticleType { get; set; }
 
+        /// <summary>
+        /// 1:富文本编辑器,2:MarkDown编辑器
+        /// </summary>
+        public int Editor { get; set; } = 1;
+
     }
 
     public enum ArticleType

@@ -2,7 +2,9 @@
 @{
     ArtDetailDto entry = ViewData["ArticleDto"] as ArtDetailDto;
     Layout = "~/Views/Shared/_LayoutBlog.cshtml";
-    ViewBag.Title = @entry.Title;
+    ViewBag.Title = entry.Title;
+    ViewBag.description = entry.Excerpt;
+    ViewBag.keywords = entry.Keywords;
 }
 @using Mock.Data;
 @using Mock.Data.AppModel

@@ -5,7 +5,6 @@ using Mock.Code.Json;
 using Mock.Code.Log;
 using Mock.Code.Mail;
 using Mock.Code.Web;
-using Mock.Data.AppModel;
 using Mock.Domain.Interface;
 using Newtonsoft.Json;
 using System;
@@ -43,10 +42,10 @@ namespace Mock.Luo.Generic.Filters
 
             LogMessage logMessage = new LogMessage
             {
-                CategoryId = (int) DbLogType.Exception,
+                CategoryId = (int)DbLogType.Exception,
                 OperateType = EnumAttribute.GetDescription(DbLogType.Exception),
                 ExecuteResult = -1,
-                MethodName = (string) context.RouteData.Values["action"],
+                MethodName = (string)context.RouteData.Values["action"],
                 Parameters = ConvertArgumentsToJson(paramsForm.ToDictionary()),
                 Exception = error.InnerException == null ? error.Message : error.InnerException.Message,
                 ExceptionSource = error.Source,
@@ -54,9 +53,9 @@ namespace Mock.Luo.Generic.Filters
             };
 
             LogRepository.LogError(logMessage, "错误日志");
-
+#if !DEBUG
             SendMail(logMessage.ExecuteResultJson);
-
+#endif
         }
 
         /// <summary>

@@ -50,7 +50,8 @@ namespace Mock.Domain.Implementations
                 t.IsAudit,
                 t.IsStickie,
                 t.PointQuantity,
-                t.Recommend
+                t.Recommend,
+                t.Editor
             }).ToList();
 
             return new DataGrid { Rows = dglist, Total = pag.Total };

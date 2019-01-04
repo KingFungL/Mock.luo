@@ -323,13 +323,35 @@ com.get_selectid = function (dgelement, type) {
     }
     return Id;
 };
+
+com.get_selectrow = function (dgelement, type) {
+    if (!dgelement) {
+        dgelement = '#dginfo';
+    }
+    var $grid = $(dgelement);
+    var row=null;
+    //如果是jqGrid的列表，使用jqGrid的方法获取主键值
+    if (type === 'jq') {
+        row = $grid.jqGridRowValue();
+        //当得到的行记录不是数组时，则为对象
+        if (!(row instanceof Array)) {
+            //Id = row.Id;
+        }
+    } else {
+        if ($grid.bootstrapTable('getSelections')[0] !== undefined) {
+            row = $(dgelement).bootstrapTable('getSelections')[0];
+        }
+    }
+    return row;
+};
+
 //编辑前统一提示信息,当Id为0时，说明未选中任何记录，其他时，将Id,作为回调函数的参数
 com.edit = function (dgelement, type, callback) {
-    var Id = com.get_selectid(dgelement, type);
-    if (!Id) {
+    var row = com.get_selectrow(dgelement, type);
+    if (!row.Id) {
         layer.msg('在操作之前，请先选中一条记录！');
     } else {
-        callback(Id);
+        callback(row.Id, row);
     }
 };
 

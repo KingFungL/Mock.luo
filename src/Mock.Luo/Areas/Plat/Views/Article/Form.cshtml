@@ -163,11 +163,12 @@
             json.PointQuantity = 0;
             json.Thumbnail = "/Content/Images/default-thumbnail.png";
             json.linkUrl = "";
-            json.Archive ='@DateTime.Now.ToString("yyyy年MM")';
+            json.Archive = '@DateTime.Now.ToString("yyyy年MM")';
         } else {
             json.linkUrl = '/App/Detail/' + json.Id;
         }
         json.FId == null && (json.FId = -1);
+        json.Editor = 1;
         json.Tag = [];
         var ue;
         var vm = new Vue({

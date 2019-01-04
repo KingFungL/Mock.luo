@@ -1,0 +1,336 @@
+﻿
+@{
+    ViewBag.Title = "文章新增编辑管理";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+
+<form class="form-horizontal" id="v-app" style="margin-top:15px;">
+    <div class="container-fluid">
+        <div class="col-md-9 table-responsive">
+            <table class="table table-bordered">
+                <tr>
+                    <th width="80">分类</th>
+                    <td colspan="3">
+                        <multiselect v-model="FId" :hide-selected="false" label="text" track-by="id" placeholder="--请选择分类--" :options="FTypeOptions" :multiple="false"
+                                     :searchable="true" :clear-on-select="false"
+                                     :close-on-select="true">
+                            <span slot="noResult">Oops! No elements found. Consider changing the search query.</span>
+                        </multiselect>
+                    </td>
+                </tr>
+                <tr>
+                    <th width="80">博客分类</th>
+                    <td>
+                        <select class="form-control" v-model="ArticleType">
+                            <option value="0" selected="selected">请选择</option>
+                            <option value="original">原创</option>
+                            <option value="repost">转载</option>
+                            <option value="translated">翻译</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>关键词</th>
+                    <td>
+                        <input id="Keywords" name="Keywords" v-model="Keywords" title="请输入标题" class="form-control" type="text" checkexpession="LenStr" length="400">
+                    </td>
+                    <th>文章来源</th>
+                    <td><input id="Source" name="Source" v-model="Source" class="form-control" type="text" checkexpession="LenStr" length="400"></td>
+                </tr>
+                <tr>
+                    <th>文章标题<span style="color:red">*</span></th>
+                    <td colspan="3">
+                        <input id="Title" name="Title" v-model="Title" data-placement="right" title="请输入标题" class="form-control" type="text" isvalid="yes" checkexpession="NotNull" length="200" errmsg="请输入标题">
+                    </td>
+                </tr>
+                <tr>
+                    <th>摘要</th>
+                    <td colspan="3">
+                        <textarea name="Excerpt" v-model="Excerpt" id="Excerpt" style="width: 98%; height: 80px;" class="form-control" isvalid="yes" checkexpession="LenStrOrNull" length="400"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>标签</th>
+                    <td colspan="3">
+                        <div class="tagcloud">
+                            <template v-for="item in Tag">
+                                <a href="javascript:void(0);" v-bind:class="{ active: item.Active }" v-text="item.text" v-on:click="toogle_tag(item.id)"></a>
+                            </template>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>内容</th>
+                    <td colspan="3">
+                        <div id="comment-editormd" style="z-index: 1000">
+                            <textarea class="form-control" name="Content" id="Content" rows="5" placeholder="请输入公告内容！"></textarea>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-3">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr> <th> <b>缩略图</b></th></tr>
+                    <tr>
+                        <td>
+                            <div style="text-align: center;">
+                                <input type="hidden" v-model="Thumbnail">
+                                <a href="javascript:com.upload_one_image('图片上传','Thumbnail');">
+                                    <img width="135" height="145" onerror="this.src='/Content/Images/default-thumbnail.png'" style="cursor:grab" :src="Thumbnail" />
+                                </a>
+                                <input type="button" class="btn btn-default btn-sm" v-on:click="init_img" value="取消图片">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr> <th><b>评论</b></th> </tr>
+                    <tr>
+                        <td>
+                            <label style="width: 88px"><a href="#" v-on:click="show_review" style="color: #2fa4e7;">查看评论</a></label>
+                        </td>
+                    </tr>
+                    <tr> <th><b>状态</b></th> </tr>
+                    <tr>
+                        <td>
+                            <div class="radio">
+                                <label><input type="radio" name="IsAudit" value="true" v-model="IsAudit">审核通过</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="IsAudit" value="false" v-model="IsAudit">待审核</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio">
+                                <label><input type="radio" name="IsStickie" value="true" v-model="IsStickie">置顶</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="IsStickie" value="false" v-model="IsStickie">未置顶</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="radio">
+                                <label><input type="radio" name="Recommend" value="true" v-model="Recommend">推荐</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="Recommend" value="false" v-model="Recommend">未推荐</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr> <th><b>文章链接</b></th> </tr>
+                    <tr>
+                        <td>
+                            <label style="width: 88px">
+                                <a :href="linkUrl" target="_blank" style="color: #2fa4e7;" v-text="linkUrl">
+                                </a>
+                            </label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
+
+@section css{
+    <link href="~/Content/css/vue-multiselect.min31f.css" rel="stylesheet" />
+    <link href="~/Content/js/editor.md/css/editormd.css" rel="stylesheet" />
+    <style>
+        .tagcloud { padding: 5px 0 5px 2px; }
+            .tagcloud > a { font-size: 14px; text-decoration: none; float: left; margin: 4px; padding: 0 7px; line-height: 26px; text-align: center; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); }
+                .tagcloud > a:hover, .tagcloud > a.active { background: #2f889a; color: #fff !important; border: 1px solid #2f889a; transition: all 0.1s ease-in 0s; }
+    </style>
+
+}
+@section scripts{
+    <script src="~/Content/js/vue/vue-multiselect.min.js"></script>
+    <script src="~/Content/js/editor.md/src/editormd.js"></script>
+
+
+    <script>
+        var json = com.replaceSpce(`@Html.Raw(ViewBag.ViewModel)`);
+        var tagAcitve = JSON.parse('@Html.Raw(ViewBag.TagActive)');
+        var commentEditor;
+        var params = {};
+
+        Vue.component('Multiselect', VueMultiselect.Multiselect);
+        if (json.Id == null) {
+            json.IsAudit = true;
+            json.Recommend = false;
+            json.IsStickie = false;
+            json.ViewHits = 0;
+            json.CommentQuantity = 0;
+            json.PointQuantity = 0;
+            json.Thumbnail = "/Content/Images/default-thumbnail.png";
+            json.linkUrl = "";
+            json.Archive ='@DateTime.Now.ToString("yyyy年MM")';
+        } else {
+            json.linkUrl = '/App/Detail/' + json.Id;
+        }
+        json.FId == null && (json.FId = -1);
+        json.Tag = [];
+        json.Editor = 2;
+        var vm = new Vue({
+        el: '#v-app',
+        data: json,
+        beforeCreate: function () {
+            json.FTypeOptions = [];
+            json.FId == null && (json.FId = -1);
+        },
+        created: function () {
+
+        },
+        mounted: function () {
+            this.get_ftypeoptions();
+
+            commentEditor = editormd("comment-editormd", {
+                width: "100%",
+                height: "800px",
+                path: '/Content/js/editor.md/lib/',
+                // theme: "dark",
+                // previewTheme: "dark",
+                //editorTheme: "pastel-on-dark",
+                codeFold: true,
+                //syncScrolling : false,
+                saveHTMLToTextarea: true,    // 保存 HTML 到 Textarea
+                searchReplace: true,
+                //watch : false,                // 关闭实时预览
+                htmlDecode: "style,script,iframe|on*",            // 开启 HTML 标签解析，为了安全性，默认不开启
+                //toolbar  : false,             //关闭工具栏
+                //previewCodeHighlight : false, // 关闭预览 HTML 的代码块高亮，默认开启
+                emoji: true,
+                taskList: true,
+                tocm: true,         // Using [TOCM]
+                tex: true,                   // 开启科学公式TeX语言支持，默认关闭
+                flowChart: true,             // 开启流程图支持，默认关闭
+                sequenceDiagram: true,       // 开启时序/序列图支持，默认关闭,
+                //dialogLockScreen : false,   // 设置弹出层对话框不锁屏，全局通用，默认为true
+                //dialogShowMask : false,     // 设置弹出层对话框显示透明遮罩层，全局通用，默认为true
+                //dialogDraggable : false,    // 设置弹出层对话框不可拖动，全局通用，默认为true
+                //dialogMaskOpacity : 0.4,    // 设置透明遮罩层的透明度，全局通用，默认值为0.1
+                //dialogMaskBgColor : "#000", // 设置透明遮罩层的背景颜色，全局通用，默认为#fff
+                imageUpload: true,
+                imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                imageUploadURL: "/Plat/Upload/Image",
+                onload: function () {
+                    //console.log('onload', this);
+                    //this.fullscreen();
+                    //this.unwatch();
+                    //this.watch().fullscreen();
+
+                    //this.setMarkdown("#PHP");
+                    //this.width("100%");
+                    //this.height(480);
+                    //this.resize("100%", 640);
+                    var ID = params['ID'];
+                    if (ID) {
+                        GetFormJson(ID);
+                    }
+                }
+            });
+
+            json.Content = decodeURIComponent(json.Content);
+            if (json.Id != null) {
+
+            }
+            this.get_tag_options();
+        },
+        methods: {
+            submit: function (callback) {
+                if (!$('#v-app').Validform()) {
+                    return false;
+                }
+                vm.Content = encodeURIComponent(commentEditor.getMarkdown());
+                vm.FId = vm.FId.id;
+                var tagArray = [];
+                $.each(vm.Tag, function (i, v) {
+                    if (v.Active == true) {
+                        tagArray.push(v.id);
+                    }
+                });
+                vm.Tag = String(tagArray);
+                if (json.FId == -1) {
+                    json.FId = null;
+                }
+                com.ajax({
+                    url: '/Plat/Article/Edit/' + vm.Id,
+                    data: vm.$data,
+                    showMsg: true,
+                    success: callback
+                });
+            },
+            init_img: function () {
+                var imgsrc = '/Content/Images/default-thumbnail.png';
+                this.thumbnail = imgsrc;
+                return false;
+            },
+            get_ftypeoptions: function () {
+                com.ajax({
+                    url: '/Plat/ItemsDetail/GetCombobox?Encode=FTypeCode',
+                    showLoading: false,
+                    success: function (d) {
+                        json.FTypeOptions = d;
+                        //实现,编辑时，后台只传来类别的id时,将combobox选中的对象赋值给json.FId,这样才能实现选中效果,
+                        //新增时，FId被赋值-1
+                        $.each(d, function (i, v) {
+                            if (json.FId ==v.id) {
+                                json.FId = v;
+                                return false;
+                            }
+                        });
+                    }
+                })
+            },
+            show_review: function () {
+                $.layerOpen({
+                    content: '/Plat/Review/Index?Id=' + vm.Id,
+                    width: '70%',
+                    height: '64%'
+                })
+            },
+            get_tag_options: function () {
+                com.ajax({
+                    url: '/Plat/ItemsDetail/GetCombobox?Encode=Tag',
+                    showLoading: false,
+                    success: function (data) {
+                        if (data && data.length > 0) {
+                            data.splice(0, 1);
+                            $.each(data, function (i, d) {
+                                    data[i].Active = false;
+                            });
+                        }
+                        if (tagAcitve && tagAcitve.length > 0) {
+                            $.each(tagAcitve, function (i, d) {
+                                $.each(data, function (j, v) {
+                                    if (v.id == d) {
+                                        data[j].Active = true;
+                                        return false;
+                                    }
+                                });
+                            });
+                        }
+                        vm.Tag = data;
+                    }
+                })
+            },
+            toogle_tag: function (id) {
+                $.each(vm.Tag, function (i,d) {
+                    if (id == d.id) {
+                        if (d.Active == true) {
+                            vm.Tag[i].Active = false;
+                        } else {
+                            vm.Tag[i].Active = true;
+                        }
+                        return false;
+                    }
+                })
+            }
+        }
+    });
+    </script>
+
+}
