@@ -43,7 +43,7 @@
                     <li class="fadeInUp">
                         <div v-bind:id="'author-comment-'+ item.Id" class="comment-body">
                             <div class="comment-author vcard">
-                                <img class="avatar" v-bind:src="item.Avatar" style="display: block;">
+                                <img class="avatar" v-bind:src="item.Avatar" style="display: block;" onerror="com.nofind()">
                                 <strong>
                                     <a href="#">{{item.AuName}}</a>
                                 </strong>
@@ -103,6 +103,9 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-4  col-xs-12">
+            @{Html.RenderPartial("_RightSidebar"); }
+        </div>
     </div>
 </div>
 @section css{
@@ -123,7 +126,7 @@
                     PersonalWebsite: '',
                     Text: '',
                     PName: '博主',
-                    isLogin:false
+                   isLogin: false
               };
         @{
             OperatorProvider op = OperatorProvider.Provider;
@@ -155,26 +158,31 @@
                 total: vmJson.Total,
                 review: vmJson.Rows,
                 index: "",
-                reply: reply
+                reply: reply,
+                Category: [],
+                RecommendArt: [],
+                ArchiveFile: []
             },
-            mounted: function () {
+            mounted: function() {
                 this.init_datagrid();
                 this.init_layedit();
+                this.get_relate_list();
             },
             methods: {
-                init_layedit: function () {
+                init_layedit: function() {
 
-                    window.setTimeout(function () {
-                        vm.index = com.layEditor({
-                            elem: '.layui-editor'
-                        });
-                    }, 1000);
+                    window.setTimeout(function() {
+                            vm.index = com.layEditor({
+                                elem: '.layui-editor'
+                            });
+                        },
+                        1000);
                 },
-                init_datagrid: function () {
+                init_datagrid: function() {
                     var that = this;
                     that.layuipage(vmJson.Total);
                 },
-                layuipage: function (total) {
+                layuipage: function(total) {
                     var that = this;
                     layui.laypage.render({
                         elem: 'review-page',
@@ -183,7 +191,7 @@
                         curr: 1,
                         groups: 5,
                         layout: ['prev', 'page', 'next', 'skip'],
-                        jump: function (obj, first) {
+                        jump: function(obj, first) {
                             //首次不执行
                             if (!first) {
                                 //1.跳转分页时也需要将查询参数携带给后台，才算真正的分页效果,
@@ -196,7 +204,7 @@
                         }
                     });
                 },
-                get_itemgrid: function (data, callback) {
+                get_itemgrid: function(data, callback) {
                     com.ajax({
                         url: '/Plat/GuestBook/GetAduitDataGrid',
                         data: data,
@@ -210,11 +218,11 @@
                         }
                     });
                 },
-                cancel: function () {
+                cancel: function() {
                     vm.reply.PId = 0;
                     vm.reply.PName = "博主";
                 },
-                submit: function () {
+                submit: function() {
                     if (!$('#review-form').Validform()) {
                         return false;
                     }
@@ -234,10 +242,13 @@
                         url: '/Plat/GuestBook/Add',
                         data: vm.reply,
                         showMsg: true,
-                        success: function (d) {
+                        success: function(d) {
                             $('#layui_edit').val("");
                             if (reply.isLogin == false) {
-                                vm.reply.QQ = ""; vm.reply.AuName = ""; vm.reply.AuEmail = ""; vm.reply.PersonalWebsite = "";
+                                vm.reply.QQ = "";
+                                vm.reply.AuName = "";
+                                vm.reply.AuEmail = "";
+                                vm.reply.PersonalWebsite = "";
                             }
                             var data = {
                                 'limit': that.limit,
@@ -247,32 +258,48 @@
                         }
                     });
                 },
-                init_hover: function () {
-                    window.setTimeout(function () {
-                        $('.comment-list .fadeInUp').each(function () {
-                            $(this).hover(function () {
-                                $(this).find(".ua-info").css('display', 'inline');
-                            }, function () {
-                                $(this).find(".ua-info").css('display', 'none');
-                            });
-                        })
-                    }, 1000);
+                init_hover: function() {
+                    window.setTimeout(function() {
+                            $('.comment-list .fadeInUp').each(function() {
+                                $(this).hover(function() {
+                                        $(this).find(".ua-info").css('display', 'inline');
+                                    },
+                                    function() {
+                                        $(this).find(".ua-info").css('display', 'none');
+                                    });
+                            })
+                        },
+                        1000);
                 },
-                reply_review: function (id) {
+                reply_review: function(id) {
                     console.log(id);
                     $('html,body').animate({
-                        scrollTop: $('.scroll-comments').offset().top
-                    }, 800);
-                    $.each(vm.review, function (i, v) {
-                        if (v.Id == id) {
-                            vm.reply.PName = v.AuName;
-                            vm.reply.PId = v.Id;
-                            return false;
+                            scrollTop: $('.scroll-comments').offset().top
+                        },
+                        800);
+                    $.each(vm.review,
+                        function(i, v) {
+                            if (v.Id == id) {
+                                vm.reply.PName = v.AuName;
+                                vm.reply.PId = v.Id;
+                                return false;
+                            }
+                        });
+                },
+                get_relate_list: function() {
+                    com.ajax({
+                        url: '/App/GetRelateList',
+                        data: { Id: '0' },
+                        showLoading: false,
+                        success: function(data) {
+                            vm.Category = data.Category;
+                            vm.RecommendArt = data.RecommendArt;
+                            vm.ArchiveFile = data.ArchiveFile;
                         }
                     });
-                },
+                }
             }
-        })
+        });
 
 
 

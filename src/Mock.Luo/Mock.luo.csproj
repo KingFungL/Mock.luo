@@ -684,6 +684,12 @@
     <Content Include="Content\Images\qqlogin.png" />
     <Content Include="Content\Images\qrcode_for_gh_676b1b527097_430.jpg" />
     <Content Include="Content\Images\r_title_bg.jpg" />
+    <Content Include="Content\Images\show-useragent\chrome.png" />
+    <Content Include="Content\Images\show-useragent\cn.png" />
+    <Content Include="Content\Images\show-useragent\qqbrowser.png" />
+    <Content Include="Content\Images\show-useragent\windows.png" />
+    <Content Include="Content\Images\show-useragent\windows_win7.png" />
+    <Content Include="Content\Images\show-useragent\windows_win8.png" />
     <Content Include="Content\Images\tim.jpg" />
     <Content Include="Content\Images\time.jpg" />
     <Content Include="Content\Images\UserCard01.png" />

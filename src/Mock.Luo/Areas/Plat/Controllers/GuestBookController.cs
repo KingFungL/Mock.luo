@@ -148,6 +148,12 @@ namespace Mock.Luo.Areas.Plat.Controllers
 
             return Success("留言成功");
         }
+
+        [Skip]
+        public ActionResult RandomUserUrl()
+        {
+            return Result(UiHelper.GetRandomUserUrl());
+        }
     }
 
 }

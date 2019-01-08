@@ -39,5 +39,7 @@ namespace Mock.Data.Dto
         public bool IsNew { get; set; }
         public int? CreatorUserId { get; set; }
         public DateTime? CreatorTime { get; set; }
+
+        public int Editor { get; set; }
     }
 }

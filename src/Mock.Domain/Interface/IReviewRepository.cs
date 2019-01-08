@@ -23,7 +23,7 @@ namespace Mock.Domain.Interface
         /// <param name="email">邮箱</param>
         /// <param name="aId">文章主键</param>
         /// <returns>DataGrid实体</returns>
-        DataGrid GetDataGrid(Expression<Func<Review, bool>> predicate, PageDto pag, string email, int aId);
+        DataGrid GetDataGrid(Expression<Func<Review, bool>> predicate, PageDto pag, string email, int aId,int flag);
 
 
     }

@@ -459,7 +459,12 @@ com.checkedRow = function (n) {
             }, nofind: function () {//图片未找到
                 var img = event.srcElement;
 
-                img.src = "/Content/Images/mo.jpg";
+                com.ajax({
+                    url: '/Plat/GuestBook/RandomUserUrl',
+                    success: function(d) {
+                        img.src = d; //"/Content/Images/mo.jpg";
+                    }
+                });
 
                 img.onerror = null;
             }

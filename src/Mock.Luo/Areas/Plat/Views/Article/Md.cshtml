@@ -138,7 +138,7 @@
 
 @section css{
     <link href="~/Content/css/vue-multiselect.min31f.css" rel="stylesheet" />
-    <link href="~/Content/js/editor.md/css/editormd.css" rel="stylesheet" />
+    <link href="/Content/js/editor.md/css/editormd.css" rel="stylesheet" />
     <style>
         .tagcloud { padding: 5px 0 5px 2px; }
             .tagcloud > a { font-size: 14px; text-decoration: none; float: left; margin: 4px; padding: 0 7px; line-height: 26px; text-align: center; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); }
@@ -148,7 +148,8 @@
 }
 @section scripts{
     <script src="~/Content/js/vue/vue-multiselect.min.js"></script>
-    <script src="~/Content/js/editor.md/src/editormd.js"></script>
+    <script src="/Content/js/editor.md/src/editormd.js"></script>
+
 
 
     <script>
@@ -226,14 +227,19 @@
                     //this.width("100%");
                     //this.height(480);
                     //this.resize("100%", 640);
-                    var ID = params['ID'];
-                    if (ID) {
-                        GetFormJson(ID);
-                    }
+                    //var ID = params['ID'];
+                    //if (ID) {
+                    //    GetFormJson(ID);
+                    //}
                 }
             });
 
             json.Content = decodeURIComponent(json.Content);
+
+            window.setTimeout(function() {
+                commentEditor.setValue(json.Content);
+                },
+                150);
             if (json.Id != null) {
 
             }
@@ -272,62 +278,67 @@
                 com.ajax({
                     url: '/Plat/ItemsDetail/GetCombobox?Encode=FTypeCode',
                     showLoading: false,
-                    success: function (d) {
+                    success: function(d) {
                         json.FTypeOptions = d;
                         //实现,编辑时，后台只传来类别的id时,将combobox选中的对象赋值给json.FId,这样才能实现选中效果,
                         //新增时，FId被赋值-1
-                        $.each(d, function (i, v) {
-                            if (json.FId ==v.id) {
-                                json.FId = v;
-                                return false;
-                            }
-                        });
+                        $.each(d,
+                            function(i, v) {
+                                if (json.FId == v.id) {
+                                    json.FId = v;
+                                    return false;
+                                }
+                            });
                     }
-                })
+                });
             },
             show_review: function () {
                 $.layerOpen({
                     content: '/Plat/Review/Index?Id=' + vm.Id,
                     width: '70%',
                     height: '64%'
-                })
+                });
             },
             get_tag_options: function () {
                 com.ajax({
                     url: '/Plat/ItemsDetail/GetCombobox?Encode=Tag',
                     showLoading: false,
-                    success: function (data) {
+                    success: function(data) {
                         if (data && data.length > 0) {
                             data.splice(0, 1);
-                            $.each(data, function (i, d) {
+                            $.each(data,
+                                function(i, d) {
                                     data[i].Active = false;
-                            });
+                                });
                         }
                         if (tagAcitve && tagAcitve.length > 0) {
-                            $.each(tagAcitve, function (i, d) {
-                                $.each(data, function (j, v) {
-                                    if (v.id == d) {
-                                        data[j].Active = true;
-                                        return false;
-                                    }
+                            $.each(tagAcitve,
+                                function(i, d) {
+                                    $.each(data,
+                                        function(j, v) {
+                                            if (v.id == d) {
+                                                data[j].Active = true;
+                                                return false;
+                                            }
+                                        });
                                 });
-                            });
                         }
                         vm.Tag = data;
                     }
-                })
+                });
             },
             toogle_tag: function (id) {
-                $.each(vm.Tag, function (i,d) {
-                    if (id == d.id) {
-                        if (d.Active == true) {
-                            vm.Tag[i].Active = false;
-                        } else {
-                            vm.Tag[i].Active = true;
+                $.each(vm.Tag,
+                    function(i, d) {
+                        if (id == d.id) {
+                            if (d.Active == true) {
+                                vm.Tag[i].Active = false;
+                            } else {
+                                vm.Tag[i].Active = true;
+                            }
+                            return false;
                         }
-                        return false;
-                    }
-                })
+                    });
             }
         }
     });

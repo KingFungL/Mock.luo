@@ -17,5 +17,7 @@
         public bool Recommend { get; set; } = false;
         public bool IsStickie { get; set; } = false;
         public string ArticleType { get; set; }
+
+        public int Editor { get; set; }
     }
 }

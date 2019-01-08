@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Web.Mvc;
-using Mock.Code.Attribute;
+﻿using Mock.Code.Attribute;
 using Mock.Code.Extend;
 using Mock.Code.Helper;
 using Mock.Code.Mail;
@@ -12,6 +9,9 @@ using Mock.Data.AppModel;
 using Mock.Data.Models;
 using Mock.Domain.Interface;
 using Mock.Luo.Controllers;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace Mock.Luo.Areas.Plat.Controllers
 {
@@ -56,7 +56,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
         /// <returns></returns>
         public ActionResult GetDataGrid(PageDto pag, string email = "", int aId = 0)
         {
-            return Result(_reviewRepositroy.GetDataGrid(ExtLinq.True<Review>(), pag, email, aId));//所有
+            return Result(_reviewRepositroy.GetDataGrid(ExtLinq.True<Review>(), pag, email, aId, 1));//所有
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
                 pag.Limit = 10;
             }
             //审核通过的
-            return Result(_reviewRepositroy.GetDataGrid(u => u.IsAduit == true, pag, "", aId));
+            return Result(_reviewRepositroy.GetDataGrid(u => u.IsAduit == true, pag, "", aId, 0));
         }
 
         # region 前台用户评论文章
@@ -122,7 +122,7 @@ namespace Mock.Luo.Areas.Plat.Controllers
             }
             if (!ModelState.IsValid)
             {
-                return Error(ModelState.Values.Where(u => u.Errors.Count > 0).FirstOrDefault().Errors[0].ErrorMessage);
+                return Error(ModelState.Values.FirstOrDefault(u => u.Errors.Count > 0)?.Errors[0].ErrorMessage);
             }
             OperatorProvider op = OperatorProvider.Provider;
 
@@ -147,9 +147,13 @@ namespace Mock.Luo.Areas.Plat.Controllers
             _reviewRepositroy.Insert(reViewModel);
 
             var artEntity = _articleRepository.Queryable(u => u.Id == reViewModel.AId).FirstOrDefault();
-            artEntity.CommentQuantity += 1;
+            if (artEntity != null)
+            {
+                artEntity.CommentQuantity += 1;
 
-            _articleRepository.Update(artEntity, "CommentQuantity");
+                _articleRepository.Update(artEntity, "CommentQuantity");
+            }
+
             _redisHelper.KeyDeleteAsync(string.Format(ConstHelper.Review, "GetRecentReview"));
 
             return Success("吐槽成功");

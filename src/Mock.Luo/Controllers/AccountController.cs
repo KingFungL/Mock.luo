@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Web.Mvc;
-using System.Web.Security;
-using Mock.Code;
+﻿using Mock.Code;
 using Mock.Code.Helper;
 using Mock.Code.Mail;
 using Mock.Code.Net;
@@ -13,6 +9,10 @@ using Mock.Data.AppModel;
 using Mock.Data.Models;
 using Mock.Domain.Interface;
 using Mock.Luo.Models;
+using System;
+using System.Linq;
+using System.Web.Mvc;
+using System.Web.Security;
 
 namespace Mock.Luo.Controllers
 {
@@ -146,7 +146,7 @@ namespace Mock.Luo.Controllers
             var amm = _appUserRepository.IsRepeat(new AppUser
             {
                 Id = id,
-                LoginName=Utils.GuId(),
+                LoginName = Utils.GuId(),
                 Email = email
             });
             if (amm.State.Equals(ResultType.Error.ToString()))
@@ -416,7 +416,7 @@ namespace Mock.Luo.Controllers
         public ActionResult GetCommentGrid(PageDto pag)
         {
             int? userId = Op.CurrentUser.UserId;
-            DataGrid dg = _reviewRepository.GetDataGrid(u => u.CreatorUserId == userId, pag, "", 0);
+            DataGrid dg = _reviewRepository.GetDataGrid(u => u.CreatorUserId == userId, pag, "", 0, 1);
 
             return Result(dg);
         }

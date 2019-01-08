@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using Mock.Code.Extend;
+﻿using Mock.Code.Extend;
 using Mock.Code.Helper;
 using Mock.Code.Web;
 using Mock.Data.AppModel;
@@ -11,6 +7,10 @@ using Mock.Data.Extensions;
 using Mock.Data.Models;
 using Mock.Data.Repository;
 using Mock.Domain.Interface;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Mock.Domain.Implementations
 {
@@ -37,11 +37,11 @@ namespace Mock.Domain.Implementations
         /// <param name="email"></param>
         /// <param name="aId"></param>
         /// <returns></returns>
-        public DataGrid GetDataGrid(Expression<Func<Review, bool>> predicate, PageDto pag, string email, int aId)
+        public DataGrid GetDataGrid(Expression<Func<Review, bool>> predicate, PageDto pag, string email, int aId, int flag = 0)
         {
             predicate = predicate.And(u => u.DeleteMark == false
-               && (email == "" || u.AuEmail.Contains(email))
-               && (aId == 0 || u.AId == aId));
+                                           && (email == "" || u.AuEmail.Contains(email))
+                                           && (aId == 0 || u.AId == aId));
 
             var reviewList = base.Queryable(u => u.AId == aId).Select(u => new
             {
@@ -50,30 +50,59 @@ namespace Mock.Domain.Implementations
                 u.AuName
             }).ToList();
 
-            var dglist = base.Queryable(predicate).Where(pag).Select(u=>new {
+
+            var dglist = base.Queryable(predicate).Where(pag).Select(u => new
+            {
                 u.Article.Title,
                 Avatar = u.AppUser == null ? u.Avatar : u.AppUser.Avatar,
-                u=u
-            }).ToList().Select(r => new
-            {
-                r.Title,
-                r.Avatar,
-                r.u.Id,
-                r.u.AId,
-                PName = reviewList.Where(s => s.Id == r.u.PId).Select(s => s.AuName).FirstOrDefault(),
-                r.u.PId,
-                r.u.Text,
-                r.u.Ip,
-                r.u.Agent,
-                r.u.System,
-                r.u.GeoPosition,
-                r.u.UserHost,
-                r.u.AuName,
-                r.u.AuEmail,
-                r.u.IsAduit,
-                r.u.CreatorTime
+                u = u
             }).ToList();
-            return new DataGrid { Rows = dglist, Total = pag.Total };
+            if (flag == 0)
+            {
+                var dg = dglist.Select(r => new
+                {
+                    r.Title,
+                    Avatar = r.Avatar ?? UiHelper.GetRandomUserUrl(),
+                    r.u.Id,
+                    r.u.AId,
+                    PName = reviewList.Where(s => s.Id == r.u.PId).Select(s => s.AuName).FirstOrDefault(),
+                    r.u.PId,
+                    r.u.Text,
+                    r.u.Ip,
+                    r.u.Agent,
+                    r.u.System,
+                    r.u.GeoPosition,
+                    r.u.UserHost,
+                    r.u.AuName,
+                    r.u.AuEmail,
+                    r.u.IsAduit,
+                    r.u.CreatorTime
+                }).ToList();
+                return new DataGrid { Rows = dg, Total = pag.Total };
+            }
+            else
+            {
+                var dg = dglist.Select(r => new
+                {
+                    r.Title,
+                    Avatar = r.Avatar ?? UiHelper.GetRandomUserUrl(),
+                    r.u.Id,
+                    r.u.AId,
+                    PName = reviewList.Where(s => s.Id == r.u.PId).Select(s => s.AuName).FirstOrDefault(),
+                    r.u.PId,
+                    r.u.Text,
+                    r.u.Ip,
+                    r.u.Agent,
+                    r.u.System,
+                    r.u.GeoPosition,
+                    r.u.UserHost,
+                    r.u.AuName,
+                    r.u.CreatorTime
+                }).ToList();
+                return new DataGrid { Rows = dg, Total = pag.Total };
+            }
+
+
         }
         #endregion
 

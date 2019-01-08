@@ -76,7 +76,8 @@ namespace Mock.Domain.Implementations
                 CreatorTime = r.CreatorTime,
                 ViewHits = r.ViewHits,
                 Thumbnail = r.Thumbnail,
-                PointQuantity = r.PointQuantity
+                PointQuantity = r.PointQuantity,
+                Editor = r.Editor
             }).FirstOrDefault();
 
             if (artEntry != null)
@@ -220,38 +221,13 @@ namespace Mock.Domain.Implementations
         #region 根据文章Id得到相关内容
         public ArtRelateDto GetRelateDtoByAId(int id)
         {
-
+            ArtRelateDto ardList = this.GetRelateDto();
+            if (id == 0)
+            {
+                return ardList;
+            }
             IQueryable<Article> iQ = base.Queryable(u => u.DeleteMark == false);
 
-            //文章归档 | 可缓存
-            List<BaseDto> archiveFile = _iRedisHelper.UnitOfWork(string.Format(ConstHelper.Article, "archiveFile"), () =>
-            {
-                return base.Queryable(u => u.DeleteMark == false && u.IsAudit == true).GroupBy(u => u.Archive).Select(u => new
-                {
-                    u.Key,
-                    u.FirstOrDefault().Archive,
-                    u.FirstOrDefault().CreatorTime,
-                    count = u.Count(),
-                }).OrderByDescending(u => u.CreatorTime).ToList().Select(u => new BaseDto
-                {
-                    Text = u.Archive,
-                    Code = u.count.ToString()
-                }).ToList();
-
-            });
-
-
-            //从文章列表中取出5条博主最后新增时间的置顶文章 | 可缓存
-            List<BaseDto> recommendArt = _iRedisHelper.UnitOfWork(string.Format(ConstHelper.Article, "recommendArt"), () =>
-            {
-                return base.Queryable(u => u.DeleteMark == false && u.IsAudit == true).OrderByDescending(u => u.CreatorTime).Take(5).ToList().Select(u => new BaseDto { Id = u.Id, Text = u.Title }).ToList();
-            });
-
-            //取出分类目录:分类编码，分类名称
-            List<BaseDto> category = _iRedisHelper.UnitOfWork(string.Format(ConstHelper.Article, "category"), () =>
-            {
-                return base.Db.Set<ItemsDetail>().AsNoTracking().Where(u => u.Items.EnCode == EnCode.FTypeCode.ToString()).Select(u => new BaseDto { Id = u.Id, Text = u.ItemName, Code = u.ItemCode }).ToList();
-            });
 
             //取出分类FId,和文章对应的标签多个Id
             var iTagFid = iQ.Where(r => r.Id == id).Select(r => new
@@ -285,17 +261,56 @@ namespace Mock.Domain.Implementations
             //随机文章
             List<BaseDto> randomArt = iQ.Select(u => new BaseDto { Id = u.Id, Text = u.Title }).Take(5).ToList();
 
-            ArtRelateDto ardList = new ArtRelateDto
-            {
-                RelateArt = relateArt,
-                Category = category,
-                RecommendArt = recommendArt,
-                ArchiveFile = archiveFile,
-                RandomArt = randomArt,
-                ArtTag = artTag
-            };
+
+            ardList.RelateArt = relateArt;
+            ardList.RandomArt = randomArt;
+            ardList.ArtTag = artTag;
+
             return ardList;
         }
         #endregion
+
+
+        public ArtRelateDto GetRelateDto()
+        {
+
+            //文章归档 | 可缓存
+            List<BaseDto> archiveFile = _iRedisHelper.UnitOfWork(string.Format(ConstHelper.Article, "archiveFile"), () =>
+            {
+                return base.Queryable(u => u.DeleteMark == false && u.IsAudit == true).GroupBy(u => u.Archive).Select(u => new
+                {
+                    u.Key,
+                    u.FirstOrDefault().Archive,
+                    u.FirstOrDefault().CreatorTime,
+                    count = u.Count(),
+                }).OrderByDescending(u => u.CreatorTime).ToList().Select(u => new BaseDto
+                {
+                    Text = u.Archive,
+                    Code = u.count.ToString()
+                }).ToList();
+
+            });
+
+
+            //从文章列表中取出5条博主最后新增时间的置顶文章 | 可缓存
+            List<BaseDto> recommendArt = _iRedisHelper.UnitOfWork(string.Format(ConstHelper.Article, "recommendArt"), () =>
+            {
+                return base.Queryable(u => u.DeleteMark == false && u.IsAudit == true).OrderByDescending(u => u.CreatorTime).Take(5).ToList().Select(u => new BaseDto { Id = u.Id, Text = u.Title }).ToList();
+            });
+
+            //取出分类目录:分类编码，分类名称
+            List<BaseDto> category = _iRedisHelper.UnitOfWork(string.Format(ConstHelper.Article, "category"), () =>
+            {
+                return base.Db.Set<ItemsDetail>().AsNoTracking().Where(u => u.Items.EnCode == EnCode.FTypeCode.ToString()).Select(u => new BaseDto { Id = u.Id, Text = u.ItemName, Code = u.ItemCode }).ToList();
+            });
+
+            ArtRelateDto ardList = new ArtRelateDto
+            {
+                Category = category,
+                RecommendArt = recommendArt,
+                ArchiveFile = archiveFile,
+            };
+            return ardList;
+        }
     }
 }
