@@ -1,4 +1,5 @@
 ﻿# Mock.luo
+* [概要设计说明](docs/概要设计说明.md)
 * 演示地址：http://igeekfan.cn
 * 这是我的示例代码库。
 * 开发工具:VS2017
@@ -35,3 +36,26 @@
 *  登录界面的记住密码使用的iCheck控件，选中，记住密码。更漂亮.有多种皮肤 [github icheck链接](https://github.com/fronteed/icheck)
 * 关于表单验证，也是从力软上的拿来的validator,没有仔细看他们的代码，不过知道怎么用，并改进其中的方法，使用layer的弹出tip层来显示出错信息，我觉得这个验证应该是他们自己扩展的。
 * 关于上传控件，我们用的是uploadify自己改的，之前在学校项目的时候，我的学长借鉴163邮箱封装uploadify，然后，我觉得不太好用，自己也看了源码，照着163邮箱的上传附件功能，自己再次重写了一下uploadify控件，当然是指扩展。
+
+
+
+### docs文件夹介绍
+* Mock.Luo.zip  项目文件  VS2017下双击Mock.Luo.sln，右击解决方案还原NuGet包。详情请参考用户使用说明书。
+* Mock数据bak文件20171129.zip  数据库bak文件、
+* mock数据库备选方案还原.zip   数据库.sql文件，执行一下，数据库就还原成功了，SQL SERER 2008R2 上还原。 
+
+
+## 博客系统截图
+
+![docs/博客系统截图/1.png](docs/博客系统截图/1.png)
+![docs/博客系统截图/2.png](docs/博客系统截图/2.png)
+![docs/博客系统截图/2.png](docs/博客系统截图/2.png)
+![docs/博客系统截图/3.png](docs/博客系统截图/3.png)
+![docs/博客系统截图/4.png](docs/博客系统截图/4.png)
+![docs/博客系统截图/5.png](docs/博客系统截图/5.png)
+![docs/博客系统截图/6.png](docs/博客系统截图/6.png)
+![docs/博客系统截图/7.png](docs/博客系统截图/7.png)
+![docs/博客系统截图/8.png](docs/博客系统截图/8.png)
+
+
+
