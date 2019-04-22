@@ -1,15 +1,16 @@
-# start
+# 开始
 
 该文档用于指导你如何使用该项目。
 ### 工具
 1. VS2015、VS2017
 2. SQL server 2008,2012,2017
 3. Redis
-
-这是我写的博客
+4. redis-desktop-manager.exe
+![安装包下载](/docs/images/Install-Software.png)
+博客里面有redis,sql server 2012的安装包
 [https://blog.csdn.net/q710777720/article/details/80358932](https://blog.csdn.net/q710777720/article/details/80358932)
 
-![安装包下载](/docs/images/Install-Software.png)
+
 
 ### 1.还原数据库
 数据库：SQL server 2008,2012,2017都可以。
