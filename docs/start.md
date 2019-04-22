@@ -7,7 +7,7 @@
 3. Redis
 4. redis-desktop-manager.exe
 ![安装包下载](/docs/images/Install-Software.png)
-博客里面有redis,sql server 2012的安装包
+博客里面有redis,sql server 2012,redis-desktop-manager.exe的安装包
 [https://blog.csdn.net/q710777720/article/details/80358932](https://blog.csdn.net/q710777720/article/details/80358932)
 
 
