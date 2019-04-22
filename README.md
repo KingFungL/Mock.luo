@@ -1,5 +1,6 @@
 ﻿# Mock.luo
 * [概要设计说明](docs/概要设计说明.md)
+* [项目如何开始使用，点这个文档](docs/start.md)
 * 演示地址：http://igeekfan.cn
 * 这是我的示例代码库。
 * 开发工具:VS2017
