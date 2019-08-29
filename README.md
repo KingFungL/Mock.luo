@@ -1,4 +1,7 @@
-﻿# Mock.luo
+#### windows服务器过期，迁移至.net core 新版本.
+[https://github.com/luoyunchong/lin-cms-dotnetcore](https://github.com/luoyunchong/lin-cms-dotnetcore)
+
+# Mock.luo
 * [概要设计说明](docs/概要设计说明.md)
 * [项目如何开始使用，点这个文档](docs/start.md)
 * 演示地址：http://igeekfan.cn
